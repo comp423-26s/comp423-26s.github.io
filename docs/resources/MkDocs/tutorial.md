@@ -4,7 +4,7 @@ Welcome! In this tutorial, you'll learn how to build a static website to organiz
 
 !!! info "Why Material for MkDocs?"
 
-    MkDocs is the de facto documentation site generator for today's most popular, modern Python projects, including a few we'll in this course: [FastAPI](https://fastapi.tiangolo.com/) and [Pydantic](https://docs.pydantic.dev/latest/). Those sites are made and maintained with this documentation tool. Material for MkDocs is one of the most popular themes for MkDocs, offering a sleek design, responsive layout, and tons of features out of the box. As an added endorsement, I, Kris, claim this is the best and easiest to use, static site generator tool I've ever seen. In fact, **this course site you're reading right now** is [built using MkDocs](https://github.com/comp423-25s/comp423-25s.github.io/), too! (There's a recursion joke somewhere in here.)
+    MkDocs is the de facto documentation site generator for today's most popular, modern Python projects, including a few we'll in this course: [FastAPI](https://fastapi.tiangolo.com/) and [Pydantic](https://docs.pydantic.dev/latest/). Those sites are made and maintained with this documentation tool. Material for MkDocs is one of the most popular themes for MkDocs, offering a sleek design, responsive layout, and tons of features out of the box. As an added endorsement, I, Kris, claim this is the best and easiest to use, static site generator tool I've ever seen. In fact, **this course site you're reading right now** is [built using MkDocs](https://github.com/comp423-26s/comp423-26s.github.io/), too! (There's a recursion joke somewhere in here.)
 
 ## Why This Matters
 

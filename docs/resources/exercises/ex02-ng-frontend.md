@@ -23,7 +23,7 @@ CORS (Cross-Origin Resource Sharing) is a security feature implemented by web br
 
 When you build a web application with a separate frontend and backend (like we're doing with Angular and FastAPI), they typically run on different domains or ports during development. Without proper CORS configuration, your Angular application running on one port (e.g., localhost:4200) won't be able to make API requests to your FastAPI backend running on another port (e.g., localhost:8000).
 
-Additionally, for this exercise, we will deploy your front-end as a static web page on GitHub pages to further emphasize the separation between frontend and backend separation. Your EX02 frontend will run on GitHub Pages and (origin host: comp423-25s.github.io) and backend will run on your personal OKD project hostname. This also requires CORS for requests to succeed across origins.
+Additionally, for this exercise, we will deploy your front-end as a static web page on GitHub pages to further emphasize the separation between frontend and backend separation. Your EX02 frontend will run on GitHub Pages and (origin host: comp423-26s.github.io) and backend will run on your personal OKD project hostname. This also requires CORS for requests to succeed across origins.
 
 ### Using Middleware in FastAPI
 

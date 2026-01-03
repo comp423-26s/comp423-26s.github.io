@@ -82,7 +82,7 @@ Your team will share a GitHub repository for collaboration. This repository is w
 3. After completing step 2, all other members of the team should update their local CSXL development environment to remove the git `origin` remote and establish a new remote, named `origin`, that points to your team's GitHub repository (use the `https://github.com` URL). After doing so, you should be able to perform `git pull origin main` and it succeed. Additionally, you can verify correctness by running `git remote show origin` to see that it is pointed to your team's repository and not the official CSXL repository.
 
 4. Only after everyone has successfully completed step 3, a third member of your team should establish a project board for your team.
-    1. Begin by opening you your team repo (`comp423-25s/csxl-team-XN` where `XN` is your table number, like `a1`). 
+    1. Begin by opening you your team repo (`comp423-26s/csxl-team-XN` where `XN` is your table number, like `a1`). 
     2. Be sure you do this from your team's repository page! From this page, click the `Projects` tab. Click `New Project`. 
     3. From the modal with templates, select `Featured` and then select the `Kanban` template. 
     4. Name the project "Team XN Project Board", where XN is your table. 

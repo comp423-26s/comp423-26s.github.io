@@ -31,7 +31,7 @@ When a request is received in a FastAPI application, the following steps occur:
 To follow along with this quick tutorial on dependency injection, from your host machine's terminal clone the course FastAPI Tutorial repository again, but name the cloned directory `di-tutorial`:
 
 ~~~bash
-git clone https://github.com/comp423-25s/fastapi-tutorial di-tutorial
+git clone https://github.com/comp423-26s/fastapi-tutorial di-tutorial
 ~~~
 
 The last argument of `di-tutorial` is what causes `git` to clone to a specific directory name on your machine.
@@ -45,7 +45,7 @@ The last argument of `di-tutorial` is what causes `git` to clone to a specific d
     Once you have `gh`, you can achieve the clone command above with:
 
     ~~~bash
-    gh repo clone comp423-25s/fastapi-tutorial di-tutorial
+    gh repo clone comp423-26s/fastapi-tutorial di-tutorial
     ~~~
 
 Open the repo directory in a VS Code Dev Container.

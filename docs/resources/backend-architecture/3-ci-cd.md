@@ -101,7 +101,7 @@ Now that you are logged in, go to the upper-right corner and click your ONYEN an
 
 Before proceeding, switch to your personal OKD project using your ONYEN. For example, if your ONYEN is "jdoe", run:
 ```bash
-oc project comp590-140-25sp-jdoe
+oc project comp590-140-26sp-jdoe
 ```
 
 If the above command fails, restart the steps above! The following will not work until you are able to access your project via `oc`.

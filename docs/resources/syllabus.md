@@ -5,7 +5,7 @@ date: 2026-01-07
 due: 2026-01-08
 type: reading
 threads: course
-authors: Kris Jordan
+authors: [Kris Jordan]
 ---
 
 # Course Syllabus
@@ -13,12 +13,12 @@ authors: Kris Jordan
 ## General Course Info
 
 * **Title**: Foundations of Software Engineering
-* **Term**: Spring 2025
+* **Term**: Spring 2026
 * **Department**: Computer Science (COMP)
 * **Course Number**: 590-140 (Pilot for 423) 
 * **Section**: 001 In-person MWF - 1:25pm to 2:15pm
 * **Instructor**: [Kris Jordan](https://www.youtube.com/krisjordan)
-    * E-mail: <kris+comp590.25s@cs.unc.edu>
+    * E-mail: <kris+comp590.26s@cs.unc.edu>
     * LinkedIn: <https://www.linkedin.com/in/krisjordan/>
 
 ## Course Description, Target Audience, and Prerequisites
@@ -39,7 +39,7 @@ The goal of this course is to prepare you for technical leadership, emphasizing 
 
 ## Textbooks and Resources
 
-The course web page (https://comp423-25s.github.io/) and Canvas are the primary resources for this course. There is no textbook for this course. We will distribute frequent readings, reference material, and tutorials via the course website and Canvas.
+The course web page (https://comp423-26s.github.io/) and Canvas are the primary resources for this course. There is no textbook for this course. We will distribute frequent readings, reference material, and tutorials via the course website and Canvas.
 
 Textbooks we will source chapters from, without your needing to purchase any texts, include the following. Each of these books is worth reading in whole and having on your bookshelf as you progress in your software engineering career!
 

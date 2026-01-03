@@ -17,7 +17,7 @@ If you are off-campus, you will need to establish a VPN connection in to make us
 
 Access the OKD CloudApps console here: <https://console.apps.unc.edu/>
 
-Under the **okd** logo, you should see "Developer" in a drop down and to the right "Project: " followed by `comp590-140-25sp-ONYEN` where ONYEN is your UNC ONYEN.
+Under the **okd** logo, you should see "Developer" in a drop down and to the right "Project: " followed by `comp590-140-26sp-ONYEN` where ONYEN is your UNC ONYEN.
 
 ## Using the `oc` Command-line Tool to Administer OKD
 
@@ -43,7 +43,7 @@ One member of each team should be designated the project host. From this member'
   * For each team member, with their `onyen`:
     1. Create binding
     2. Name: `admin-ONYEN` (replace `ONYEN` with teammate's ONYEN)
-    3. Be sure the project you are in in CloudApps is `comp590-140-25sp-ONYEN`
+    3. Be sure the project you are in in CloudApps is `comp590-140-26sp-ONYEN`
       * `ONYEN` should be your UNC ONYEN
     4. Role name: `admin`
     5. Subject:
@@ -169,12 +169,12 @@ IMPORTANT: Be sure you substitute your team's information in TWO places below! F
 IMPORTANT: Be sure you are currently on your stage branch. If you are not, go ahead and stash and/or commit changes on your current branch, and switch to stage.
 
 ```bash
-oc new-app python:3.11~git@github.com:comp423-25s/<your-final_repo_name>.git#stage \
+oc new-app python:3.11~git@github.com:comp423-26s/<your-final_repo_name>.git#stage \
   --source-secret=comp590-final-project-deploykey \
   --name=final-project \
   --strategy=docker \
   --env=MODE=development \
-  --env=HOST=csxl-team-<TEAM NUMBER>-comp423-25s.apps.unc.edu
+  --env=HOST=csxl-team-<TEAM NUMBER>-comp423-26s.apps.unc.edu
 ```
 
 Notice the `#stage` at the end of the repository URL. This is the branch name that OpenShift will pull from. When setting up the final project, you created a branch named `stage` and established it as the primary branch for your repository. This notion of a staging branch is a common practice in DevOps, and is a good way to keep your production code separate (live at csxl.unc.edu) from your development code (which you are establishing right now).
@@ -201,7 +201,7 @@ Next, we can create a route to the service with a specifically chosen hostname. 
 ```bash
 oc create route edge \
   --service=final-project \
-  --hostname=csxl-team-<TEAM NUMBER>-comp423-25s.apps.unc.edu
+  --hostname=csxl-team-<TEAM NUMBER>-comp423-26s.apps.unc.edu
 ```
 
 You can now visit the hostname for your team and access it in the browser. If you see a message from OpenShift that says "Application is not available", it means that the application is still building. Once your build completes, you should see the application running, but there is still one more important step: resetting the database.

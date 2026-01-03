@@ -11,7 +11,7 @@ Since you are now comfortable with HTTP methods, paths, query parameters, and so
 
 In a terminal on your host machine, outside of any other `git` repositories, follow the following steps:
 
-1. **Clone the tutorial repository**: Start by cloning the repository at [https://github.com/comp423-25s/fastapi-tutorial.git](https://github.com/comp423-25s/fastapi-tutorial.git).
+1. **Clone the tutorial repository**: Start by cloning the repository at [https://github.com/comp423-26s/fastapi-tutorial.git](https://github.com/comp423-26s/fastapi-tutorial.git).
 
 2. **Open the repository in a VS Code Dev Container**. The dev container is based on a modern Microsoft Dev Container image, which we have already used once in this course, so it should load quickly and install the necessary dependencies from `requirements.txt`. 
 

@@ -29,7 +29,7 @@ In RESTful APIs, the nouns in your API are **resources**. Each resource is uniqu
 You may know these as web addresses, like:
 
 - [https://csxl.unc.edu/api/organizations](https://csxl.unc.edu/api/organizations) → Returns a list of CS student organizations in JSON.
-- [https://csxl.unc.edu/api/academics/section/term/25S](https://csxl.unc.edu/api/academics/section/term/25S) → Returns a list of CS classes offered in Spring 2025.
+- [https://csxl.unc.edu/api/academics/section/term/26S](https://csxl.unc.edu/api/academics/section/term/26S) → Returns a list of CS classes offered in Spring 2026.
 
 !!! warning "Could you easily see the structure of the JSON in the URLs above?"
 
