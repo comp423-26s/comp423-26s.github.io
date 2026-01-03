@@ -1,7 +1,7 @@
-site_name: COMP423 - Spring 2025
-site_url: https://comp423-25s.github.io/
-repo_url: https://github.com/comp423-25s/comp423-25s.github.io
-repo_name: comp423-25s/comp423-25s.github.io
+site_name: COMP423 - Spring 2026
+site_url: https://comp423-26s.github.io/
+repo_url: https://github.com/comp423-26s/comp423-26s.github.io
+repo_name: comp423-26s/comp423-26s.github.io
 
 theme:
   name: material
@@ -54,7 +54,10 @@ validation:
 plugins:
   - search
   - awesome-pages
+  - macros:
+      module_name: main
 markdown_extensions:
+  - meta
   - attr_list
   - admonition
   - md_in_html
@@ -85,5 +88,6 @@ extra_css:
 extra_javascript:
   - javascripts/mathjax.js
   - javascripts/accessibility-fixes.js
+  - javascripts/timeline-due-highlights.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
-copyright: Copyright &copy; 2025 Kris Jordan
+copyright: Copyright &copy; 2026 Kris Jordan

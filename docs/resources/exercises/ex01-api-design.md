@@ -131,7 +131,7 @@ app = FastAPI(
     title="EX01 API Design",
     contact={
         "name": "Parter A, Partner B",
-        "url": "https://github.com/comp423-25s/<your-team-repo>",
+        "url": "https://github.com/comp423-26s/<your-team-repo>",
     },
     description="""
 ## Introduction
@@ -366,7 +366,7 @@ Phase 2 should have `pytest` integration tests cover Sue Sharer and Cai Clicker'
 
 Let's deploy your backend API to the UNC Kubernetes/OKD cluster! Then you can share snippets and redirects with your friends.
 
-The steps we follow will be very similar to the tutorial you worked through in class on [Monday, February 17th](https://comp423-25s.github.io/resources/backend-architecture/3-ci-cd/). The general overview is:
+The steps we follow will be very similar to the tutorial you worked through in class on [Monday, February 17th](https://comp423-26s.github.io/resources/backend-architecture/3-ci-cd/). The general overview is:
 
 1. Setup Continuous Integration with a GitHub Action
 2. Setup a Cloud Deployment on OKD
@@ -536,14 +536,14 @@ To work with UNC's OKD/Kubernetes cluster, you need to be on Eduroam or [VPN'ed 
 
 Login to OKD here: <https://console.apps.unc.edu>
 
-Get your `oc` login command by clicking your name in the top right and navigating to copy login command. Click display token and then copy the `oc login --token=...` line and paste it into your dev container's Terminal. Try running the `oc project` command to see your OKD/Kubernetes project selected (`comp590-140-25sp-<your-onyen>`).
+Get your `oc` login command by clicking your name in the top right and navigating to copy login command. Click display token and then copy the `oc login --token=...` line and paste it into your dev container's Terminal. Try running the `oc project` command to see your OKD/Kubernetes project selected (`comp590-140-26sp-<your-onyen>`).
 
 ##### Setup a Fine-grained Personal Access Token
 
 In the CI/CD Tutorial we used a classic personal access token with wide ranging access to read your repositories on GitHub. For this project, let's use the newer style Fine-grained token that gives the token holder permission to read only your EX01 repository. The production setup will be given this token so it can access your code to build your project. To create a new one, on GitHub click your Profile > Settings > Developer settings > Personal access tokens > Fine-grained tokens > Generate new token.
 
 * Token Name: EX01 - OKD Access - <Your Onyen>
-* Resource owner: comp423-25s
+* Resource owner: comp423-26s
 * Expiration: 30 Days is Fine
 * Description: Giving access to OKD to clone/access the EX01 repo.
 * Repository Access:
@@ -621,7 +621,7 @@ First, find the secret URL:
 oc describe bc/ex01 | grep -C 1 generic
 ~~~
 
-You should see a URL that looks something like: `https://api.apps.unc.edu:6443/apis/build.openshift.io/v1/namespaces/comp590-140-25sp-ONYEN/buildconfigs/ex01/webhooks/<secret>/generic`
+You should see a URL that looks something like: `https://api.apps.unc.edu:6443/apis/build.openshift.io/v1/namespaces/comp590-140-26sp-ONYEN/buildconfigs/ex01/webhooks/<secret>/generic`
 
 Next, we need to find the secret to plug into the `<secret>` part of the path. This is found in the YAML configuration for the BuildConfig (`bc`). We can filter down to it using `grep` to search for `generic` with one line of context around the matching line:
 
@@ -668,6 +668,7 @@ Since both you and your team mate will both kick-off the CD step from the same G
 
 **If you are the first to establish continuous deployment for your production environment**, add the following to the end of your YAML file. If you are the second of your pair, just read this step to understand it, pull from `main` to get this going, and then continue to your instructions following.
 
+{% raw %}
 ~~~yaml
   cd:
     name: "Continuous Deployment"
@@ -680,13 +681,14 @@ Since both you and your team mate will both kick-off the CD step from the same G
         run: |
           curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_<ONYEN> }}
 ~~~
+{% endraw %}
 
 Be sure to substitute the `<ONYEN>` with yours so that it matches the name of the secret you established above.
 
 The `cd` line should be at the same level of indentation as the `ci` entry which came in the section above. Both `ci` and `cd` are direct descendents of `jobs` based on indentation. Notice a few features of this `cd` definition:
 
 * `needs: ci` Indicates that this job is taking a dependency on the `ci` job being successful above.
-* `if: ${{ github.event_name == 'push' }}` this conditional differentiates a push (which a merge is treated as) from a pull request build. Thus, continuous deployment is _skipped_ on Pull Requests _until_ a PR is merged to `main` (and "pushed" to `main`). This makes sense because you **do not** want to deploy to production until you merge to `main`!
+* {% raw %}`if: ${{ github.event_name == 'push' }}`{% endraw %} this conditional differentiates a push (which a merge is treated as) from a pull request build. Thus, continuous deployment is _skipped_ on Pull Requests _until_ a PR is merged to `main` (and "pushed" to `main`). This makes sense because you **do not** want to deploy to production until you merge to `main`!
 * Notice in the `steps` that the command `run` is the same one you ran from the terminal with `curl`. This will trigger the WebHook.
 
 Switch to a new branch, perhaps `cd-setup`, add these changes, make a commit, and push. Following the push, go create a Pull Request into your repository's `main` branch from the `cd-setup` branch you just pushed.
@@ -707,6 +709,7 @@ Back in your dev container, switch back to `main` and pull to incorporate your s
 
 Switch to `main` in your dev container and pull your partner's merged work. Open your `.github/workflows/cicd.yaml` file and you should see their `cd` step added above. Go ahead and create a new branch, perhaps named `cd-extension`. For your part, you're just going to add one more line to the "Notify OKD to build and deploy" step:
 
+{% raw %}
 ~~~yaml hl_lines="5"
     steps:
       - name: Notify OKD to Build and Deploy
@@ -714,6 +717,7 @@ Switch to `main` in your dev container and pull your partner's merged work. Open
           curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_<FIRST_ONYEN> }}
           curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_<SECOND_ONYEN> }}
 ~~~
+{% endraw %}
 
 You will add the second `curl` command with your ONYEN replacing the `<SECOND_ONYEN>` placeholder. This will cause `curl` to first trigger your partner's build and then yours immediately after.
 
@@ -756,7 +760,7 @@ For Cai's stories, you should be able to access the shortened URL directly in th
 
 #### How should you handle hostname differences between development and production?
 
-In development your host name is likely your localhost IP address followed by a port: `localhost:8000`. In production, your hostname will be something like `ex01-comp590-140-25sp-ONYEN.apps.unc.edu`. If your Sue routes need to produce URLs for Cai to click on, you _should not_ hard code `localhost`. Instead, you can use a dependency injection for FastAPI's `Request` object and inspect its host. Or, you can add the following helpful service to a new `url_service.py` file and inject it into a route instead. Here's the implementation:
+In development your host name is likely your localhost IP address followed by a port: `localhost:8000`. In production, your hostname will be something like `ex01-comp590-140-26sp-ONYEN.apps.unc.edu`. If your Sue routes need to produce URLs for Cai to click on, you _should not_ hard code `localhost`. Instead, you can use a dependency injection for FastAPI's `Request` object and inspect its host. Or, you can add the following helpful service to a new `url_service.py` file and inject it into a route instead. Here's the implementation:
 
 ~~~python title="url_service.py"
 """Service for creating URLs based on the current request's hostname."""
@@ -802,4 +806,4 @@ def demo(url_svc: Annotated[URLService, Depends()]) -> str:
     return url_svc.url_to_path("abc123")
 ~~~
 
-The result of using this service's `url_to_path` as shown above is it would return `"http://127.0.0.1:8000/abc123"` if you are running in development. In production, it will return `"https://ex01-comp590-140-25sp-ONYEN.apps.unc.edu/abc123"`, instead. If you hardcoded a hostname anywhere, you will want to either come up with your own solution or use the service above.
+The result of using this service's `url_to_path` as shown above is it would return `"http://127.0.0.1:8000/abc123"` if you are running in development. In production, it will return `"https://ex01-comp590-140-26sp-ONYEN.apps.unc.edu/abc123"`, instead. If you hardcoded a hostname anywhere, you will want to either come up with your own solution or use the service above.

@@ -101,7 +101,7 @@ Now that you are logged in, go to the upper-right corner and click your ONYEN an
 
 Before proceeding, switch to your personal OKD project using your ONYEN. For example, if your ONYEN is "jdoe", run:
 ```bash
-oc project comp590-140-25sp-jdoe
+oc project comp590-140-26sp-jdoe
 ```
 
 If the above command fails, restart the steps above! The following will not work until you are able to access your project via `oc`.
@@ -213,12 +213,14 @@ To configure this:
    - Go to **Settings > Security > Secrets and Variables > Actions > Repository Secrets > New Repository Secret**.
    - Set the name to `WEBHOOK_URL` and paste in the full URL. The full URL is comprised of the URL template found in the command above and substituting the secret into the path. This secret in your repository is what will be referenced in the next GitHub Action variable. Note: **you will ==NOT== put the URL directly into the action definition!**
 4. In your GitHub Actions workflow, uncomment the following step to use `curl` to send a POST request to trigger a new build:
+    {% raw %}
    ```yaml
    - name: Trigger OKD Build via Webhook
      if: success()
      run: |
        curl -X POST "${{ secrets.WEBHOOK_URL }}"
    ```
+    {% endraw %}
    This step uses the webhook URL to trigger a build only when prior steps succeed, thanks to the `if` condition where `success()` is established by the workflow steps prior.
 
 You can try testing this by modifying something simple in your application that will not break the tests. For example, perhaps just switch the ordering in `main.py` of the two timezones in the `TIMEZONES` constant. Make a commit with the changes to your app and `test.yml`. Push the commit to `main` (we can circumvent best practices about branching for educational purposes here!) When you open your GitHub repository, you can see the action flow through the steps. In one of the final steps you will see "Deploy to production". If you then go look at OKD, you will see a new build is kicked off and working to build a new production image. Once it completes, the image is deployed to your app and it is live on the web! This is continuous integration (via testing) and continuous deployment (contingent on tests passing)! These flows are common in industrial software engineering settings.

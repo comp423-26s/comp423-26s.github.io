@@ -4,7 +4,7 @@
 
 Your team will collaborate to create an initial design document outlining the _epic_ of your feature. This task will guide your team through the planning of first Agile sprint and help you clearly define your project's scope, purpose, and value. Begin by creating a shared Google Doc for initial brainstorming and drafting. Ultimately, this document will be converted into a markdown file (`feature-design.md`) in your team's repository under the `docs` directory.
 
-For features, please see our [Call for Projects](./sp00-cfp.md) this Spring 2025. We are integrating AI functionality into the CSXL web application! All features must utilize the OpenAI LLM API in some way that adds intelligence to <csxl.unc.edu>.
+For features, please see our [Call for Projects](./sp00-cfp.md) this Spring 2026. We are integrating AI functionality into the CSXL web application! All features must utilize the OpenAI LLM API in some way that adds intelligence to <csxl.unc.edu>.
 
 **Important Note on AI:**  
 Generative AI tools (e.g., ChatGPT, Bard) are strictly prohibited in crafting your design document. This exercise focuses on teamwork, critical thinking, communication, and a thorough understanding of the problem you aim to solve. Detection of generative AI writing in submissions risks a team score of 0% for this sprint.
