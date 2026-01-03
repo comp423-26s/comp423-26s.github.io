@@ -1,2 +1,7 @@
-mkdocs-material
-mkdocs-awesome-pages-plugin
+mkdocs==1.6.1
+mkdocs-material==9.7.1
+mkdocs-awesome-pages-plugin==2.10.1
+
+# Explicit pins for extensions referenced in mkdocs.yml
+pymdown-extensions==10.20
+Markdown==3.10

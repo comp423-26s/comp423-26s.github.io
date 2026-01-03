@@ -12,3 +12,22 @@ solutions/
 node_modules
 **/.env
 **/.ipynb_checkpoints
+
+# Virtual environment
+/.venv
+
+# MkDocs build output
+/site
+
+# Local Python artifacts
+*.egg-info/
+dist/
+build/
+
+# Cache and coverage
+.coverage
+.pytest_cache/
+
+# Editor/temp
+.idea/
+*.swp
