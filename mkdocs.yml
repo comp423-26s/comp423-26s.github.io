@@ -62,7 +62,7 @@ markdown_extensions:
   - pymdownx.blocks.caption
   - pymdownx.details
   - pymdownx.highlight:
-      anchor_linenums: true
+      anchor_linenums: false
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite

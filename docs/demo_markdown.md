@@ -66,8 +66,8 @@ sequenceDiagram
 
 | Date   | Topic              |                                    Links                                    |
 | :----- | :----------------- | :-------------------------------------------------------------------------: |
-| W 1/9  | Welcome to COMP423 | [:material-youtube:](https://youtube.com) [:material-file-powerpoint:](#) |
-| F 1/11 | git Repositories   |                      [:material-youtube:](https://foo)                      |
+| W 1/9  | Welcome to COMP423 | [:material-youtube:](https://youtube.com){: aria-label="YouTube Video" } [:material-file-powerpoint:](#){: aria-label="PowerPoint Slides" } |
+| F 1/11 | git Repositories   |                      [:material-youtube:](https://foo){: aria-label="YouTube Video" }                      |
 
 
 === "C"
