@@ -21,3 +21,11 @@
   /* Darken primary color (header/tabs background) for better contrast with white text */
   --md-primary-fg-color: #004d80;
 }
+
+[data-md-color-scheme="slate"] {
+  /* Lighten link color for better contrast against dark background */
+  --md-typeset-a-color: #66b0ff;
+  
+  /* Keep primary color dark for contrast with white text in header */
+  --md-primary-fg-color: #004d80;
+}
