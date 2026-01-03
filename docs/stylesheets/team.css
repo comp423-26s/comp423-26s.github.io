@@ -9,6 +9,15 @@
 
 .link-card {
   width: 100px;
-  border: 1px white;
+  border: 1px solid var(--md-default-fg-color--lightest);
   height: auto;
+}
+
+:root,
+[data-md-color-scheme="default"] {
+  /* Darken link color for better contrast against white background */
+  --md-typeset-a-color: #005fa0;
+  
+  /* Darken primary color (header/tabs background) for better contrast with white text */
+  --md-primary-fg-color: #004d80;
 }
