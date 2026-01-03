@@ -83,7 +83,7 @@
    Timeline table styling
    ------------------------------------------------------------------------- */
 
-.md-typeset table[data-timeline="course"] tr.timeline-date-row th {
+.md-typeset table[data-timeline="course"] tr.timeline-date-row td {
   background-color: color-mix(
     in srgb,
     var(--md-primary-fg-color) 14%,

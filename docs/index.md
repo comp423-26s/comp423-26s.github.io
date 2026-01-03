@@ -13,10 +13,10 @@ Welcome to the course home. Below is a live view of recent and upcoming modules.
 <table data-timeline="course">
   <thead>
     <tr>
-      <th>Threads</th>
-      <th>Code</th>
-      <th>Module</th>
-      <th>Due</th>
+      <th scope="col">Threads</th>
+      <th scope="col">Code</th>
+      <th scope="col">Module</th>
+      <th scope="col">Due</th>
     </tr>
   </thead>
   <tbody>
@@ -24,7 +24,7 @@ Welcome to the course home. Below is a live view of recent and upcoming modules.
   {% for item in get_recent_and_upcoming() %}
     {% if ns.prev_date != item.date %}
     <tr class="timeline-date-row">
-      <th colspan="4">{{ item.date | format_timeline_date }}</th>
+      <td colspan="4" class="timeline-date-cell">{{ item.date | format_timeline_date }}</td>
     </tr>
     {% set ns.prev_date = item.date %}
     {% endif %}

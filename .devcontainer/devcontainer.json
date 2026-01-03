@@ -1,6 +1,11 @@
 {
   "name": "Python Project",
   "image": "mcr.microsoft.com/devcontainers/python:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -11,5 +16,11 @@
       ]
     }
   },
-  "postCreateCommand": "pip install -r requirements.txt"
+  "remoteEnv": {
+    "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
+    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
+    "CHROME_PATH": "/usr/bin/chromium"
+  },
+  "postCreateCommand": "bash .devcontainer/postCreate.sh",
+  "postStartCommand": "bash .devcontainer/postStart.sh"
 }
