@@ -29,3 +29,77 @@
   /* Keep primary color dark for contrast with white text in header */
   --md-primary-fg-color: #004d80;
 }
+
+/* -------------------------------------------------------------------------
+   Thread pills (timeline "Threads" column)
+   ------------------------------------------------------------------------- */
+
+.md-typeset .thread-pill {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  margin: 0.05em 0.25em 0.05em 0;
+  border-radius: 999px;
+  font-size: 0.75em;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  background-color: var(
+    --thread-pill-bg,
+    color-mix(in srgb, var(--md-default-fg-color) 10%, transparent)
+  );
+  color: var(--thread-pill-fg, var(--md-default-fg-color));
+  border: 1px solid
+    color-mix(in srgb, var(--md-default-fg-color) 18%, transparent);
+}
+
+/* Per-thread background colors (derived from theme tokens; no new palette) */
+.md-typeset .thread-pill--meetings {
+  --thread-pill-bg: color-mix(in srgb, var(--md-primary-fg-color) 18%, transparent);
+}
+
+.md-typeset .thread-pill--exercise,
+.md-typeset .thread-pill--exercises {
+  --thread-pill-bg: color-mix(in srgb, var(--md-typeset-a-color) 18%, transparent);
+}
+
+.md-typeset .thread-pill--syllabus {
+  --thread-pill-bg: color-mix(in srgb, var(--md-primary-fg-color) 12%, transparent);
+}
+
+.md-typeset .thread-pill--apis,
+.md-typeset .thread-pill--api {
+  --thread-pill-bg: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
+}
+
+.md-typeset .thread-pill--frontend {
+  --thread-pill-bg: color-mix(in srgb, var(--md-typeset-a-color) 14%, transparent);
+}
+
+.md-typeset .thread-pill--backend {
+  --thread-pill-bg: color-mix(in srgb, var(--md-primary-fg-color) 14%, transparent);
+}
+
+/* -------------------------------------------------------------------------
+   Timeline table styling
+   ------------------------------------------------------------------------- */
+
+.md-typeset table[data-timeline="course"] tr.timeline-date-row th {
+  background-color: color-mix(
+    in srgb,
+    var(--md-primary-fg-color) 14%,
+    transparent
+  );
+  font-weight: 700;
+}
+
+.md-typeset table[data-timeline="course"] tr.timeline-item-row--due-upcoming td {
+  background-color: color-mix(
+    in srgb,
+    var(--md-typeset-a-color) 10%,
+    transparent
+  );
+}
+
+.md-typeset table[data-timeline="course"] tr.timeline-item-row--due-upcoming td.timeline-due {
+  font-weight: 700;
+}

@@ -14,7 +14,12 @@ Primary features:
 from __future__ import annotations
 
 import datetime
+import os
+import re
+from pathlib import Path
 from typing import Any, Iterable, TypedDict, cast
+
+from markupsafe import Markup, escape
 
 try:
     import yaml  # type: ignore
@@ -29,7 +34,9 @@ class RecentItem(TypedDict):
     url: str
     date: datetime.date
     type: str
+    code: str
     threads: list[str]
+    due: datetime.date | None
     delta: int
 
 
@@ -61,18 +68,29 @@ def define_env(env: Any) -> None:
             and `delta` (days relative to today).
         """
 
-        # We prefer iterating over MkDocs' navigation structure because it
-        # reflects exactly what will be rendered.
+        # Prefer scanning all MkDocs pages, not just navigation.
+        #
+        # Some setups (e.g., auto-generated nav via plugins) can omit pages from
+        # navigation while MkDocs still renders them. Timeline should reflect
+        # rendered pages with metadata, regardless of nav inclusion.
+        doc_pages: list[Any] = []
+
+        pages_var = env.variables.get("pages")
+        if pages_var is not None:
+            try:
+                doc_pages.extend(list(pages_var))
+            except TypeError:
+                pass
+
+        site = env.variables.get("site")
+        if site is not None and hasattr(site, "pages"):
+            doc_pages.extend(list(site.pages))
+
         nav = env.variables.get("navigation") or env.variables.get("nav")
-
-        # Best case: Navigation exposes a flat list of pages.
-        doc_pages: list[Any]
         if nav is not None and hasattr(nav, "pages"):
-            doc_pages = list(nav.pages)
-        else:
+            doc_pages.extend(list(nav.pages))
+        elif nav is not None:
             # Fallback: Walk the nav tree and collect page nodes.
-            doc_pages = []
-
             def walk_nav(items: Iterable[Any]) -> None:
                 for item in items:
                     if getattr(item, "is_page", False):
@@ -80,8 +98,21 @@ def define_env(env: Any) -> None:
                     elif getattr(item, "is_section", False):
                         walk_nav(getattr(item, "children", []))
 
-            if nav is not None:
-                walk_nav(nav)
+            root_items = getattr(nav, "items", None)
+            if root_items is None:
+                root_items = nav
+            walk_nav(root_items)
+
+        # De-duplicate (site.pages and nav.pages can overlap).
+        unique_pages: dict[str, Any] = {}
+        for p in doc_pages:
+            abs_path = getattr(getattr(p, "file", None), "abs_src_path", None)
+            url = getattr(p, "url", None)
+            key = str(abs_path or url or id(p))
+            if key not in unique_pages:
+                unique_pages[key] = p
+
+        doc_pages = list(unique_pages.values())
 
         current_date = datetime.date.today()
         relevant_items: list[RecentItem] = []
@@ -114,13 +145,57 @@ def define_env(env: Any) -> None:
                         "url": getattr(p, "url", ""),
                         "date": item_date,
                         "type": meta.get("type", "General"),
+                        "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
                         "threads": threads,
+                        "due": _coerce_date(meta.get("due")),
                         "delta": delta,
                     }
                 )
 
-        # Sort chronologically.
-        relevant_items.sort(key=lambda x: x["date"])
+        # Fallback: scan the docs directory directly.
+        #
+        # Some navigation configurations omit pages from nav (while MkDocs still
+        # renders them). Scanning docs/ ensures we also include those pages.
+        existing_urls = {item["url"] for item in relevant_items if item.get("url")}
+
+        docs_dir = _get_docs_dir(env)
+        if docs_dir:
+            for abs_path in _iter_markdown_files(docs_dir):
+                meta = _extract_file_meta(abs_path)
+                item_date = _coerce_date(meta.get("date"))
+                if item_date is None:
+                    continue
+
+                url = _docs_path_to_url(docs_dir, abs_path)
+                if url in existing_urls:
+                    continue
+
+                threads_raw = meta.get("threads", [])
+                if threads_raw is None:
+                    threads = []
+                elif isinstance(threads_raw, str):
+                    threads = [t.strip() for t in threads_raw.split(",") if t.strip()]
+                else:
+                    threads = [str(t).strip() for t in threads_raw if str(t).strip()]
+
+                delta = (item_date - current_date).days
+                if -_RECENT_DAYS <= delta:
+                    relevant_items.append(
+                        {
+                            "title": str(meta.get("title", "Untitled")),
+                            "url": url,
+                            "date": item_date,
+                            "type": str(meta.get("type", "General")),
+                            "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
+                            "threads": threads,
+                            "due": _coerce_date(meta.get("due")),
+                            "delta": delta,
+                        }
+                    )
+                    existing_urls.add(url)
+
+        # Sort reverse-chronologically (newest first).
+        relevant_items.sort(key=lambda x: x["date"], reverse=True)
 
         try:
             limit_int = int(limit)
@@ -140,12 +215,39 @@ def define_env(env: Any) -> None:
             threads: An iterable of thread/tag strings.
 
         Returns:
-            A comma-separated string with each tag wrapped in backticks.
+            An HTML string of pill-styled labels.
         """
 
         if not threads:
             return ""
-        return ", ".join(f"`{t}`" for t in threads)
+
+        pills: list[Markup] = []
+        for raw in threads:
+            label = str(raw).strip()
+            if not label:
+                continue
+            slug = _slugify_thread(label)
+            pills.append(
+                Markup('<span class="thread-pill thread-pill--')
+                + escape(slug)
+                + Markup('">')
+                + escape(label)
+                + Markup("</span>")
+            )
+
+        return str(Markup(" ").join(pills))
+
+    @env.filter
+    def format_timeline_date(value: Any) -> str:
+        """Format a date for the Timeline subheading.
+
+        Example: 2026-01-09 -> "Friday, January 9th"
+        """
+
+        d = _coerce_date(value)
+        if d is None:
+            return ""
+        return _format_long_date_with_ordinal(d)
 
 
 # ---------------------------------------------------------------------------
@@ -157,6 +259,40 @@ _DATE_FORMATS = ("%Y-%m-%d", "%Y/%m/%d")
 
 # How far back (in days) we consider content "recent".
 _RECENT_DAYS = 14
+
+
+_THREAD_SLUG_RE = re.compile(r"[^a-z0-9-]+")
+
+
+def _ordinal_suffix(day: int) -> str:
+    if 11 <= (day % 100) <= 13:
+        return "th"
+    match day % 10:
+        case 1:
+            return "st"
+        case 2:
+            return "nd"
+        case 3:
+            return "rd"
+        case _:
+            return "th"
+
+
+def _format_long_date_with_ordinal(d: datetime.date) -> str:
+    return f"{d.strftime('%A, %B')} {d.day}{_ordinal_suffix(d.day)}"
+
+
+def _slugify_thread(label: str) -> str:
+    """Convert a thread label into a CSS-safe slug.
+
+    Example: "API Design" -> "api-design"
+    """
+
+    slug = label.strip().lower()
+    slug = slug.replace("_", " ")
+    slug = re.sub(r"\s+", "-", slug)
+    slug = _THREAD_SLUG_RE.sub("", slug)
+    return slug.strip("-") or "thread"
 
 
 def _coerce_date(value: Any) -> datetime.date | None:
@@ -220,9 +356,19 @@ def _extract_page_meta(page: Any) -> dict[str, Any]:
         source path is missing or metadata cannot be parsed.
     """
 
+    page_meta = getattr(page, "meta", None)
+    if isinstance(page_meta, dict) and page_meta:
+        return cast(dict[str, Any], page_meta)
+
     abs_path = getattr(getattr(page, "file", None), "abs_src_path", None)
     if not abs_path:
         return {}
+
+    return _extract_file_meta(abs_path)
+
+
+def _extract_file_meta(abs_path: str) -> dict[str, Any]:
+    """Extract metadata directly from a Markdown file path (best effort)."""
 
     try:
         with open(abs_path, "r", encoding="utf-8") as f:
@@ -246,7 +392,6 @@ def _extract_page_meta(page: Any) -> dict[str, Any]:
             return {}
 
         if isinstance(loaded, dict):
-            # Best effort typing: YAML keys/values may not be strings.
             return cast(dict[str, Any], loaded)
         return {}
 
@@ -260,3 +405,50 @@ def _extract_page_meta(page: Any) -> dict[str, Any]:
         key, value = line.split(":", 1)
         meta[key.strip()] = value.strip()
     return meta
+
+
+def _get_docs_dir(env: Any) -> str | None:
+    config = env.variables.get("config")
+    docs_dir = getattr(config, "docs_dir", None)
+    if isinstance(docs_dir, str) and docs_dir:
+        return docs_dir
+    if isinstance(config, dict):
+        val = config.get("docs_dir")
+        if isinstance(val, str) and val:
+            return val
+    return None
+
+
+def _iter_markdown_files(docs_dir: str) -> list[str]:
+    root = Path(docs_dir)
+    if not root.exists():
+        return []
+
+    paths: list[str] = []
+    for dirpath, _dirnames, filenames in os.walk(root):
+        for filename in filenames:
+            if filename.lower().endswith(".md"):
+                paths.append(str(Path(dirpath) / filename))
+    return paths
+
+
+def _docs_path_to_url(docs_dir: str, abs_path: str) -> str:
+    """Convert a docs-relative Markdown path to a MkDocs-like URL."""
+
+    root = Path(docs_dir).resolve()
+    p = Path(abs_path).resolve()
+    try:
+        rel = p.relative_to(root).as_posix()
+    except ValueError:
+        rel = p.name
+
+    if rel.endswith(".md"):
+        rel = rel[: -len(".md")]
+
+    # MkDocs maps `index.md` to its containing directory URL.
+    if rel == "index":
+        return ""
+    if rel.endswith("/index"):
+        rel = rel[: -len("/index")]
+
+    return f"{rel}/"

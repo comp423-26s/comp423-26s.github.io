@@ -1,3 +1,13 @@
+---
+code: RD00
+title: Course Syllabus
+date: 2026-01-07
+due: 2026-01-08
+type: reading
+threads: course
+authors: Kris Jordan
+---
+
 # Course Syllabus
 
 ## General Course Info
