@@ -1,0 +1,12 @@
+{
+    "chromeLaunchConfig": {
+        "args": ["--no-sandbox", "--disable-setuid-sandbox"],
+        "executablePath": "/usr/bin/chromium"
+    },
+    "actions": [
+        "click element label[for='__palette_1']",
+        "wait for element label[for='__palette_2'] to be visible",
+        "click element label[for='__palette_2']",
+        "wait for element label[for='__palette_0'] to be visible"
+    ]
+}

@@ -1,7 +1,11 @@
 site_name: COMP423 - Spring 2025
+site_url: https://comp423-25s.github.io/
+repo_url: https://github.com/comp423-25s/comp423-25s.github.io
+repo_name: comp423-25s/comp423-25s.github.io
 
 theme:
   name: material
+  language: en
   palette:
     - media: "(prefers-color-scheme)"
       primary: blue
@@ -34,8 +38,19 @@ theme:
     - content.code.select
     - content.code.annotate
     - content.code.copy
+    - navigation.top
+    - toc.follow
   icon:
     logo: fontawesome/solid/users-gear
+validation:
+  nav:
+    omitted_files: info
+    not_found: warn
+    absolute_links: info
+  links:
+    not_found: warn
+    absolute_links: info
+    unrecognized_links: info
 plugins:
   - search
   - awesome-pages
@@ -47,7 +62,7 @@ markdown_extensions:
   - pymdownx.blocks.caption
   - pymdownx.details
   - pymdownx.highlight:
-      anchor_linenums: true
+      anchor_linenums: false
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
@@ -66,8 +81,9 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
 extra_css:
-  - stylesheets/team.css
+  - stylesheets/extra.css
 extra_javascript:
   - javascripts/mathjax.js
+  - javascripts/accessibility-fixes.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 copyright: Copyright &copy; 2025 Kris Jordan
