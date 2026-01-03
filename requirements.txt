@@ -5,3 +5,4 @@ mkdocs-awesome-pages-plugin==2.10.1
 # Explicit pins for extensions referenced in mkdocs.yml
 pymdown-extensions==10.20
 Markdown==3.10
+mkdocs-macros-plugin

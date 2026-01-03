@@ -21,7 +21,7 @@ Under the **okd** logo, you should see "Developer" in a drop down and to the rig
 
 ## Using the `oc` Command-line Tool to Administer OKD
 
-The `oc` tool is included in the `csxl` developer container. As long as you are successfully running Docker locally and connected to a campus network or VPN, you will be able to use `oc` from your container. However, if you are making use of CodeSpaces, you will need to follow [these instructions](/exercises/oc-host-install.html) for installing `oc` onto your host machine so that you can access the OKD cluster from VPN/campus rather than the cloud container.
+The `oc` tool is included in the `csxl` developer container. As long as you are successfully running Docker locally and connected to a campus network or VPN, you will be able to use `oc` from your container. However, if you are making use of CodeSpaces, you will need to install `oc` onto your host machine so that you can access the OKD cluster from VPN/campus rather than the cloud container.
 
 ## Logging into the OKD Container
 

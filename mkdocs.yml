@@ -54,7 +54,10 @@ validation:
 plugins:
   - search
   - awesome-pages
+  - macros:
+      module_name: main
 markdown_extensions:
+  - meta
   - attr_list
   - admonition
   - md_in_html

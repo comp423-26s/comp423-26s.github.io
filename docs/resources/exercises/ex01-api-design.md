@@ -668,6 +668,7 @@ Since both you and your team mate will both kick-off the CD step from the same G
 
 **If you are the first to establish continuous deployment for your production environment**, add the following to the end of your YAML file. If you are the second of your pair, just read this step to understand it, pull from `main` to get this going, and then continue to your instructions following.
 
+{% raw %}
 ~~~yaml
   cd:
     name: "Continuous Deployment"
@@ -680,13 +681,14 @@ Since both you and your team mate will both kick-off the CD step from the same G
         run: |
           curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_<ONYEN> }}
 ~~~
+{% endraw %}
 
 Be sure to substitute the `<ONYEN>` with yours so that it matches the name of the secret you established above.
 
 The `cd` line should be at the same level of indentation as the `ci` entry which came in the section above. Both `ci` and `cd` are direct descendents of `jobs` based on indentation. Notice a few features of this `cd` definition:
 
 * `needs: ci` Indicates that this job is taking a dependency on the `ci` job being successful above.
-* `if: ${{ github.event_name == 'push' }}` this conditional differentiates a push (which a merge is treated as) from a pull request build. Thus, continuous deployment is _skipped_ on Pull Requests _until_ a PR is merged to `main` (and "pushed" to `main`). This makes sense because you **do not** want to deploy to production until you merge to `main`!
+* {% raw %}`if: ${{ github.event_name == 'push' }}`{% endraw %} this conditional differentiates a push (which a merge is treated as) from a pull request build. Thus, continuous deployment is _skipped_ on Pull Requests _until_ a PR is merged to `main` (and "pushed" to `main`). This makes sense because you **do not** want to deploy to production until you merge to `main`!
 * Notice in the `steps` that the command `run` is the same one you ran from the terminal with `curl`. This will trigger the WebHook.
 
 Switch to a new branch, perhaps `cd-setup`, add these changes, make a commit, and push. Following the push, go create a Pull Request into your repository's `main` branch from the `cd-setup` branch you just pushed.
@@ -707,6 +709,7 @@ Back in your dev container, switch back to `main` and pull to incorporate your s
 
 Switch to `main` in your dev container and pull your partner's merged work. Open your `.github/workflows/cicd.yaml` file and you should see their `cd` step added above. Go ahead and create a new branch, perhaps named `cd-extension`. For your part, you're just going to add one more line to the "Notify OKD to build and deploy" step:
 
+{% raw %}
 ~~~yaml hl_lines="5"
     steps:
       - name: Notify OKD to Build and Deploy
@@ -714,6 +717,7 @@ Switch to `main` in your dev container and pull your partner's merged work. Open
           curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_<FIRST_ONYEN> }}
           curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_<SECOND_ONYEN> }}
 ~~~
+{% endraw %}
 
 You will add the second `curl` command with your ONYEN replacing the `<SECOND_ONYEN>` placeholder. This will cause `curl` to first trigger your partner's build and then yours immediately after.
 
