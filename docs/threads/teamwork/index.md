@@ -1,4 +1,4 @@
-# Tools and Processes for Teams
+# Tools and Processes for Teamwork
 
 This thread focuses on successful collaboration in software contexts. It covers project management software, source code pull request (PR) workflows, and code review (CR) practices.
 

@@ -1,14 +1,22 @@
-# TA Team
+---
+code: LS00
+title: Team 423 - Spring 2026
+date: 2026-01-07
+type: lesson
+threads: Course
+authors: [Kris Jordan]
+---
 
-COMP423 would not be possible without the substantial contributions of these Undergraduate Teaching Assistants (UTAs):
+# COMP423 Spring 2026 Teaching Team
 
 <div id="TA-team" class="grid cards" markdown>
 
--   ![Alanna Zhang photo](../people/profile_photos/alanna26.JPEG)  
+<!-- TODO: Add your photo and profile markdown page. Be sure to resize your photo to 512px by 512px and keep it square. -->
 
-    ---  
+-   ![Kris Jordan Photo](../people/profile_photos/krisj.png)  
+
+    ---
     
-    [__Alanna Zhang__](../people/bios/alanna26_about.md)
-   
+    [__Kris Jordan__](../people/bios/krisj_about.md)
 
 </div>

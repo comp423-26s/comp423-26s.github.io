@@ -2,7 +2,8 @@ nav:
     - Course: threads/course
     - Career: threads/career
     - Tools: threads/tools
-    - Team: threads/team
+    - Teamwork: threads/teamwork
     - SDE: threads/sde
     - Design: threads/design
     - System: threads/system
+    - Team: people
