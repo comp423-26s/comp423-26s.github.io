@@ -178,7 +178,7 @@ Software engineers shall advance the integrity and reputation of the profession 
 
 6.02. Promote public knowledge of software engineering.
 
-6.03. Extend software engineering knowledge by appropriate participation in professional organizations, lessons and publications.
+6.03. Extend software engineering knowledge by appropriate participation in professional organizations, meetings and publications.
 
 6.04. Support, as members of a profession, other software engineers striving to follow this Code.
 
