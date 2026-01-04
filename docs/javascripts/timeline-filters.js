@@ -158,7 +158,7 @@
       td.colSpan = 3;
       td.className = 'timeline-date-cell';
       
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const dayName = days[date.getDay()];
       const month = date.getMonth() + 1;
       const dayOfMonth = date.getDate();

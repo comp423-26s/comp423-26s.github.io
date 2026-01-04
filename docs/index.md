@@ -9,7 +9,7 @@ hide:
 <table data-timeline="course">
   <thead>
     <tr>
-      <th scope="col">Item</th>
+      <th scope="col">Topic</th>
       <th scope="col">Due</th>
       <th scope="col">Threads</th>
     </tr>

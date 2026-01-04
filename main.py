@@ -233,13 +233,13 @@ def define_env(env: Any) -> None:
     def format_timeline_date(value: Any) -> str:
         """Format a date for the Timeline subheading.
 
-        Example: 2026-01-09 -> "Fri 1/9"
+        Example: 2026-01-09 -> "Friday 1/9"
         """
 
         d = _coerce_date(value)
         if d is None:
             return ""
-        return d.strftime("%a %-m/%-d")
+        return d.strftime("%A %-m/%-d")
 
     @env.filter
     def format_due_date(value: Any) -> str:
