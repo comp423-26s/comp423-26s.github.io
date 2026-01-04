@@ -10,6 +10,7 @@ hide:
   <thead>
     <tr>
       <th scope="col">Topic</th>
+      <th scope="col">Links</th>
       <th scope="col">Due</th>
       <th scope="col">Threads</th>
     </tr>
@@ -19,12 +20,20 @@ hide:
   {% for item in get_recent_and_upcoming() %}
     {% if ns.prev_date != item.date %}
     <tr class="timeline-date-row">
-      <td colspan="3" class="timeline-date-cell">{{ item.date | format_timeline_date }}</td>
+      <td colspan="4" class="timeline-date-cell">{{ item.date | format_timeline_date }}</td>
     </tr>
     {% set ns.prev_date = item.date %}
     {% endif %}
     <tr class="timeline-item-row" data-date="{{ item.date }}"{% if item.due %} data-due="{{ item.due }}"{% endif %}>
-      <td><strong>{{ item.code }}</strong><a href="{{ item.url | relative_url }}">{{ item.title }}</a></td>
+      <td>
+        <strong>{{ item.code }}</strong>
+        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      </td>
+      <td>
+        {% if item.slides %}
+        <a href="{{ item.slides }}" target="_blank" title="Slides" class="timeline-slides-link">Slides</a>
+        {% endif %}
+      </td>
       <td class="timeline-due">{% if item.due %}{{ item.due | format_due_date }}{% endif %}</td>
       <td>{{ item.threads | format_threads }}</td>
     </tr>

@@ -37,6 +37,7 @@ class RecentItem(TypedDict):
     code: str
     threads: list[str]
     due: datetime.date | None
+    slides: str | None
 
 
 def define_env(env: Any) -> None:
@@ -144,6 +145,7 @@ def define_env(env: Any) -> None:
                     "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
                     "threads": threads,
                     "due": _coerce_date(meta.get("due")),
+                    "slides": meta.get("slides"),
                 }
             )
 
@@ -182,6 +184,7 @@ def define_env(env: Any) -> None:
                         "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
                         "threads": threads,
                         "due": _coerce_date(meta.get("due")),
+                        "slides": meta.get("slides"),
                     }
                 )
                 existing_urls.add(url)
