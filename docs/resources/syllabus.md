@@ -90,13 +90,13 @@ Final grades are calculated with the following weights for each course component
     * 15% - (EX) Exercises
     * 15% - (RD) Readings & Professional Development
 * 30% - (QZ) Quizzes (Some Fridays, announced by Monday of same week)
-* 10% - (MT) Class Meeting Attendance and Participation
+* 10% - (MT) Class Lesson Attendance and Participation
 
-### Meeting (Class Attendance) Policy
+### Lesson (Class Attendance) Policy
 
 Our course adheres to UNC's official policies on [Attendance, Grading, and Examination](https://catalog.unc.edu/policies-procedures/attendance-grading-examination/).
 
-Each student is permitted to be absent for up to four (4) class meetings without any penalty, prior approval, or instructor notification, regardless of absence type (university approved or otherwise). After four missed lectures, absences will count against your in-class activities and participation grade unless they are university approved absences.
+Each student is permitted to be absent for up to four (4) class lessons without any penalty, prior approval, or instructor notification, regardless of absence type (university approved or otherwise). After four missed lectures, absences will count against your in-class activities and participation grade unless they are university approved absences.
 
 ### Regrade Requests
 
@@ -104,7 +104,7 @@ Regrade requests for quizzes and other manually graded assignments are open for 
 
 ### Late policies
 
-All class meeting assignments will be due by the end of the meeting and handed-in on Gradescope.
+All class lesson assignments will be due by the end of the lesson and handed-in on Gradescope.
 
 All assignments, outside of assessments such as quizzes and the final, will have a 10:00pm deadline on their due date.
 

@@ -54,7 +54,7 @@
 }
 
 /* Per-thread background colors (derived from theme tokens; no new palette) */
-.md-typeset .thread-pill--meetings {
+.md-typeset .thread-pill--lessons {
   --thread-pill-bg: color-mix(in srgb, var(--md-primary-fg-color) 18%, transparent);
 }
 

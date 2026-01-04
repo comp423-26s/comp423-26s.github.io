@@ -20,7 +20,7 @@ Some high-level strategies and concerns are pervasive in software development. W
     - These artifacts act as shared _resources_, ensuring all stakeholders are able to rally around the same ideas _before_ they are built. This idea is not new to software development, think of blue prints and artistic renderings of buildings and spaces in the construction industry as a predecessor.
 
 2. **Choosing the Right Medium for the Message**
-    - **Synchronous Communication**: Meetings, video calls, or real-time collaboration are great for brainstorming or addressing urgent issues.
+    - **Synchronous Communication**: Lessons, video calls, or real-time collaboration are great for brainstorming or addressing urgent issues.
     - **Asynchronous Communication**: Emails, project management tools, and documentation are better for detailed updates and tracking progress.
 
 3. **Adjusting Formality Based on Context**

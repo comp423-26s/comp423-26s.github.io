@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
     else if (mobileMql.addListener) mobileMql.addListener(syncMobileTitleLink);
 
     // MkDocs Material instant navigation swaps page content without a full reload.
-    // Re-apply the link after each page change so it works on pages like /meetings/2026_01_07/.
+    // Re-apply the link after each page change so it works on pages like /lessons/2026_01_07/.
     if (typeof document$ !== "undefined" && document$ && typeof document$.subscribe === "function") {
         document$.subscribe(function () {
             syncMobileTitleLink();
