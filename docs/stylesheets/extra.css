@@ -313,6 +313,45 @@ input:focus + .timeline-switch-slider {
   background-color: var(--md-typeset-a-color);
 }
 
+/* Mobile sidebar logo full width */
+.md-nav--primary .md-nav__title .md-logo,
+.md-nav--primary .md-nav__link--logo,
+.md-nav--primary [data-md-component="logo"] {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.md-nav--primary .md-nav__title .md-logo img,
+.md-nav--primary .md-nav__link--logo img,
+.md-nav--primary [data-md-component="logo"] img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  display: block !important;
+  margin: 0 !important;
+}
+
+.md-nav--primary .md-nav__title {
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  white-space: normal !important;
+  height: auto !important;
+  line-height: normal !important;
+  background-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+.md-nav--primary .md-nav__title {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  padding-bottom: 1rem !important;
+}
+
 /* Hide Threads column on mobile */
 @media screen and (max-width: 40em) {
   .md-typeset table[data-timeline="course"] th:nth-child(3),

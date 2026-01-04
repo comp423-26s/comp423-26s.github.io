@@ -202,10 +202,20 @@
       // Update Due Date Cell
       if (item.dueCell) {
           const relLabel = getRelativeDateLabel(item.due, today);
+          const isUpcoming = item.due && item.due >= today;
+
           if (relLabel) {
-              item.dueCell.innerHTML = `<a href="https://gradescope.com" target="_blank">${relLabel}</a>`;
+              if (isUpcoming) {
+                  item.dueCell.innerHTML = `<a href="https://www.gradescope.com/courses/1209203" target="_blank">${relLabel}</a>`;
+              } else {
+                  item.dueCell.textContent = relLabel;
+              }
           } else {
               item.dueCell.innerHTML = item.originalDueHtml;
+              // If it's past, ensure no link even if originalDueHtml had one
+              if (!isUpcoming && item.due) {
+                  item.dueCell.textContent = item.dueCell.textContent;
+              }
           }
       }
 

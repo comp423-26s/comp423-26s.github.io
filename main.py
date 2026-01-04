@@ -51,6 +51,8 @@ def define_env(env: Any) -> None:
         env: The macros plugin environment.
     """
 
+    env.variables["today"] = datetime.date.today()
+
     @env.macro
     def get_recent_and_upcoming(limit: int = 0) -> list[RecentItem]:
         """Get pages with dates that are recent or upcoming.

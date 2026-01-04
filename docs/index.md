@@ -31,7 +31,7 @@ hide:
         <span class="timeline-links-container">({% for link in item.links %}<a href="{{ link.url }}" target="_blank" title="{{ link.title }}" class="timeline-link">{{ link.title }}</a>{% if not loop.last %}, {% endif %}{% endfor %})</span>
         {% endif %}
       </td>
-      <td class="timeline-due">{% if item.due %}<a href="https://gradescope.com" target="_blank">{{ item.due | format_due_date }}</a>{% endif %}</td>
+      <td class="timeline-due">{% if item.due %}{% if item.due >= today %}<a href="https://www.gradescope.com/courses/1209203" target="_blank">{{ item.due | format_due_date }}</a>{% else %}{{ item.due | format_due_date }}{% endif %}{% endif %}</td>
       <td>{{ item.threads | format_threads }}</td>
     </tr>
   {% endfor %}
