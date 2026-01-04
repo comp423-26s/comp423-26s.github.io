@@ -52,7 +52,7 @@ def define_env(env: Any) -> None:
     """
 
     @env.macro
-    def get_recent_and_upcoming(limit: int | str = 5) -> list[RecentItem]:
+    def get_recent_and_upcoming(limit: int = 0) -> list[RecentItem]:
         """Get pages with dates that are recent or upcoming.
 
         We scan the site's pages for a `date` metadata field, keep pages whose

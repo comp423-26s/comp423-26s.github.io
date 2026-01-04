@@ -1,3 +1,13 @@
+---
+code: RD05
+title: Branching and Merging
+date: 2026-01-07
+due: 2026-01-13
+type:  reading
+threads: tool bench 
+authors: [Kris Jordan]
+---
+
 # Ch. 3 Branching and Merging
 
 Imagine this: you're working on a project like a collaborative web app, and you want to test out a bold new feature—maybe integrating a third-party login system—without disrupting the stable version already in use by other team members. In software teams, branching allows experimentation like this without risk. Or maybe you're part of a team, and multiple people are working on different features at the same time. How do you keep everything organized and avoid stepping on each other's toes? That’s where **branching** and **merging** come in—two of Git’s most powerful features.

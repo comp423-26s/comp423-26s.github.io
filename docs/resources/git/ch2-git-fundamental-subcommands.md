@@ -1,6 +1,11 @@
 ---
-authors:
-    - Kris Jordan
+code: RD04
+title: Fundamental `git` Subcommands
+date: 2026-01-07
+due: 2026-01-11
+type:  reading
+threads: tool bench 
+authors: [Kris Jordan]
 ---
 
 # Ch. 2 Fundamental `git` Subcommands

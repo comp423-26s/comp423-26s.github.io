@@ -1,3 +1,13 @@
+---
+code: RD03
+title: Core Concepts of a `git` Repository
+date: 2026-01-07
+due: 2026-01-11
+type:  reading
+threads: tool bench 
+authors: [Kris Jordan]
+---
+
 # Ch. 1 Core Concepts of a `git` Repository
 
 `git` becomes much easier to learn and operate with a high-level understanding of its organization and data structure design.
