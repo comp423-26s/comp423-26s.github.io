@@ -249,6 +249,17 @@ def define_env(env: Any) -> None:
             return ""
         return _format_long_date_with_ordinal(d)
 
+    @env.filter
+    def format_due_date(value: Any) -> str:
+        """Format a date for the Due column.
+
+        Example: 2026-01-13 -> "Tue, 1/13"
+        """
+        d = _coerce_date(value)
+        if d is None:
+            return ""
+        return d.strftime("%a, %-m/%-d")
+
 
 # ---------------------------------------------------------------------------
 # Configuration / conventions

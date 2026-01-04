@@ -28,7 +28,10 @@
 
     // "Still in the future" => strictly after today.
     if (dueDate.getTime() > today.getTime()) {
-      row.classList.add("timeline-item-row--due-upcoming");
+      const dueCell = row.querySelector(".timeline-due");
+      if (dueCell) {
+        dueCell.classList.add("timeline-item-row--due-upcoming");
+      }
     }
   }
 })();

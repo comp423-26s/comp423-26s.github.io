@@ -90,17 +90,15 @@
     transparent
   );
   font-weight: 700;
+  font-size: 1.1rem;
 }
 
-.md-typeset table[data-timeline="course"] tr.timeline-item-row--due-upcoming td {
+.md-typeset table[data-timeline="course"] td.timeline-item-row--due-upcoming {
   background-color: color-mix(
     in srgb,
     var(--md-typeset-a-color) 10%,
     transparent
   );
-}
-
-.md-typeset table[data-timeline="course"] tr.timeline-item-row--due-upcoming td.timeline-due {
   font-weight: 700;
 }
 
