@@ -1,14 +1,10 @@
 ---
-title: Course Dashboard
+title: Foundations of Software Engineering
 hide:
   - navigation
 ---
 
-# CS Intro to Engineering Dashboard
-
-Welcome to the course home. Below is a live view of recent and upcoming modules.
-
-## 📅 Timeline
+# Agenda {: #agenda-title}
 
 <table data-timeline="course">
   <thead>
@@ -37,9 +33,3 @@ Welcome to the course home. Below is a live view of recent and upcoming modules.
   {% endfor %}
   </tbody>
 </table>
-
-## 🧠 Course Concepts
-This course is built around several core threads. Click a thread to see all related materials.
-
-* **Ethics**: Focus on responsible engineering...
-* **Systems**: Understanding complex interactions...
