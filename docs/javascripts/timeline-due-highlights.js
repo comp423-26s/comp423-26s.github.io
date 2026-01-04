@@ -1,9 +1,14 @@
 (function () {
   "use strict";
 
-  // Self-gate: only run where the Timeline table exists.
-  const timeline = document.querySelector('table[data-timeline="course"]');
-  if (!timeline) return;
+  function initDueHighlights() {
+    // Self-gate: only run where the Timeline table exists.
+    const timeline = document.querySelector('table[data-timeline="course"]');
+    if (!timeline) return;
+    
+    // Prevent double initialization
+    if (timeline.hasAttribute('data-due-highlights-initialized')) return;
+    timeline.setAttribute('data-due-highlights-initialized', 'true');
 
   function parseISODate(iso) {
     // Expect YYYY-MM-DD
@@ -34,4 +39,13 @@
       }
     }
   }
+  }
+
+  // Run on initial load
+  initDueHighlights();
+
+  // Re-run when navigating with instant loading
+  document$.subscribe(() => {
+    initDueHighlights();
+  });
 })();

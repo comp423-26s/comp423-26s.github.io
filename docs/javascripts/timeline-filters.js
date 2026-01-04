@@ -1,8 +1,13 @@
 (function () {
   "use strict";
 
-  const timeline = document.querySelector('table[data-timeline="course"]');
-  if (!timeline) return;
+  function initTimelineFilters() {
+    const timeline = document.querySelector('table[data-timeline="course"]');
+    if (!timeline) return;
+    
+    // Prevent double initialization
+    if (timeline.hasAttribute('data-timeline-initialized')) return;
+    timeline.setAttribute('data-timeline-initialized', 'true');
 
   // --- 1. Setup UI Components ---
 
@@ -262,4 +267,13 @@
   }
 
   render();
+  }
+
+  // Run on initial load
+  initTimelineFilters();
+
+  // Re-run when navigating with instant loading
+  document$.subscribe(() => {
+    initTimelineFilters();
+  });
 })();
