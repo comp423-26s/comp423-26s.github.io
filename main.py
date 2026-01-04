@@ -154,7 +154,7 @@ def define_env(env: Any) -> None:
             relevant_items.append(
                 {
                     "title": getattr(p, "title", None) or meta.get("title", "Untitled"),
-                    "url": getattr(p, "url", ""),
+                    "url": meta.get("url") or getattr(p, "url", ""),
                     "date": item_date,
                     "type": meta.get("type", "General"),
                     "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
@@ -199,14 +199,14 @@ def define_env(env: Any) -> None:
                             for k, v in link_item.items():
                                 links.append({"title": str(k), "url": str(v)})
                 
-                # Fallback to "slides" if "links" is empty
+                # Fallback to "links" if "links" is empty
                 if not links and meta.get("slides"):
                     links.append({"title": "Slides", "url": str(meta.get("slides"))})
 
                 relevant_items.append(
                     {
                         "title": str(meta.get("title", "Untitled")),
-                        "url": url,
+                        "url": meta.get("url") or url,
                         "date": item_date,
                         "type": str(meta.get("type", "General")),
                         "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
@@ -249,13 +249,29 @@ def define_env(env: Any) -> None:
             label = str(raw).strip()
             if not label:
                 continue
-            slug = _slugify_thread(label)
+            
+            # Handle "Parent / Child" threads
+            parts = [p.strip() for p in label.split("/")]
+            
+            # CSS class comes from the first part (e.g. "SDE")
+            css_slug = _slugify_thread(parts[0])
+            
+            # Display text comes from the last part (e.g. "ADR")
+            display_text = parts[-1]
+            
+            # URL path comes from joining all parts slugified
+            # e.g. "SDE / ADR" -> "threads/sde/adr/"
+            url_slugs = [_slugify_thread(p) for p in parts]
+            url_path = "threads/" + "/".join(url_slugs) + "/"
+
             pills.append(
-                Markup('<span class="thread-pill thread-pill--')
-                + escape(slug)
+                Markup('<a href="')
+                + escape(url_path)
+                + Markup('" class="thread-pill thread-pill--')
+                + escape(css_slug)
                 + Markup('">')
-                + escape(label)
-                + Markup("</span>")
+                + escape(display_text)
+                + Markup("</a>")
             )
 
         return str(Markup(" ").join(pills))

@@ -7,7 +7,6 @@ nav:
           - Frontend: frontend
           - Backend: backend-architecture
           - APIs: apis
-          - git: git
           - MkDocs: MkDocs
     - Course Content:
           - syllabus.md

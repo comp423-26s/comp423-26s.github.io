@@ -1,3 +1,13 @@
+---
+code: RD06
+title: "Git Collaboration: Working with Remote Repositories"
+date: 2026-01-12
+due: 2026-01-13
+type:  reading
+threads: ["IC Tools", "IC Tools / git"]
+authors: [Kris Jordan]
+---
+
 # Ch. 4 Git Collaboration: Working with Remote Repositories
 
 In today's software development world, writing code is rarely a solo endeavor. Whether you're contributing to open source projects, working on a team assignment, or collaborating with others across the globe, you'll need to share your code and coordinate with other developers. This is where Git's collaboration features become essential - they're the foundation of modern software development practices.

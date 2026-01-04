@@ -1,10 +1,10 @@
 ---
 code: RD03
-title: Core Concepts of a `git` Repository
+title: "`git`: Core Concepts of a Repository"
 date: 2026-01-07
 due: 2026-01-11
 type:  reading
-threads: tool bench 
+threads: ["IC Tools", "IC Tools / git"]
 authors: [Kris Jordan]
 ---
 

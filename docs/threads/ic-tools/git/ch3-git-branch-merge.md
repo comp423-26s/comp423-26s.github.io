@@ -1,10 +1,10 @@
 ---
 code: RD05
 title: Branching and Merging
-date: 2026-01-07
+date: 2026-01-12
 due: 2026-01-13
 type:  reading
-threads: tool bench 
+threads: ["IC Tools", "IC Tools / git"]
 authors: [Kris Jordan]
 ---
 

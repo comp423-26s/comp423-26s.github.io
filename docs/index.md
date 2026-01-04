@@ -26,7 +26,11 @@ hide:
     <tr class="timeline-item-row" data-date="{{ item.date }}"{% if item.due %} data-due="{{ item.due }}"{% endif %}>
       <td>
         <strong>{{ item.code }}</strong>
+        {% if item.url == "tbd" %}
+        {{ item.title }}
+        {% else %}
         <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+        {% endif %}
         {% if item.links %}
         <span class="timeline-links-container">({% for link in item.links %}<a href="{{ link.url }}" target="_blank" title="{{ link.title }}" class="timeline-link">{{ link.title }}</a>{% if not loop.last %}, {% endif %}{% endfor %})</span>
         {% endif %}

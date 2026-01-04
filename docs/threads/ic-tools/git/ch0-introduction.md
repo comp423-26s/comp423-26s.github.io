@@ -4,7 +4,7 @@ title: What is Source Code Management and `git`?
 date: 2026-01-07
 due: 2026-01-11
 type:  reading
-threads: tool bench 
+threads: ["IC Tools", "IC Tools / git"]
 authors: [Kris Jordan]
 ---
 
