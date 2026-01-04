@@ -19,4 +19,12 @@ authors: [Kris Jordan]
     
     [__Kris Jordan__](../people/bios/krisj_about.md)
 
+
+
+-   ![Muhammad Fouly Photo](../people/profile_photos/mfouly.png)  
+
+    ---
+    
+    [__Muhammad Fouly__](../people/bios/mfouly_about.md)
+
 </div>
