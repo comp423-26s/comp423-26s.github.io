@@ -4,7 +4,7 @@ title: "Git Collaboration: Working with Remote Repositories"
 date: 2026-01-12
 due: 2026-01-13
 type:  reading
-threads: ["IC Tools / git"]
+threads: ["Tools / git"]
 authors: [Kris Jordan]
 ---
 

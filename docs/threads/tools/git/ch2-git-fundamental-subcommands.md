@@ -2,9 +2,9 @@
 code: RD04
 title: "`git`: Fundamental Subcommands"
 date: 2026-01-07
-due: 2026-01-11
+due: 2026-01-09
 type:  reading
-threads: ["IC Tools / git"]
+threads: ["Tools / git"]
 authors: [Kris Jordan]
 ---
 

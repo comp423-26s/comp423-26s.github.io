@@ -2,9 +2,9 @@
 code: RD02
 title: What is Source Code Management and `git`?
 date: 2026-01-07
-due: 2026-01-11
+due: 2026-01-09
 type:  reading
-threads: ["IC Tools / git"]
+threads: ["Tools / git"]
 authors: [Kris Jordan]
 ---
 

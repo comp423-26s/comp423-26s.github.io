@@ -385,29 +385,29 @@ input:focus + .timeline-switch-slider {
 :root {
   --thread-c-course:   #d81b60; /* Pink */
   --thread-c-career:   #e65100; /* Orange */
-  --thread-c-ic-tools: #f9a825; /* Yellow/Amber */
-  --thread-c-sde:      #2e7d32; /* Green */
-  --thread-c-design:   #00838f; /* Cyan */
-  --thread-c-system:   #1565c0; /* Blue */
-  --thread-c-team:     #6a1b9a; /* Purple */
+  --thread-c-tools:    #f9a825; /* Yellow/Amber */
+  --thread-c-team:     #2e7d32; /* Green */
+  --thread-c-sde:      #00838f; /* Cyan */
+  --thread-c-design:   #1565c0; /* Blue */
+  --thread-c-system:   #6a1b9a; /* Purple */
 }
 
 .md-typeset .thread-pill--course   { --thread-base: var(--thread-c-course); }
 .md-typeset .thread-pill--career   { --thread-base: var(--thread-c-career); }
-.md-typeset .thread-pill--ic-tools { --thread-base: var(--thread-c-ic-tools); }
+.md-typeset .thread-pill--tools    { --thread-base: var(--thread-c-tools); }
+.md-typeset .thread-pill--team     { --thread-base: var(--thread-c-team); }
 .md-typeset .thread-pill--sde      { --thread-base: var(--thread-c-sde); }
 .md-typeset .thread-pill--design   { --thread-base: var(--thread-c-design); }
 .md-typeset .thread-pill--system   { --thread-base: var(--thread-c-system); }
-.md-typeset .thread-pill--team     { --thread-base: var(--thread-c-team); }
 
 /* Shared styles for rainbow pills */
 .md-typeset .thread-pill--course,
 .md-typeset .thread-pill--career,
-.md-typeset .thread-pill--ic-tools,
+.md-typeset .thread-pill--tools,
+.md-typeset .thread-pill--team,
 .md-typeset .thread-pill--sde,
 .md-typeset .thread-pill--design,
-.md-typeset .thread-pill--system,
-.md-typeset .thread-pill--team {
+.md-typeset .thread-pill--system {
   /* Light mode: Tinted BG, Darker Text */
   --thread-pill-bg: color-mix(in srgb, var(--thread-base) 12%, transparent);
   --thread-pill-fg: color-mix(in srgb, var(--thread-base), black 40%); 
@@ -416,11 +416,11 @@ input:focus + .timeline-switch-slider {
 
 [data-md-color-scheme="slate"] .md-typeset .thread-pill--course,
 [data-md-color-scheme="slate"] .md-typeset .thread-pill--career,
-[data-md-color-scheme="slate"] .md-typeset .thread-pill--ic-tools,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--tools,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--team,
 [data-md-color-scheme="slate"] .md-typeset .thread-pill--sde,
 [data-md-color-scheme="slate"] .md-typeset .thread-pill--design,
-[data-md-color-scheme="slate"] .md-typeset .thread-pill--system,
-[data-md-color-scheme="slate"] .md-typeset .thread-pill--team {
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--system {
   /* Dark mode: Stronger Tint BG, Lighter Text */
   --thread-pill-bg: color-mix(in srgb, var(--thread-base) 25%, transparent);
   --thread-pill-fg: color-mix(in srgb, var(--thread-base), white 40%);

@@ -1,4 +1,8 @@
 nav:
-    - Home: index.md
-    - resources
-    - people
+    - Course: threads/course
+    - Career: threads/career
+    - Tools: threads/tools
+    - Team: threads/team
+    - SDE: threads/sde
+    - Design: threads/design
+    - System: threads/system
