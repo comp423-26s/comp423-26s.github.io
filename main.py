@@ -37,7 +37,7 @@ class RecentItem(TypedDict):
     code: str
     threads: list[str]
     due: datetime.date | None
-    slides: str | None
+    links: list[dict[str, str]]
 
 
 def define_env(env: Any) -> None:
@@ -136,6 +136,19 @@ def define_env(env: Any) -> None:
                 # If a YAML list is provided, accept it as-is (best effort).
                 threads = [str(t).strip() for t in threads_raw if str(t).strip()]
 
+            # Normalize "links" to a list of {title, url} dicts.
+            links: list[dict[str, str]] = []
+            links_raw = meta.get("links", [])
+            if isinstance(links_raw, list):
+                for link_item in links_raw:
+                    if isinstance(link_item, dict):
+                        for k, v in link_item.items():
+                            links.append({"title": str(k), "url": str(v)})
+            
+            # Fallback to "slides" if "links" is empty
+            if not links and meta.get("slides"):
+                links.append({"title": "Slides", "url": str(meta.get("slides"))})
+
             relevant_items.append(
                 {
                     "title": getattr(p, "title", None) or meta.get("title", "Untitled"),
@@ -145,7 +158,7 @@ def define_env(env: Any) -> None:
                     "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
                     "threads": threads,
                     "due": _coerce_date(meta.get("due")),
-                    "slides": meta.get("slides"),
+                    "links": links,
                 }
             )
 
@@ -175,6 +188,19 @@ def define_env(env: Any) -> None:
                 else:
                     threads = [str(t).strip() for t in threads_raw if str(t).strip()]
 
+                # Normalize "links" to a list of {title, url} dicts.
+                links: list[dict[str, str]] = []
+                links_raw = meta.get("links", [])
+                if isinstance(links_raw, list):
+                    for link_item in links_raw:
+                        if isinstance(link_item, dict):
+                            for k, v in link_item.items():
+                                links.append({"title": str(k), "url": str(v)})
+                
+                # Fallback to "slides" if "links" is empty
+                if not links and meta.get("slides"):
+                    links.append({"title": "Slides", "url": str(meta.get("slides"))})
+
                 relevant_items.append(
                     {
                         "title": str(meta.get("title", "Untitled")),
@@ -184,7 +210,7 @@ def define_env(env: Any) -> None:
                         "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
                         "threads": threads,
                         "due": _coerce_date(meta.get("due")),
-                        "slides": meta.get("slides"),
+                        "links": links,
                     }
                 )
                 existing_urls.add(url)

@@ -174,7 +174,7 @@
       const tr = document.createElement('tr');
       tr.className = 'timeline-date-row';
       const td = document.createElement('td');
-      td.colSpan = 4;
+      td.colSpan = 3;
       td.className = 'timeline-date-cell';
       
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -216,7 +216,7 @@
     if (visibleItems.length === 0) {
        const tr = document.createElement('tr');
        const td = document.createElement('td');
-       td.colSpan = 4;
+       td.colSpan = 3;
        td.style.textAlign = 'center';
        td.style.padding = '2rem';
        td.style.color = 'var(--md-default-fg-color--light)';
