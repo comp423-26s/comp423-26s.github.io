@@ -5,6 +5,8 @@ repo_name: comp423-26s/comp423-26s.github.io
 
 theme:
   name: material
+  logo: assets/images/logo.png
+  favicon: assets/images/favicon.png
   language: en
   palette:
     - media: "(prefers-color-scheme)"
@@ -40,8 +42,6 @@ theme:
     - content.code.copy
     - navigation.top
     - toc.follow
-  icon:
-    logo: fontawesome/solid/users-gear
 validation:
   nav:
     omitted_files: info

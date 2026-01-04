@@ -1,6 +1,11 @@
 ---
-authors:
-    - Kris Jordan
+code: RD02
+title: What is Source Code Management and `git`?
+date: 2026-01-07
+due: 2026-01-11
+type:  reading
+threads: tool bench 
+authors: [Kris Jordan]
 ---
 
 # Ch. 0 What is Source Code Management and `git`?

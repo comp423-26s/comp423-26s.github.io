@@ -103,3 +103,21 @@
 .md-typeset table[data-timeline="course"] tr.timeline-item-row--due-upcoming td.timeline-due {
   font-weight: 700;
 }
+
+/* Increase logo size in header */
+.md-header__button.md-logo img, .md-header__button.md-logo svg {
+  height: 8rem;
+  width: auto;
+  position: absolute;
+  top: -0.0em;
+  left: -9rem;
+}
+
+.md-header__button.md-logo {
+  position: absolute;
+}
+
+[dir=ltr] .md-header__title {
+  margin-left: 0;
+  padding-left: 0;
+}
