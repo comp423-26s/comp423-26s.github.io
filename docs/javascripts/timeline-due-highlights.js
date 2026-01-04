@@ -26,8 +26,8 @@
     const dueDate = parseISODate(dueStr);
     if (!dueDate) continue;
 
-    // "Still in the future" => strictly after today.
-    if (dueDate.getTime() > today.getTime()) {
+    // "Still in the future" => today or after.
+    if (dueDate.getTime() >= today.getTime()) {
       const dueCell = row.querySelector(".timeline-due");
       if (dueCell) {
         dueCell.classList.add("timeline-item-row--due-upcoming");

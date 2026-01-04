@@ -48,6 +48,22 @@
     return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
   }
 
+  function getRelativeDateLabel(date, today) {
+    if (!date) return null;
+    const d = new Date(date);
+    const t = new Date(today);
+    d.setHours(0,0,0,0);
+    t.setHours(0,0,0,0);
+    
+    const diffTime = d.getTime() - t.getTime();
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    
+    if (diffDays === -1) return "Yesterday";
+    if (diffDays === 0) return "Today";
+    if (diffDays === 1) return "Tomorrow";
+    return null;
+  }
+
   // Capture all item rows.
   const rawRows = Array.from(tbody.querySelectorAll('tr.timeline-item-row'));
   const items = rawRows.map(row => {
@@ -56,12 +72,15 @@
     const date = parseISODate(dateStr);
     const due = parseISODate(dueStr);
     const code = row.querySelector('td:first-child strong').textContent.trim();
+    const dueCell = row.querySelector('.timeline-due');
     
     return {
       element: row,
       date: date,
       due: due,
-      code: code
+      code: code,
+      dueCell: dueCell,
+      originalDueHtml: dueCell ? dueCell.innerHTML : ''
     };
   });
 
@@ -105,8 +124,8 @@
       tabsContainer.style.display = 'none';
       filterContainer.style.display = 'none';
     } else if (dueSoonCheckbox.checked) {
-      // "Due Soon" mode: Show ALL items due in the future, ignoring tabs
-      visibleItems = items.filter(item => item.due && item.due > today);
+      // "Due Soon" mode: Show ALL items due today or in the future, ignoring tabs
+      visibleItems = items.filter(item => item.due && item.due >= today);
       tabsContainer.style.display = 'none';
     } else {
       // Normal mode: Filter by Tab
@@ -163,7 +182,10 @@
       const month = date.getMonth() + 1;
       const dayOfMonth = date.getDate();
       
-      td.textContent = `${dayName} ${month}/${dayOfMonth}`;
+      const relativeLabel = getRelativeDateLabel(date, today);
+      const prefix = relativeLabel ? `${relativeLabel}, ` : '';
+
+      td.textContent = `${prefix}${dayName} ${month}/${dayOfMonth}`;
       tr.appendChild(td);
       return tr;
     };
@@ -177,6 +199,16 @@
         }
       }
       
+      // Update Due Date Cell
+      if (item.dueCell) {
+          const relLabel = getRelativeDateLabel(item.due, today);
+          if (relLabel) {
+              item.dueCell.textContent = relLabel;
+          } else {
+              item.dueCell.innerHTML = item.originalDueHtml;
+          }
+      }
+
       item.element.style.display = '';
       tbody.appendChild(item.element);
     });
