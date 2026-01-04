@@ -37,7 +37,6 @@ class RecentItem(TypedDict):
     code: str
     threads: list[str]
     due: datetime.date | None
-    delta: int
 
 
 def define_env(env: Any) -> None:
@@ -136,21 +135,17 @@ def define_env(env: Any) -> None:
                 # If a YAML list is provided, accept it as-is (best effort).
                 threads = [str(t).strip() for t in threads_raw if str(t).strip()]
 
-            # Keep items within the last `_RECENT_DAYS` days, and all future items.
-            delta = (item_date - current_date).days
-            if -_RECENT_DAYS <= delta:
-                relevant_items.append(
-                    {
-                        "title": getattr(p, "title", None) or meta.get("title", "Untitled"),
-                        "url": getattr(p, "url", ""),
-                        "date": item_date,
-                        "type": meta.get("type", "General"),
-                        "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
-                        "threads": threads,
-                        "due": _coerce_date(meta.get("due")),
-                        "delta": delta,
-                    }
-                )
+            relevant_items.append(
+                {
+                    "title": getattr(p, "title", None) or meta.get("title", "Untitled"),
+                    "url": getattr(p, "url", ""),
+                    "date": item_date,
+                    "type": meta.get("type", "General"),
+                    "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
+                    "threads": threads,
+                    "due": _coerce_date(meta.get("due")),
+                }
+            )
 
         # Fallback: scan the docs directory directly.
         #
@@ -178,24 +173,21 @@ def define_env(env: Any) -> None:
                 else:
                     threads = [str(t).strip() for t in threads_raw if str(t).strip()]
 
-                delta = (item_date - current_date).days
-                if -_RECENT_DAYS <= delta:
-                    relevant_items.append(
-                        {
-                            "title": str(meta.get("title", "Untitled")),
-                            "url": url,
-                            "date": item_date,
-                            "type": str(meta.get("type", "General")),
-                            "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
-                            "threads": threads,
-                            "due": _coerce_date(meta.get("due")),
-                            "delta": delta,
-                        }
-                    )
-                    existing_urls.add(url)
+                relevant_items.append(
+                    {
+                        "title": str(meta.get("title", "Untitled")),
+                        "url": url,
+                        "date": item_date,
+                        "type": str(meta.get("type", "General")),
+                        "code": "" if meta.get("code") is None else str(meta.get("code")).strip(),
+                        "threads": threads,
+                        "due": _coerce_date(meta.get("due")),
+                    }
+                )
+                existing_urls.add(url)
 
-        # Sort reverse-chronologically (newest first).
-        relevant_items.sort(key=lambda x: x["date"], reverse=True)
+        # Sort chronologically (ascending).
+        relevant_items.sort(key=lambda x: x["date"])
 
         try:
             limit_int = int(limit)
@@ -267,9 +259,6 @@ def define_env(env: Any) -> None:
 
 # Accept a couple of common date formats in page metadata.
 _DATE_FORMATS = ("%Y-%m-%d", "%Y/%m/%d")
-
-# How far back (in days) we consider content "recent".
-_RECENT_DAYS = 365
 
 
 _THREAD_SLUG_RE = re.compile(r"[^a-z0-9-]+")

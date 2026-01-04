@@ -110,8 +110,18 @@
   padding: 0.3rem 0.6rem;
 }
 
+.md-typeset table[data-timeline="course"] th:nth-child(2),
+.md-typeset table[data-timeline="course"] td:nth-child(2),
+.md-typeset table[data-timeline="course"] th:nth-child(3),
+.md-typeset table[data-timeline="course"] td:nth-child(3) {
+  text-align: center;
+}
+
 .md-typeset table[data-timeline="course"] tr.timeline-item-row td:first-child strong {
   margin-right: 0.6rem;
+  font-family: var(--md-code-font-family, monospace);
+  display: inline-block;
+  width: 4ch;
 }
 
 .md-typeset table[data-timeline="course"] td.timeline-item-row--due-upcoming {
@@ -281,4 +291,12 @@ input:focus + .timeline-switch-slider {
   right: 0;
   height: 2px;
   background-color: var(--md-typeset-a-color);
+}
+
+/* Hide Threads column on mobile */
+@media screen and (max-width: 40em) {
+  .md-typeset table[data-timeline="course"] th:nth-child(3),
+  .md-typeset table[data-timeline="course"] td:nth-child(3) {
+    display: none;
+  }
 }
