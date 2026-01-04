@@ -230,6 +230,42 @@ def define_env(env: Any) -> None:
 
         return relevant_items
 
+    @env.macro
+    def get_pages_for_thread(thread_filter: str) -> list[RecentItem]:
+        """Get pages belonging to a specific thread.
+
+        Args:
+            thread_filter: The thread name to filter by (e.g. "SDE", "Tools / git").
+                           Matches if the page has a thread that starts with this string.
+        """
+        items = get_recent_and_upcoming(limit=0)
+        filtered_items = []
+        
+        # Normalize filter
+        filter_lower = thread_filter.lower()
+        
+        for item in items:
+            # Check if any of the item's threads match the filter
+            match = False
+            for t in item["threads"]:
+                # We match if the thread starts with the filter
+                # e.g. filter "Tools" matches "Tools" and "Tools / git"
+                # e.g. filter "Tools / git" matches "Tools / git"
+                if t.lower().startswith(filter_lower):
+                    match = True
+                    break
+            
+            if match:
+                filtered_items.append(item)
+        
+        return filtered_items
+
+    @env.macro
+    def get_thread_css_class(thread_name: str) -> str:
+        """Get the CSS class suffix for a thread name."""
+        parts = thread_name.split("/")
+        return _slugify_thread(parts[0])
+
     @env.filter
     def format_threads(threads: Iterable[str] | None) -> str:
         """Format a list of thread tags for display.

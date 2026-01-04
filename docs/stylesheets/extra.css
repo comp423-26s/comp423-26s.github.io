@@ -89,12 +89,14 @@
   width: 100% !important;
 }
 
-.md-typeset__table table[data-timeline="course"] {
+.md-typeset__table table[data-timeline="course"],
+.md-typeset__table table[data-timeline="thread"] {
   display: table;
   width: 100% !important;
 }
 
-.md-typeset table[data-timeline="course"] tr.timeline-date-row td {
+.md-typeset table[data-timeline="course"] tr.timeline-date-row td,
+.md-typeset table[data-timeline="thread"] tr.timeline-date-row td {
   background-color: color-mix(
     in srgb,
     var(--md-primary-fg-color) 14%,
@@ -106,7 +108,8 @@
   text-align: center;
 }
 
-.md-typeset table[data-timeline="course"] tr.timeline-item-row td {
+.md-typeset table[data-timeline="course"] tr.timeline-item-row td,
+.md-typeset table[data-timeline="thread"] tr.timeline-item-row td {
   font-size: 0.8rem;
   padding: 0.3rem 0.6rem;
 }
@@ -114,11 +117,14 @@
 .md-typeset table[data-timeline="course"] th:nth-child(2),
 .md-typeset table[data-timeline="course"] td:nth-child(2),
 .md-typeset table[data-timeline="course"] th:nth-child(3),
-.md-typeset table[data-timeline="course"] td:nth-child(3) {
+.md-typeset table[data-timeline="course"] td:nth-child(3),
+.md-typeset table[data-timeline="thread"] th:nth-child(2),
+.md-typeset table[data-timeline="thread"] td:nth-child(2) {
   text-align: center;
 }
 
-.md-typeset table[data-timeline="course"] tr.timeline-item-row td:first-child strong {
+.md-typeset table[data-timeline="course"] tr.timeline-item-row td:first-child strong,
+.md-typeset table[data-timeline="thread"] tr.timeline-item-row td:first-child strong {
   margin-right: 0.6rem;
   font-family: var(--md-code-font-family, monospace);
   display: inline-block;
@@ -426,3 +432,34 @@ input:focus + .timeline-switch-slider {
   --thread-pill-fg: color-mix(in srgb, var(--thread-base), white 40%);
   border-color: color-mix(in srgb, var(--thread-base) 50%, transparent);
 }
+
+/* -------------------------------------------------------------------------
+   Thread Header / Context Styling
+   ------------------------------------------------------------------------- */
+
+.thread-context {
+  margin-bottom: 1em;
+  padding: 1em;
+  border-left: 5px solid var(--md-default-fg-color);
+  background-color: var(--md-code-bg-color);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Apply rainbow colors to the border */
+.thread-border--course   { border-left-color: var(--thread-c-course); }
+.thread-border--career   { border-left-color: var(--thread-c-career); }
+.thread-border--tools    { border-left-color: var(--thread-c-tools); }
+.thread-border--team     { border-left-color: var(--thread-c-team); }
+.thread-border--sde      { border-left-color: var(--thread-c-sde); }
+.thread-border--design   { border-left-color: var(--thread-c-design); }
+.thread-border--system   { border-left-color: var(--thread-c-system); }
+
+/* Style the table header with the thread color */
+.thread-table--course thead th   { background-color: color-mix(in srgb, var(--thread-c-course) 20%, transparent); }
+.thread-table--career thead th   { background-color: color-mix(in srgb, var(--thread-c-career) 20%, transparent); }
+.thread-table--tools thead th    { background-color: color-mix(in srgb, var(--thread-c-tools) 20%, transparent); }
+.thread-table--team thead th     { background-color: color-mix(in srgb, var(--thread-c-team) 20%, transparent); }
+.thread-table--sde thead th      { background-color: color-mix(in srgb, var(--thread-c-sde) 20%, transparent); }
+.thread-table--design thead th   { background-color: color-mix(in srgb, var(--thread-c-design) 20%, transparent); }
+.thread-table--system thead th   { background-color: color-mix(in srgb, var(--thread-c-system) 20%, transparent); }
+

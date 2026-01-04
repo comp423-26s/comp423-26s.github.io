@@ -3,7 +3,7 @@ code: RD01
 title: ACM Software Engineering Code of Ethics
 date: 2026-01-07
 due: 2026-01-08
-type: task
+type: reading
 threads: ["Career / Ethics"]
 authors: [Kris Jordan]
 ---
