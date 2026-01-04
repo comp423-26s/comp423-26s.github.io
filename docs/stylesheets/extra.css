@@ -313,67 +313,67 @@ input:focus + .timeline-switch-slider {
   background-color: var(--md-typeset-a-color);
 }
 
-/* Mobile sidebar logo full width */
-.md-nav--primary .md-nav__title {
-  /* Remove sticky positioning that causes overlap */
-  position: static !important;
-  /* Keep the background color (primary color) so white logos are visible */
-  background-color: var(--md-primary-fg-color) !important;
-  color: var(--md-primary-bg-color) !important;
-  /* Allow height to grow with logo */
-  height: auto !important;
-  min-height: auto !important;
-  /* Ensure it's a block to contain the logo */
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  /* Allow overflow so logo is fully visible */
-  overflow: visible !important;
-  text-align: center;
-}
-
-/* Target the logo link/button */
-.md-nav--primary .md-nav__title .md-nav__button.md-logo {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  position: static !important;
-  overflow: visible !important;
-}
-
-/* Target the logo image */
-.md-nav--primary .md-nav__title .md-nav__button.md-logo img {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  max-height: none !important;
-  max-width: 100% !important;
-  object-fit: contain !important;
-}
-
-/* Ensure the menu list appears AFTER the logo */
-.md-nav--primary > .md-nav__list {
-  margin-top: 0 !important;
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-/* Hide the site title text completely */
-.md-nav--primary .md-nav__title .md-ellipsis {
-  display: none !important;
-}
-
-/* Hide the GitHub repository info in the sidebar */
-.md-nav__source {
-  display: none !important;
-}
-
 /* Hide Threads column on mobile */
-@media screen and (max-width: 40em) {
+@media screen and (max-width: 76.1875em) {
   .md-typeset table[data-timeline="course"] th:nth-child(3),
   .md-typeset table[data-timeline="course"] td:nth-child(3) {
     display: none;
+  }
+
+  /* Mobile sidebar logo full width */
+  .md-nav--primary .md-nav__title {
+    /* Remove sticky positioning that causes overlap */
+    position: static !important;
+    /* Keep the background color (primary color) so white logos are visible */
+    background-color: var(--md-primary-fg-color) !important;
+    color: var(--md-primary-bg-color) !important;
+    /* Allow height to grow with logo */
+    height: auto !important;
+    min-height: auto !important;
+    /* Ensure it's a block to contain the logo */
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* Allow overflow so logo is fully visible */
+    overflow: visible !important;
+    text-align: center;
+  }
+
+  /* Target the logo link/button */
+  .md-nav--primary .md-nav__title .md-nav__button.md-logo {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    overflow: visible !important;
+  }
+
+  /* Target the logo image */
+  .md-nav--primary .md-nav__title .md-nav__button.md-logo img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+  }
+
+  /* Ensure the menu list appears AFTER the logo */
+  .md-nav--primary > .md-nav__list {
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* Hide the site title text completely */
+  .md-nav--primary .md-nav__title .md-ellipsis {
+    display: none !important;
+  }
+
+  /* Hide the GitHub repository info in the sidebar */
+  .md-nav__source {
+    display: none !important;
   }
 }
