@@ -130,6 +130,20 @@
   margin-left: 0.2rem;
 }
 
+.md-typeset table[data-timeline="course"] td.timeline-due a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.md-typeset table[data-timeline="course"] td.timeline-due a:hover {
+  color: var(--md-typeset-a-color);
+  text-decoration: underline;
+}
+
 .md-typeset table[data-timeline="course"] td.timeline-item-row--due-upcoming {
   background-color: color-mix(
     in srgb,

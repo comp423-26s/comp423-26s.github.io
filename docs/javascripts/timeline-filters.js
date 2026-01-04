@@ -203,7 +203,7 @@
       if (item.dueCell) {
           const relLabel = getRelativeDateLabel(item.due, today);
           if (relLabel) {
-              item.dueCell.textContent = relLabel;
+              item.dueCell.innerHTML = `<a href="https://gradescope.com" target="_blank">${relLabel}</a>`;
           } else {
               item.dueCell.innerHTML = item.originalDueHtml;
           }
