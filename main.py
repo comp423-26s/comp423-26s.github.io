@@ -241,24 +241,24 @@ def define_env(env: Any) -> None:
     def format_timeline_date(value: Any) -> str:
         """Format a date for the Timeline subheading.
 
-        Example: 2026-01-09 -> "Friday, January 9th"
+        Example: 2026-01-09 -> "Fri 1/9"
         """
 
         d = _coerce_date(value)
         if d is None:
             return ""
-        return _format_long_date_with_ordinal(d)
+        return d.strftime("%a %-m/%-d")
 
     @env.filter
     def format_due_date(value: Any) -> str:
         """Format a date for the Due column.
 
-        Example: 2026-01-13 -> "Tue, 1/13"
+        Example: 2026-01-13 -> "Tue 1/13"
         """
         d = _coerce_date(value)
         if d is None:
             return ""
-        return d.strftime("%a, %-m/%-d")
+        return d.strftime("%a %-m/%-d")
 
 
 # ---------------------------------------------------------------------------
@@ -269,28 +269,10 @@ def define_env(env: Any) -> None:
 _DATE_FORMATS = ("%Y-%m-%d", "%Y/%m/%d")
 
 # How far back (in days) we consider content "recent".
-_RECENT_DAYS = 14
+_RECENT_DAYS = 365
 
 
 _THREAD_SLUG_RE = re.compile(r"[^a-z0-9-]+")
-
-
-def _ordinal_suffix(day: int) -> str:
-    if 11 <= (day % 100) <= 13:
-        return "th"
-    match day % 10:
-        case 1:
-            return "st"
-        case 2:
-            return "nd"
-        case 3:
-            return "rd"
-        case _:
-            return "th"
-
-
-def _format_long_date_with_ordinal(d: datetime.date) -> str:
-    return f"{d.strftime('%A, %B')} {d.day}{_ordinal_suffix(d.day)}"
 
 
 def _slugify_thread(label: str) -> str:

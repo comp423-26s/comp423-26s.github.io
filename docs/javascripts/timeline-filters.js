@@ -31,7 +31,7 @@
   const tabsContainer = document.createElement('div');
   tabsContainer.className = 'timeline-tabs';
   tabsContainer.innerHTML = `
-    <button class="timeline-tab active" data-tab="upcoming">Upcoming</button>
+    <button class="timeline-tab active" data-tab="upcoming">This Week and Upcoming</button>
     <button class="timeline-tab" data-tab="past">The Past</button>
   `;
   timeline.parentNode.insertBefore(tabsContainer, timeline);
@@ -72,8 +72,12 @@
   // Date Logic
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
+  const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+  // Calculate days since Monday. If today is Sunday (0), it's 6 days since Monday.
+  // If today is Monday (1), it's 0 days.
+  const daysSinceMonday = (dayOfWeek + 6) % 7;
+  const mostRecentMonday = new Date(today);
+  mostRecentMonday.setDate(today.getDate() - daysSinceMonday);
 
   // State
   let currentTab = 'upcoming';
@@ -81,26 +85,33 @@
   // --- 3. Rendering Logic ---
 
   function render() {
-    // 1. Filter by Tab
     let visibleItems = [];
-    if (currentTab === 'upcoming') {
-      visibleItems = items.filter(item => item.date && item.date >= yesterday);
-    } else {
-      visibleItems = items.filter(item => item.date && item.date < yesterday);
-    }
 
-    // 2. Apply "Due Soon" Filter
+    // 1. Filter Logic
     if (dueSoonCheckbox.checked) {
-      visibleItems = visibleItems.filter(item => item.due && item.due > today);
+      // "Due Soon" mode: Show ALL items due in the future, ignoring tabs
+      visibleItems = items.filter(item => item.due && item.due > today);
+      tabsContainer.style.display = 'none';
+    } else {
+      // Normal mode: Filter by Tab
+      tabsContainer.style.display = ''; // Revert to CSS default (flex)
+      if (currentTab === 'upcoming') {
+        visibleItems = items.filter(item => item.date && item.date >= mostRecentMonday);
+      } else {
+        visibleItems = items.filter(item => item.date && item.date < mostRecentMonday);
+      }
     }
 
-    // 3. Sort
-    if (currentTab === 'upcoming') {
+    // 2. Sort Logic
+    if (dueSoonCheckbox.checked) {
+      // Sort by Due Date (Ascending)
       visibleItems.sort((a, b) => {
-        if (dueSoonCheckbox.checked) {
-           if (a.due && b.due && a.due.getTime() !== b.due.getTime()) return a.due.getTime() - b.due.getTime();
-           return a.code.localeCompare(b.code);
-        }
+         if (a.due && b.due && a.due.getTime() !== b.due.getTime()) return a.due.getTime() - b.due.getTime();
+         return a.code.localeCompare(b.code);
+      });
+    } else if (currentTab === 'upcoming') {
+      // Upcoming: Chronological (Asc)
+      visibleItems.sort((a, b) => {
         if (a.date.getTime() !== b.date.getTime()) return a.date.getTime() - b.date.getTime();
         return a.code.localeCompare(b.code);
       });
@@ -111,7 +122,7 @@
       });
     }
 
-    // 4. Render to DOM
+    // 3. Render to DOM
     items.forEach(item => item.element.remove());
     tbody.innerHTML = '';
 
@@ -175,19 +186,12 @@
   // --- 4. Event Listeners ---
 
   dueSoonCheckbox.addEventListener('change', () => {
-    if (dueSoonCheckbox.checked && currentTab === 'past') {
-      currentTab = 'upcoming';
-      updateTabUI();
-    }
     render();
   });
 
   tabsContainer.addEventListener('click', (e) => {
     if (e.target.classList.contains('timeline-tab')) {
       currentTab = e.target.getAttribute('data-tab');
-      if (currentTab === 'past' && dueSoonCheckbox.checked) {
-        dueSoonCheckbox.checked = false;
-      }
       updateTabUI();
       render();
     }
