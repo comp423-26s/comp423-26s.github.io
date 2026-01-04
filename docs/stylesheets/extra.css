@@ -36,12 +36,13 @@
 
 .md-typeset .thread-pill {
   display: inline-block;
-  padding: 0.15em 0.6em;
-  margin: 0.05em 0.25em 0.05em 0;
+  padding: 0.1em 0.6em;
+  margin: 0 0.25em 0 0;
   border-radius: 999px;
-  font-size: 0.75em;
+  font-size: 1em;
   font-weight: 600;
-  line-height: 1.6;
+  line-height: 1.2;
+  vertical-align: middle;
   white-space: nowrap;
   background-color: var(
     --thread-pill-bg,
@@ -101,7 +102,16 @@
   );
   font-weight: 700;
   font-size: 0.9rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.6rem;
+}
+
+.md-typeset table[data-timeline="course"] tr.timeline-item-row td {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.md-typeset table[data-timeline="course"] tr.timeline-item-row td:first-child strong {
+  margin-right: 0.6rem;
 }
 
 .md-typeset table[data-timeline="course"] td.timeline-item-row--due-upcoming {
@@ -173,7 +183,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--md-default-fg-color--light);
+  color: var(--md-default-fg-color);
   user-select: none;
   cursor: pointer;
 }
@@ -229,4 +239,46 @@ input:checked + .timeline-switch-slider:before {
 
 input:focus + .timeline-switch-slider {
   box-shadow: 0 0 1px var(--md-primary-fg-color);
+}
+
+/* -------------------------------------------------------------------------
+   Timeline Tabs
+   ------------------------------------------------------------------------- */
+
+.timeline-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.timeline-tab {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.timeline-tab:hover {
+  color: var(--md-typeset-a-color);
+}
+
+.timeline-tab.active {
+  color: var(--md-typeset-a-color);
+}
+
+.timeline-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--md-typeset-a-color);
 }

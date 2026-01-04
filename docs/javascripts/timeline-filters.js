@@ -4,7 +4,9 @@
   const timeline = document.querySelector('table[data-timeline="course"]');
   if (!timeline) return;
 
-  // Create filter UI
+  // --- 1. Setup UI Components ---
+
+  // Create Filter UI (Due Soon)
   const filterContainer = document.createElement('div');
   filterContainer.className = 'timeline-filter-container';
   filterContainer.innerHTML = `
@@ -25,10 +27,20 @@
     timeline.parentNode.insertBefore(filterContainer, timeline);
   }
 
+  // Create Tabs UI
+  const tabsContainer = document.createElement('div');
+  tabsContainer.className = 'timeline-tabs';
+  tabsContainer.innerHTML = `
+    <button class="timeline-tab active" data-tab="upcoming">Upcoming</button>
+    <button class="timeline-tab" data-tab="past">The Past</button>
+  `;
+  timeline.parentNode.insertBefore(tabsContainer, timeline);
+
+  // --- 2. Data Parsing & State ---
+
   const dueSoonCheckbox = document.getElementById('filter-due-soon');
   const tbody = timeline.querySelector('tbody');
-  const originalRows = Array.from(tbody.querySelectorAll('tr'));
-
+  
   function parseISODate(iso) {
     if (!iso || typeof iso !== "string") return null;
     const m = iso.trim().match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/);
@@ -36,51 +48,161 @@
     return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
   }
 
+  // Capture all item rows.
+  const rawRows = Array.from(tbody.querySelectorAll('tr.timeline-item-row'));
+  const items = rawRows.map(row => {
+    const dateStr = row.getAttribute('data-date');
+    const dueStr = row.getAttribute('data-due');
+    const date = parseISODate(dateStr);
+    const due = parseISODate(dueStr);
+    const code = row.querySelector('td:first-child strong').textContent.trim();
+    
+    return {
+      element: row,
+      date: date,
+      due: due,
+      code: code
+    };
+  });
+
+  // Hide original date rows permanently
+  const originalDateRows = Array.from(tbody.querySelectorAll('tr.timeline-date-row'));
+  originalDateRows.forEach(r => r.style.display = 'none');
+
+  // Date Logic
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
 
-  function applyFilters() {
-    const showDueSoonOnly = dueSoonCheckbox.checked;
-    
-    if (showDueSoonOnly) {
-      // Filter to only upcoming items
-      const visibleRows = originalRows.filter(row => {
-        if (!row.classList.contains('timeline-item-row')) return false;
-        const dueStr = row.getAttribute('data-due');
-        const dueDate = parseISODate(dueStr);
-        return dueDate && dueDate.getTime() > today.getTime();
-      });
+  // State
+  let currentTab = 'upcoming';
 
-      // Sort by due date (asc) then Code (asc)
-      visibleRows.sort((a, b) => {
-        const dateA = parseISODate(a.getAttribute('data-due'));
-        const dateB = parseISODate(b.getAttribute('data-due'));
-        
-        if (dateA.getTime() !== dateB.getTime()) {
-          return dateA.getTime() - dateB.getTime();
+  // --- 3. Rendering Logic ---
+
+  function render() {
+    // 1. Filter by Tab
+    let visibleItems = [];
+    if (currentTab === 'upcoming') {
+      visibleItems = items.filter(item => item.date && item.date >= yesterday);
+    } else {
+      visibleItems = items.filter(item => item.date && item.date < yesterday);
+    }
+
+    // 2. Apply "Due Soon" Filter
+    if (dueSoonCheckbox.checked) {
+      visibleItems = visibleItems.filter(item => item.due && item.due > today);
+    }
+
+    // 3. Sort
+    if (currentTab === 'upcoming') {
+      visibleItems.sort((a, b) => {
+        if (dueSoonCheckbox.checked) {
+           if (a.due && b.due && a.due.getTime() !== b.due.getTime()) return a.due.getTime() - b.due.getTime();
+           return a.code.localeCompare(b.code);
         }
-        
-        const codeA = a.querySelector('td:first-child').textContent.trim();
-        const codeB = b.querySelector('td:first-child').textContent.trim();
-        return codeA.localeCompare(codeB);
-      });
-
-      // Hide all original rows
-      originalRows.forEach(row => row.style.display = 'none');
-      
-      // Show and reorder visible rows
-      visibleRows.forEach(row => {
-        row.style.display = '';
-        tbody.appendChild(row);
+        if (a.date.getTime() !== b.date.getTime()) return a.date.getTime() - b.date.getTime();
+        return a.code.localeCompare(b.code);
       });
     } else {
-      // Restore original order and visibility
-      originalRows.forEach(row => {
-        row.style.display = '';
-        tbody.appendChild(row);
+      // Past: Reverse chronological (Desc)
+      visibleItems.sort((a, b) => {
+        return b.date.getTime() - a.date.getTime();
       });
+    }
+
+    // 4. Render to DOM
+    items.forEach(item => item.element.remove());
+    tbody.innerHTML = '';
+
+    let lastDateStr = '';
+    
+    const createHeader = (date) => {
+      const tr = document.createElement('tr');
+      tr.className = 'timeline-date-row';
+      const td = document.createElement('td');
+      td.colSpan = 3;
+      td.className = 'timeline-date-cell';
+      
+      const options = { weekday: 'long', month: 'long', day: 'numeric' };
+      let dateStr = date.toLocaleDateString('en-US', options);
+      
+      const day = date.getDate();
+      const suffix = (day) => {
+        if (day > 3 && day < 21) return 'th';
+        switch (day % 10) {
+          case 1:  return "st";
+          case 2:  return "nd";
+          case 3:  return "rd";
+          default: return "th";
+        }
+      };
+      // Simple replacement to add suffix
+      const dayRegex = new RegExp(` ${day}(?!\\d)`);
+      dateStr = dateStr.replace(dayRegex, ` ${day}${suffix(day)}`);
+
+      td.textContent = dateStr;
+      tr.appendChild(td);
+      return tr;
+    };
+
+    visibleItems.forEach(item => {
+      if (!dueSoonCheckbox.checked) {
+        const itemDateStr = item.date.toISOString().split('T')[0];
+        if (itemDateStr !== lastDateStr) {
+          tbody.appendChild(createHeader(item.date));
+          lastDateStr = itemDateStr;
+        }
+      }
+      
+      item.element.style.display = '';
+      tbody.appendChild(item.element);
+    });
+    
+    if (visibleItems.length === 0) {
+       const tr = document.createElement('tr');
+       const td = document.createElement('td');
+       td.colSpan = 3;
+       td.style.textAlign = 'center';
+       td.style.padding = '2rem';
+       td.style.color = 'var(--md-default-fg-color--light)';
+       td.textContent = 'No items found.';
+       tr.appendChild(td);
+       tbody.appendChild(tr);
     }
   }
 
-  dueSoonCheckbox.addEventListener('change', applyFilters);
+  // --- 4. Event Listeners ---
+
+  dueSoonCheckbox.addEventListener('change', () => {
+    if (dueSoonCheckbox.checked && currentTab === 'past') {
+      currentTab = 'upcoming';
+      updateTabUI();
+    }
+    render();
+  });
+
+  tabsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('timeline-tab')) {
+      currentTab = e.target.getAttribute('data-tab');
+      if (currentTab === 'past' && dueSoonCheckbox.checked) {
+        dueSoonCheckbox.checked = false;
+      }
+      updateTabUI();
+      render();
+    }
+  });
+
+  function updateTabUI() {
+    const tabs = tabsContainer.querySelectorAll('.timeline-tab');
+    tabs.forEach(tab => {
+      if (tab.getAttribute('data-tab') === currentTab) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+  }
+
+  render();
 })();
