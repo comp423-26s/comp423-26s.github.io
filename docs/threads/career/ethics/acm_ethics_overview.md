@@ -4,7 +4,7 @@ title: ACM Software Engineering Code of Ethics
 date: 2026-01-07
 due: 2026-01-08
 type: task
-threads: ["Career", "Career / Ethics"]
+threads: ["Career / Ethics"]
 authors: [Kris Jordan]
 ---
 

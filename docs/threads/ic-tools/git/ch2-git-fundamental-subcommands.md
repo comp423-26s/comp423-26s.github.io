@@ -4,7 +4,7 @@ title: "`git`: Fundamental Subcommands"
 date: 2026-01-07
 due: 2026-01-11
 type:  reading
-threads: ["IC Tools", "IC Tools / git"]
+threads: ["IC Tools / git"]
 authors: [Kris Jordan]
 ---
 
