@@ -27,4 +27,11 @@ authors: [Kris Jordan]
     
     [__Muhammad Fouly__](../people/bios/mfouly_about.md)
 
+
+-   ![Jade Keegan Photo](../people/profile_photos/jadek.png)  
+
+    ---
+    
+    [__Jade Keegan__](../people/bios/jadek_about.md)
+
 </div>
