@@ -15,109 +15,141 @@ authors: [Kris Jordan]
 * **Title**: Foundations of Software Engineering
 * **Term**: Spring 2026
 * **Department**: Computer Science (COMP)
-* **Course Number**: 590-140 (Pilot for 423) 
+* **Course Number**: 423
 * **Section**: 001 In-person MWF - 1:25pm to 2:15pm
 * **Instructor**: [Kris Jordan](https://www.youtube.com/krisjordan)
-    * E-mail: <kris+comp590.26s@cs.unc.edu>
+    * E-mail: <kris+comp423.26s@cs.unc.edu>
     * LinkedIn: <https://www.linkedin.com/in/krisjordan/>
 
 ## Course Description, Target Audience, and Prerequisites
 
-This course introduces students to the fundamentals of Software Engineering. Students gain experience with technical communication, team collaboration, design process, project management methodologies, development and production environment concerns, automation, code review, and so on, with an emphasis on today's best practices and tools.
+This course introduces the fundamentals of software engineering. You will gain experience with technical communication, teamwork, design, project management, production environments, automation, and code review, using modern tools and best practices.
 
-The target audience for this course are Undergraduate Computer Science majors seeking experience in the discipline of software engineering.
+This course is for undergraduate Computer Science majors who want experience in software engineering.
 
-Pre-requisite Courses: C or better in both COMP301 and COMP211.
+Prerequisite courses: C or better in both COMP301 and COMP211.
 
-## Goals
+## Course Objectives
 
-The goal of this course is to prepare you for technical leadership, emphasizing on collaborative designing, implementation, and delivery of human-centered software systems.
+The goal of this course is to prepare you for technical leadership by focusing on how teams design, build, and deliver software for people.
 
-1. Develop healthy habits for lifelong learning in the field through reading, experimentation,  self-reflection, and participation in professional communities.
-2. Improve spoken and written technical communications to specific audiences of stakeholders with an emphasis on collaborators.
-3. Practice designing, specifying, constructing, verifying, iterating on, and operating production-grade software systems in pairs and small teams following intentional methodologies.
+Software engineering is a fast-moving field that covers everything from ethics and communication to code and tools. The course is organized around six threads:
+
+1. **Career and Professional Life**
+    * You will learn the software engineering code of ethics and how to make and justify decisions ethically.
+    * You will practice teaching yourself by evaluating tools, reading documentation, using AI assistants, and experimenting.
+    * You will learn about common professional roles and career paths in software development.
+    * You will reflect on your goals and practice habits to help you achieve them.
+    * You will build a portfolio-grade project with a team to show to future employers.
+2. **Collaboration**
+    * You will practice technical communication for different audiences, especially your teammates.
+    * You will practice using professional collaboration workflows.
+    * You will practice using tools designed to help teams build software.
+    * You will practice working on a shared codebase with a small team.
+3. **Design Process**
+    * You will practice solving engineering challenges through a design lens.
+    * You will practice analyzing requirements, brainstorming, and making trade-offs.
+    * You will practice writing requirements, design documents, and creating wireframes.
+    * You will practice working with user personas, stories, and epics.
+4. **Production System Design and Operation** 
+    * You will learn the main sub-systems of a modern, production-ready application that integrates with databases and AI.
+    * You will learn how system components communicate using APIs and protocols.
+    * You will practice deploying a production-grade cloud system automatically.
+    * You will practice with system concerns like scalability and reliability.
+5. **Software Engineering Skills** 
+    * You will practice building software that meets design requirements.
+    * You will practice making and documenting architectural decisions.
+    * You will practice acceptance verification using techniques such as automated testing, continuous integration, and static analysis.
+    * You will practice code reviews and pair programming.
+    * You will practice contributing to a large, existing codebase.
+6. **Tool Bench**
+    * You will learn to use fundamental tools such as dependency managers, test harnesses, and linters.
+    * You will learn to use AI tools like coding agents and cloud code reviewers.
+    * You will practice setting up a professional development environment.
+    * You will practice evaluating and choosing the right tools for a job.
+
+These threads will be woven together throughout the semester. We will label activities by thread to help you see how they fit into the big picture.
 
 ## Textbooks and Resources
 
-The course web page (https://comp423-26s.github.io/) and Canvas are the primary resources for this course. There is no textbook for this course. We will distribute frequent readings, reference material, and tutorials via the course website and Canvas.
+The course website (https://comp423-26s.github.io/) and Canvas are your main resources. There is no required textbook; we will provide all readings and tutorials online.
 
-Textbooks we will source chapters from, without your needing to purchase any texts, include the following. Each of these books is worth reading in whole and having on your bookshelf as you progress in your software engineering career!
+We may source chapters from the following books. You do not need to buy them, but they are excellent resources for your career:
 
 * The Mythical Man-month, Fred Brooks
 * Code Complete 2nd Edition, Steve McConnell
 * The Pragmatic Programmer, Dave Thomas and Andrew Hunt
 * Clean Code and Clean Agile, Robert Martin
 * A Philosophy of Software Design, John Ousterhout
-* Understanding Comics, Scott McCloud
-* Conceptual Blockbusting, James L Adams
 
 ## Disclaimer
 
-This is a pilot course. The instructor reserves to right to make changes to the syllabus. Any changes will be announced as early as possible. Given the experimental nature of this course, please anticipate changes in the syllabus being far more likely than with established courses of record. Check the course site regularly for updates and announcements!
+The instructor may change the syllabus and will announce any changes as early as possible. This semester represents a significant iteration over previous offerings to incorporate AI-enabled software engineering workflows and modern production systems. Expect more frequent updates than in typical courses. Check the course site regularly for changes.
 
 ## Modality: In-person
 
-The most valuable resources in this course are lecture and office hours. Both will be held exclusively in-person; remote participation in lecture is not feasible due to the emphasis on groupwork.
+Lecture and office hours are your best resources. Both are in-person only; remote participation is not possible because we focus on group work.
 
-Unlike most of the courses in the computer science curriculum, Software Engineering is as much, or more, about interpersonal communication and the methodologies of collaboration as it is about programming and the mastery of neatly defined concepts and skills. You will be working in pairs and teams throughout the semester. Your ability to be an upstanding teammate is critical to your success in this course.
+Unlike many CS courses, software engineering is as much about communication and teamwork as it is about programming. You will work in pairs and teams all semester. Being a reliable teammate is critical to your success.
 
 ## Course Requirements and Policies
 
-You should attend all lectures and check the course page for announcements and updates. You should complete all assignments on time.
+You should attend all lectures and check the course page for updates. Complete all assignments on time.
 
-Please show up at least five minutes early to lecture so class can begin promptly at its scheduled start time. Please place your bookbag in the basket beneath your seat.
+Please arrive at least five minutes early so class can start on time. Place your bag in the basket under your seat.
 
 ## Course Load Expectation
 
-This course is a rigorous introduction to Software Engineering. Communicating with your team mates, reading, designing, self-teaching, and debugging will require significant amounts of time every week. The amount of time you and your team mates spend engaging with course content and projects outside of lecture will significantly impact what you get out of this course. You should expect to spend 3 hours per week on lecture in addition to 9 hours per week _outside of lecture_ working on the course.
+This course is rigorous. Communicating with teammates, reading, designing, and debugging will take significant time. You should expect to spend 3 hours in lecture and about 9 hours per week working outside of class.
 
-We DO NOT recommended taking COMP423 in a semester when you are enrolled in 17 or more credit hours.
+We do not recommend taking COMP423 if you are enrolled in 17 or more credit hours.
 
 ## Grading Criteria
 
-To do well in this course you must actively participate in lecture, be a professional, responsible, and productive team mate, keep up with the reading, writing, and programming assignments, and produce quality software.
+To do well, you must participate in class, be a professional and productive teammate, keep up with assignments, and write verifiably acceptable software.
 
-Peer evaluations of each team member's individual contributions to the final project will be heavily factored into final grade determinations. If you do not equitably contribute as a team mate in pair work on exercises and team work on the final project, which together represent 60% of your course grade, you may fail the course despite succeeding in the other components.
+Your final grade will depend heavily on peer evaluations of your work on the team project and paired tasks.
 
-Final grades are calculated with the following weights for each course component:
+Final grades are weighted as follows:
 
-* 30% - Project Sprints (SP) / Final Project (FN)
-    * 5% SP00 - Sprint 0
-    * 5% SP01 - Sprint 1
-    * 10% SP02 - Sprint 2
-    * 10% for Final Project Presentations and Final Project Hand-in
-* 30% - Homework
-    * 15% - (EX) Exercises
-    * 15% - (RD) Readings & Professional Development
-* 30% - (QZ) Quizzes (Some Fridays, announced by Monday of same week)
-* 10% - (MT) Class Lesson Attendance and Participation
+* 15% - (LS) Lesson Attendance and Participation
+* 20% - Homework
+    * 10% - (TK) Tasks
+    * 10% - (RD) Readings & Professional Development
+* 20% - (QZ) Quizzes
+* 25% - Project Sprints (SP) / Final Project (FN)
+    * 5% - SP00 - Sprint 0
+    * 5% - SP01 - Sprint 1
+    * 5% - SP02 - Sprint 2
+    * 10% - Final Presentation and Hand-in
+* 20% - (FN) Final Exam
 
 ### Lesson (Class Attendance) Policy
 
-Our course adheres to UNC's official policies on [Attendance, Grading, and Examination](https://catalog.unc.edu/policies-procedures/attendance-grading-examination/).
+We follow UNC's official [Attendance, Grading, and Examination](https://catalog.unc.edu/policies-procedures/attendance-grading-examination/) policies.
 
-Each student is permitted to be absent for up to four (4) class lessons without any penalty, prior approval, or instructor notification, regardless of absence type (university approved or otherwise). After four missed lectures, absences will count against your in-class activities and participation grade unless they are university approved absences.
+You can miss up to four (4) classes without penalty or needing approval. After four absences, further missed classes will lower your participation grade unless they are university-approved.
 
 ### Regrade Requests
 
-Regrade requests for quizzes and other manually graded assignments are open for 48 hours following the release of the grade. If you missed any of the points on a given assignment, review your work when grades are posted and understand the marks you missed. This will raise your comprehension and mastery of the material. In the event we grade your work improperly, select the specific question on Gradescope and submit a regrade request. If there are multiple questions, submit one request per question. Do not use regrade requests to ask why something is wrong, come work with us in office hours to understand the problem at hand.
+You have 48 hours to request a regrade after a grade is posted. Review your work first to understand any mistakes. If we graded something incorrectly, submit a request on Gradescope for that specific question. Do not use regrade requests to ask why something is wrong; come to office hours instead.
 
 ### Late policies
 
-All class lesson assignments will be due by the end of the lesson and handed-in on Gradescope.
+Class assignments are due by the end of the lesson on Gradescope.
 
-All assignments, outside of assessments such as quizzes and the final, will have a 10:00pm deadline on their due date.
+Other assignments are due at 10:00pm on their due date.
 
-Assignments with 10:00pm deadlines will have late periods. When the late period begins, there is a 2-hour grace period in which no penalty is applied. A 15% late penalty will be applied at the end of the semester. The late period for assignments is 48-hours.
+Assignments with 10:00pm deadlines have a 2-hour grace period. After that, a 15% penalty applies. The late period lasts 48 hours.
 
 #### Slip Days
 
-To ensure fairness to everyone, as emergencies may arise for anyone, we will drop penalties on up to four late assignments. Priority will go to assignments weighted higher (e.g. exercises ahead of readings). **This penalty drop does _not_ impact zeroes, only penalties for assignments handed in late. We expect you to hand everything in!**
+We will drop the late penalties for your first four late assignments. This only removes the penalty; it does not count for assignments you don't turn in. We expect you to hand everything in!
 
 ### Grading Scale Breakdown
 
-- A: 93-100
-- A-: 90-92
+- A: 94-100
+- A-: 90-94
 - B+: 87-89
 - B: 83-86
 - B-: 80-82
@@ -127,51 +159,47 @@ To ensure fairness to everyone, as emergencies may arise for anyone, we will dro
 - D: 60-69
 - F: 59 or below
 
-In cases of fractional points, grades will be rounded up if greater than 0.4999999999...
+Grades will be rounded up if the fraction is greater than 0.499.
 
 ### Office Hour Expectations
 
-Office hours are a terrific resource for you to get help. We use the CSXL web application for managing Office Hours. You will be automatically enrolled.
+Office hours are a great way to get help. We use the CSXL app to manage the queue; you will be enrolled automatically.
 
-All of our office hours are held **in-person in Sitterson Hall SN136**. The up-to-date office hours schedule will be available on the CSXL web application.
+Office hours are **in-person in Sitterson Hall SN136**. Check the CSXL app for the current schedule.
 
-To ensure that all the UTA staff is able to help students get the help they need, we have instituted the following expectations:
+To help our TAs support everyone, please follow these guidelines:
 
-* UTAs will help individual students with **one ticket** for up to a maximum of **20 minutes per day**. This limit ensures that more students have access to UTA help and ensures that UTA help does not impede your own learning and self-discovery working through problems on your own or with your teammates. Reasoning critically through problems and working with teammates to discover solutions is not only a valuable skill to develop, but it also makes you a better software engineer, team member, and problem solver.
+* TAs can help you for up to **20 minutes per day**. This ensures everyone gets help and encourages you to try solving problems on your own or with teammates first. Solving problems yourself is a vital skill for any engineer.
 
-* In addition, we expect that students write their CSXL help tickets **thoughtfully**. Please explain the problem you are having in detail, and what you first tried to fix it. We will help you make progress on the problem you specify in the ticket, but will encourage you to try to reason through other problems if they come up before returning to office hours.
+* Please write **thoughtful** help tickets. Explain the problem in detail and what you have already tried. We will help you make progress, but we may ask you to try reasoning through new problems on your own before returning.
 
 ### Final Project Presentations
 
-This course centers around a large final project. In lieu of a final exam, we will still meet on the scheduled day of finals, but each group will give group presentations and demonstrations of their feature work completed in the back half of this semester.
+Instead of a final exam, teams will present and demo their projects during the scheduled final exam period.
 
 ### Final Project Licensing Agreement
 
-The final project of this course is to work in a team of four on implementing a feature for an MIT Licensed open source software project that serves the students in the Computer Science Department at UNC-Chapel Hill. The hope for final projects is to select the best implemented, documented, and tested features produced by teams in this course and merge them into the production software's code base for future UNC-Chapel Hill computer science students to benefit from. As such, the implementation work you and your team does will be subject to a popular open source license, the MIT License <https://opensource.org/licenses/MIT>. Of course, per the license, any works merged in will record proper attribution and authorship in order.
+You will work in a team of four to build a feature for an open-source project used by UNC CS students. We hope to merge the best projects into the production codebase. Because of this, your work will be licensed under the [MIT License](https://opensource.org/licenses/MIT), and you will receive proper credit for your contributions.
 
 ## Honor Code and Collaboration Policy
 
-Software Engineering is as at least as much, but typically more, about collaboration as it is about individual production. This course will emphasize technical collaboration, team work, community building, and leadership. Group work with peer students enrolled in the course and collaboration with course staff is encouraged unless made explicit otherwise (such as on quizzes and individual projects). The most significant graded portion of this course will be a group-based project. Quizzes are the only course component where collaboration is not permitted.
+Software engineering is about teamwork. We encourage you to collaborate with classmates and staff unless an assignment is explicitly marked as individual (like quizzes). The largest part of your grade is a group project. Quizzes are the only part of the course where you cannot collaborate.
 
-**Collaboration on submitted work in this course should cite all collaborators clearly and distinctly.**
+**Always cite your collaborators clearly on any work you turn in.**
 
-No written text should be generated by an LLM. When we get to final project specifications, LLMs may be used to edit or provide feedback suggestions on your writing. Until then, and especially for personally reflective questions, we want to see your thinking and writing, not a machine's!
+Do not use LLMs to write text. You may use them to get feedback on your project specifications later in the semester, but for now, we want to see your own writing—especially for reflections.
 
-Any code snippets, derivations, or generated code found or produced through artificial intelligence tools outside of the official documentation for a language, framework, or package, and made use of in your work, should be clearly cited and linked back to with a complete URL. **You must understand and be able to explain any code snippet, derivation, or generated code you make use of in your work.** For example, you do not need to cite an example usage found in a Python package imported into a project. However, you do need to cite an example usage found in StackOverflow, generated through ChatGPT, Github Co-pilot, or similar sources.
+If you use AI tools for code, you must cite them with a URL. **You must be able to explain any code you turn in.** You don't need to cite official documentation or standard library examples, but you must cite code from StackOverflow, ChatGPT, or GitHub Copilot.
 
-Finally, this Spring we are implementing the "Google Rule." As of late 2024, about 20% of code merged in by Google Engineers was written in collaboration with a Large Language Model (like ChatGPT or Gemini). In COMP423, for any given assignment involving code, no more than 20% of the lines added should be written in collaboration with an LLM. If you exceed this limitation, a 50% deduction will be assessed for the assignment for you and your partner or team.
+We follow the "Google Rule": no more than 20% of the lines you add to an assignment should be written with an LLM. Exceeding this will result in a 50% grade deduction for your team.
 
 ### Code Review Test
 
-The instructor reserves the right to, at any time, ask you to submit to a "code review" test with me or a TA. We may ask you to meet to explain any line of code or decision made in your program. 
-
-**Using code, even if cited, that you do not understand and cannot explain is intellectually dishonest and a lost learning opportunity for you.**
-
-Thus, you should be able to comfortably explain the code you hand in for credit. Should you be unable to do so, your grade will be penalized for the assignment in question and you may be taken to honor court depending on the severity of the infraction.
+We may ask you to explain any line of code you turned in. **Using code you don't understand is intellectually dishonest.** If you cannot explain your work, your grade will be penalized, and you may be reported to the honor court.
 
 ## Feedback
 
-If you have suggestions on how to improve the course or just want to leave some positive, encouraging feedback for the TAs or I, please <a href="https://docs.google.com/forms/d/e/1FAIpQLScQMteEvnQpBfGsAYP5TpuqokQenhZUIf8CNvfAUUZEjMCWZQ/viewform" target="_blank">give us feedback</a>. If you make a suggestion we're able to act on, while we still have time to, we're more than happy to!
+If you have suggestions or want to thank the TAs, please [give us feedback](https://docs.google.com/forms/d/e/1FAIpQLScQMteEvnQpBfGsAYP5TpuqokQenhZUIf8CNvfAUUZEjMCWZQ/viewform). We are happy to make improvements when we can!
 
 ## Diversity Statement
 
