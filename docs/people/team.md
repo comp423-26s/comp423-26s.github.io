@@ -34,4 +34,11 @@ authors: [Kris Jordan]
     
     [__Jade Keegan__](../people/bios/jadek_about.md)
 
+
+-   ![Lizzie Coats Photo](../people/profile_photos/escoats.jpg)  
+
+    ---
+    
+    [__Lizzie Coats__](../people/bios/escoats_about.md)
+
 </div>
