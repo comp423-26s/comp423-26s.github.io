@@ -112,17 +112,17 @@ Your final grade will depend heavily on peer evaluations of your work on the tea
 
 Final grades are weighted as follows:
 
-* 15% - (LS) Lesson Attendance and Participation
-* 20% - Homework
-    * 10% - (TK) Tasks
-    * 10% - (RD) Readings & Professional Development
-* 20% - (QZ) Quizzes
-* 25% - Project Sprints (SP) / Final Project (FN)
-    * 5% - SP00 - Sprint 0
-    * 5% - SP01 - Sprint 1
-    * 5% - SP02 - Sprint 2
-    * 10% - Final Presentation and Hand-in
-* 20% - (FN) Final Exam
+* 10% - (LS) Lesson Attendance and Participation
+* 25% - Homework
+    * 10% - (RD) Readings
+    * 15% - (TK) Tasks
+* 15% - (QZ) Quizzes
+* 35% - Project Sprints (SP) / Final Project (FN)
+    * 10% - SP00 - Sprint 0
+    * 10% - SP01 - Sprint 1
+    * 10% - SP02 - Sprint 2
+    * 5% - Final Presentation and Hand-in
+* 15% - (FN) Final Exam
 
 ### Lesson (Class Attendance) Policy
 
@@ -169,13 +169,15 @@ Office hours are **in-person in Sitterson Hall SN136**. Check the CSXL app for t
 
 To help our TAs support everyone, please follow these guidelines:
 
+* TAs cannot help you with code you are working on that you cannot explain yourself. This is **especially important** to understand for AI-generated code: it is _your_ responsibility to be able to understand and explain code you are responsible for and you are responsible for all code that you write yourself or generate.
+
 * TAs can help you for up to **20 minutes per day**. This ensures everyone gets help and encourages you to try solving problems on your own or with teammates first. Solving problems yourself is a vital skill for any engineer.
 
 * Please write **thoughtful** help tickets. Explain the problem in detail and what you have already tried. We will help you make progress, but we may ask you to try reasoning through new problems on your own before returning.
 
 ### Final Project Presentations
 
-Instead of a final exam, teams will present and demo their projects during the scheduled final exam period.
+Instead addition to an abbreviated final exam, teams will present and demo their projects during the scheduled final exam period.
 
 ### Final Project Licensing Agreement
 
@@ -187,28 +189,56 @@ Software engineering is about teamwork. We encourage you to collaborate with cla
 
 **Always cite your collaborators clearly on any work you turn in.**
 
-Do not use LLMs to write text. You may use them to get feedback on your project specifications later in the semester, but for now, we want to see your own writing—especially for reflections.
+Do not use AI tools to write your original text drafts. You may use them to get feedback on grammar or clarity, but we want to see your own writing and thinking,  especially for self-reflections.
 
-If you use AI tools for code, you must cite them with a URL. **You must be able to explain any code you turn in.** You don't need to cite official documentation or standard library examples, but you must cite code from StackOverflow, ChatGPT, or GitHub Copilot.
+If you use AI tools for code, you must cite the tools you use in your commits. In some tasks where we expect AI usage, we will require your prompt contexts to be committed to the repository as files of record and specify `git` workflows to show proof-of-work. **You must be able to explain any code you turn in.** You don't need to cite official documentation or standard library examples.
 
-We follow the "Google Rule": no more than 20% of the lines you add to an assignment should be written with an LLM. Exceeding this will result in a 50% grade deduction for your team.
+In earlier offerings of the course we had a "Google Rule": no more than 20% of the lines of code you add to an assignment should be written by AI. The world of software engineering is quickly changing, however. This semester there is no limit to AI code generation in projects. You are responsible for understanding and ensuring the correctness of the code you generate and submit, though. The more you generate, the more you need to understand and assume responsibility for.
 
 ### Code Review Test
 
-We may ask you to explain any line of code you turned in. **Using code you don't understand is intellectually dishonest.** If you cannot explain your work, your grade will be penalized, and you may be reported to the honor court.
+We may ask you to explain any line of code you turned in. **Submitting code you do not understand is intellectually dishonest.** If you cannot explain your work, your grade will be penalized, and you may be reported to the honor court.
 
 ## Feedback
 
 If you have suggestions or want to thank the TAs, please [give us feedback](https://docs.google.com/forms/d/e/1FAIpQLScQMteEvnQpBfGsAYP5TpuqokQenhZUIf8CNvfAUUZEjMCWZQ/viewform). We are happy to make improvements when we can!
 
-## Diversity Statement
+## University Statements and Resources
 
-The instructor and the undergraduate teaching assistant team value the perspectives of individuals from all backgrounds reflecting the diversity of our students. We broadly define diversity to include race, gender identity, national origin, ethnicity, religion, social class, age, sexual orientation, political background, and physical and learning ability. We strive to make this classroom an inclusive space for all students. Please let us know if there is anything we can do to improve; we appreciate suggestions.
+### Acceptable Use Policy
 
-## Title IX Resources
+By attending the University of North Carolina at Chapel Hill, you agree to abide by the University of North Carolina at Chapel Hill policies related to the acceptable use of IT systems and services. The Acceptable Use Policy (AUP) sets the expectation that you will use the University’s technology resources responsibly, consistent with the University’s mission. In the context of a class, it’s quite likely you will participate in online activities that could include personal information about you or your peers, and the AUP addresses your obligations to protect the privacy of class participants. In addition, the AUP addresses matters of others’ intellectual property, including copyright. These are only a couple of typical examples, so you should consult the full Information Technology Acceptable Use Policy, which covers topics related to using digital resources, such as privacy, confidentiality and intellectual property.
 
-Any student who is impacted by discrimination, harassment, interpersonal (relationship) violence, sexual violence, sexual exploitation, or stalking is encouraged to seek resources on campus or in the community. Please contact the Director of Title IX Compliance (Adrienne Allison – <Adrienne.allison@unc.edu>), Report and Response Coordinators in the Equal Opportunity and Compliance Office (<reportandresponse@unc.edu>), Counseling and Psychological Services (confidential), or the Gender Violence Services Coordinators (<gvsc@unc.edu>; confidential) to discuss your specific needs. Additional resources are available at safe.unc.edu.
+Additionally, consult the Safe Computing at UNC website for information about data security policies, updates, and tips on keeping your identity, information, and devices safe.
 
-## Counseling and Psychological Services
+### Data Security and Privacy
 
-CAPS is strongly committed to addressing the mental health needs of a diverse student body through timely access to consultation and connection to clinically appropriate services, whether for short or long-term needs. Go to their website: <a href="https://caps.unc.edu/" target="_blank">https://caps.unc.edu/</a> or visit their facilities on the third floor of the Campus Health Services building for a walk-in evaluation to learn more. (source: Student Safety and Wellness Proposal for EPC, Sep 2018)
+UNC-Chapel Hill is committed to fulfilling its responsibilities of transparency as a state-sponsored institution of higher learning, protecting certain types of information, and using information Carolina collects only for appropriate purposes. Consult the UNC-Chapel Hill Privacy Statement for additional information.
+
+### University Compliance Office – Accommodations
+
+University Compliance Office (UCO) Accommodations Team (Accommodations – UNC Compliance) receives requests for accommodations for disability, pregnancy and related conditions, and sincerely held religious beliefs and practices through the University’s Policy on Accommodations. UCO Accommodations team determines eligibility and reasonable accommodations consistent with state and federal laws.
+
+### Counseling and Psychological Services
+
+UNC-Chapel Hill is strongly committed to addressing the mental health needs of a diverse student body. The Heels Care Network website is a place to access the many mental health resources at Carolina. CAPS is the primary mental health provider for students, offering timely access to consultation and connection to clinically appropriate services. Go to the CAPS website or visit their facilities on the third floor of the Campus Health building for an initial evaluation to learn more. Students can also call CAPS 24/7 at 919-966-3658 for immediate assistance.
+
+### Title IX Resources
+
+Any student who is impacted by discrimination, harassment, interpersonal (relationship) violence, sexual violence, sexual exploitation, or stalking is encouraged to seek resources on campus or in the community. Reports can be made online to the UCO or by contacting the University’s Title IX Coordinator, Elizabeth Hall, or the Report and Response Managers in the University Compliance Office (UCO) (formerly the Equal Opportunity and Compliance Office).  Please note that I am designated as a Responsible Employee, which means I must report to the UCO any information I receive about the forms of misconduct listed in this paragraph.  If you’d like to speak with a confidential resource, those include Counseling and Psychological Services, the University’s Ombuds Office, and the Gender Violence Services Coordinators. Additional resources are available at safe.unc.edu.
+
+### Policy on Non-Discrimination
+
+As set out in the University’s Policy Statement on Non-Discrimination, the University is committed to providing an environment where all members of our community can learn, work, and thrive. Consistent with these principles and applicable laws, it is therefore the University’s policy not to discriminate on the basis of age, color, disability, gender, gender expression, gender identity, genetic information, national origin, race, religion, sex, sexual orientation or veteran status as consistent with the University’s Policy on Prohibited Discrimination, Harassment and Related Misconduct. No person, on the basis of protected status, shall be excluded from participation in, be denied the benefits of, or be subjected to unlawful discrimination, harassment, or retaliation under any University program or activity, including with respect to employment terms and conditions. The University will consider only relevant factors such as individual abilities and qualifications in admissions, hiring, disciplinary action, and all other decisions and will apply consistent standards of conduct and performance.
+
+If you are experiencing harassment or discrimination, you can seek assistance and file a report through the Report and Response Coordinators (email reportandresponse@unc.edu or see additional contact info at safe.unc.edu) or the University Compliance Office. Please note that I am designated as a Responsible Employee, which means that I must report to the UCO any information I receive about harassment or discrimination.  If you’d like to speak with a confidential resource, those include Counseling and Psychological Services and the University’s Ombuds Office.
+
+All students are expected to adhere to University policy and follow the guidelines of the UNC Student Code of Conduct. Additional information can be found at <https://studentconduct.unc.edu/>.
+
+### Writing Center
+
+For free feedback on any course writing projects, check out UNC’s Writing Center. Writing Center coaches can assist with any writing project, including multimedia projects and application essays, at any stage of the writing process. You don’t even need a draft to come visit. To schedule a 45-minute appointment, review quick tips, or request written feedback online, visit UNC’s Writing Center online.
+
+### Syllabus Changes
+
+The instructor reserves the right to make changes to the syllabus including project due dates and test dates. These changes will be announced as early as possible.
