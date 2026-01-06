@@ -1,12 +1,3 @@
----
-code: LS00
-title: Team 423 - Spring 2026
-date: 2026-01-07
-type: lesson
-threads: Course
-authors: [Kris Jordan]
----
-
 # COMP423 Spring 2026 Teaching Team
 
 <div id="TA-team" class="grid cards" markdown>
