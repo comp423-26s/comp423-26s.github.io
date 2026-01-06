@@ -41,4 +41,11 @@ authors: [Kris Jordan]
     
     [__Lizzie Coats__](../people/bios/escoats_about.md)
 
+
+-   ![Alex Tang Photo](../people/profile_photos/alext.jpg)  
+
+    ---
+    
+    [__Alex Tang__](../people/bios/alext_about.md)
+
 </div>
