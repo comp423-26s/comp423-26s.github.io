@@ -39,4 +39,10 @@
     
     [__Alex Tang__](../people/bios/alext_about.md)
 
+-   ![Julia Guzzo Photo](../people/profile_photos/juliag.jpg)  
+
+    ---
+    
+    [__Julia Guzzo__](../people/bios/juliag_about.md)
+
 </div>
