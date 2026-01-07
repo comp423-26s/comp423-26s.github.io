@@ -6,7 +6,6 @@ due: 2026-01-08
 type: reading
 threads: ["Career / Ethics"]
 authors: [Kris Jordan]
-url: tbd
 ---
 
 ## Software Engineering Code of Ethics and Professional Practice (Short Version)
