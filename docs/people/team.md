@@ -45,4 +45,10 @@
     
     [__Julia Guzzo__](../people/bios/juliag_about.md)
 
+-   ![Hamzah Yousuf Photo](../people/profile_photos/hamzahyous.jpg)  
+
+    ---
+    
+    [__Hamzah Yousuf__](../people/bios/hamzahyous_about.md)
+
 </div>

@@ -1,9 +1,9 @@
 nav:
     - Course: threads/course
     - Career: threads/career
-    - Tools: threads/tools
-    - Teamwork: threads/teamwork
-    - SDE: threads/sde
-    - Design: threads/design
-    - System: threads/system
+    - Collaboration: threads/teamwork
+    - Design Process: threads/design
+    - System Design: threads/system
+    - Software Engineering: threads/sde
+    - Tool Bench: threads/tools
     - Teaching Team: people
