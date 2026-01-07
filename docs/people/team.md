@@ -39,4 +39,10 @@
     
     [__Alex Tang__](../people/bios/alext_about.md)
 
+-   ![Benny Rakower Photo](../people/profile_photos/brakower.jpeg)  
+
+    ---
+    
+    [__Benny Rakower__](../people/bios/brakower_about.md)
+
 </div>
