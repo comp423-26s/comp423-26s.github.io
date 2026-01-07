@@ -4,20 +4,23 @@
 
 <!-- TODO: Add your photo and profile markdown page. Be sure to resize your photo to 512px by 512px and keep it square. -->
 
--   ![Kris Jordan Photo](../people/profile_photos/krisj.png)  
+-   ![Alex Tang Photo](../people/profile_photos/alext.jpg)  
 
     ---
     
-    [__Kris Jordan__](../people/bios/krisj_about.md)
+    [__Alex Tang__](../people/bios/alext_about.md)
 
-
-
--   ![Muhammad Fouly Photo](../people/profile_photos/mfouly.png)  
+-   ![Benny Rakower Photo](../people/profile_photos/brakower.jpeg)  
 
     ---
     
-    [__Muhammad Fouly__](../people/bios/mfouly_about.md)
+    [__Benny Rakower__](../people/bios/brakower_about.md)
 
+-   ![Hamzah Yousuf Photo](../people/profile_photos/hamzahyous.jpg)  
+
+    ---
+    
+    [__Hamzah Yousuf__](../people/bios/hamzahyous_about.md)
 
 -   ![Jade Keegan Photo](../people/profile_photos/jadek.png)  
 
@@ -25,6 +28,30 @@
     
     [__Jade Keegan__](../people/bios/jadek_about.md)
 
+-   ![Julia Guzzo Photo](../people/profile_photos/juliag.jpg)  
+
+    ---
+    
+    [__Julia Guzzo__](../people/bios/juliag_about.md)
+
+
+-   ![Kamal Vasireddy Photo](../people/profile_photos/kamalv.jpg)  
+
+    ---
+    
+    [__Kamal Vasireddy__](../people/bios/kamalv_about.md)
+
+-   ![Katie Brown Photo](../people/profile_photos/kgbro.jpg)  
+
+    ---
+    
+    [__Katie Brown__](../people/bios/kgbro_about.md)
+
+-   ![Kris Jordan Photo](../people/profile_photos/krisj.png)  
+
+    ---
+    
+    [__Kris Jordan__](../people/bios/krisj_about.md)
 
 -   ![Lizzie Coats Photo](../people/profile_photos/escoats.jpg)  
 
@@ -32,11 +59,16 @@
     
     [__Lizzie Coats__](../people/bios/escoats_about.md)
 
-
--   ![Alex Tang Photo](../people/profile_photos/alext.jpg)  
+-   ![Lucy Good Photo](../profile_photos/lucykgood.jpg)  
 
     ---
     
-    [__Alex Tang__](../people/bios/alext_about.md)
+    [__Lucy Good__](../people/bios/lucykgood_about.md)
+
+-   ![Muhammad Fouly Photo](../people/profile_photos/mfouly.png)  
+
+    ---
+    
+    [__Muhammad Fouly__](../people/bios/mfouly_about.md)
 
 </div>
