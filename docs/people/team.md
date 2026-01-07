@@ -39,6 +39,12 @@
     
     [__Alex Tang__](../people/bios/alext_about.md)
 
+-   ![Katie Brown Photo](../people/profile_photos/kgbro.jpg)  
+
+    ---
+    
+    [__Katie Brown__](../people/bios/kgbro_about.md)
+
 -   ![Julia Guzzo Photo](../people/profile_photos/juliag.jpg)  
 
     ---
