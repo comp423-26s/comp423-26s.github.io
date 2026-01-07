@@ -39,4 +39,11 @@
     
     [__Alex Tang__](../people/bios/alext_about.md)
 
+
+-   ![Lucy Good Photo](../profile_photos/lucykgood.jpg)  
+
+    ---
+    
+    [__Lucy Good__](../people/bios/lucykgood_about.md)
+
 </div>
