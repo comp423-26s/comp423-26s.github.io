@@ -52,10 +52,10 @@ Software engineering is a fast-moving field that covers everything from ethics a
     * You will practice writing requirements, design documents, and creating wireframes.
     * You will practice working with user personas, stories, and epics.
 4. **Production System Design and Operation** 
-    * You will learn the main sub-systems of a modern, production-ready application that integrates with databases and AI.
+    * You will learn the main subsystems of a modern, production-ready application that integrates with databases and AI.
     * You will learn how system components communicate using APIs and protocols.
     * You will practice deploying a production-grade cloud system automatically.
-    * You will practice with system concerns like scalability and reliability.
+    * You will practice reasoning about cross-functional system concerns like scalability and reliability.
 5. **Software Engineering Skills** 
     * You will practice building software that meets design requirements.
     * You will practice making and documenting architectural decisions.
@@ -63,7 +63,7 @@ Software engineering is a fast-moving field that covers everything from ethics a
     * You will practice code reviews and pair programming.
     * You will practice contributing to a large, existing codebase.
 6. **Tool Bench**
-    * You will learn to use fundamental tools such as dependency managers, test harnesses, and linters.
+    * You will learn to use fundamental tools such as source code management, dependency managers, test harnesses, and linters.
     * You will learn to use AI tools like coding agents and cloud code reviewers.
     * You will practice setting up a professional development environment.
     * You will practice evaluating and choosing the right tools for a job.
