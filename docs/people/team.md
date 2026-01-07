@@ -39,4 +39,11 @@
     
     [__Alex Tang__](../people/bios/alext_about.md)
 
+-   ![Hamzah Yousuf Photo](../people/profile_photos/hamzahyous.jpg)  
+
+    ---
+    
+    [__Hamzah Yousuf__](../people/bios/hamzahyous_about.md)
+
+
 </div>
