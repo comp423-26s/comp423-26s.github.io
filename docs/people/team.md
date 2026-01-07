@@ -45,4 +45,28 @@
     
     [__Benny Rakower__](../people/bios/brakower_about.md)
 
+-   ![Kamal Vasireddy Photo](../people/profile_photos/kamalv.jpg)  
+
+    ---
+    
+    [__Kamal Vasireddy__](../people/bios/kamalv_about.md)
+
+-   ![Katie Brown Photo](../people/profile_photos/kgbro.jpg)  
+
+    ---
+    
+    [__Katie Brown__](../people/bios/kgbro_about.md)
+
+-   ![Julia Guzzo Photo](../people/profile_photos/juliag.jpg)  
+
+    ---
+    
+    [__Julia Guzzo__](../people/bios/juliag_about.md)
+
+-   ![Hamzah Yousuf Photo](../people/profile_photos/hamzahyous.jpg)  
+
+    ---
+    
+    [__Hamzah Yousuf__](../people/bios/hamzahyous_about.md)
+
 </div>
