@@ -39,6 +39,12 @@
     
     [__Alex Tang__](../people/bios/alext_about.md)
 
+-   ![Kamal Vasireddy Photo](../people/profile_photos/kamalv.jpg)  
+
+    ---
+    
+    [__Kamal Vasireddy__](../people/bios/kamalv_about.md)
+
 -   ![Katie Brown Photo](../people/profile_photos/kgbro.jpg)  
 
     ---
