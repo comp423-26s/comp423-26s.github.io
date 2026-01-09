@@ -16,6 +16,12 @@
     
     [__Benny Rakower__](../people/bios/brakower_about.md)
 
+-   ![Charlotte Tsui Photo](../people/profile_photos/chtsui.jpg)  
+
+    ---
+    
+    [__Charlotte Tsui__](../people/bios/chtsui_about.md)
+
 -   ![Hamzah Yousuf Photo](../people/profile_photos/hamzahyous.jpg)  
 
     ---
