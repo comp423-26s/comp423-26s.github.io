@@ -71,4 +71,10 @@
     
     [__Muhammad Fouly__](../people/bios/mfouly_about.md)
 
+-   ![Natalie Ammerman Photo](../people/profile_photos/natamm.png)  
+
+    ---
+    
+    [__Natalie Ammerman__](../people/bios/natamm_about.md)
+
 </div>
