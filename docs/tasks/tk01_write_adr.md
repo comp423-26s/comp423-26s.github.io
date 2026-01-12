@@ -216,4 +216,4 @@ You may reference:
 
 ## Hand-in on Gradescope
 
-You will submit your work for this Task on Gradescope. Submissions will open by Saturday 1/10.
+You will submit your two written ADRs for this Task on Gradescope.
