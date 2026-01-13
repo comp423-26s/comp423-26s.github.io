@@ -64,6 +64,12 @@ In the alternate timeline, you previously submitted ADRs to Synercast.io. Chad s
 
 Get started by accepting the following GitHub Classroom Assignment: <https://classroom.github.com/a/3UMeYIjj>
 
+!!! warning "Accept Invitation to Join COMP423 Spring 2026 Organization"
+    After attempting to accept this first assignment, you may need to accept an invitation 
+    to join our course organization. 
+    
+    To do so, in a different tab, log in to Github, navigate to <https://github.com/settings/organizations> and look for an invitation to join the organization.
+
 Once your GitHub repository is created, you will need to clone it to your developer machine.
 
 Open the project directory in VSCode. It should prompt you to reopen the project in a Dev Container. Accept the suggestion and wait for the dev container to download and install. Once it has, you should see "Dev Container: ..." in the bottom left corner of VSCode. All work in this course will be completed in Dev Containers.
