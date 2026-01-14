@@ -1,6 +1,6 @@
 ---
 code: LS03
-title: Diagramming git Operations
+title: Conceptually Understanding Common `git` Operations
 date: 2026-01-14
 type: lesson
 threads: ["Tools / git"]
