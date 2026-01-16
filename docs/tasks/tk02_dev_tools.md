@@ -93,6 +93,9 @@ When you begin work on a new concept: branch. Go ahead and make the new branch d
 
 After you've made that commit, your task is to setup this project with `uv` such that when a new dev container is created (or rebuilt) the `uv` package manager is installed in the dev container, configured, and dependencies are `sync`'ed ("synchronized" or _installed_). Since installing and configuring a dependency manager in a dev container contains some non-critical configuration knowledge, it is a reasonable task to work with the GitHub Copilot Agentic AI on. Based on the strategies discussed in LS02, you should open a new agent prompt for this task. 
 
+!!! info "Don't forget to claim Copilot Pro"
+    If you run into trouble prompting Copilot within VSCode, make sure you've claimed your Copilot Pro coupon! This is a separate step from accepting Github's Student Developer Pack. To claim your coupon, head to GitHub and navigate to your profile > Settings > Billing and Licensing > Education Benefits and follow the instructions, then restart VSCode for the changes to take effect.
+
 Try crafting an agentic prompt that includes the following context:
 
 1. Describes what you want the agent to do for you (hint: it's implementing your Architectural Design Record)
