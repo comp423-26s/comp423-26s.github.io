@@ -8,6 +8,38 @@ threads: ["SDE / ADR", "Tools / Code Agent"]
 authors: [Kris Jordan]
 ---
 
+## Prelude
+
+In your alternate timeline, you received the following email.
+
+> Internal Memo: The Company Has Discovered "Standards"
+> 
+> From: Chadwick P. Ledger, CEO (HBS)
+>
+> To: Engineering (You)
+>
+> Subject: Congratulations, You Now Own "Quality"
+> 
+> Hi and welcome back!!!
+> 
+> First off: outstanding work on the last task. I personally watched the terminal print weather for Chapel Hill, and I immediately forwarded a screenshot to three investors with the caption: "We are basically profitable." This is what we at SynerCast.ai call "traction" and "validation". That "timeout" was _definitely a fluke."
+> 
+> Now that we have solved dependency management, leadership is ready to take the next strategic leap forward: we are professionalizing. I know it sounds intense, but please remember: professionalism is just vibes, except you can run it in the command line.
+> 
+> Here’s the situation. We’ve noticed an alarming trend where code is being written in multiple styles, bugs are being introduced without any formal announcement, and the app sometimes works only if you believe in it hard enough. This is a risk to our brand, our roadmap, and most importantly, Chad’s ability (me) to demo things live without sweating through a quarter-zip.
+> 
+> So your next mission is simple: add the kind of automated guardrails that make a project feel like it belongs to a real company. Think: consistent formatting, helpful warnings before mistakes become folklore, and a way to prove things work that doesn’t involve "it ran once on my machine."
+> 
+> Thanks in advance.
+> 
+> Warmly,
+>
+> Chadwick P. Ledger, CEO (HBS)
+>
+> SynerCast.ai
+
+
+
 ## 1. Overview
 
 In **Task 2**, you established the foundation of your project by selecting **`uv`** as your dependency manager and automatically installing it in your Dev Container. 
