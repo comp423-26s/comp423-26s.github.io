@@ -22,7 +22,7 @@ In your alternate timeline, you received the following email.
 > 
 > Hi and welcome back!!!
 > 
-> First off: outstanding work on the last task. I personally watched the terminal print weather for Chapel Hill, and I immediately forwarded a screenshot to three investors with the caption: "We are basically profitable." This is what we at SynerCast.ai call "traction" and "validation". That "timeout" was _definitely a fluke."
+> First off: outstanding work on the last task. I personally watched the terminal print weather for Chapel Hill, and I immediately forwarded a screenshot to three investors with the caption: "We are basically profitable." This is what we at SynerCast.ai call "traction" and "validation". That "timeout" was _definitely a fluke_.
 > 
 > Now that we have solved dependency management, leadership is ready to take the next strategic leap forward: we are professionalizing. I know it sounds intense, but please remember: professionalism is just vibes, except you can run it in the command line.
 > 
