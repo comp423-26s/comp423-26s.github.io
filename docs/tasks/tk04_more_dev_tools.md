@@ -78,7 +78,7 @@ Finally, update your project's `README.md` to have a section that covers "Format
 
 Once you have made your `feat:` commit with a verified implementation, merge it into your `main` branch with a merge commit.
 
-### B. ADR003 Static Type Checking (Logic Correctness)
+### B. ADR003 Static Type Checking
 
 Before writing your ADR, you should read an overview of each of the tools and be able to answer the following questions:
 
@@ -94,7 +94,7 @@ Tools to investigate and choose from:
 
 For this `git` workflow, follow the same naming conventions, standards, and expectations as the previous ADR. It will be on you to determine how to verify the tool you choose works in your devcontainer and vscode IDE integration. We will ask you to be able to prove this verification in the submission for this task.
 
-### C. ADR004 Testing & Coverage (Execution Verification)
+### C. ADR004 Testing & Coverage 
 
 Before writing your ADR, you should read an overview of each of the tools and be able to answer the following questions:
 
