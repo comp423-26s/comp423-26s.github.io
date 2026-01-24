@@ -1,3 +1,13 @@
+---
+code: RD10
+title: Advancements in Communication between Computing Systems
+date: 2026-01-23
+due: 2026-01-27
+type:  reading
+threads: ["System / APIs"]
+authors: [Kris Jordan]
+---
+
 # 2. Advancements in Communication between Computing Systems
 
 As we turn our attention to communication between systems, that software engineers design and implement, it is helpful to have some historical context. Just as structured communication enables humans to align on shared goals, advances in computing systems have focused on making the exchange of information between machines more structured, scalable, and reliable. This history lays the foundation for understanding how modern APIs play a central role in today’s interconnected digital world.

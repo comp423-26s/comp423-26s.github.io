@@ -1,3 +1,13 @@
+---
+code: RD09
+title: Communicating in the Software Development Lifecycle
+date: 2026-01-23
+due: 2026-01-27
+type:  reading
+threads: ["System / APIs", "Design / Communication"]
+authors: [Kris Jordan]
+---
+
 # 1. Communication in the Software Development Lifecycle
 
 Effective communication is critical throughout the software development life cycle (SDLC). Whether a client is requesting a feature or multiple teams are collaborating on a project, intentional communication strategies help ensure that everyone remains on the same page. Poor communication, on the other hand, can lead to misunderstandings, delays, and even project failure.
@@ -16,7 +26,7 @@ Good communication helps:
 Some high-level strategies and concerns are pervasive in software development. We will explore these in more depth as the course goes on, but it is worth highlighting a few now:
 
 1. **Using Shared _Resources_ (e.g. artifacts like files and documents)**
-    - Design documents, technical specifications, and wireframes help clarify ideas.
+    - Architectural Design Records, Design documents, technical specifications, and wireframes help clarify ideas.
     - These artifacts act as shared _resources_, ensuring all stakeholders are able to rally around the same ideas _before_ they are built. This idea is not new to software development, think of blue prints and artistic renderings of buildings and spaces in the construction industry as a predecessor.
 
 2. **Choosing the Right Medium for the Message**

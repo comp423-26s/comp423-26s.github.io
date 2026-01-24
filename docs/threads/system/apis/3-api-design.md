@@ -1,3 +1,13 @@
+---
+code: RD11
+title: "Human Communication and API Design: A Shared Foundation"
+date: 2026-01-23
+due: 2026-01-27
+type:  reading
+threads: ["System / APIs"]
+authors: [Kris Jordan]
+---
+
 # 3. Human Communication and API Design: A Shared Foundation
 
 Building on the importance of communication in the software development life cycle, we now turn our attention to APIs—**Application Programming Interfaces**. Just as intentional communication strategies help teams of humans align and collaborate, APIs serve as the structured communication layer that allows different software systems to work together effectively.
@@ -43,7 +53,7 @@ To help solidify these concepts, let’s draw some direct parallels between comm
 
 ## Empathy in API Design
 
-Empathy is just as critical in API design as it is in human-to-human communication. In both, structure minimizes ambiguity and reduces the effort required to interpret messages. Imagine receiving a vague email like, “Please fix it ASAP,” without knowing what "it" refers to or how urgent the issue really is. Similarly, an API that returns an error message like, “Something went wrong,” leaves developers guessing about what needs to be fixed.
+Empathy is just as critical in API design as it is in human-to-human communication. In both, structure minimizes ambiguity and reduces the effort required to interpret messages. Imagine receiving a vague email like, "Please fix it ASAP," without knowing what "it" refers to or how urgent the issue really is. Similarly, an API that returns an error message like, “Something went wrong,” leaves developers guessing about what needs to be fixed.
 
 API designers must consider the needs, constraints, and workflows of the developers who will use their APIs. This means thinking beyond technical functionality to focus on usability and developer experience. Here are some best practices when designing APIs that are a joy to use:
 

@@ -1,7 +1,7 @@
 ---
 code: TK04
 title: Professionalizing the Developer Environment
-date: 2026-01-22
+date: 2026-01-21
 due: 2026-01-27
 type: task
 threads: ["SDE / ADR", "Tools / Code Agent"]

@@ -5,3 +5,7 @@ This is the "big picture" view of software components coming together to form a 
 Understanding how systems of components interact allows you to build applications that are fast, secure, and capable of handling many users. In the industry, system design knowledge is essential for architecting modern platforms and is a major focus of high-level engineering interviews.
 
 System design concerns will pick-up as we get deeper into the course.
+
+{% set thread_name = "System" %}
+{% set css_class = get_thread_css_class(thread_name) %}
+{% include "_includes/thread_table.html" %}
