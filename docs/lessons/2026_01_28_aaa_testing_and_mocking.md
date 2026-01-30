@@ -1,6 +1,6 @@
 ---
 code: LS06
-title: AAA Testing, Mocking, and Patching
+title: Arrange-Act-Assert Testing and Mocking
 date: 2026-01-28
 type: lesson
 threads: ["Course", "SDE / Testing"]
