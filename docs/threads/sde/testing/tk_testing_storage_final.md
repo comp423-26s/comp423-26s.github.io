@@ -46,6 +46,12 @@ This project begins from a new repository, setup very similar to where yours lef
 
 You can begin the task by accepting the following GitHub Classroom assignment: https://classroom.github.com/a/ItT31Yka
 
+!!! info "If cloning fails..."
+
+    If cloning the repository once you've accepted the assignment fails, then you may need to accept an invitation to the repository.
+
+    Click on your Notifications of Github.com (the inbox icon) and look for the invitation to accept the repository there. If you do not see it there, look under your profile at "Organizations" or "Repositories" as alternate places to find the invite. (There should have been an email notification to accept, as well.)
+
 From a terminal, in whatever directory on your _host machine_ you keep your coursework projects, you should clone your repository. Open that directory as a workspace in VSCode and then reopen the workspace in a dev container.
 
 ## 1. Guided Code Read
