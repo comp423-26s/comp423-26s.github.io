@@ -52,6 +52,10 @@ You can begin the task by accepting the following GitHub Classroom assignment: h
 
     Click on your Notifications of Github.com (the inbox icon) and look for the invitation to accept the repository there. If you do not see it there, look under your profile at "Organizations" or "Repositories" as alternate places to find the invite. (There should have been an email notification to accept, as well.)
 
+!!! warning "Errors starting the Dev Containers in Windows"
+
+    If you face a problem opening the DevContainer in Windows, it's likely due to a line ending issue. In VSCode, change your line ending setting for the project to be just LF _not_ CRLF. You will see a setting for this in the bottom right corner. Change to `LF` and try reopening the dev container.
+
 From a terminal, in whatever directory on your _host machine_ you keep your coursework projects, you should clone your repository. Open that directory as a workspace in VSCode and then reopen the workspace in a dev container.
 
 ## 1. Guided Code Read
@@ -104,6 +108,7 @@ Follow these steps to complete the assignment.
         5. `wip-jsonfileio-persist-unit`
         6. `wip-linkstore-integration`
         7. `wip-fixture-refactor`
+
 
 ### Phase 1: `LinkStore` - Unit Test and Implement
 
