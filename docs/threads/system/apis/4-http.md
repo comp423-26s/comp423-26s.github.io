@@ -1,3 +1,13 @@
+---
+code: RD14
+title: "Key Concepts in HTTP"
+date: 2026-02-11
+due: 2026-02-12
+type:  reading
+threads: ["System / APIs"]
+authors: [Kris Jordan]
+---
+
 # 4. Key Concepts in HTTP
 
 Have you ever wondered how your favorite apps communicate with servers behind the scenes? When you leave a comment on Instagram, how does the server know which post you’re commenting on and what you wrote? In this section, we'll explore how modern software systems communicate via HTTP (Hypertext Transfer Protocol), focusing on APIs (Application Programming Interfaces) and the structure that makes it all work.
@@ -86,7 +96,7 @@ HTTP methods define **what** action you want to perform on a resource. Understan
 
 Safety in web APIs is like reading a book versus writing in it. When a method is "safe," it means it only reads or looks at data without changing anything on the server - like how reading a book doesn't change its contents. GET is the only safe method since it just retrieves information, while methods like POST, PUT, PATCH, and DELETE are not safe because they modify data on the server, just like how writing in a book changes its contents.
 
-Idempotency is about whether doing something multiple times has the same effect as doing it once. It's a really important property in many system designs. Think of it like pressing the button at a crosswalk: the second or third time you push it before the lights change has no additional effect (as much as we wish it sped the process up!). Similarly, saving a file many times in a row in your editor does not create multiple files. Importantly, for well implemented checkout systems, pressing "Complete Purchase" many times does not result in duplicate orders going through. These operations are idempotent. GET, PUT, PATCH, and DELETE are idempotent because repeating the same request gives you the same result, while POST is not idempotent because each request creates something new - like how pressing "send" multiple times on an email might send multiple copies of the same message.
+**Idempotency** is about whether doing something multiple times has the same effect as doing it once. _It's a **very important** property in many system designs._ Think of it like pressing the button at a crosswalk: the second or third time you push it before the lights change has no additional effect (as much as we wish it sped the process up!). Similarly, saving a file many times in a row in your editor does not create multiple files. Importantly, for well implemented online checkout systems, pressing "Complete Purchase" many times does not result in duplicate orders going through. These operations are idempotent. GET, PUT, PATCH, and DELETE are idempotent because repeating the same request _should produce_ you the same result. Contrast this with POST, which is not idempotent, because each request creates something new, like pressing "Download" many times on a website may download multiple copies of the same file.
 
 #### GET
 * Examples:

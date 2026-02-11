@@ -1,3 +1,13 @@
+---
+code: RD16
+title: "FastAPI and Pydantic Tutorial"
+date: 2026-02-11
+due: 2026-02-15
+type:  reading
+threads: ["System / APIs"]
+authors: [Kris Jordan]
+---
+
 # 6. FastAPI and Pydantic Tutorial
 
 FastAPI is a modern, fast (high-performance), standards-first web framework for Python.
@@ -13,11 +23,9 @@ In a terminal on your host machine, outside of any other `git` repositories, fol
 
 1. **Clone the tutorial repository**: Start by cloning the repository at [https://github.com/comp423-26s/fastapi-tutorial.git](https://github.com/comp423-26s/fastapi-tutorial.git).
 
-2. **Open the repository in a VS Code Dev Container**. The dev container is based on a modern Microsoft Dev Container image, which we have already used once in this course, so it should load quickly and install the necessary dependencies from `requirements.txt`. 
+2. **Open the repository in a VS Code Dev Container**. The dev container is based on a modern Microsoft Dev Container image, which we have already used once in this course, so it should load quickly and install the necessary dependencies from `requirements.txt`. This repo uses an older style package manager (`pip`) than what we have emphasized this semester (`uv`), but both tools and setups are valid and common "in the wild."
 
-3. **Read the `requirements.txt` file**. Notice that we are taking a dependency on `fastapi[standard]` package ([PIP package repository page](https://pypi.org/project/fastapi/)). The other two packages, `black` and `pylint` are tools used to automatically format your Python code using consistent style (`black`) and _lint_ check your code for common [code smells](https://martinfowler.com/bliki/CodeSmell.html) or issues. We'll learn more about these kinds of tools soon, but they're configured in the dev container settings file if you are curious.
-
-4. **Open main.py**. This is the entrypoint of our API app and the tutorial starts meow :cat:.
+3. **Open main.py**. This is the entrypoint of our API app and where the tutorial starts!
 
 ## 2. First Route: Hello World
 
@@ -106,13 +114,14 @@ Update `main.py` with the following:
 
 ```python
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Annotated
 
 app = FastAPI()
 
 class Post(BaseModel):
-    id: int
-    content: str
+    id: Annotated[int, Field()]
+    content: Annotated[str, Field()]
 
 # Prepopulate dictionary of posts
 posts_db = {
@@ -150,12 +159,13 @@ Add the following import and route definition to your `main.py` file:
 
 ```python
 # ... Update FastAPI Imports ...
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path
+from typing import Annotated
 
 # ... Earlier App Stays Same ... 
 
 @app.get("/posts/{post_id}")
-def get_post(post_id: int) -> Post:
+def get_post(post_id: Annotated[int, Path(title="ID of Post")]) -> Post:
     if post_id in posts_db:
         return posts_db[post_id]
     raise HTTPException(status_code=404, detail="Post not found")
@@ -227,12 +237,12 @@ Let’s make our API a bit more dynamic by allowing clients to **create** new po
 
 ```python
 # Update FastAPI Imports
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Body
 
 # ... Keep other routes the same ...
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-def create_post(post: Post):
+def create_post(post: Annotated[Post, Body()]):
     if post.id in posts_db:
         raise HTTPException(status_code=400, detail="Post with this ID already exists")
     posts_db[post.id] = post
@@ -269,7 +279,7 @@ There are a few other activities for you to try here:
 
     We are not actually using a "database" in this tutorial; just a dictionary stored in our module's global memory a sa simplification. As such, every time your FastAPI server stops and restarts, this dictionary is reset to its initialized contents. That means each time you change your `main.py` file below, and the server automatically reloads, you will lose any changes made via the API.
 
-    In a coming unit, we will learn how to connect our API to persistent databases that live in a layer outside of our code such that when we stop and restart our server the data is securely stored and accessible again as soon as our server starts back up.
+    Soon, we will learn how to connect our API to persistent databases that live in a layer outside of our code such that when we stop and restart our server the data is securely stored and accessible again as soon as our server starts back up.
 
 ---
 
@@ -281,14 +291,14 @@ Finally, let’s round out our basic CRUD functionality (Create, Retrieve, Updat
 # ... previous code remains the same ...
 
 @app.put("/posts/{post_id}")
-def update_post(post_id: int, updated_post: Post) -> Post:
+def update_post(post_id: Annotated[int, Path()], updated_post: Annotated[Post, Body()]) -> Post:
     if post_id not in posts_db:
         raise HTTPException(status_code=404, detail="Post not found")
     posts_db[post_id] = updated_post
     return updated_post
 
 @app.delete("/posts/{post_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_post(post_id: int) -> None:
+def delete_post(post_id: Annotated[int, Path()]) -> None:
     if post_id not in posts_db:
         raise HTTPException(status_code=404, detail="Post not found")
     del posts_db[post_id]
@@ -345,6 +355,5 @@ Congratulations! You’ve:
 - **Organize your files**: Real projects separate routers, models, and database logic into different modules.
 - **Use databases**: Instead of an in-memory dictionary, integrate a real database system for persistence.
 - **Validation and error handling**: Explore more Pydantic features to ensure robust data validation. One place where we did not fully specify our APIs above, for the sake of not getting bogged down in error cases, is when we responded with error status codes but did not specify this in the route decorator. In the next assignment, we will fully specify all expected response types in our route handler functions.
-- **Deployment to the Web**: You have successfully deployed a _static_ website to the web. Deploying a dynamic web application, like this API, requires some more machinery because our API doesn't just result in _static files_ it results in a _running server program_. We will learn more about deploying an application like this to the cloud soon.
 
 With these fundamentals, you have a solid handle on building a basic API with **FastAPI**. Enjoy experimenting, and happy coding!

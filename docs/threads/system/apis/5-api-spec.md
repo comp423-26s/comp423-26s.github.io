@@ -1,3 +1,13 @@
+---
+code: RD15
+title: "Toward Designing and Formally Specifying APIs"
+date: 2026-02-11
+due: 2026-02-12
+type:  reading
+threads: ["System / APIs"]
+authors: [Kris Jordan]
+---
+
 # 5. Toward Designing and Formally Specifying APIs
 
 Now that you have seen the key elements of HTTP at a conceptual level, across the entire request-response journey, let's focus in on how API designers generally use the inputs from a request. Additionally, let's look at how responses are designed.
