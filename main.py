@@ -260,7 +260,7 @@ def define_env(env: Any) -> None:
 
         def code_sort_key(item: RecentItem) -> tuple[Any, ...]:
             code = item["code"].lower()
-            return tuple(int(part) if part.isdigit() else part for part in re.split(r"(\d+)", code))
+            return (item["date"], tuple(int(part) if part.isdigit() else part for part in re.split(r"(\d+)", code)))
 
         filtered_items.sort(key=code_sort_key)
 
