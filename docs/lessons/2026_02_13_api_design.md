@@ -6,7 +6,6 @@ type: lesson
 threads: ["System / Backend"]
 authors: [Kris Jordan]
 url: https://docs.google.com/presentation/d/1rTiBQfSxXGlhlcaJJb0QYr8wYF8J1J_LYWRDTaIXKlk/edit?usp=sharing
-links:
     
 ---
 
