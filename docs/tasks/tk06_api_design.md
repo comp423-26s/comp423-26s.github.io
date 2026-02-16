@@ -4,11 +4,11 @@ title: API Design (Part 1)
 date: 2026-02-16
 due: 2026-02-19
 type: task
-threads: ["SDE / ADR", "Tools / Code Agent"]
+threads: ["System / API", "System / Backend"]
 authors: [Kris Jordan]
 ---
 
-# TK06. API Design and Implementation
+# TK06. API Design and Implementation (Part 1)
 
 In this task you will design an API for a URL shortening service.
 
@@ -16,7 +16,7 @@ In this task you will design an API for a URL shortening service.
 
 Part 1. You only need to implement the route decorators and function signatures, *NOT* the actual implementations of the API.
 
-Part 2. You will implement the API.
+Part 2. You will implement the API. (Not yet released!)
 
 ## App Overview: URL Shortener
 
