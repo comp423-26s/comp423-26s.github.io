@@ -4,7 +4,7 @@ title: API Design (Part 1)
 date: 2026-02-16
 due: 2026-02-19
 type: task
-threads: ["System / API", "System / Backend"]
+threads: ["System / API", "Design"]
 authors: [Kris Jordan]
 ---
 
