@@ -5,7 +5,7 @@ date: 2026-02-16
 due: 2026-02-17
 type:  reading
 threads: ["System / Backend"]
-authors: [Kris Jordan]
+authors: ["Kris Jordan"]
 ---
 
 # 1. Introduction to Dependency Injection in FastAPI
