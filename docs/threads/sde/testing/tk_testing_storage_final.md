@@ -4,7 +4,7 @@ title: Unit and Integration Testing Exercise
 date: 2026-02-02
 due: 2026-02-06
 type: reading
-threads: ["Course", "SDE / Testing"]
+threads: ["SDE / Testing"]
 authors: [Kris Jordan]
 ---
 
