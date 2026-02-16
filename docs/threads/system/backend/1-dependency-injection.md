@@ -1,5 +1,5 @@
 ---
-code: RD18
+code: RD17
 title: "Dependency Injection"
 date: 2026-02-16
 due: 2026-02-17
@@ -14,7 +14,7 @@ authors: [Kris Jordan]
 
 **Dependency Injection (DI)** is a widely used design pattern that promotes modular, testable, and maintainable code. It is a **core principle** in many modern application frameworks across various programming languages, including Java (Spring), Python (FastAPI), and TypeScript (Angular). The primary idea behind DI is instead of _you_ constructing dependencies _inside_ a function or class body, you declare them as _special parameters_. When the application framework calls your function, such as a route, its DI system constructs the argument values behind the scenes and "injects" them as arguments. This process is called **dependency injection**.
 
-This concept plays a role in modern **layered architectures** like you just read about. We previously introduced a **business logic services layer** that encapsulates domain-specific logic and separates it from the **routing layer** (which handles HTTP requests and responses). Dependency Injection provides a **clean and structured way** to introduce and manage dependencies between these layers, keeping them **loosely coupled** and testable.
+This concept plays a role in modern **layered architectures** like as we are exploring in this course. Dependency Injection provides a **clean, structured way** to introduce and manage dependencies between layers, keeping them **loosely coupled** and testable. We will introduce a **business logic services layer** that encapsulates domain-specific logic and separates it from the **routing layer** (which handles HTTP requests and responses). The services layer is _dependency injected_ into the routing layer.
 
 ### Why Use Dependency Injection?
 
