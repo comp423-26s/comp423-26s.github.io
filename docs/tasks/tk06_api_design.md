@@ -206,7 +206,13 @@ class MessageResponse(BaseModel):
     },
     tags=["Shopping"]
 )
-def get_item(item_id: int) -> MessageResponse:
+def get_item(
+    item_id: Annotated[int, Path(
+        description="The unique ID of the item",
+        gt=0,
+        examples=[67, 68]
+    )]
+) -> MessageResponse:
     if item_id > 0:
         return MessageResponse(message="Item found!")
     else:
