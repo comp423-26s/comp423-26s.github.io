@@ -163,6 +163,20 @@ Write your own brief intro to what his API is about.
 )
 ```
 
+!!! success "Run your dev server with `./scripts/run-dev-server.sh`"
+
+    You have two paths toward running the development server.
+    The easiest way is to run the `./scripts/run-dev-server.sh` script.
+
+    Otherwise, you can run the `uvicorn` command manually:
+
+    `uv run uvicorn main:app --host 0.0.0.0 --reload`
+
+    While the server is running in your dev container, you can navigate
+    to the _ports_ tab in VS Code to look for the "Forwarded Address". This is the port that is forwarded to your host machine. You can either open a browser on your host machine directly to this location _or_ click the globe icon next to the address in VSCode as a direct shortcut to do the same.
+
+    Navigate to `/docs` in your browser to see the interactive OpenAPI documentation UI.
+
 After you've more fully configured your `app`, as shown above, try reloading your OpenAPI UI by navigating to `/docs` in your dev server. You should see the information above being used to improve the documentation generated. The **tags** added will allow you to organize your routes based on the intended user. In real APIs, tags are generally used to cluster endpoints for a specific feature together; here we're using them to organize by persona served.
 
 #### Route-level Decorator Specification
