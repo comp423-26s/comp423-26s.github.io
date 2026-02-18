@@ -55,7 +55,7 @@ An journey may combine a few user stories in order to give a complete start-to-f
 1. As Sue Sharer, I want to create a shortened URL with an optional expiration time and the ability to request a custom vanity URL, so that I can control how long it is available and share a more meaningful link.
 2. As Cai Clicker, I want to open a shortened URL by clicking its unique link, so that I am automatically redirected to the original long URL.
 3. Amy Admin
-    1. As Amy Admin, I want to see a list of all active resources (shortened URLs) and filter by type or view counts greater than some low threshold, so that I can oversee what content is currently being shared.  
+    1. As Amy Admin, I want to see a list of all active resources (shortened URLs) and filter by view counts greater than some low threshold, so that I can oversee what content is currently being shared.  
     2. As Amy Admin, I want to see how many times each resource has been accessed, so that I can monitor usage and identify high-traffic resources.
     3. As Amy Admin, I want to change the target of a shortened URL, so that I can correct or modify existing resources when necessary.  
     4. As Amy Admin, I want to delete any active resource from the system, so that I can remove content that should no longer be available.  
