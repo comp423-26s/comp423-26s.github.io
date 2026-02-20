@@ -142,7 +142,7 @@ In order to export the `LinkStoreDI` name from the `store` package, we need to a
 
 To add `LinkStoreDI` to the list of names available at the package level, add an import statement for the `LinkStoreDI` type and then add the name to the special dunderscore variable `__all__`. This will make the name importable from the `store` package.
 
-~~~python title="src/store/link_store_factory.py" linenums="1"
+~~~python title="src/store/__init__.py" linenums="1"
 """Persistence layer package."""
 
 from store.json_file_io import JSONFileIO
@@ -172,7 +172,7 @@ Now that you have seen a few examples of a the `DI`-style `TypeAlias` convention
 
 ### 6. Injecting Services in Routes
 
-Now, _finally_, after establishing these definitions to support dependency injection, you can inject your `LinkStore` service into your routes in `router.py`. First, be sure you import the `LinkStoreDI` type that you exported from `services`. Then, what do you need to do to inject a `LinkStore` instance into your routes? You should be able to figure this out at this point; refer back to the readings as necessary.
+Now, _finally_, after establishing these definitions to support dependency injection, you can inject your `LinkService` service into your routes in `router.py`. First, be sure you import the `LinkServiceDI` type that you exported from `services`. Then, what do you need to do to inject a `LinkService` instance into your routes? You should be able to figure this out at this point; refer back to the readings as necessary.
 
 ## Working Together
 
