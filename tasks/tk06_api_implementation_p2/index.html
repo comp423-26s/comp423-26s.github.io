@@ -1,0 +1,1691 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/tasks/tk06_api_implementation_p2/">
+      
+      
+        <link rel="prev" href="../tk06_api_design/">
+      
+      
+        <link rel="next" href="../../threads/career/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>API and Service-layer Implementation (Part 2) - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#requirements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API and Service-layer Implementation (Part 2)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-defining-routes-in-a-routing-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Defining Routes in a Routing Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-establishing-a-configuration-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Establishing a Configuration Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-establishing-configpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Establishing config.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-establishing-data-directory-and-updating-gitignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Establishing data/ directory and updating .gitignore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-dependency-injection-factories-and-helper-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Dependency Injection Factories and Helper Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Dependency Injection Factories and Helper Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-adding-srcstorelink_store_factorypy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Adding src/store/link_store_factory.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-exporting-the-linkstoredi-name-from-the-store-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Exporting the LinkStoreDI name from the store Package
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-establishing-a-service-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Establishing a Service Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-injecting-services-in-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Injecting Services in Routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working Together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>API and Service-layer Implementation (Part 2)</h1>
+
+<h2 id="requirements">Requirements</h2>
+<p>In the follow-on extension to <a href="../tk06_api_design/">Part 1 of Task 06</a>, you will implement the following subset of three stories:</p>
+<ol>
+<li>As Sue Sharer, I want to create a shortened URL and the ability to request a custom vanity URL, so that I can share a more meaningful link.</li>
+<li>As Cai Clicker, I want to open a shortened URL by clicking its unique link, so that I am automatically redirected to the original long URL.</li>
+<li>As Amy Admin, I want to see a list of all active resources (shortened URLs).</li>
+</ol>
+<p>These stories are simplifications of stories you specified an API design for in Phase  Your API should still <em>advertise</em> the more sophisticated abilities, but you can choose to ignore the additional inputs or throw an unimplemented exception if detected. If you and your partner are looking for an added challenge, implementing these capabilities is a fun, educational extension, though! Specifically, the complexities of stories from Part 1 your API was designed to handle, that <strong>you do not need to implement in the underlying layers</strong>, are:</p>
+<ol>
+<li>As Sue Sharer, the optional expiration time of a shortened URL.</li>
+<li>As Amy Admin, the ability to filter active resources by their view counts.</li>
+</ol>
+<p>To implement these stories, you will <strong>establish a services layer</strong> that sits between your routes and the simple file storage implementation you wrote in previous tasks. These sevices will come together at runtime via dependency injection. </p>
+<p>For turn-in time saving purposes, you will only unit, integration, and end-to-end test Sue and Cai's limited stories #1 and #2. For additional practice, testing Amy's story is a good exercise, as well.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>You should branch off of your team's <code>pair-api-design</code> branch. Name the new branch <code>pair-api-implementation</code>. Go ahead and push this new branch name to your shared repository so you can both access it. As you progress on this assignment, you will create <code>wip</code> branches at your own direction (we recommend often!) and use the shared repository as a means for handing-off with one another.</p>
+<h3 id="1-defining-routes-in-a-routing-module">1. Defining Routes in a Routing Module</h3>
+<p>You should define your final API routes in an <code>APIRouter</code> that gets included in your <code>main.py</code>'s <code>app</code>. The point of an <code>APIRouter</code> is it allows you to define <em>groups of routes</em> together so that your app's <code>main</code> script does not grow too overwhelming. It's a divide-and-conquer approach.</p>
+<p>Some of you noticed the <code>src/routes/router.py</code> module and its inclusion in <code>src/main.py</code> and already organized your routes in this way. If you designed your API routes in <code>main.py</code>, you can easily move them to <code>src/routes/router.py</code> by cutting, pasting, and renaming your decorators from <code>@app.get(...)</code> and <code>@app.post(...)</code> to <code>@router.get(...)</code> and <code>@router.post(...)</code>, respectively. You can <a href="https://fastapi.tiangolo.com/reference/apirouter/#fastapi.APIRouter">read the official documentation on <code>APIRouter</code></a> for additional guidance, as needed.</p>
+<h3 id="2-establishing-a-configuration-module">2. Establishing a Configuration Module</h3>
+<p>In any reasonably sized application that is designed for <em>testing</em>, developers and systems administrators need control over its configuration. For example, our <code>JSONFileIO</code> storage ultimately needs a string <em>path</em> to read and write its data file to. Our little system is quite simple, so this is the only configuration it really needs, but you can imagine for more sophisticated real-world apps there are many other places where configuration needs to be controlled.</p>
+<p>Rather than hard-coding specific string paths throughout our application's source code, we will introduce some <em>indirection</em> to allow us to <em>dependency inject</em> a <code>Config</code> object wherever it is useful. In doing so, we will <em>also</em> be able to easily provide our own <em>test double</em> for a <code>Config</code> object when writing automated tests that give us easy control over our application's configuration while testing it. This is a win-win for organization.</p>
+<h3 id="3-establishing-configpy">3. Establishing <code>config.py</code></h3>
+<p>Begin by adding a file named <code>config.py</code> to your <code>src</code> directory with the following contents:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">src/config.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><span class="sd">&quot;&quot;&quot;Application configuration settings.&quot;&quot;&quot;</span>
+</span><span id="__span-0-2">
+</span><span id="__span-0-3"><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+</span><span id="__span-0-4"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">TypeAlias</span>
+</span><span id="__span-0-5">
+</span><span id="__span-0-6"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">Depends</span>
+</span><span id="__span-0-7">
+</span><span id="__span-0-8">
+</span><span id="__span-0-9"><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-0-10"><span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+</span><span id="__span-0-11"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Defines configuration values for the application.</span>
+</span><span id="__span-0-12">
+</span><span id="__span-0-13"><span class="sd">    Attributes:</span>
+</span><span id="__span-0-14"><span class="sd">        links_path: Path to the JSON file that stores link data.</span>
+</span><span id="__span-0-15"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-16">
+</span><span id="__span-0-17">    <span class="n">links_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;data/links.json&quot;</span>
+</span><span id="__span-0-18">
+</span><span id="__span-0-19">
+</span><span id="__span-0-20"><span class="n">ConfigDI</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Config</span><span class="p">,</span> <span class="n">Depends</span><span class="p">()]</span>
+</span><span id="__span-0-21"><span class="sd">&quot;&quot;&quot;Dependency-injected Config type.&quot;&quot;&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+<p>For more information on the <code>@dataclass</code> decorator, see the <a href="https://docs.python.org/3/library/dataclasses.html">official Python documentation</a>. Python's <code>dataclass</code> is very similar to <a href="https://docs.oracle.com/en/java/javase/17/language/records.html">Java's <code>record</code> classes</a>.</p>
+<p>You will notice we establish a <code>TypeAlias</code> for dependency injection convenience that we will make use of soon.</p>
+<p>In the future, rather than hard-coding the <code>links_path</code> string here, we will use an <em>environment variable</em> that is read from our process' environment to enable loading this configuration from the outside world. This is more of a production and deployment concern, though, so we will address it then. By moving this configuration into its own class, which can be dependency injected, we are achieving our goal in making it easier to substitute configuration test doubles when we get to writing tests.</p>
+<h3 id="3-establishing-data-directory-and-updating-gitignore">3. Establishing <code>data/</code> directory and updating <code>.gitignore</code></h3>
+<p>In your project, as a sibling to the <code>src</code> directory, go ahead and make a directory named <code>data</code>. You should be able to do this from the dev container's terminal after completing COMP211!</p>
+<p>Ultimately, this is where your <code>Config</code> class is configured to read and write <code>links.json</code> once your application is running. However, we don't actually want the data in <code>links.json</code> to be committed to the repository. Otherwise, you and your partner would frequently run into merge conflicts as you collaborate asynchronously. Let's be sure <code>git</code> ignores this file by adding it to your project's <code>.gitignore</code> file. Add a section at the end that specifically ignores <code>data/links.json</code> as a path.</p>
+<p>Finally, to ensure that this directory exists when a partner pulls or someone clones fresh in the future, add a file to the <code>data</code> directory named <code>.gitkeep</code>. Its contents will be blank. This is a conventional file name used in an otherwise empty directory to ensure the directory will be created by git. You can add this to a new commit and go ahead and make a commit.</p>
+<h3 id="4-dependency-injection-factories-and-helper-types">4. Dependency Injection Factories and Helper Types</h3>
+<p>Your <code>service</code> layer need to compose with your <code>store</code> layer's <code>LinkStore</code> class through dependency injection. However, your <code>LinkStore</code> class' constructor requires a <em>path</em> to the underlying data storage file (whose string file path we have established in <code>Config</code>). Thus, the dependency injection container can't automatically determine how to construct it. To get around this limitation without redesigning our <code>LinkStore</code>, we will create a <em>factory function</em> that uses dependency injection to get a handle on <code>Config</code>.</p>
+<h4 id="41-adding-srcstorelink_store_factorypy">4.1 Adding <code>src/store/link_store_factory.py</code></h4>
+<p>The following file defines a <strong>factory function</strong>, which is really just a plain-old function that returns an instantiated object <em>and</em> whose parameters can all be dependency injected. Notice the single parameter is making use of the <code>ConfigDI</code> dependency injection type you setup in <code>config.py</code> above.</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">src/store/link_store_factory.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><span class="sd">&quot;&quot;&quot;Dependency factory for creating link store instances.&quot;&quot;&quot;</span>
+</span><span id="__span-1-2">
+</span><span id="__span-1-3"><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="__span-1-4"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">TypeAlias</span>
+</span><span id="__span-1-5">
+</span><span id="__span-1-6"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">Depends</span>
+</span><span id="__span-1-7">
+</span><span id="__span-1-8"><span class="kn">from</span><span class="w"> </span><span class="nn">config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigDI</span>
+</span><span id="__span-1-9">
+</span><span id="__span-1-10"><span class="kn">from</span><span class="w"> </span><span class="nn">.json_file_io</span><span class="w"> </span><span class="kn">import</span> <span class="n">JSONFileIO</span>
+</span><span id="__span-1-11"><span class="kn">from</span><span class="w"> </span><span class="nn">.link_store</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinkStore</span>
+</span><span id="__span-1-12">
+</span><span id="__span-1-13">
+</span><span id="__span-1-14"><span class="k">def</span><span class="w"> </span><span class="nf">link_store_factory</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">ConfigDI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LinkStore</span><span class="p">:</span>
+</span><span id="__span-1-15"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a LinkStore wired to the configured JSON storage.</span>
+</span><span id="__span-1-16">
+</span><span id="__span-1-17"><span class="sd">    Args:</span>
+</span><span id="__span-1-18"><span class="sd">        config: Application config containing the storage path.</span>
+</span><span id="__span-1-19">
+</span><span id="__span-1-20"><span class="sd">    Returns:</span>
+</span><span id="__span-1-21"><span class="sd">        A LinkStore backed by the JSON file storage implementation.</span>
+</span><span id="__span-1-22"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-1-23">
+</span><span id="__span-1-24">    <span class="n">storage</span> <span class="o">=</span> <span class="n">JSONFileIO</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">links_path</span><span class="p">))</span>
+</span><span id="__span-1-25">    <span class="k">return</span> <span class="n">LinkStore</span><span class="p">(</span><span class="n">storage</span><span class="p">)</span>
+</span><span id="__span-1-26">
+</span><span id="__span-1-27">
+</span><span id="__span-1-28"><span class="n">LinkStoreDI</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">LinkStore</span><span class="p">,</span> <span class="n">Depends</span><span class="p">(</span><span class="n">link_store_factory</span><span class="p">)]</span>
+</span><span id="__span-1-29"><span class="sd">&quot;&quot;&quot;Dependency-injected LinkStore type.&quot;&quot;&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Reading the implementation of <code>link_store_factory</code>, notice it simply reads the <code>links_path</code> from <code>config</code> and produces a new <code>LinkStore</code> object.</p>
+<p>Finally, notice that we are, once again, defining a <code>TypeAlias</code> for the convenience of specifying a dependency injectable <code>LinkStore</code>.</p>
+<h4 id="42-exporting-the-linkstoredi-name-from-the-store-package">4.2 Exporting the <code>LinkStoreDI</code> name from the <code>store</code> Package</h4>
+<p>As defined, if you wanted to use the <code>LinkStoreDI</code> type from our services layer, you would have to import it using the fully qualified module name it is defined in:</p>
+<p><code>from store.link_store_factory import LinkStoreDI</code></p>
+<p>However, this type makes sense to be able to import directly from the <code>store</code> package. We really want to be able to use the following import statement from other areas of our project:</p>
+<p><code>from store import LinkStoreDI</code></p>
+<p>In order to export the <code>LinkStoreDI</code> name from the <code>store</code> package, we need to add its name to the list of exported names at the package level. Python has a specific and peculiar way of doing so. If you open <code>src/store/__init__.py</code> you will see the convention.</p>
+<p>To add <code>LinkStoreDI</code> to the list of names available at the package level, add an import statement for the <code>LinkStoreDI</code> type and then add the name to the special dunderscore variable <code>__all__</code>. This will make the name importable from the <code>store</code> package.</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">src/store/__init__.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><span class="sd">&quot;&quot;&quot;Persistence layer package.&quot;&quot;&quot;</span>
+</span><span id="__span-2-2">
+</span><span id="__span-2-3"><span class="kn">from</span><span class="w"> </span><span class="nn">store.json_file_io</span><span class="w"> </span><span class="kn">import</span> <span class="n">JSONFileIO</span>
+</span><span id="__span-2-4"><span class="kn">from</span><span class="w"> </span><span class="nn">store.link_store</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinkStore</span>
+</span><span id="__span-2-5"><span class="kn">from</span><span class="w"> </span><span class="nn">store.link_store_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinkStoreDI</span>
+</span><span id="__span-2-6">
+</span><span id="__span-2-7"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;JSONFileIO&quot;</span><span class="p">,</span> <span class="s2">&quot;LinkStore&quot;</span><span class="p">,</span> <span class="s2">&quot;LinkStoreDI&quot;</span><span class="p">]</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="5-establishing-a-service-layer">5. Establishing a Service Layer</h3>
+<p>In <code>src/services</code>, add a <code>link_service.py</code> module with the following starter code:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><span class="kn">from</span><span class="w"> </span><span class="nn">models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Link</span>
+</span><span id="__span-3-2"><span class="kn">from</span><span class="w"> </span><span class="nn">store</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinkStoreDI</span>
+</span><span id="__span-3-3">
+</span><span id="__span-3-4">
+</span><span id="__span-3-5"><span class="k">class</span><span class="w"> </span><span class="nc">LinkService</span><span class="p">:</span>
+</span><span id="__span-3-6">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link_store</span><span class="p">:</span> <span class="n">LinkStoreDI</span><span class="p">):</span>
+</span><span id="__span-3-7">        <span class="bp">self</span><span class="o">.</span><span class="n">_link_store</span> <span class="o">=</span> <span class="n">link_store</span>
+</span></code></pre></div>
+<p>Notice the <code>link_store</code> parameter is making use of the <code>LinkStoreDI</code> dependency injected type you just established.</p>
+<p>Now that you have seen a few examples of a the <code>DI</code>-style <code>TypeAlias</code> convention we are using, go ahead and define a <code>TypeAlias</code> for <code>LinkService</code> <code>DI</code> and be sure it is exported from the <code>services</code> package.</p>
+<h3 id="6-injecting-services-in-routes">6. Injecting Services in Routes</h3>
+<p>Now, <em>finally</em>, after establishing these definitions to support dependency injection, you can inject your <code>LinkService</code> service into your routes in <code>router.py</code>. First, be sure you import the <code>LinkServiceDI</code> type that you exported from <code>services</code>. Then, what do you need to do to inject a <code>LinkService</code> instance into your routes? You should be able to figure this out at this point; refer back to the readings as necessary.</p>
+<h2 id="working-together">Working Together</h2>
+<p>Our recommendation for paired workflow on this assignment is:</p>
+<ol>
+<li>Pair program on a single laptop to do the initial refactoring and getting started steps</li>
+<li>Pair program to complete the initial implementation of functionality of routes. Push and fetch to sync work across your machines.</li>
+<li>Split up the work of <em>testing</em> Sue and Cai's routes individually, push to <code>wip</code> branches, review each other's code, and merge back in</li>
+</ol>
+<h2 id="testing-requirements">Testing Requirements</h2>
+<p>Beyond the required story implementations described in <a href="#requirements">Requirements</a>, there are a few testing requirements to practice unit, integration, and end-to-end tests.</p>
+<p>For both Sue and Cai's required stories, you need to produce AAA tests following the conventions shown in the recent <a href="../../threads/system/backend/2-testing-apis/">reading on API testing</a>. For both routes and service methods, you should be able to demonstrate:</p>
+<ol>
+<li>Unit Tests for the route handlers and service class methods (separate test files, well organized in <code>test</code> directory) </li>
+<li>Integration Tests for the <em>router, route handler, and service layers</em> isolated from the <em>storage</em> layer. There are multiple viable strategies for overriding the storage layer with a mock, but you are encouraged to experiment with FastAPI's <code>dependency_overrides</code>. Look to online resources to learn more. Try overriding <code>link_store_factory</code> via <code>dependency_overrides</code>.</li>
+<li>End-to-end Tests from <em>router</em> through <em>storage</em>. Here you will want to use <code>dependency_overrides</code> to override your <code>Config</code> to use a <code>pytest</code> provided <code>tmp_path</code> fixture. Reminder, <code>tmp_path</code> returns a path of a temporary directory location so you will need to append an actual filename. See your integration tests for <code>JSONFileIO</code> to learn more. This is still an end-to-end test because your code reads and writes from disk, the override is just making setup/teardown smoother.</li>
+</ol>
+<p>For integration and end-to-end tests, you are encouraged to use VSCode's built-in debugger and test runner with debugger to step through a test line-by-line, to convince yourself of your testing subject's scope and convincing yourself you have isolated the correct targets.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tk06_api_design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: API Design (Part 1)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                API Design (Part 1)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../threads/career/" class="md-footer__link md-footer__link--next" aria-label="Next: Career and Professional Life">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Career and Professional Life
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

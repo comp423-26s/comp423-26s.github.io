@@ -1,0 +1,1911 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/tasks/tk06_api_design/">
+      
+      
+        <link rel="prev" href="../tk04_more_dev_tools/">
+      
+      
+        <link rel="next" href="../tk06_api_implementation_p2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>API Design (Part 1) - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tk06-api-design-and-implementation-part-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Design (Part 1)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#breakdown-of-parts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breakdown of Parts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-overview-url-shortener" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        App Overview: URL Shortener
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="App Overview: URL Shortener">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-journey-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Journey Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sue-sharer-creates-a-shortened-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sue Sharer Creates a Shortened URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-user-stories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required User Stories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-requirement-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path Requirement Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-authentication-enforced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Authentication Enforced
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: API Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: API Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-branch-for-individual-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a Branch for Individual API Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#individual-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Individual API Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openapi-specification-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAPI Specification Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenAPI Specification Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fastapi-application-level-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FastAPI Application-level Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#route-level-decorator-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route-level Decorator Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-path-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic Path Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Query Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documenting-pydantic-model-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documenting Pydantic Model Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-body-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request Body Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collaboration-for-phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collaboration for Phase 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sanity-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanity Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-submission-and-reflection-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 Submission and Reflection Questions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="tk06-api-design-and-implementation-part-1">TK06. API Design and Implementation (Part 1)</h1>
+<p>In this task you will design an API for a URL shortening service.</p>
+<h2 id="breakdown-of-parts">Breakdown of Parts</h2>
+<p>Part 1. You only need to implement the route decorators and function signatures, <em>NOT</em> the actual implementations of the API.</p>
+<p>Part 2. You will implement the API. (Not yet released!)</p>
+<h2 id="app-overview-url-shortener">App Overview: URL Shortener</h2>
+<p>In this lab, you and a partner will collaborate to design and implement a service that implements a URL-shortening API (submit a long URL and receive a short, redirectable URL).</p>
+<p>This application will be able to generate shortened URLs, similar to UNC's <code>go.unc.edu</code> service which you can try out today. Here is an example of a shortened URL: <a href="https://go.unc.edu/Xj9b6">https://go.unc.edu/Xj9b6</a></p>
+<p>This application design will feature three personas:</p>
+<ol>
+<li>
+<p><strong>Sue Sharer</strong> is someone who wants to distribute content easily. She might be a marketing manager sharing links to organization resources. Sue values convenience, control, and customization, which is why she wants options like vanity URLs and expiration times.</p>
+</li>
+<li>
+<p><strong>Cai Clicker</strong> is the person who receives and opens links. They might be a colleague reviewing content or a prospective customer. Cai values seamlessness and reliability—when they click a link, they expect to be redirected without delay.</p>
+</li>
+<li>
+<p><strong>Amy Admin</strong> is responsible for monitoring and managing all active links. She is a community manager. Amy values visibility, control, and order, ensuring that shared content remains appropriate and awareness of high-traffic links.</p>
+</li>
+</ol>
+<h3 id="user-journey-examples">User Journey Examples</h3>
+<p>An journey may combine a few user stories in order to give a complete start-to-finish example of a feature's use. Since you may not be familiar with the point of a URL shortener, consider these journeys before reading the user stories in a more standalone presentation.</p>
+<h3 id="sue-sharer-creates-a-shortened-url"><strong>Sue Sharer Creates a Shortened URL</strong></h3>
+<ol>
+<li>Sue wants to a share a link to the company website <a href="https://comp423-26s.github.io/">https://comp423-26s.github.io/</a>.  </li>
+<li>She submits the long URL below and a vanity path of <code>comp423</code>:<br />
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1">https://comp423-26s.github.io/
+</span></code></pre></div></li>
+<li>The system generates a link with the vanity path and responds with the information Sue needs to share the URL. </li>
+<li>Sue shares this link with her friend: <code>https://&lt;your-apps-hostname&gt;/comp423</code> </li>
+<li>Cai Clicker clicks the link and is redirected to:<br />
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1">https://comp423-26s.github.io/
+</span></code></pre></div></li>
+</ol>
+<h3 id="required-user-stories">Required User Stories</h3>
+<ol>
+<li>As Sue Sharer, I want to create a shortened URL with an optional expiration time and the ability to request a custom vanity URL, so that I can control how long it is available and share a more meaningful link.</li>
+<li>As Cai Clicker, I want to open a shortened URL by clicking its unique link, so that I am automatically redirected to the original long URL.</li>
+<li>Amy Admin<ol>
+<li>As Amy Admin, I want to see a list of all active resources (shortened URLs) and filter by view counts greater than some low threshold, so that I can oversee what content is currently being shared.  </li>
+<li>As Amy Admin, I want to see how many times each resource has been accessed, so that I can monitor usage and identify high-traffic resources.</li>
+<li>As Amy Admin, I want to change the target of a shortened URL, so that I can correct or modify existing resources when necessary.  </li>
+<li>As Amy Admin, I want to delete any active resource from the system, so that I can remove content that should no longer be available.  </li>
+</ol>
+</li>
+</ol>
+<h3 id="path-requirement-specifications">Path Requirement Specifications</h3>
+<p>User story 2 above is the only story which we will very specificaly share an API requirement, as follows:</p>
+<p>The method is <code>GET</code> and the <code>path</code> in FastAPI route path syntax is <code>/{short_code}</code>.</p>
+<ul>
+<li>When a user accesses a vanity URL, the system must <em><strong>temporarily redirect</strong></em> to a <strong>shortened URL</strong>.</li>
+</ul>
+<h3 id="no-authentication-enforced">No Authentication Enforced</h3>
+<p>The concerns of how to authenticate a user, like Amy Admin, and authorize various actions, is beyond your concern in this initial API design. You should proceed with all routes publicly available, unprotected. Later, we'll learn strategies for authenticating and authorizing various actions at the HTTP API level.</p>
+<h2 id="phase-1-api-design">Phase 1: API Design</h2>
+<h3 id="getting-started">Getting Started</h3>
+<p>To begin work on TK06, you and your partner will need to decide on <em>one of your TK05 implementations to serve as the starting point</em>. Begin by comparing approaches to <em>unit</em> and <em>integration</em> testing in TK05. If either of you did not reach 100% coverage for <em>unit</em> and <em>integration</em> testing, choose the partner's who did. If the approaches appear equivalent, flip a coin or play a game of rock-paper-scissors to decide whose will be the starting point. For instructional purposes, we will call the team mate whose TK05 repository will be the starting point the <strong>starter</strong>.</p>
+<p>The way TK06's setup will work is that when the <strong>starter</strong> accepts the assignment through GitHub Classroom, they will set the team name of <code>team_tk06_NN</code> where <code>NN</code> is your team number from the <a href="https://docs.google.com/spreadsheets/d/1330dsHBdipQQbJWBTxrRvI05v9rUIFSRL9EnCewXaKE/edit?usp=sharing">pairings sheet</a>. The initial repository will be <strong>empty</strong>. In the starter's <code>tk05</code> repository, the empty <code>tk06</code> repository will be added as a <strong>remote</strong> and <code>main</code> will be pushed to it. From here, both team mates will clone the <code>tk06</code> repository to use for this next exercise.</p>
+<p><strong>Starter</strong> team mate's repository steps:</p>
+<ol>
+<li>The <strong>starter</strong> (teammate whose TK05 repository will seed TK06's starting point) will accept the Github Classroom assignment here: <a href="https://classroom.github.com/a/TZfqFme7">https://classroom.github.com/a/TZfqFme7</a><ol>
+<li>*<em>Carefully</em> fill in your team name: <code>team_tk06_NN</code> where <code>NN</code> is your team's number from the <a href="https://docs.google.com/spreadsheets/d/1330dsHBdipQQbJWBTxrRvI05v9rUIFSRL9EnCewXaKE/edit?usp=sharing">pairings sheet</a>.</li>
+<li>You may need to view your GitHub invitations to accept the TK06 repository invitation in order to join the repository.</li>
+</ol>
+</li>
+<li>The <strong>starter</strong> will use their terminal (local) to navigate to TK05 and <em>add</em> their new team repository as a remote repository:<ol>
+<li><code>git remote add tk06 [insert-tk06-repo-url-here]</code> - Replace the entire <code>[insert]</code> substring, square brackets included, with your empty TK06 repository URL.</li>
+<li><code>git switch main</code> - If you are not already on the <code>main</code> branch.</li>
+<li><code>git push tk06 main</code> - Push the <code>main</code> branch of your <code>tk05</code> to <code>tk06</code>.</li>
+</ol>
+</li>
+<li>Refresh the TK06 repository on GitHub to confirm it is no longer empty and contains your <code>tk05</code> repository's history as its starting point.</li>
+</ol>
+<div class="admonition success">
+<p class="admonition-title">Seeding New Repositories</p>
+<p>As a team, reflect on what was just completed. It's very neat! You seeded a <em>new, empty</em> repository by pushing a branch from an existing repository to it.</p>
+<p>This is commonly useful in real world scenarios and should make sense that it is possible with your understanding of what it means to <code>push</code> a branch to a remote. The neat feature of this particular scenario is the remote repository was empty and you were able to target it for your push by establishing a new remote named <code>tk06</code>.</p>
+</div>
+<p><strong>Both</strong> team mate's next steps:</p>
+<ol>
+<li>(Pre-step) The team mate who was <em>not the starter</em> should go ahead and accept the GitHub classroom assignment and <strong>carefully</strong> select the correct team from the list of existing teams.</li>
+<li>Using a terminal, both of you should navigate to the directory on your host machine's storage where you clone course projects.</li>
+<li><strong>Both</strong> team members should clone their <code>tk06</code> repository URL from GitHub using their host machine's terminal.</li>
+<li>Open the TK06 repository in VSCode, then reopen the repository in a Dev Container.</li>
+<li>Now you are ready to start!</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Errors starting the Dev Containers in Windows</p>
+<p>If you face a problem opening the DevContainer in Windows, it's likely due to a line ending issue. In VSCode, change your line ending setting for the project to be just LF <em>not</em> CRLF. You will see a setting for this in the bottom right corner. Change to <code>LF</code> and try reopening the dev container.</p>
+</div>
+<h3 id="create-a-branch-for-individual-api-design">Create a Branch for Individual API Design</h3>
+<p>Clone the project, open your project in a dev container, and create a branch for your individual API design. <strong>Name your branch something that includes your onyen or github username.</strong></p>
+<h3 id="individual-api-design">Individual API Design</h3>
+<p>In your branch created above, go ahead and stub out an HTTP API, making use of FastAPI routes and Pydantic models as necessary, that satisfy the user stories. Use the <code>/docs</code> user interface to review your routes. Your objectives are:</p>
+<ul>
+<li><strong>Define Endpoints</strong>: Specify all the HTTP routes required for the required user stories above.</li>
+<li><strong>Design Data Models</strong>: Create Pydantic models that define the structure of request bodies and responses.</li>
+<li><strong>Clear OpenAPI Documentation</strong>: Fully document important your API using the OpenAPI standards discussed below.</li>
+<li><strong>Establish Conventions</strong>: Ensure consistent naming and documentation throughout your API design.</li>
+</ul>
+<h3 id="openapi-specification-requirements">OpenAPI Specification Requirements</h3>
+<p>FastAPI and Pydantic have special constructs which allow you to more fully specify your API and its documentation to produce the standards-based <code>OpenAPI.json</code> spec powering the <code>/docs</code> user interface.</p>
+<p>You are <strong>required</strong> to add specification and documentation to your API design along each of the following dimensions. You can find examples of how each is done following this overview list:</p>
+<ul>
+<li><strong>FastAPI Application:</strong> Ensure your app is properly instantiated with required metadata.</li>
+<li><strong>Route-level:</strong> Always include a summary and description; document response bodies thoroughly.</li>
+<li><strong>Route Parameters:</strong><ul>
+<li><strong>Path parameters:</strong> Must have descriptions and optional validations.</li>
+<li><strong>Query parameters:</strong> Must have descriptions and can include validations.</li>
+<li><strong>Body parameters:</strong> Must have descriptions and <code>openapi_examples</code> for clear request body documentation.</li>
+</ul>
+</li>
+<li><strong>Pydantic Fields:</strong> Every field should include a description and an example (or examples) to aid API consumers.</li>
+</ul>
+<h4 id="fastapi-application-level-documentation">FastAPI Application-level Documentation</h4>
+<p>Instantiate your FastAPI app using the <code>FastAPI</code> constructor. You <em>must</em> provide a <code>title</code>, <code>contact</code>, <code>description</code>, and <code>openapi_tags</code> (for organizing routes), as shown below. Notice that the description is markdown and you can use a <em>docstring</em> to give your API documentation </p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">(</span>
+</span><span id="__span-2-2">    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;TK06 API Design&quot;</span><span class="p">,</span>
+</span><span id="__span-2-3">    <span class="n">contact</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-2-4">        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Parter A, Partner B&quot;</span><span class="p">,</span>
+</span><span id="__span-2-5">        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/comp423-26s/&lt;your-team-repo&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-2-6">    <span class="p">},</span>
+</span><span id="__span-2-7">    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-2-8"><span class="s2">## Introduction</span>
+</span><span id="__span-2-9">
+</span><span id="__span-2-10"><span class="s2">Your introduction text to your API goes here, in **markdown**.</span>
+</span><span id="__span-2-11"><span class="s2">Write your own brief intro to what his API is about.</span>
+</span><span id="__span-2-12"><span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+</span><span id="__span-2-13">    <span class="n">openapi_tags</span><span class="o">=</span><span class="p">[</span>
+</span><span id="__span-2-14">        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sue&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Sue Sharer&#39;s API Endpoints&quot;</span><span class="p">},</span>
+</span><span id="__span-2-15">        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Cai&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Cai Clicker&#39;s API Endpoints&quot;</span><span class="p">},</span>
+</span><span id="__span-2-16">        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Amy&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Amy Admin&#39;s API Endpoints&quot;</span><span class="p">},</span>
+</span><span id="__span-2-17">    <span class="p">],</span>
+</span><span id="__span-2-18"><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Run your dev server with <code>./scripts/run-dev-server.sh</code></p>
+<p>You have two paths toward running the development server.
+The easiest way is to run the <code>./scripts/run-dev-server.sh</code> script.</p>
+<p>Otherwise, you can run the <code>uvicorn</code> command manually:</p>
+<p><code>uv run uvicorn main:app --host 0.0.0.0 --reload</code></p>
+<p>While the server is running in your dev container, you can navigate
+to the <em>ports</em> tab in VS Code to look for the "Forwarded Address". This is the port that is forwarded to your host machine. You can either open a browser on your host machine directly to this location <em>or</em> click the globe icon next to the address in VSCode as a direct shortcut to do the same.</p>
+<p>Navigate to <code>/docs</code> in your browser to see the interactive OpenAPI documentation UI.</p>
+</div>
+<p>After you've more fully configured your <code>app</code>, as shown above, try reloading your OpenAPI UI by navigating to <code>/docs</code> in your dev server. You should see the information above being used to improve the documentation generated. The <strong>tags</strong> added will allow you to organize your routes based on the intended user. In real APIs, tags are generally used to cluster endpoints for a specific feature together; here we're using them to organize by persona served.</p>
+<h4 id="route-level-decorator-specification">Route-level Decorator Specification</h4>
+<p>Define endpoints using FastAPI’s route decorators (e.g., <code>@app.get</code>, <code>@app.post</code>). Each route <em>must</em> include a <em>summary</em>, <em>description</em>, and <em>tag</em>. The <em>tag</em> corresponds to the <code>openapi_tags</code> you specified above and will be a persona name. If your route returns response codes besides <code>200</code>, such as <code>404</code>, you need to specify the <em>responses</em> field as shown below. For a given status code, the <em>description</em> is required and the <em>model</em> (Pydantic subclass) is only necessary if the response returns a body.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-3-2">
+</span><span id="__span-3-3"><span class="k">class</span><span class="w"> </span><span class="nc">MessageResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="__span-3-4">    <span class="n">message</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-3-5">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Information conveyed ot user&quot;</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Hi!&quot;</span><span class="p">]</span>
+</span><span id="__span-3-6">    <span class="p">)]</span>
+</span><span id="__span-3-7">
+</span><span id="__span-3-8"><span class="c1"># ...</span>
+</span><span id="__span-3-9">
+</span><span id="__span-3-10"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-3-11">    <span class="s2">&quot;/items/</span><span class="si">{item_id}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-3-12">    <span class="n">summary</span><span class="o">=</span><span class="s2">&quot;Retrieve an Item&quot;</span><span class="p">,</span>
+</span><span id="__span-3-13">    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Get details of an item by its ID.&quot;</span><span class="p">,</span>
+</span><span id="__span-3-14">    <span class="n">responses</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-3-15">        <span class="mi">404</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-3-16">            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Item not found&quot;</span><span class="p">,</span>
+</span><span id="__span-3-17">        <span class="p">}</span>
+</span><span id="__span-3-18">    <span class="p">},</span>
+</span><span id="__span-3-19">    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Shopping&quot;</span><span class="p">]</span>
+</span><span id="__span-3-20"><span class="p">)</span>
+</span><span id="__span-3-21"><span class="k">def</span><span class="w"> </span><span class="nf">get_item</span><span class="p">(</span>
+</span><span id="__span-3-22">    <span class="n">item_id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span>
+</span><span id="__span-3-23">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The unique ID of the item&quot;</span><span class="p">,</span>
+</span><span id="__span-3-24">        <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-3-25">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mi">67</span><span class="p">,</span> <span class="mi">68</span><span class="p">]</span>
+</span><span id="__span-3-26">    <span class="p">)]</span>
+</span><span id="__span-3-27"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageResponse</span><span class="p">:</span>
+</span><span id="__span-3-28">    <span class="k">if</span> <span class="n">item_id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-3-29">        <span class="k">return</span> <span class="n">MessageResponse</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Item found!&quot;</span><span class="p">)</span>
+</span><span id="__span-3-30">    <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-3-31">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Item not found!&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="dynamic-path-parameters">Dynamic <strong>Path</strong> Parameters</h4>
+<p>For dynamic segments in the URL (path parameters), use <code>Path</code>. Include a <strong>description</strong> and any additional keyword parameters found in the <a href="https://fastapi.tiangolo.com/reference/parameters/?h=path%28#fastapi.Query">official documentation</a> you believe would be helpful in specifying and documenting your path (useful ideas: 1. <code>examples</code> list of example values you might expect for the parameter, 2. validation such as <code>min_length</code> or <code>gt</code> (greater than) as shown below).</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Path</span>
+</span><span id="__span-4-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-4-3">
+</span><span id="__span-4-4"><span class="c1"># ...</span>
+</span><span id="__span-4-5">
+</span><span id="__span-4-6"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/users/</span><span class="si">{user_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-7"><span class="k">def</span><span class="w"> </span><span class="nf">get_user</span><span class="p">(</span>
+</span><span id="__span-4-8">    <span class="n">user_id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span>
+</span><span id="__span-4-9">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The unique ID of the user&quot;</span><span class="p">,</span>
+</span><span id="__span-4-10">        <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-4-11">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">423</span><span class="p">]</span>
+</span><span id="__span-4-12">    <span class="p">)]</span>
+</span><span id="__span-4-13"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
+</span><span id="__span-4-14">    <span class="o">...</span>
+</span></code></pre></div>
+<h4 id="query-parameters"><strong>Query</strong> Parameters</h4>
+<p>For query parameters (appended to the URL), use <code>Query</code>. Each query parameter <strong>must</strong> include a <strong>description</strong>, <strong>should</strong> probably include a default value, and can optionally include additional examples and validation rules, if needed. See the <a href="https://fastapi.tiangolo.com/reference/parameters/?h=path%28#fastapi.Query">official documentation</a> on supported keyword parameters when specifying and documenting query parameters.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Query</span>
+</span><span id="__span-5-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-5-3">
+</span><span id="__span-5-4"><span class="c1"># ...</span>
+</span><span id="__span-5-5">
+</span><span id="__span-5-6"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/search&quot;</span><span class="p">)</span>
+</span><span id="__span-5-7"><span class="k">def</span><span class="w"> </span><span class="nf">search_items</span><span class="p">(</span>
+</span><span id="__span-5-8">    <span class="n">q</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Query</span><span class="p">(</span>
+</span><span id="__span-5-9">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The product search query&quot;</span><span class="p">,</span>
+</span><span id="__span-5-10">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jordans&quot;</span><span class="p">]</span>
+</span><span id="__span-5-11">    <span class="p">)]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Default value is empty string</span>
+</span><span id="__span-5-12"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SearchResults</span><span class="p">:</span>
+</span><span id="__span-5-13">    <span class="o">...</span>
+</span></code></pre></div>
+<h4 id="documenting-pydantic-model-fields">Documenting Pydantic Model Fields</h4>
+<p>Within your Pydantic models, use the <code>Field</code> function to document each field. Every field <strong>must</strong> have a <strong>description</strong> and <strong>examples</strong> list to aid API consumers.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+</span><span id="__span-6-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-6-3">
+</span><span id="__span-6-4"><span class="k">class</span><span class="w"> </span><span class="nc">Item</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="__span-6-5">    <span class="n">name</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-6-6">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of Product&quot;</span><span class="p">,</span>
+</span><span id="__span-6-7">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;UNC Jersey&quot;</span><span class="p">,</span> <span class="s2">&quot;UNC Socks&quot;</span><span class="p">]</span>
+</span><span id="__span-6-8">    <span class="p">)]</span>
+</span><span id="__span-6-9">    <span class="n">price</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-6-10">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sales Price&quot;</span><span class="p">,</span>
+</span><span id="__span-6-11">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mf">75.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">]</span>
+</span><span id="__span-6-12">    <span class="p">)]</span>
+</span></code></pre></div>
+<h4 id="request-body-parameters">Request Body Parameters</h4>
+<p>For request body parameters (used in <code>POST</code>/<code>PUT</code>/<code>PATCH</code> requests), define a Pydantic model and use <code>Body</code> to add metadata. The body parameter <strong>must</strong> include a <strong>description</strong> and <strong>openapi_examples</strong>. These examples help make testing out the API in <code>/docs</code> easier, as you will see when you try it out. You can also add validation rules if needed.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Body</span>
+</span><span id="__span-7-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-7-3">
+</span><span id="__span-7-4"><span class="c1"># ... Same Item model as above ...</span>
+</span><span id="__span-7-5">
+</span><span id="__span-7-6"><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/items&quot;</span><span class="p">)</span>
+</span><span id="__span-7-7"><span class="k">def</span><span class="w"> </span><span class="nf">create_item</span><span class="p">(</span>
+</span><span id="__span-7-8">    <span class="n">item</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Body</span><span class="p">(</span>
+</span><span id="__span-7-9">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The product to create&quot;</span><span class="p">,</span>
+</span><span id="__span-7-10">        <span class="n">openapi_examples</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-7-11">            <span class="s2">&quot;Air Jordans&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-7-12">                <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="s2">&quot;Air Jordan 1 Mid SE&quot;</span><span class="p">,</span>
+</span><span id="__span-7-13">                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Sample product to create&quot;</span><span class="p">,</span>
+</span><span id="__span-7-14">                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-7-15">                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Air Jordan 1 Mid SE&quot;</span><span class="p">,</span>
+</span><span id="__span-7-16">                    <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">134.99</span>
+</span><span id="__span-7-17">                <span class="p">},</span>
+</span><span id="__span-7-18">            <span class="p">}</span>
+</span><span id="__span-7-19">        <span class="p">}</span>
+</span><span id="__span-7-20">    <span class="p">)]</span>
+</span><span id="__span-7-21"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Item</span><span class="p">:</span>
+</span><span id="__span-7-22">    <span class="o">...</span>
+</span></code></pre></div>
+<h3 id="collaboration-for-phase-1">Collaboration for Phase 1</h3>
+<p>Each of you should individually draft a design of your API in FastAPI on your own branches (branch naming specified after the Getting Started section above). You should both push your branches to GitHub.</p>
+<p>Once you are ready to merge your branches to form a unified API for your team, we do not recommend actually attempting a merge in <code>git</code>. You are welcomed to, but at your own peril. Since you both worked in <code>main.py</code>, and made design decisions independently, the merge conflict resolution will be gnarly.</p>
+<p>Instead of attempting a <code>git</code> merge, we strongly suggest <strong>pair programming</strong>, and starting over by going back to your <code>main</code> branch on one of your machines. Start a new branch based on <code>main</code> that is <code>pair-api-design</code>. On the other of your machines, have open both of your branches in GitHub to easily view how each of you approached the design and try to form a consensus on how to approach. You will be well served by each reading each other's design and then attempting to whiteboard your final approach before diving into code. Once you are complete, push your final <code>pair-api-design</code> to GitHub and submit your teams' reflection for Phase 1 on Gradescope.</p>
+<h3 id="sanity-checks">Sanity Checks</h3>
+<p>Questions to consider in the context of your API:</p>
+<ul>
+<li>Have we ensured that our design addresses every required user story for Sue, Cai, and Amy?</li>
+<li>Are our naming conventions for endpoints, models, and fields consistent and descriptive enough for all personas?</li>
+<li>Are we including required metadata (e.g., summaries, descriptions, examples) for every endpoint and model field so that a developer can easily understand our API?</li>
+<li>How have we documented error responses (like 404 for missing resources) in our endpoints?</li>
+<li>Is the route design intuitive for both API users and maintainers?</li>
+</ul>
+<h3 id="phase-1-submission-and-reflection-questions">Phase 1 Submission and Reflection Questions</h3>
+<ul>
+<li>Gradescope submission will include:<ul>
+<li>Permalink to branches of both partners</li>
+<li>Permalink to the final <code>pair-api-design</code> branch</li>
+</ul>
+</li>
+<li>Brief reflection question:<ul>
+<li>What challenges did we encounter when comparing our individual designs, developing a single design, and pair programming our joint, final design?</li>
+</ul>
+</li>
+</ul>
+<h3 id="key-takeaways">Key Takeaways</h3>
+<ol>
+<li>
+<p><strong>Designing for Users and Use Cases</strong></p>
+<p>Through this assignment, you’ve gained experience designing an API that serves multiple types of users with distinct needs. You’ve seen how clear, user-focused API design is essential—not just for making the system functional but also for ensuring a smooth experience for different personas. This mirrors real-world software development, where balancing the needs of end users, system administrators, and stakeholders is key to building successful products.</p>
+</li>
+<li>
+<p><strong>Writing Clear, Professional API Documentation</strong></p>
+<p>By leveraging FastAPI’s OpenAPI documentation, you’ve practiced writing API specs that go beyond just making things work, you’ve created an API that is easy for others to understand, test, and use. In industry, well-documented APIs are what enable teams to scale, integrate with other systems, and onboard new developers quickly. This attention to detail will serve you well in any software engineering or product development role.</p>
+</li>
+<li>
+<p><strong>Collaborating on Software Design in a Team Environment</strong></p>
+<p>By independently designing an API and then merging your ideas into a unified implementation, you’ve practiced an essential part of professional software development: balancing individual contributions with collaborative decision-making. You’ve navigated trade-offs, discussed design choices, and worked toward a shared vision. These skills are essential in any software engineering role.</p>
+</li>
+<li>
+<p><strong>Designing the Interface First for Human-Centered Development</strong></p>
+<p>By focusing on the API interface before implementation, you’ve embraced a human-centered approach: prioritizing how users interact with the system rather than getting lost in internal details. This ensures the design is intuitive and valuable. A well-defined interface also enables parallel development: frontend teams can build against the spec while backend teams implement functionality, making collaboration more efficient. In real-world projects, this approach reduces wasted effort, improves usability, and accelerates development, ultimately leading to better software.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tk04_more_dev_tools/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Professionalizing the Developer Environment">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Professionalizing the Developer Environment
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tk06_api_implementation_p2/" class="md-footer__link md-footer__link--next" aria-label="Next: API and Service-layer Implementation (Part 2)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                API and Service-layer Implementation (Part 2)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

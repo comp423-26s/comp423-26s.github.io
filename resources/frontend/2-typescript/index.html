@@ -1,0 +1,2402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/frontend/2-typescript/">
+      
+      
+        <link rel="prev" href="../1-tools/">
+      
+      
+        <link rel="next" href="../3-event-driven/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>TypeScript For the COMP 301 Java Developer - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#typescript-for-the-comp-301-java-developer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TypeScript For the COMP 301 Java Developer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preface
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Syntax
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Syntax">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#typing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-and-constant-declarations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable and Constant Declarations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arrays
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditionals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditionals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loops
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-while-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The while Loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-for-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The for Loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arrow-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arrow Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-and-interface-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class and Interface Construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extra-typescript-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extra TypeScript Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extra TypeScript Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#printing-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Printing Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enums
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-aliases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type Aliases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ternary-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ternary Operator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generic Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extra Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="typescript-for-the-comp-301-java-developer">TypeScript For the COMP 301 Java Developer</h1>
+<blockquote>
+<p>Written by Ajay Gandecha and Kris Jordan for the CSXL Web Application and for COMP 423: Foundations of Software Engineering.<br></p>
+</blockquote>
+<h2 id="preface">Preface</h2>
+<p>During your career at UNC, you likely started out in COMP 110 learning the <em>Python</em> programming language. In COMP 210, you transitioned to Java and learned how to organize your code using classes and common data structures. In COMP 301, you built off of this idea and learned more about useful language features to help you gain a toolbox of design patterns and strategies for approaching software architecture challenges.</p>
+<p>Since this course's semester project is currently focused on <em>web</em> applications, you need to gain familiarity with the programming languages and tools needed to build high quality web apps. As you just read, <strong>JavaScript</strong> is the <em>leading programming language that powers the web</em> and web applications. According to the <strong><a href="https://survey.stackoverflow.co/2023/#technology-most-popular-technologies">2023 StackOverflow Developer Survey</a></strong>, developers ranked JavaScript as their most commonly-used programming language - an <em><strong>eleven-year long streak</strong> and counting!</em></p>
+<p>In this course, we will use <strong>TypeScript</strong> to build out the frontend of our web applications. TypeScript is a <em>superset</em> of JavaScript - it adds <strong>static typing</strong> with optional type annotations to JavaScript. It transpiles to JavaScript.</p>
+<p>Static typing is practiced in COMP110 with Python's modern type annotations, which were actually inpsired by TypeScript's success, and has its roots in industrial languages like Java and C. The word "static", in this context, refers to <em>at development time</em> which is, importantly, not <em>at runtime</em>. You can think of static as "code at rest" when it is in your editor or being analyzed by a compiler, not code that is actually running on a machine. Specifying static types allows the TypeScript IDE (e.g., VSCode) and compiler to verify that your code's expressions and statements are <strong>type safe</strong>. An example of a type safety check would be ensuring that if your code contains a call to a method named <code>bar</code> on an object of type <code>Foo</code>, that in the <code>Foo</code> class definition there actually exists a method named <code>bar</code> with the correct parameters corresponding to the arguments provided. Without type safety, or static type annotations, you increase your risk of writing code that breaks <em>when your users are using it, after release</em>, rather than at development time, before release. Static type specification also serves as a form of built-in documentation for other developers on your team to know how to properly use each other's code more reliably and confidently. <strong>Static type checking represents an important theme of Software Engineering as a discipline, and this course: time invested in detailed specification and documentation allows teams to collaborate more successfully and unlocks opportunities to verify correctness with tools during development.</strong></p>
+<p>TypeScript shares some similarities to Java - both are high-level languages, both support object-oriented programming. However, there are many key differences (including their purpose, how they are compiled, etc). You will learn more about these features throughout the course. </p>
+<p>This document is designed to help you become familiar with the syntax and features of TypeScript from the context of the Java experience you all have had in COMP 301. It compares the syntax between Java and TypeScript in various situations and should serve as a guide going into the first few weeks of the semester.</p>
+<h2 id="syntax">Syntax</h2>
+<p>The syntax for TypeScript is pretty succint and less verbose than Java! In this section, you will learn the syntax of TypeScript code with the context of the Java syntax you have worked in throughout <em>COMP 210</em> and <em>COMP 301</em>.</p>
+<h3 id="typing">Typing</h3>
+<p>The first major distinction between Java and TypeScript exists with its typing system. Recall the following:</p>
+<ul>
+<li><strong>Primitive types</strong> are a set of basic data types in a programming language. All other data types and classes can be constructed from these primitive types. Using standard programming conventions, primitive types are often denoted with an <em>all-lowercase</em> name and usually do not need to be imported.</li>
+<li><strong>Reference types</strong>, on the other hand, are all of the other types in a language. Reference types are defined as structures that contain or build upon the basic primitive types. Reference types are often defined by <em>interfaces</em>, <em>classes</em>, and <em>enumerations</em>. Reference types, like the name of all clases, often start with a capital letter (For example, <code>Dog</code> or <code>Cat</code>).</li>
+</ul>
+<p>In <strong>Java</strong>, we have the following <em>primitive</em> types:
+* <code>int</code>: Represents a number with no decimal places.
+* <code>double</code>: Represents a number that can store fractions (decimal places).
+* <code>boolean</code>: Represents a state that can either be <code>true</code> or <code>false</code>.</p>
+<p>In <strong>TypeScript</strong>, on the otherhand, we have <strong>different</strong> primitive types. TypeScript defines the following:
+* <code>number</code>: Represents a number that can store fractions (decimal places).
+* <code>boolean</code>: Represents a state that can either be <code>true</code> or <code>false</code>.
+* <code>string</code>: Represents a sequence of characters.</p>
+<p>Notice there is not a type distinction between <em>integers</em> and <em>floats / doubles</em>. We use <code>number</code> in TypeScript for both. This is helpful because it effectively allows us to work with double-floating point, 64-bit, values for all numerical computations.</p>
+<p>Second, notice that <code>string</code> is not capitalized in TypeScript. Technically, the string values we use wind up being references and realizations of the immutable <code>String</code> class in TypeScript/JavaScript, with its expected methods, but its type is specified with lowercase letters as a built-in.</p>
+<h3 id="variable-and-constant-declarations">Variable and Constant Declarations</h3>
+<p>Now that you know a bit about the basic data types in TypeScript, let's take a look at how to define <strong>variables</strong>.</p>
+<p>Let's compare a number declaration in Java and TypeScript, then compare more generally.</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><span class="c1">// Declaring a Number</span>
+</span><span id="__span-0-2"><span class="kt">int</span><span class="w"> </span><span class="n">myNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">88</span><span class="p">;</span>
+</span><span id="__span-0-3">
+</span><span id="__span-0-4"><span class="c1">// General Formula</span>
+</span><span id="__span-0-5"><span class="n">type</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-1-1"><span class="c1">// Declaring a Number</span>
+</span><span id="__span-1-2"><span class="kd">let</span><span class="w"> </span><span class="nx">myNumber</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">88</span><span class="p">;</span>
+</span><span id="__span-1-3">
+</span><span id="__span-1-4"><span class="c1">// General Formula</span>
+</span><span id="__span-1-5"><span class="kd">let</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>As you can see, there are a few differences. First, in Java, we specify the data type <em>first</em>. In TypeScript, we provide a <strong>type annotation <em>after</em></strong> the name of the variable. We also provide the <code>let</code> keyword before variable name.</p>
+<p>You can also notice the difference in types. In Java, we use the <code>int</code> primitive type. In TypeScript, we use <code>number</code> instead. Lastly, you can note that both Java and TypeScript use semicolons at the end of their lines.</p>
+<p>What if we wanted to make these values <em>constants</em> instead of variables (so that we cannot change their value later)?</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><span class="c1">// Declaring a Constant</span>
+</span><span id="__span-2-2"><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">myNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">88</span><span class="p">;</span>
+</span><span id="__span-2-3">
+</span><span id="__span-2-4"><span class="c1">// General Formula</span>
+</span><span id="__span-2-5"><span class="kd">final</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-3-1"><span class="c1">// Declaring a Constant</span>
+</span><span id="__span-3-2"><span class="kd">const</span><span class="w"> </span><span class="nx">myNumber</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">88</span><span class="p">;</span>
+</span><span id="__span-3-3">
+</span><span id="__span-3-4"><span class="c1">// General Formula</span>
+</span><span id="__span-3-5"><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>As you can see, in Java, we use the <code>final</code> keyword to turn a variable into a constant. The keyword is appended to the front. In TypeScript however, we just use the <code>const</code> keyword <strong><em>instead of</em></strong> the <code>let</code> keyword!</p>
+<h3 id="arrays">Arrays</h3>
+<p>The way that arrays work in Java and TypeScript are a bit different, and so is the syntax to create them.</p>
+<p>In Java, you probably remember that the length of an array cannot be changed once it is set - and that using <code>ArrayList&lt;&gt;</code> or any other subtype of <code>List</code> (imported from <code>java.utils.*</code>) provides this functionality!</p>
+<p>TypeScript arrays <strong>are more similar to the Java <code>List</code> than to the Java array</strong>. Creating arrays in TypeScript is also very similar to creating lists in Python. To declare an array in TypeScript, we can simply add <code>[]</code> to the end of a variable's <em>type annotation</em>, and use brackets to add initial values. Compare the following:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">TypeScript</label><label for="__tabbed_1_2">Python</label><label for="__tabbed_1_3">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-4-1"><span class="c1">// Initialize</span>
+</span><span id="__span-4-2"><span class="kd">let</span><span class="w"> </span><span class="nx">names</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Aziz&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Andrew&quot;</span><span class="p">]</span>
+</span><span id="__span-4-3"><span class="c1">// Add values</span>
+</span><span id="__span-4-4"><span class="nx">names</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;Jordan&quot;</span><span class="p">);</span>
+</span><span id="__span-4-5"><span class="c1">// Replace a value</span>
+</span><span id="__span-4-6"><span class="nx">names</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Kris&quot;</span><span class="p">;</span>
+</span><span id="__span-4-7"><span class="c1">// Remove a value</span>
+</span><span id="__span-4-8"><span class="nx">names</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">names</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;Kris&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Removes by value</span>
+</span><span id="__span-4-9"><span class="nx">names</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Removes by index</span>
+</span><span id="__span-4-10"><span class="c1">// Access a value </span>
+</span><span id="__span-4-11"><span class="kd">let</span><span class="w"> </span><span class="nx">aziz</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">names</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><span class="c1"># Initialize</span>
+</span><span id="__span-5-2"><span class="n">names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Aziz&quot;</span><span class="p">,</span> <span class="s2">&quot;Andrew&quot;</span><span class="p">]</span>
+</span><span id="__span-5-3"><span class="c1"># Add values</span>
+</span><span id="__span-5-4"><span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Jordan&quot;</span><span class="p">)</span>
+</span><span id="__span-5-5"><span class="c1"># Replace a value</span>
+</span><span id="__span-5-6"><span class="n">names</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Kris&quot;</span>
+</span><span id="__span-5-7"><span class="c1"># Remove a value</span>
+</span><span id="__span-5-8"><span class="n">names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Kris&quot;</span><span class="p">)</span> <span class="c1"># Removes by value</span>
+</span><span id="__span-5-9"><span class="n">names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Removes by index</span>
+</span><span id="__span-5-10"><span class="c1"># Access a value</span>
+</span><span id="__span-5-11"><span class="n">aziz</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><span class="c1">// Initialize</span>
+</span><span id="__span-6-2"><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-6-3"><span class="n">names</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;Aziz&quot;</span><span class="p">);</span>
+</span><span id="__span-6-4"><span class="n">names</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;Andrew&quot;</span><span class="p">);</span>
+</span><span id="__span-6-5"><span class="c1">// Add values</span>
+</span><span id="__span-6-6"><span class="n">names</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;Jordan&quot;</span><span class="p">);</span>
+</span><span id="__span-6-7"><span class="c1">// Replace a value</span>
+</span><span id="__span-6-8"><span class="n">names</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;Kris&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-6-9"><span class="c1">// Remove a value</span>
+</span><span id="__span-6-10"><span class="n">names</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="s">&quot;Kris&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Removes by value</span>
+</span><span id="__span-6-11"><span class="n">names</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Removes by index</span>
+</span><span id="__span-6-12"><span class="c1">// Access a value</span>
+</span><span id="__span-6-13"><span class="n">String</span><span class="w"> </span><span class="n">aziz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">names</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>Just like in Python lists and traditional Java arrays (but unlike Java's <code>List</code>), we can index values of TypeScript arrays using the subscription <code>[]</code> syntax.</p>
+<p>As shown in the code above, TypeScript does not have a built-in <em>delete</em> method - but, it does have <code>.splice(i, n)</code>, which removes <code>n</code> number of elements <em>starting at index <code>i</code></em>. So, we can combine this with <code>.indexOf()</code> to delete our value.</p>
+<p>TypeScript's arrays also have a <code>.pop()</code> method that removes the <em>last</em> item of an array. </p>
+<p>To access the length of a TypeScript array, you can use the array's <code>length</code> field. For example, given an array <code>a</code>, the length of this array would be accessed using <code>a.length</code>.</p>
+<h3 id="conditionals">Conditionals</h3>
+<p>Java and TypeScript have similar syntax for creating <em>conditional statements</em> and <em>if-statements</em>. </p>
+<p>TypeScript uses the same <strong>boolean operators</strong> that Java does. This means that <code>&amp;&amp;</code> represents <em>AND</em>, <code>||</code> represents <em>OR</em>, and <code>!</code> represents <em>NOT</em>. TypeScript and Java both use the lowercased <code>true</code> and <code>false</code> for boolean values.</p>
+<p>Additionally, following in the C-family heritage, the <code>&amp;&amp;</code> and <code>||</code> operators are short-circuiting. If the left-hand expression of an <code>&amp;&amp;</code> operator is <code>false</code>, the right-hand expression will not be evaluated. Conversely, if the left-hand expression of an <code>||</code> operator is <code>true</code>, then the right-hand expression will not be evaluated. This matters when the right-hand expression contains a function or method call that mutates state.</p>
+<p>Coming from Java, one surprising feature of JavaScript and TypeScript is the notion of <em>truthiness</em>. You can learn more about <a href="https://developer.mozilla.org/en-US/docs/Glossary/Truthy">truthy</a> values on MDN, a great documentation resource for front-end web concerns. Many values besides the boolean value <code>true</code> are treated as <code>true</code>/"truthy" in boolean contexts in JavaScript. For example, any non-empty strings and any non-zero numbers are considered "truthy" in boolean contexts. This means you can write a valid, type safe expression like <code>"foo" || ""</code>. Surprisingly, the <code>||</code> operator evaluates to its first truthy value, so <code>"foo" || ""</code>, <code>"" || "foo"</code>, and <code>"foo" || "bar"</code> all evaluate to <code>"foo"</code>, not <code>true</code>. This is handy and commonly used in variable initialization statements, such as <code>let initialValue: string = userInput || "Default Value";</code></p>
+<p>If-statements have the <strong><em>same syntax and usage</em></strong> as they do in Java!</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">conditionA</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">conditionB</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><span class="w"> </span><span class="c1">// Some code here!</span>
+</span><span id="__span-7-3"><span class="p">}</span>
+</span><span id="__span-7-4"><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-5"><span class="w"> </span><span class="c1">// Some code here.</span>
+</span><span id="__span-7-6"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">conditionA</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">conditionB</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><span class="w"> </span><span class="c1">// Some code here!</span>
+</span><span id="__span-8-3"><span class="p">}</span>
+</span><span id="__span-8-4"><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-5"><span class="w"> </span><span class="c1">// Some code here.</span>
+</span><span id="__span-8-6"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<blockquote>
+<p><strong>NOTE:</strong> Both Java and TypeScript require the use of parenthesis <code>( )</code> around the conditional statements in if-statements.</p>
+</blockquote>
+<h3 id="loops">Loops</h3>
+<h4 id="the-while-loop">The <code>while</code> Loop</h4>
+<p>Just like with if-statements, both Java and TypeScript use the same syntax for while loops! We use parenthesis around the conditional in both languages. </p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-9-1"><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">conditionA</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><span class="w"> </span><span class="c1">// Some code here!</span>
+</span><span id="__span-9-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-10-1"><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">conditionA</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><span class="w"> </span><span class="c1">// Some code here!</span>
+</span><span id="__span-10-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<h3 id="the-for-loop">The <code>for</code> Loop</h3>
+<p>In both Java and TypeScript, there are two types of loops that both serve distinct purposes.</p>
+<p>The first type of loop contains a counter variable that is modified each time the the loop iterates - and, iteration stops when some provided condition evaluates to false. This type of loop exists in <strong><em>both</em></strong> Java and TypeScript. The code is <em>nearly</em> identical, but notice that in the TypeScript version, we need to use our new method of creating variables. We do not say <code>int i = 0;</code>, instead we say <code>let i = 0;</code>. We can see this here:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-11-1"><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-2"><span class="w"> </span><span class="c1">// Loop body here...</span>
+</span><span id="__span-11-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-12-1"><span class="k">for</span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><span class="w"> </span><span class="c1">// Loop body here...</span>
+</span><span id="__span-12-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<blockquote>
+<p><strong>NOTE:</strong> In this example, notice how we do not include the type annotation on the conditional variable. In general, type annotations on variables in TypeScript are not necessary by default. TypeScript infers types of variables when there is no explicit type annotation provided. However, including them is <strong><em>strongly encouraged</em></strong>. In this case, for conciseness in the for loop header body and the the fact that the variable's type is guaranteed to be <code>number</code>, it can be omitted here.</p>
+</blockquote>
+<p>The second type of loop in Java allows you to <em>iterate over a collection</em>, where a variable is updated with a value corresponding to the current iteration. This is often the most widely-used loop. There are syntactical differences here between Java and TypeScript, both in the <em>keywords used</em> and the variable creation convention.</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-13-1"><span class="k">for</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">names</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-2"><span class="w"> </span><span class="c1">// Loop body here...</span>
+</span><span id="__span-13-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-14-1"><span class="k">for</span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">names</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-2"><span class="w"> </span><span class="c1">// Loop body here...</span>
+</span><span id="__span-14-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>As you can see, like in previous examples, TypeScript uses the <code>let</code> keyword. In addition, Java uses <code>:</code>, while TypeScript uses <code>of</code>.</p>
+<h3 id="defining-functions">Defining Functions</h3>
+<p>Functions are the most fundamental abstraction technique we use in software engineering. It is important to note that in Java, we create <em>methods</em>, which are functions that are members of a <em>class</em>. In TypeScript, we also mainly work in the context of classes, but we are not necessarily required to. So, if you are hearing the term "functions" and "methods" passed around, it is useful to remember this distinction: methods are called on an object (e.g. <code>object.method()</code>) whereas functions are generally called standalone <code>function()</code>. This distinction has some nuance in more advanced uses of TypeScript/JavaScript, but is generally how you should approach it.</p>
+<p>There are many fundamental differences in the syntax for creating functions in Java and TypeScript. Let's take a look at an example of a function that takes in a user's name and returns a string that greets the user.</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-15-1"><span class="n">String</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-2"><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Welcome, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">;</span>
+</span><span id="__span-15-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-16-1"><span class="kd">function</span><span class="w"> </span><span class="nx">greet</span><span class="p">(</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-2"><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Welcome, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;!&quot;</span><span class="p">;</span>
+</span><span id="__span-16-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>There are a few noticeable differences. First, TypeScript uses the <code>function</code> keyword at the front rather than specifying a return type first. Also, the <em>type annotation</em> is at the end of the function header (and before the body). The placement of type annotations for the <em>function parameters</em> also changes here.</p>
+<p>In the case that a function returns nothing, note that in Java, we specify the return type to be <code>void</code>. We can do this in TypeScript too, however it is optional. Both including <code>: void</code> or not is valid. For example:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-17-1"><span class="kt">void</span><span class="w"> </span><span class="nf">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-2"><span class="w"> </span><span class="c1">// Implementation Not Shown</span>
+</span><span id="__span-17-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-18-1"><span class="kd">function</span><span class="w"> </span><span class="nx">doSomething</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-2"><span class="w"> </span><span class="c1">// Implementation Not Shown</span>
+</span><span id="__span-18-3"><span class="p">}</span>
+</span><span id="__span-18-4">
+</span><span id="__span-18-5"><span class="c1">// OR</span>
+</span><span id="__span-18-6">
+</span><span id="__span-18-7"><span class="kd">function</span><span class="w"> </span><span class="nx">doSomething</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-8"><span class="w"> </span><span class="c1">// Implementation Not Shown</span>
+</span><span id="__span-18-9"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<h3 id="arrow-functions">Arrow Functions</h3>
+<p>TypeScript also has a tremendously useful feature called <strong>arrow functions</strong>. Arrow functions are a more compact and concise method of defining traditional functions. Let's take a look at a function from above as a <em>traditional function</em> and one as an <em>arrow function</em>.</p>
+<table>
+<tr><th width="520">TypeScript - Traditional Function</th><th width="520">TypeScript - Arrow Function</th></tr>
+<tr>
+<td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-19-1"><span class="kd">function</span><span class="w"> </span><span class="nx">greet</span><span class="p">(</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-2"><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Welcome, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;!&quot;</span><span class="p">;</span>
+</span><span id="__span-19-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-20-1"><span class="kd">let</span><span class="w"> </span><span class="nx">greet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-20-2"><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Welcome, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;!&quot;</span><span class="p">;</span>
+</span><span id="__span-20-3"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>There are a few things to unpack here. First, it looks like we are ultimately assigning <em>"something"</em> to a <em>variable.</em> We use the <code>let</code> keyword and we provide a variable name! On the right, we have a weird structure that would go in the <em>value</em> spot of our variable formula.</p>
+<p>In fact, this is exactly what we are doing! We are saving a <em>function</em> to a variable and giving it a name that we can use to call it. In the <code>( )</code>, we provide the parameters to the function. We provide a return type in the type annotation as well. Then, we use <code>=&gt;</code> to connect these parameters to a <em>function body</em>.</p>
+<p>We can then call our function in the same way we would normally, like so:
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-21-1"><span class="nx">greet</span><span class="p">(</span><span class="s2">&quot;Jade&quot;</span><span class="p">);</span>
+</span></code></pre></div></p>
+<p>While this seems like just a syntactic change, the implications of this are <strong><em>massive</em></strong> and opens the door to an entire new world of programming called <strong>functional programming</strong>, as we can pass around functions as values. This is something that we will be covering <em>extensively</em> throughout this course, however it is super important to become familiar with the arrow function syntax now so it is less suprising later!</p>
+<p>To conclude this section, provide two important caveats must be emphasized:
+* Arrow functions don't have their own <code>this</code> bindings and therefore should not be used when defining methods of a class.
+* Arrow functions cannot be used as constructors. Calling them with <code>new</code> throws a <code>TypeError</code>.</p>
+<p>These caveats are important to note because traditional functions and arrow functions are not <em>exactly</em> the same, and there are some semantic differences.</p>
+<h3 id="class-and-interface-construction">Class and Interface Construction</h3>
+<p><strong>Classes</strong> define data types and are the foundation of object-oriented programming. It will be critical for you to be comfortable working within TypeScript classes throughout your time in COMP 423! While there are many syntax differences between classes in Java and TypeScript, the <em>core idea</em> and motivation for using them remains the same. Below is an example of a full class in both Java and TypeScript. I recommend that you read this in its entirely and try to compare line by line! From there, we will go through each section.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">TypeScript</label><label for="__tabbed_2_2">Java</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-22-1"><span class="cm">/** Represents a UNC Student. */</span>
+</span><span id="__span-22-2"><span class="k">public</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Student</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-3">
+</span><span id="__span-22-4"><span class="w">    </span><span class="cm">/* Fields</span>
+</span><span id="__span-22-5"><span class="cm">    * NOTE: In COMP 301, you learned about using the</span>
+</span><span id="__span-22-6"><span class="cm">    * `private` keyword on fields to control access</span>
+</span><span id="__span-22-7"><span class="cm">    * via getter and setter methods. For this example,</span>
+</span><span id="__span-22-8"><span class="cm">    * I am making some fields public and others private.</span>
+</span><span id="__span-22-9"><span class="cm">    */</span>
+</span><span id="__span-22-10">
+</span><span id="__span-22-11"><span class="w">    </span><span class="cm">/** Represents the name of the student */</span>
+</span><span id="__span-22-12"><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-22-13"><span class="w">    </span><span class="cm">/** Represents the year of the student*/</span>
+</span><span id="__span-22-14"><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nx">year</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+</span><span id="__span-22-15"><span class="w">    </span><span class="cm">/** Represents the address of the student */</span>
+</span><span id="__span-22-16"><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="nx">address</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-22-17">
+</span><span id="__span-22-18"><span class="w">    </span><span class="cm">/* Constructor */</span>
+</span><span id="__span-22-19"><span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">year</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">,</span><span class="w"> </span><span class="nx">adr</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-20"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
+</span><span id="__span-22-21"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">year</span><span class="p">;</span>
+</span><span id="__span-22-22"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">adr</span><span class="p">;</span>
+</span><span id="__span-22-23"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">welcome</span><span class="p">();</span>
+</span><span id="__span-22-24"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-22-25">
+</span><span id="__span-22-26"><span class="w">    </span><span class="cm">/* Methods */</span>
+</span><span id="__span-22-27">
+</span><span id="__span-22-28"><span class="w">    </span><span class="cm">/** Prints a welcome message to the console. */</span>
+</span><span id="__span-22-29"><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nx">welcome</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-30"><span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;!&quot;</span><span class="p">);</span>
+</span><span id="__span-22-31"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-22-32">
+</span><span id="__span-22-33"><span class="w">    </span><span class="cm">/** Converts a year number to a description. */</span>
+</span><span id="__span-22-34"><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">yearToString</span><span class="p">(</span><span class="nx">year</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-35"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="nx">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-36"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Freshman&quot;</span><span class="p">;</span>
+</span><span id="__span-22-37"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-38"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Sophomore&quot;</span><span class="p">;</span>
+</span><span id="__span-22-39"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-40"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Junior&quot;</span><span class="p">;</span>
+</span><span id="__span-22-41"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-42"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Senior&quot;</span><span class="p">;</span>
+</span><span id="__span-22-43"><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-22-44">
+</span><span id="__span-22-45"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Oops...&quot;</span><span class="p">;</span>
+</span><span id="__span-22-46"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-22-47"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-java highlight"><pre><span></span><code><span id="__span-23-1"><span class="cm">/** Represents a UNC Student. */</span>
+</span><span id="__span-23-2"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Student</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-3">
+</span><span id="__span-23-4"><span class="w">    </span><span class="cm">/* Fields</span>
+</span><span id="__span-23-5"><span class="cm">    * NOTE: In COMP 301, you learned about using the</span>
+</span><span id="__span-23-6"><span class="cm">    * `private` keyword on fields to control access</span>
+</span><span id="__span-23-7"><span class="cm">    * via getter and setter methods. For this example,</span>
+</span><span id="__span-23-8"><span class="cm">    * I am making some fields public and others private.</span>
+</span><span id="__span-23-9"><span class="cm">    */</span>
+</span><span id="__span-23-10">
+</span><span id="__span-23-11"><span class="w">    </span><span class="cm">/** Represents the name of the student */</span>
+</span><span id="__span-23-12"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-23-13"><span class="w">    </span><span class="cm">/** Represents the year of the student*/</span>
+</span><span id="__span-23-14"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">year</span><span class="p">;</span>
+</span><span id="__span-23-15"><span class="w">    </span><span class="cm">/** Represents the address of the student */</span>
+</span><span id="__span-23-16"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">address</span><span class="p">;</span>
+</span><span id="__span-23-17">
+</span><span id="__span-23-18"><span class="w">    </span><span class="cm">/* Constructor */</span>
+</span><span id="__span-23-19"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Student</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">year</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">adr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-20"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-23-21"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">year</span><span class="p">;</span>
+</span><span id="__span-23-22"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adr</span><span class="p">;</span>
+</span><span id="__span-23-23"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">welcome</span><span class="p">();</span>
+</span><span id="__span-23-24"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-23-25">
+</span><span id="__span-23-26"><span class="w">    </span><span class="cm">/* Methods */</span>
+</span><span id="__span-23-27">
+</span><span id="__span-23-28"><span class="w">    </span><span class="cm">/** Prints a welcome message to the console. */</span>
+</span><span id="__span-23-29"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">welcome</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-30"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">);</span>
+</span><span id="__span-23-31"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-23-32">
+</span><span id="__span-23-33"><span class="w">    </span><span class="cm">/** Converts a year number to a description. */</span>
+</span><span id="__span-23-34"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">yearToString</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">year</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-35"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-36"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Freshman&quot;</span><span class="p">;</span>
+</span><span id="__span-23-37"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-38"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Sophomore&quot;</span><span class="p">;</span>
+</span><span id="__span-23-39"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-40"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Junior&quot;</span><span class="p">;</span>
+</span><span id="__span-23-41"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-23-42"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Senior&quot;</span><span class="p">;</span>
+</span><span id="__span-23-43"><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-23-44">
+</span><span id="__span-23-45"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Oops...&quot;</span><span class="p">;</span>
+</span><span id="__span-23-46"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-23-47"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p></td>
+</tr>
+</table></p>
+<p>As you can see, there are a few similarities between classes in Java and TypeScript! First, we can look at <em>access modifiers</em>. The <code>public</code>, <code>private</code>, and <code>protected</code> keywords are the <strong><em>same</em></strong> in both Java and TypeScript.</p>
+<p>Notice that the fields are the same conventions as well! Note however that the <code>let</code> keyword is <strong><em>not used</em></strong> when defining fields - it is only needed when defining regular variables.</p>
+<p>The constructor also differs a bit. In TypeScript, the <code>constructor</code> keyword replaces <code>public ClassName</code> from Java! The type annotations in the parameters also follow the normal conventions of TypeScript functions.</p>
+<p>Lastly, like fields, <em>methods</em> in TypeScript also do <strong><em>not</em></strong> use their respective keyword (<code>function</code>) to be defined. Instead, we can just provide an access modifier.</p>
+<p>We use the <code>static</code> keyword to denote class methods the same way in both Java and TypeScript. Learn more about class fields and methods <a href="https://www.tutorialsteacher.com/typescript/typescript-static">here</a>.</p>
+<p>Within a function, we also have access to the <code>this</code> keyword that references the current object.</p>
+<p>Now, how do we <strong><em>instantiate</em></strong> objects?</p>
+<p>We actually use the same syntax as in Java:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-24-1"><span class="n">Student</span><span class="w"> </span><span class="n">noah</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">(</span><span class="s">&quot;Noah&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Columbia St&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-25-1"><span class="nx">noah</span><span class="o">:</span><span class="w"> </span><span class="kt">Student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Student</span><span class="p">(</span><span class="s2">&quot;Noah&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Columbia St&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>We can also define interfaces in TypeScript like we do in Java. Take a look at the following:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-26-1"><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">Person</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-26-2"><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-26-3"><span class="p">}</span>
+</span><span id="__span-26-4">
+</span><span id="__span-26-5"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Student</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-27-1"><span class="k">public</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-27-2"><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-27-3"><span class="p">}</span>
+</span><span id="__span-27-4">
+</span><span id="__span-27-5"><span class="k">public</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Student</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>As you can see, the keywords remain the same between both languages with <code>interface</code> and <code>implements</code>! The only difference between the two languages are with variable creation and type annotation conventions.</p>
+<p>There is also another interesting feature of TypeScript worth mentioning here.</p>
+<p>TypeScript employs <strong><em>structural type checking</em></strong>. This means that TypeScript views objects as equivalent types <em>if they share the same structure</em>, NOT just the same name! On the otherhand, Java is a <strong><em>nominally type language</em></strong>, which means it views objects as equivalent types if they share the same name ONLY (or if there is an inheritence relationship).</p>
+<p>So, we can <em>technically</em> directly create a value of type <code>Person</code> in TypeScript! This is not something you can directly do in Java without creating a subclass. The syntax would look like so:</p>
+<table>
+<tr><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-28-1"><span class="kd">let</span><span class="w"> </span><span class="nx">person</span><span class="o">:</span><span class="w"> </span><span class="kt">Person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-28-2"><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Charles&quot;</span>
+</span><span id="__span-28-3"><span class="p">};</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>In this example, we use JSON (JavaScript object notation) to <em>create an object of data</em> that contains the <em>same properties</em> that a <code>Person</code> objct should have. Surprisingly enough, due to TypeScript being a structural language, this <strong><em>is a valid way to instantiate an object, technically of type object, that can used anywhere an object of type <code>Person</code> is expected without explicitly implementing the <code>Person</code> interface!</em></strong></p>
+<p>This feature is often called "duck typing", thanks to the addage "if it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck." TypeScript and structural typing take it further: "if it's a goose that looks like a duck, then it's a duck." In programming, structural type checking like TypeScript's, relaxes the strictness of nominal typing like Java's, by embracing the idea that <em>if an object has all the same fields and methods needed as some other type</em>, then it's probably OK to treat it as that other type.</p>
+<h3 id="extra-typescript-features">Extra TypeScript Features</h3>
+<h4 id="comments">Comments</h4>
+<p>The examples throughout this document have already used many comments, however we create comments in Java and TypeScript in the exact same way! This is shown below:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-29-1"><span class="c1">// This is a single-line comment.</span>
+</span><span id="__span-29-2">
+</span><span id="__span-29-3"><span class="cm">/*</span>
+</span><span id="__span-29-4"><span class="cm">This is an example of a</span>
+</span><span id="__span-29-5"><span class="cm">multi-line comment!</span>
+</span><span id="__span-29-6"><span class="cm">*/</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-30-1"><span class="c1">// This is a single-line comment.</span>
+</span><span id="__span-30-2">
+</span><span id="__span-30-3"><span class="cm">/*</span>
+</span><span id="__span-30-4"><span class="cm">This is an example of a</span>
+</span><span id="__span-30-5"><span class="cm">multi-line comment!</span>
+</span><span id="__span-30-6"><span class="cm">*/</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<h4 id="printing-values">Printing Values</h4>
+<p>In Java and TypeScript, we have statements to print out values! In TypeScript, values are printed to the <em>console</em>. We use the following convention to print values:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-31-1"><span class="n">String</span><span class="w"> </span><span class="n">taName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Jean&quot;</span><span class="p">;</span>
+</span><span id="__span-31-2"><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">taName</span><span class="p">);</span>
+</span><span id="__span-31-3"><span class="c1">// Output:</span>
+</span><span id="__span-31-4"><span class="c1">// &gt;&gt; Jean</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-32-1"><span class="kd">let</span><span class="w"> </span><span class="nx">taName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Jean&quot;</span><span class="p">;</span>
+</span><span id="__span-32-2"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">taName</span><span class="p">);</span>
+</span><span id="__span-32-3"><span class="c1">// Console:</span>
+</span><span id="__span-32-4"><span class="c1">// &gt;&gt; Jean</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>As you can see, we use <code>console.log()</code> to print out values to the console in TypeScript. To see values printed to <code>console.log()</code> in a browser, you will need to open your browser's developer tools and view its console tabl.</p>
+<h4 id="enums">Enums</h4>
+<p>Enums (enumerators) are an extremely useful language feature in many programming languages! Enums allow you to define custom, related values or states. Think of enums as implementing a multiple-choice question, where there are many options! Let's look at an example:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+ <td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-33-1"><span class="kd">enum</span><span class="w"> </span><span class="n">Direction</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-33-2"><span class="w">  </span><span class="n">UP</span><span class="p">,</span>
+</span><span id="__span-33-3"><span class="w">  </span><span class="n">DOWN</span><span class="p">,</span>
+</span><span id="__span-33-4"><span class="w">  </span><span class="n">LEFT</span><span class="p">,</span>
+</span><span id="__span-33-5"><span class="w">  </span><span class="n">RIGHT</span><span class="p">,</span>
+</span><span id="__span-33-6"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+<td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-34-1"><span class="kd">enum</span><span class="w"> </span><span class="nx">Direction</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-34-2"><span class="w">  </span><span class="nx">Up</span><span class="p">,</span>
+</span><span id="__span-34-3"><span class="w">  </span><span class="nx">Down</span><span class="p">,</span>
+</span><span id="__span-34-4"><span class="w">  </span><span class="nx">Left</span><span class="p">,</span>
+</span><span id="__span-34-5"><span class="w">  </span><span class="nx">Right</span><span class="p">,</span>
+</span><span id="__span-34-6"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>As you might notice, creating enums in TypeScript is nearly equivalent to its Java counterpart that you saw in COMP 301! The main difference is that it is convention for Java enum options to be entirely  <em>capitalized</em>, while TypeScript enum options only have their <em>first letter capitalized.</em></p>
+<p>Let's look at the <code>Direction</code> enum applied in a TypeScript function:</p>
+<table>
+<tr><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-35-1"><span class="kd">function</span><span class="w"> </span><span class="nx">directionToText</span><span class="p">(</span><span class="nx">direction</span><span class="o">:</span><span class="w"> </span><span class="kt">Direction</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-2"><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">direction</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">Direction</span><span class="p">.</span><span class="nx">Up</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">direction</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">Direction</span><span class="p">.</span><span class="nx">Down</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-3"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Let&#39;s go vertically!&quot;</span>
+</span><span id="__span-35-4"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-35-5"><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">direction</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">Direction</span><span class="p">.</span><span class="nx">Left</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">direction</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">Direction</span><span class="p">.</span><span class="nx">Right</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-6"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Let&#39;s go horizontally!&quot;</span>
+</span><span id="__span-35-7"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-35-8"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>Enumerations will be extremely useful in your final projects to model data.</p>
+<h4 id="type-aliases">Type Aliases</h4>
+<p>There is a nifty feature in TypeScript called the <strong>type alias</strong>, which essentially allows you to create another label by which you can refer to a type. This can be useful to make types more concise, or to make it more readable for your feature. Look at the following example:</p>
+<table>
+<tr><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-36-1"><span class="kr">type</span><span class="w"> </span><span class="nx">Rating</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+</span><span id="__span-36-2">
+</span><span id="__span-36-3"><span class="kd">let</span><span class="w"> </span><span class="nx">csxlRating</span><span class="o">:</span><span class="w"> </span><span class="kt">Rating</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>Using the <code>type</code> keyword, we give <code>number</code> an alias as <code>Rating</code>. Now, we can use <code>number</code> and <code>Rating</code> interchangeably. Next, we create a variable called <code>csxlRating</code> of type <code>Rating</code> (which is really just type <code>number</code>), and then assign a number to it.</p>
+<h4 id="ternary-operator">Ternary Operator</h4>
+<p>The last super useful feature of TypeScript to feature in this document is the <strong>ternary operator</strong>. The ternary operator allows you to write a <em>conditional expression</em>. Unlike the <code>if</code>/<code>else</code> syntax in TypeScript and Java, which are statements, the ternary operator results in an expression. This means that if a condition is <code>true</code>, the expression can evaluate to one value and if it's <code>false</code>, another.</p>
+<p>The ternary operator uses the following syntax:
+<code>condition ? expr_if_true : expr_if_false</code></p>
+<p>Let's look at an example relating to the CSXL site:</p>
+<table>
+<tr><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-37-1"><span class="c1">// Stores the hour which the CSXL opens.</span>
+</span><span id="__span-37-2"><span class="c1">// For sake of example, say the CSXL opens at 10am on weekdays and 12pm on weekends:</span>
+</span><span id="__span-37-3"><span class="kd">let</span><span class="w"> </span><span class="nx">csxlOpeningHour</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">isWeekday</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">10</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">12</span><span class="p">;</span>
+</span><span id="__span-37-4">
+</span><span id="__span-37-5"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">csxlOpeningHour</span><span class="p">);</span>
+</span><span id="__span-37-6">
+</span><span id="__span-37-7"><span class="c1">// Output IF isWeekday = true:</span>
+</span><span id="__span-37-8"><span class="c1">// &gt;&gt; 10</span>
+</span><span id="__span-37-9"><span class="c1">// Output IF isWeekday = false:</span>
+</span><span id="__span-37-10"><span class="c1">// &gt;&gt; 12</span>
+</span><span id="__span-37-11">
+</span><span id="__span-37-12"><span class="c1">// Since the ternary operator produces an expression, it can</span>
+</span><span id="__span-37-13"><span class="c1">// also be used like:</span>
+</span><span id="__span-37-14"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">isWeekday</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;Weekday&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Weekend&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>This is the same syntax that is used in Java! Ternary operators are <em>extremely useful</em> and are used numerous times throughout the CSXL application. I highly recommend checking out the codebase and searching for <code>?</code> / <code>:</code> to see more relevant examples!</p>
+<h4 id="generic-types">Generic Types</h4>
+<p><strong>Generic types</strong> are a powerful convention in Java that allows you to pass types <em>as a parameter</em> into objects. This makes objects support multiple data types.</p>
+<p>For example, take a <code>LinkedList</code> implementation in Java. Linked lists are data structures that can store <em>many different types of values</em>. For example, look at the following in <em>Java</em>:</p>
+<table>
+<tr><th width="520">Java</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-38-1"><span class="c1">// Create a linked list that stores strings.</span>
+</span><span id="__span-38-2"><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">myStringList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-38-3"><span class="c1">// Create a linked list that stores students.</span>
+</span><span id="__span-38-4"><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span><span class="w"> </span><span class="n">myRoster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>The above Java syntax likely looks vaguely familiar! Here, we are creating two linked lists - one of <code>String</code> objects and the other of <code>Student</code> objects. We pass the data type of the object we want to store into the <code>&lt; &gt;</code> part of the type annotation.</p>
+<p><strong>TypeScript also supports generic types!</strong> This is a feature that will be used a lot throughout this course. First, let's compare the syntax for creating the hypothetical lists shown above:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-39-1"><span class="c1">// Create a linked list that stores strings.</span>
+</span><span id="__span-39-2"><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">myStringList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-39-3"><span class="c1">// Create a linked list that stores students.</span>
+</span><span id="__span-39-4"><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span><span class="w"> </span><span class="n">myRoster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-40-1"><span class="c1">// Create a linked list that stores strings.</span>
+</span><span id="__span-40-2"><span class="kd">let</span><span class="w"> </span><span class="nx">myStringList</span><span class="o">:</span><span class="w"> </span><span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-40-3"><span class="c1">// Create a linked list that stores students.</span>
+</span><span id="__span-40-4"><span class="kd">let</span><span class="w"> </span><span class="nx">myRoster</span><span class="o">:</span><span class="w"> </span><span class="kt">LinkedList</span><span class="o">&lt;</span><span class="nx">Student</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>As you can see, the only thing different between both code snippets are how we declare the variable! The usage of <code>&lt; &gt;</code> remains the same.</p>
+<p>Now, how would we actually <em>implement</em> the <code>LinkedList&lt;T&gt;</code> class? Let's compare two rudimentary implmentations in both Java and TypeScript:</p>
+<table>
+<tr><th width="520">Java</th><th width="520">TypeScript</th></tr>
+<tr>
+<td>
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-41-1"><span class="cm">/** Represents a linked list node. */</span>
+</span><span id="__span-41-2"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LinkedList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-41-3">
+</span><span id="__span-41-4"><span class="w"> </span><span class="cm">/** Value for the node. */</span>
+</span><span id="__span-41-5"><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-41-6"><span class="w"> </span><span class="cm">/** Next node, if it exists. */</span>
+</span><span id="__span-41-7"><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+</span><span id="__span-41-8">
+</span><span id="__span-41-9"><span class="w"> </span><span class="cm">/** Constructor */</span>
+</span><span id="__span-41-10"><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="nf">LinkedList</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-41-11"><span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-41-12"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-41-13">
+</span><span id="__span-41-14"><span class="w"> </span><span class="cm">/** Returns the value of the node. */</span>
+</span><span id="__span-41-15"><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">getValue</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-41-16"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="p">;</span>
+</span><span id="__span-41-17"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-41-18">
+</span><span id="__span-41-19"><span class="cm">/* Modifies the value of the node. */</span>
+</span><span id="__span-41-20"><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setValue</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-41-21"><span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+</span><span id="__span-41-22"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-41-23">
+</span><span id="__span-41-24"><span class="w"> </span><span class="cm">/* Other methods not shown */</span>
+</span><span id="__span-41-25"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+ <td>
+
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-42-1"><span class="cm">/** Represents a linked list node. */</span>
+</span><span id="__span-42-2"><span class="k">public</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">LinkedList</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-42-3">
+</span><span id="__span-42-4"><span class="w"> </span><span class="cm">/** Value for the node. */</span>
+</span><span id="__span-42-5"><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">;</span>
+</span><span id="__span-42-6"><span class="w"> </span><span class="cm">/** Next node, if it exists. */</span>
+</span><span id="__span-42-7"><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="nx">next</span><span class="o">:</span><span class="w"> </span><span class="kt">LinkedList</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span id="__span-42-8">
+</span><span id="__span-42-9"><span class="w"> </span><span class="cm">/** Constructor */</span>
+</span><span id="__span-42-10"><span class="w"> </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-42-11"><span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+</span><span id="__span-42-12"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-42-13">
+</span><span id="__span-42-14"><span class="w"> </span><span class="cm">/** Returns the value of the node. */</span>
+</span><span id="__span-42-15"><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="nx">getValue</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-42-16"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+</span><span id="__span-42-17"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-42-18">
+</span><span id="__span-42-19"><span class="cm">/* Modifies the value of the node. */</span>
+</span><span id="__span-42-20"><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="nx">setValue</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-42-21"><span class="w">  </span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+</span><span id="__span-42-22"><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-42-23">
+</span><span id="__span-42-24"><span class="w"> </span><span class="cm">/* Other methods not shown */</span>
+</span><span id="__span-42-25"><span class="p">}</span>
+</span></code></pre></div>
+
+</td>
+</tr>
+</table>
+
+<p>In the header of the class, we put <code>&lt;T&gt;</code>, which specifies that we are adding a <em>type parameter</em>! Whenever this is then provided, like in <code>LinkedList&lt;string&gt;</code> or <code>LinkedList&lt;Student&gt;</code>, the <code>T</code> used throughout the class is then replaced by the type that is provided! So in the <code>LinkedList&lt;string&gt;</code> example, the field <code>value</code> becomes of type <code>string</code>. In the <code>LinkedList&lt;Student&gt;</code> example, the field <code>value</code> becomes of type <code>Student</code>.</p>
+<p>If this concept is unfamiliar, we highly recommend to practice using generic types in classes, as well as experimenting on your own! Generic types are an invaluable tool to make code extendable to multiple use-cases, and is used in many of the packages we are going to use throughout the course.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Congratulations! 🎉 TypeScript is an extremely powerful and useful language, and we you will have the chance to work with TypeScript code this entire semester. If you are having trouble remembering TypeScript syntax, feel free to return to this document at any time. In addition, for practice, we highly recommend you go to the official <a href="https://www.typescriptlang.org">TypeScript playground</a> or open a new <a href="https://replit.com">Repl.it</a> ! The TypeScript playground, as well as opening a <code>.ts</code> TypeScript file in <a href="https://code.visualstudio.com">Visual Studio Code</a> and playing around with it, are some of the best ways to get more familiar and accustomed to using the language. As you have seen throughout your computer science careers so far, sometimes the best way to learn is to dive right in!</p>
+<p>In addition, below are some additional resources that you may find useful as your work through learning TypeScript.</p>
+<h2 id="extra-resources">Extra Resources</h2>
+<ul>
+<li><a href="https://www.typescriptlang.org/cheatsheets">Official TypeScript Cheat Sheets</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html">Official Docs - TypeScript for the Java Programmer</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../1-tools/" class="md-footer__link md-footer__link--prev" aria-label="Previous: JavaScript and the the Rise of the Web Client Platform">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                JavaScript and the the Rise of the Web Client Platform
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../3-event-driven/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction to Event-Driven Programming in TypeScript">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Introduction to Event-Driven Programming in TypeScript
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

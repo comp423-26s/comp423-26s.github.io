@@ -1,0 +1,1929 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/apis/6-fast-api-tutorial/">
+      
+      
+        <link rel="prev" href="../5-api-spec/">
+      
+      
+        <link rel="next" href="../../backend/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>FastAPI and Pydantic Tutorial - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#6-fastapi-and-pydantic-tutorial" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FastAPI and Pydantic Tutorial
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Getting Started
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-first-route-hello-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. First Route: Hello World
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. First Route: Hello World">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-appget-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Does @app.get("/") Mean?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-running-the-development-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Running the Development Server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-adding-another-static-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Adding Another Static Route
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-introducing-a-pydantic-model-and-listing-posts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Introducing a Pydantic Model and Listing Posts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Introducing a Pydantic Model and Listing Posts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-this-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How This Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-adding-a-dynamic-route-to-get-a-single-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Adding a Dynamic Route to Get a Single Post
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Adding a Dynamic Route to Get a Single Post">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-a-happy-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try a Happy Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#try-an-unhappy-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try an Unhappy Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#try-an-invalid-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try an Invalid Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-understanding-routing-in-modern-api-frameworks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Understanding Routing in Modern API Frameworks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-automatic-documentation-with-openapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Automatic Documentation with OpenAPI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Automatic Documentation with OpenAPI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openapi-ui-in-the-wild-csxluncedu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAPI UI in the Wild: CSXL.unc.edu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-adding-a-post-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Adding a POST Route
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Adding a POST Route">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#walkthrough-of-the-post-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Walkthrough of the POST Route
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-adding-put-and-delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Adding PUT and DELETE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Adding PUT and DELETE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#put-update-a-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PUT: Update a Resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-remove-a-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE: Remove a Resource
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-put-and-delete-in-the-openapi-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing PUT and DELETE in the OpenAPI UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary and Next Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary and Next Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-beyond-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices Beyond This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="6-fastapi-and-pydantic-tutorial">6. FastAPI and Pydantic Tutorial</h1>
+<p>FastAPI is a modern, fast (high-performance), standards-first web framework for Python.
+It's designed around modern Python features such as type annotations (like you used in COMP110). FastAPI helps you both <em>specify</em> and build RESTful HTTP APIs quickly.</p>
+<p>Pydantic is a library used by FastAPI for data modeling and validation. It is how we will specify the schemas for request and response body data. It enforces type hints at runtime and yields user-friendly errors.</p>
+<p>Since you are now comfortable with HTTP methods, paths, query parameters, and so on, from the previous parts of this reading, you're in great shape to dive in!</p>
+<h2 id="1-getting-started">1. Getting Started</h2>
+<p>In a terminal on your host machine, outside of any other <code>git</code> repositories, follow the following steps:</p>
+<ol>
+<li>
+<p><strong>Clone the tutorial repository</strong>: Start by cloning the repository at <a href="https://github.com/comp423-26s/fastapi-tutorial.git">https://github.com/comp423-26s/fastapi-tutorial.git</a>.</p>
+</li>
+<li>
+<p><strong>Open the repository in a VS Code Dev Container</strong>. The dev container is based on a modern Microsoft Dev Container image, which we have already used once in this course, so it should load quickly and install the necessary dependencies from <code>requirements.txt</code>. This repo uses an older style package manager (<code>pip</code>) than what we have emphasized this semester (<code>uv</code>), but both tools and setups are valid and common "in the wild."</p>
+</li>
+<li>
+<p><strong>Open main.py</strong>. This is the entrypoint of our API app and where the tutorial starts!</p>
+</li>
+</ol>
+<h2 id="2-first-route-hello-world">2. First Route: Hello World</h2>
+<p>There's only one way to venture into new territory in programming: <em>hello, world!</em> Let’s start with the simplest possible route. Update your <code>main.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
+</span><span id="__span-0-2">
+</span><span id="__span-0-3"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+</span><span id="__span-0-4">
+</span><span id="__span-0-5"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+</span><span id="__span-0-6"><span class="k">def</span><span class="w"> </span><span class="nf">read_root</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-0-7">    <span class="k">return</span> <span class="s2">&quot;Hello, world!&quot;</span>
+</span></code></pre></div>
+<h3 id="what-does-appget-mean">What Does <code>@app.get("/")</code> Mean?</h3>
+<ul>
+<li><strong>Decorator</strong>: If you’re new to decorators, think of <code>@something</code> as a way to wrap or register the function that follows. In this case:<ul>
+<li><code>@app.get("/")</code> tells FastAPI that this function (<code>read_root</code>) handles <strong>GET</strong> requests to the <strong>root path</strong> (<code>"/"</code>).</li>
+<li>The function name <code>read_root</code> is arbitrary—choose a meaningful name for your own clarity.</li>
+</ul>
+</li>
+<li>When you return a string (like <code>"Hello, world!"</code>), FastAPI automatically converts it into an HTTP response with the body containing that string.</li>
+</ul>
+<hr />
+<h2 id="3-running-the-development-server">3. Running the Development Server</h2>
+<p>To run your app in development, use the following command (from within the <code>fastapi-tutorial</code> folder):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1">fastapi<span class="w"> </span>run<span class="w"> </span>main.py<span class="w"> </span>--reload
+</span></code></pre></div>
+<p>By default, FastAPI’s dev server:</p>
+<ul>
+<li>Runs at <code>http://127.0.0.1:8000</code> (port 8000). <strong>Note: If you have any other dev servers running on this same port (e.g. your MkDocs project's dev server) see the Ports tab in VSCode to learn what port this container's 8000 was mapped to on your host machine.</strong></li>
+<li>The <code>--reload</code> argument causes the server to watch your files. If you make changes, it <strong>auto-reloads</strong> so you don’t have to stop and restart the server on every change you make to your code.</li>
+</ul>
+<p>Behind the scenes, <strong>FastAPI</strong> is using a Python package called <strong>Uvicorn</strong> to handle lower-level HTTP concerns. This is beyond your concern, but if you see anything about <code>uvicorn</code> when reading about FastAPI just know it's a foundational HTTP layer that FastAPI sits above in the architecture. </p>
+<p>Whenever a request hits <code>GET /</code>, it calls our <code>read_root()</code> function.</p>
+<p class="annotate">Take a look at your Python code and be sure you can identify where the following HTTP API dimensions are specified: the <strong>HTTP method</strong> (1), the <strong>path</strong> (2), and the <strong>response body schema</strong> (3). Click the annotation icon, the plus symbol, to expand the answers.</p>
+<ol>
+<li>
+<p>The HTTP method is specified in the <code>@app.get</code> annotation (<code>GET</code>). If it makes it easier to remember, HTTP method specification in FastAPI is implemented as a <em>method call</em> on the FastAPI <code>app</code> object.</p>
+</li>
+<li>
+<p>The <em>path</em> is <code>/</code>, commonly called a root path since it has no parts beyond the slash, and it is specifed as the first parameter of the <code>@app.get()</code> method call.</p>
+</li>
+<li>
+<p>The <em>response body schema</em> is specified as the <em>return type</em> of the route handler function. In this case it is <code>str</code> as the returned value is <code>"Hello, world!"</code>.</p>
+</li>
+</ol>
+<hr />
+<h2 id="4-adding-another-static-route">4. Adding Another Static Route</h2>
+<p>Let’s add a second route, say, <code>GET /about</code> which returns some simple text. Update your <code>main.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
+</span><span id="__span-2-2">
+</span><span id="__span-2-3"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+</span><span id="__span-2-4">
+</span><span id="__span-2-5"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+</span><span id="__span-2-6"><span class="k">def</span><span class="w"> </span><span class="nf">read_root</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-2-7">    <span class="k">return</span> <span class="s2">&quot;Hello, world!&quot;</span>
+</span><span id="__span-2-8">
+</span><span id="__span-2-9"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/about&quot;</span><span class="p">)</span>
+</span><span id="__span-2-10"><span class="k">def</span><span class="w"> </span><span class="nf">read_about</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-2-11">    <span class="k">return</span> <span class="s2">&quot;This is a simple HTTP API.&quot;</span>
+</span></code></pre></div>
+<p>Try visiting <code>http://localhost:8000/about</code>. You should see the alternate message!</p>
+<hr />
+<h2 id="5-introducing-a-pydantic-model-and-listing-posts">5. Introducing a Pydantic Model and Listing Posts</h2>
+<p>Next, let’s introduce a <strong>Pydantic</strong> model to represent our data. These models serve a dual purpose: first they give us a Python class we can use throughout our server-side code. Second, in conjunction with FastAPI, they will automatically create a schema for our API specifications.</p>
+<p>We’ll use a simple "Post" resource as an example throughout this tutorial. Let's start by returning a list of posts from a global dictionary that we’ll pre-populate with a couple sample posts.</p>
+<ol>
+<li>Define the <code>Post</code> model as a subclass of <code>pydantic.BaseModel</code>. Be sure to add the <code>import</code> statement for <code>BaseModel</code>. Define it to have two attributes: <code>id</code> and <code>content</code>.</li>
+<li>Create a global dictionary <code>posts_db</code> containing two posts keyed by their IDs.</li>
+<li>Add a route <code>GET /posts</code> to <strong>list</strong> all posts.</li>
+</ol>
+<p>Update <code>main.py</code> with the following:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span>
+</span><span id="__span-3-2"><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+</span><span id="__span-3-3"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-3-4">
+</span><span id="__span-3-5"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+</span><span id="__span-3-6">
+</span><span id="__span-3-7"><span class="k">class</span><span class="w"> </span><span class="nc">Post</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="__span-3-8">    <span class="nb">id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Field</span><span class="p">()]</span>
+</span><span id="__span-3-9">    <span class="n">content</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">()]</span>
+</span><span id="__span-3-10">
+</span><span id="__span-3-11"><span class="c1"># Prepopulate dictionary of posts</span>
+</span><span id="__span-3-12"><span class="n">posts_db</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-3-13">    <span class="mi">1</span><span class="p">:</span> <span class="n">Post</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s2">&quot;Hello FastAPI!&quot;</span><span class="p">),</span>
+</span><span id="__span-3-14">    <span class="mi">2</span><span class="p">:</span> <span class="n">Post</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s2">&quot;Writing my second post!&quot;</span><span class="p">)</span>
+</span><span id="__span-3-15"><span class="p">}</span>
+</span><span id="__span-3-16">
+</span><span id="__span-3-17"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+</span><span id="__span-3-18"><span class="k">def</span><span class="w"> </span><span class="nf">read_root</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-3-19">    <span class="k">return</span> <span class="s2">&quot;Hello, world!&quot;</span>
+</span><span id="__span-3-20">
+</span><span id="__span-3-21"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/about&quot;</span><span class="p">)</span>
+</span><span id="__span-3-22"><span class="k">def</span><span class="w"> </span><span class="nf">read_about</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-3-23">    <span class="k">return</span> <span class="s2">&quot;This is a simple HTTP API.&quot;</span>
+</span><span id="__span-3-24">
+</span><span id="__span-3-25"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/posts&quot;</span><span class="p">)</span>
+</span><span id="__span-3-26"><span class="k">def</span><span class="w"> </span><span class="nf">list_posts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Post</span><span class="p">]:</span>
+</span><span id="__span-3-27">    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">posts_db</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</span></code></pre></div>
+<h3 id="how-this-works">How This Works</h3>
+<ul>
+<li>We store two example posts in a global dictionary, <code>posts_db</code>, keyed by their ID.</li>
+<li>The route <code>GET /posts</code> returns <code>list(posts_db.values())</code>, which effectively returns <strong>all</strong> posts as a list.</li>
+<li>Notice how each value in <code>posts_db</code> is already an instance of <code>Post</code>. When FastAPI sees these objects, it converts them to JSON automatically.</li>
+</ul>
+<p>Notice the return type of the <code>list_posts</code> function is a <code>list</code> of <code>Post</code> objects. This is specifying the response body schema. Try visiting this route in your browser to confirm it is working. If you do not see well formatted JSON that is easy to read, try going back to the previous part of this reading and installing a JSON Viewer plugin in your web browser.</p>
+<hr />
+<h2 id="6-adding-a-dynamic-route-to-get-a-single-post">6. Adding a Dynamic Route to Get a Single Post</h2>
+<p>Now let’s introduce our first <strong>dynamic</strong> route. For a URL like <code>"/posts/1"</code>, we want to look up the post with <code>id=1</code> in our dictionary and return the <code>Post</code> object with this ID. </p>
+<p>Add the following import and route definition to your <code>main.py</code> file:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><span class="c1"># ... Update FastAPI Imports ...</span>
+</span><span id="__span-4-2"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span><span class="p">,</span> <span class="n">Path</span>
+</span><span id="__span-4-3"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-4-4">
+</span><span id="__span-4-5"><span class="c1"># ... Earlier App Stays Same ... </span>
+</span><span id="__span-4-6">
+</span><span id="__span-4-7"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/posts/</span><span class="si">{post_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-8"><span class="k">def</span><span class="w"> </span><span class="nf">get_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;ID of Post&quot;</span><span class="p">)])</span> <span class="o">-&gt;</span> <span class="n">Post</span><span class="p">:</span>
+</span><span id="__span-4-9">    <span class="k">if</span> <span class="n">post_id</span> <span class="ow">in</span> <span class="n">posts_db</span><span class="p">:</span>
+</span><span id="__span-4-10">        <span class="k">return</span> <span class="n">posts_db</span><span class="p">[</span><span class="n">post_id</span><span class="p">]</span>
+</span><span id="__span-4-11">    <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Post not found&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="try-a-happy-path">Try a Happy Path</h3>
+<p>Try navigating to <code>/posts/1</code> and <code>/posts/2</code> and convince yourself you can trace the flow of information. Specifically, look at how the <em>path</em> is specified with a dynamic part named <code>post_id</code> and how that path part corresponds to the function parameter of the same name. The value is then used to lookup a post with a given ID in the dictionary.</p>
+<h3 id="try-an-unhappy-path">Try an Unhappy Path</h3>
+<p>Try navigating to <code>/posts/3</code> and seeing the 404 Response. Your browser won't show you the response code directly, but you can open up your browser's Developer Tools and look at your Network history (try reloading) to see the 404 is being sent. Notice this is achieved programatically in FastAPI by raising an <code>HTTPException</code> with a <code>status_code</code> keyword parameter.</p>
+<h3 id="try-an-invalid-path">Try an Invalid Path</h3>
+<p>Finally, navigate to <code>/posts/abc</code>. Because we declared <code>post_id: int</code>, FastAPI automatically checks if <code>"abc"</code> can be converted to an integer. It cannot, so the framework responds with an HTTP <strong>422 Unprocessable Entity</strong> error, including a helpful error message about the invalid type. This automatic validation is one of the many reasons FastAPI is a joy to work with compared to its predecessors! Edge case handling like this used to require more boilerplate code from engineers.</p>
+<hr />
+<h2 id="7-understanding-routing-in-modern-api-frameworks">7. Understanding Routing in Modern API Frameworks</h2>
+<p>Now that you’ve seen both a static route (<code>"/posts"</code>) and a dynamic route (<code>"/posts/{post_id}"</code>), let’s briefly discuss how routing works in a modern framework like FastAPI. At a high-level, the routing algorithm works like this:</p>
+<ol>
+<li><strong>Match the HTTP method</strong> (GET, POST, PUT, DELETE, etc.).</li>
+<li><strong>Match the path pattern</strong> (<code>"/"</code>, <code>"/about"</code>, <code>"/posts"</code>, <code>"/posts/{post_id}"</code>, etc.).<ul>
+<li>Routes are checked <em>in the order they are defined</em> which can be surprising. If you define a route like <code>/posts/{post_id}</code> and then a route like <code>/posts/stats</code> follows it, the first route will always be matched (and error). To avoid this common issue, specify routes with static path parts before the dynamic path parts.</li>
+</ul>
+</li>
+<li><strong>Handle parameters</strong> (like <code>post_id</code>) including type conversion and validation.</li>
+<li><strong>Call the function</strong> associated with that route.</li>
+<li><strong>Return a response</strong> which might be JSON, HTML, or something else.</li>
+</ol>
+<p>Like everything, there is a bit more more machinery behind the scenes, but understanding routing at this level of details is sufficient for now.</p>
+<hr />
+<h2 id="8-automatic-documentation-with-openapi">8. Automatic Documentation with OpenAPI</h2>
+<p>One major benefit of FastAPI is its automatic generation of <strong>OpenAPI</strong> documentation. OpenAPI was previously known as Swagger, which was an objectively awful name, so this is a welcomed development in the community. By default, FastAPI sets up:</p>
+<ul>
+<li>An <strong>OpenAPI specification</strong> at <code>/openapi.json</code>.</li>
+<li>An OpenAPI-based <strong>web interface</strong> at <code>/docs</code>.</li>
+</ul>
+<p>With your FastAPI dev server is running, navivate to:</p>
+<ul>
+<li><strong><code>/docs</code></strong> — a graphical user interface where you can see all endpoints, query them, and see sample requests and responses.</li>
+<li><strong><code>/openapi.json</code></strong> — the raw JSON specification for your API.</li>
+</ul>
+<p>Because we used <code>pydantic.BaseModel</code> for <code>Post</code>, the schema's model shape will be visible in <code>/docs</code>, including field types and potential validation error states.</p>
+<div class="admonition note">
+<p class="admonition-title">Why is an OpenAPI spec valuable?</p>
+<ul>
+<li>It standardizes your API contract, so other developers or tools (like code generators) know exactly how to consume your endpoints.</li>
+<li>The <code>/docs</code> interface provides a quick way to try out your endpoints. This will be valuable in the next section.</li>
+</ul>
+</div>
+<h3 id="openapi-ui-in-the-wild-csxluncedu">OpenAPI UI in the Wild: CSXL.unc.edu</h3>
+<p>To hopefully drive home the point that what you are learning is both <em>real</em> and used in the wild, try opening up this URL in a new tab: <a href="https://csxl.unc.edu/docs">https://csxl.unc.edu/docs</a>.</p>
+<p>This is the API for the CSXL web application. Many routes require an authentication token. If you want to try those routes, in a separate tab open up the CSXL website, login, and go to your user profile. Under profile actions, click "Copy" on the Bearer Token (which is an authorization key for your user). Paste that in to the <code>/docs</code> unlock screen. Then try running the <code>GET /api/profile</code> API endpoint and you should see your data.</p>
+<p>Some other fun routes include public ones like listing student organizations or classes in a given semester.</p>
+<p>If you've used office hours via the CSXL, or applied to be a TA, or reserved a room or checked into the XL Coworking space for a desk to work at... <em>you've already used this API without knowing it</em>! If you scroll around you can see the API end points powering coworking, office hours, and more.</p>
+<hr />
+<h2 id="9-adding-a-post-route">9. Adding a POST Route</h2>
+<p>Let’s make our API a bit more dynamic by allowing clients to <strong>create</strong> new posts. We’ll maintain our dictionary <code>posts_db</code> but now add a route for <strong>POST</strong>. We can do something like this:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><span class="c1"># Update FastAPI Imports</span>
+</span><span id="__span-5-2"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">Body</span>
+</span><span id="__span-5-3">
+</span><span id="__span-5-4"><span class="c1"># ... Keep other routes the same ...</span>
+</span><span id="__span-5-5">
+</span><span id="__span-5-6"><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/posts&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span>
+</span><span id="__span-5-7"><span class="k">def</span><span class="w"> </span><span class="nf">create_post</span><span class="p">(</span><span class="n">post</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Post</span><span class="p">,</span> <span class="n">Body</span><span class="p">()]):</span>
+</span><span id="__span-5-8">    <span class="k">if</span> <span class="n">post</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">posts_db</span><span class="p">:</span>
+</span><span id="__span-5-9">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Post with this ID already exists&quot;</span><span class="p">)</span>
+</span><span id="__span-5-10">    <span class="n">posts_db</span><span class="p">[</span><span class="n">post</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">post</span>
+</span><span id="__span-5-11">    <span class="k">return</span> <span class="n">post</span>
+</span></code></pre></div>
+<h3 id="walkthrough-of-the-post-route">Walkthrough of the POST Route</h3>
+<ul>
+<li><strong>Request Body</strong>: FastAPI automatically parses the incoming JSON body into a <code>Post</code> object (thanks to Pydantic). Notice how simple this is! We specified a parameter to the function of a Pydantic model type, there is no conflicting name in a dynamic path part, so FastAPI <em>convention</em> infers this must be the schema of the data in the request body.</li>
+<li>We "<strong>store</strong>" that post in <code>posts_db</code> using the post’s <code>id</code> as the key.</li>
+<li>By specifying <code>status_code=status.HTTP_201_CREATED</code>, FastAPI will return a <strong>201 Created</strong> status code upon success.</li>
+<li>We also added a small check to ensure that an existing post with the same ID doesn’t get overwritten.</li>
+</ul>
+<p>Open your browser to the API UI page <code>/docs</code>, or reload it (this page will not automatically refresh upon saving your work in the editor). Scroll to the <code>POST /posts</code> endpoint. You can:</p>
+<ol>
+<li>Click <strong>Try it out</strong>.</li>
+<li>Provide a sample JSON body, e.g.:
+   <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><span class="p">{</span>
+</span><span id="__span-6-2"><span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+</span><span id="__span-6-3"><span class="w">  </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My brand new post!&quot;</span>
+</span><span id="__span-6-4"><span class="p">}</span>
+</span></code></pre></div></li>
+<li>Click <strong>Execute</strong> and see the response information.</li>
+</ol>
+<p>You can then go to the <code>GET /posts/{post_id}</code> endpoint in <code>/docs</code> (or directly at <code>/posts/3</code>) to verify the newly created post.</p>
+<p>There are a few other activities for you to try here:</p>
+<ol>
+<li>Try posting the same JSON and seeing the response code.</li>
+<li>Try posting a JSON body that is just <code>{"id": 4}</code> and seeing the response FastAPI produces. (WOW!)</li>
+<li>Look at the specific response status code of the happy path (201) in the <code>/docs</code> UI. Notice where this is coming from in the definition. Take a look at how this is specified in the decorator as an additional parameter. There are other ways of responding with a specific status code, but this is preferred in a case like this.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Your 'Database' of Posts Will Reset</p>
+<p>We are not actually using a "database" in this tutorial; just a dictionary stored in our module's global memory a sa simplification. As such, every time your FastAPI server stops and restarts, this dictionary is reset to its initialized contents. That means each time you change your <code>main.py</code> file below, and the server automatically reloads, you will lose any changes made via the API.</p>
+<p>Soon, we will learn how to connect our API to persistent databases that live in a layer outside of our code such that when we stop and restart our server the data is securely stored and accessible again as soon as our server starts back up.</p>
+</div>
+<hr />
+<h2 id="10-adding-put-and-delete">10. Adding PUT and DELETE</h2>
+<p>Finally, let’s round out our basic CRUD functionality (Create, Retrieve, Update, Delete) with <strong>PUT</strong> (update) and <strong>DELETE</strong> HTTP method routes. Here’s a simple approach, using our dictionary to check for existence by key:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><span class="c1"># ... previous code remains the same ...</span>
+</span><span id="__span-7-2">
+</span><span id="__span-7-3"><span class="nd">@app</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;/posts/</span><span class="si">{post_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-4"><span class="k">def</span><span class="w"> </span><span class="nf">update_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">()],</span> <span class="n">updated_post</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Post</span><span class="p">,</span> <span class="n">Body</span><span class="p">()])</span> <span class="o">-&gt;</span> <span class="n">Post</span><span class="p">:</span>
+</span><span id="__span-7-5">    <span class="k">if</span> <span class="n">post_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">posts_db</span><span class="p">:</span>
+</span><span id="__span-7-6">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Post not found&quot;</span><span class="p">)</span>
+</span><span id="__span-7-7">    <span class="n">posts_db</span><span class="p">[</span><span class="n">post_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">updated_post</span>
+</span><span id="__span-7-8">    <span class="k">return</span> <span class="n">updated_post</span>
+</span><span id="__span-7-9">
+</span><span id="__span-7-10"><span class="nd">@app</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;/posts/</span><span class="si">{post_id}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_204_NO_CONTENT</span><span class="p">)</span>
+</span><span id="__span-7-11"><span class="k">def</span><span class="w"> </span><span class="nf">delete_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">()])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-7-12">    <span class="k">if</span> <span class="n">post_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">posts_db</span><span class="p">:</span>
+</span><span id="__span-7-13">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Post not found&quot;</span><span class="p">)</span>
+</span><span id="__span-7-14">    <span class="k">del</span> <span class="n">posts_db</span><span class="p">[</span><span class="n">post_id</span><span class="p">]</span>
+</span><span id="__span-7-15">    <span class="k">return</span> <span class="kc">None</span> <span class="c1"># 204 = No Content</span>
+</span></code></pre></div>
+<h3 id="put-update-a-resource">PUT: Update a Resource</h3>
+<p>At the HTTP specification level, <strong>PUT</strong> is meant to <strong>replace</strong> the resource at the specified URL. Here, our resource is <code>"/posts/{post_id}"</code>. When the client requests <code>PUT /posts/5</code>, for example, we expect the request body to provide the new <code>id</code> and <code>content</code> fields for post <code>5</code> (or whichever post ID is specified). If that post doesn’t exist, we respond with a <strong>404 Not Found</strong>.</p>
+<h3 id="delete-remove-a-resource">DELETE: Remove a Resource</h3>
+<p>Similarly, <strong>DELETE</strong> aligns directly with the idea of removing the resource at the URL. When a client requests <code>DELETE /posts/5</code>, we remove post <code>5</code> from our <code>posts_db</code>. A successful removal returns a <strong>204 No Content</strong>, which communicates that the request succeeded, but there’s no response body.</p>
+<h3 id="testing-put-and-delete-in-the-openapi-ui">Testing PUT and DELETE in the OpenAPI UI</h3>
+<ol>
+<li><strong>Open the documentation</strong>: Navigate to <code>http://localhost:8000/docs</code>. You’ll see your new <code>PUT</code> and <code>DELETE</code> endpoints under the <code>/posts/{post_id}</code> section.</li>
+<li><strong>Try PUT</strong>:<ul>
+<li>Expand <strong>PUT /posts/{post_id}</strong>.</li>
+<li>Click <strong>Try it out</strong>.</li>
+<li>Enter a valid <code>post_id</code> (e.g., <code>1</code>) in the path parameter box.</li>
+<li>Provide a JSON body with the <code>id</code> and <code>content</code> fields. For instance:
+    <div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><span class="p">{</span>
+</span><span id="__span-8-2"><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-8-3"><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Updated content via PUT!&quot;</span>
+</span><span id="__span-8-4"><span class="p">}</span>
+</span></code></pre></div></li>
+<li>Execute the request and verify that the response shows the updated post.</li>
+<li>Try using the <code>GET</code> routes (list or by ID) to confirm the update is reflected following the update.</li>
+</ul>
+</li>
+<li><strong>Try DELETE</strong>:<ul>
+<li>Expand <strong>DELETE /posts/{post_id}</strong>.</li>
+<li>Click <strong>Try it out</strong>.</li>
+<li>Enter the <code>post_id</code> for the post you want to remove.</li>
+<li>Execute, and you’ll see a <strong>204</strong> response indicating success (no body returned).</li>
+<li>If you try a <code>post_id</code> that doesn’t exist, you’ll get a <strong>404 Not Found</strong>.</li>
+<li>Try using the <code>GET</code> routes (list or by ID) to confirm the <code>POST</code> as deleted from your in-memory "database".</li>
+</ul>
+</li>
+</ol>
+<p>With <strong>PUT</strong> and <strong>DELETE</strong>, you now have the full set of HTTP operations to manage a simple resource.</p>
+<hr />
+<h2 id="summary-and-next-steps">Summary and Next Steps</h2>
+<p>Congratulations! You’ve:</p>
+<ol>
+<li>Declared routes with static paths (<code>"/"</code>, <code>"/about"</code>).</li>
+<li>Introduced <strong>Pydantic</strong> models (<code>Post</code>) and used a global dictionary to store and retrieve posts.</li>
+<li>Created routes to list all posts, get a specific post by ID (dynamic route), and handled invalid IDs.</li>
+<li>Learned how FastAPI automatically validates path parameters.</li>
+<li>Explored how FastAPI auto-generates <strong>OpenAPI</strong> docs at <code>"/docs"</code>.</li>
+<li>Implemented <strong>POST</strong>, <strong>PUT</strong>, and <strong>DELETE</strong> to complete the CRUD operations set.</li>
+</ol>
+<h3 id="best-practices-beyond-this-tutorial">Best Practices Beyond This Tutorial</h3>
+<ul>
+<li><strong>Organize your files</strong>: Real projects separate routers, models, and database logic into different modules.</li>
+<li><strong>Use databases</strong>: Instead of an in-memory dictionary, integrate a real database system for persistence.</li>
+<li><strong>Validation and error handling</strong>: Explore more Pydantic features to ensure robust data validation. One place where we did not fully specify our APIs above, for the sake of not getting bogged down in error cases, is when we responded with error status codes but did not specify this in the route decorator. In the next assignment, we will fully specify all expected response types in our route handler functions.</li>
+</ul>
+<p>With these fundamentals, you have a solid handle on building a basic API with <strong>FastAPI</strong>. Enjoy experimenting, and happy coding!</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../5-api-spec/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Toward Designing and Formally Specifying APIs">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Toward Designing and Formally Specifying APIs
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../backend/" class="md-footer__link md-footer__link--next" aria-label="Next: Backend Concerns">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Backend Concerns
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1835 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/backend/1-dependency-injection/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../2-testing-apis/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Dependency Injection - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-introduction-to-dependency-injection-in-fastapi" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Dependency Injection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-dependency-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Dependency Injection?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Dependency Injection?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-dependency-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Use Dependency Injection?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-dependency-injection-work-in-fastapi-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Does Dependency Injection Work in FastAPI Routing?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-dependency-injection-in-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tutorial: Dependency Injection in FastAPI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tutorial: Dependency Injection in FastAPI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-defining-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Defining Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-defining-a-game-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Defining a Game Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-establishing-a-fastapi-route-to-play-the-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Establishing a FastAPI Route to Play the Game!
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Establishing a FastAPI Route to Play the Game!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-without-dependency-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting Without Dependency Injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refactor-to-dependency-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactor to Dependency Injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-adding-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4. Adding Functionality
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4. Adding Functionality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cleaning-up-the-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleaning Up the Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-power-of-dependency-injection-in-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Power of Dependency Injection in FastAPI
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="1-introduction-to-dependency-injection-in-fastapi">1. Introduction to Dependency Injection in FastAPI</h1>
+<h2 id="what-is-dependency-injection">What is Dependency Injection?</h2>
+<p><strong>Dependency Injection (DI)</strong> is a widely used design pattern that promotes modular, testable, and maintainable code. It is a <strong>core principle</strong> in many modern application frameworks across various programming languages, including Java (Spring), Python (FastAPI), and TypeScript (Angular). The primary idea behind DI is instead of <em>you</em> constructing dependencies <em>inside</em> a function or class body, you declare them as <em>special parameters</em>. When the application framework calls your function, such as a route, its DI system constructs the argument values behind the scenes and "injects" them as arguments. This process is called <strong>dependency injection</strong>.</p>
+<p>This concept plays a role in modern <strong>layered architectures</strong> like as we are exploring in this course. Dependency Injection provides a <strong>clean, structured way</strong> to introduce and manage dependencies between layers, keeping them <strong>loosely coupled</strong> and testable. We will introduce a <strong>business logic services layer</strong> that encapsulates domain-specific logic and separates it from the <strong>routing layer</strong> (which handles HTTP requests and responses). The services layer is <em>dependency injected</em> into the routing layer.</p>
+<h3 id="why-use-dependency-injection">Why Use Dependency Injection?</h3>
+<p>Dependency Injection helps solve common software design challenges, making applications:</p>
+<ul>
+<li><strong>More Maintainable</strong>: By loosely coupling dependencies between parts of a system, changes in one part of the application don’t require modifying other parts. Loosely coupled components make it easier to replace or upgrade individual parts of a system without affecting the rest. This reduces the risk of unintended side effects and promotes a more modular and extensible architecture.</li>
+<li><strong>Easier to Test</strong>: With DI, dependencies can be replaced with mock implementations, making unit tests isolated and reliable.</li>
+<li><strong>More Flexible</strong>: By programming to an interface rather than a concrete implementation, different implementations of a dependency can be injected dynamically, allowing for easy configuration changes.</li>
+<li><strong>Reduces Code Duplication</strong>: Centralizing dependency management prevents repeated instantiation of services throughout the codebase.</li>
+</ul>
+<p>You’ve actually already encountered DI in FastAPI! Every time a request includes <strong>path parameters, query parameters, or request bodies</strong>... where did the argument values come from? FastAPI injected them into your route handlers automatically! Now, let’s take this one step further: what if we wanted to inject a <strong>custom service</strong> into our application to handle business logic?</p>
+<h2 id="how-does-dependency-injection-work-in-fastapi-routing">How Does Dependency Injection Work in FastAPI Routing?</h2>
+<p>When a request is received in a FastAPI application, the following steps occur:</p>
+<ol>
+<li><strong>Request Routing</strong>: FastAPI matches the incoming request's URL and HTTP method to the appropriate route handler function.</li>
+<li><strong>Dependency Resolution</strong>: Before calling the route function, FastAPI checks for any declared dependencies using <code>Depends()</code>. It determines what dependencies are needed and resolves how to instantiate them in a correct order. An injected dependency may have its own injected dependencies that need to be resolved and instantiated first!</li>
+<li><strong>Dependency Instantiation</strong>: If a dependency is a class or function, FastAPI instantiates it (if needed) and injects it into the route function.</li>
+<li><strong>Function Execution</strong>: The route function is called with the injected dependencies passed in as arguments to the routed function's parameters.</li>
+</ol>
+<h2 id="tutorial-dependency-injection-in-fastapi">Tutorial: Dependency Injection in FastAPI</h2>
+<p>To follow along with this quick tutorial on dependency injection, from your host machine's terminal clone the course FastAPI Tutorial repository again, but name the cloned directory <code>di-tutorial</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/comp423-26s/fastapi-tutorial<span class="w"> </span>di-tutorial
+</span></code></pre></div>
+<p>The last argument of <code>di-tutorial</code> is what causes <code>git</code> to clone to a specific directory name on your machine.</p>
+<div class="admonition info">
+<p class="admonition-title">GitHub's <code>gh</code> CLI Program</p>
+<p>Now that you are comfortable with fundamental <code>git</code> commands, you may want to install GitHub's <code>gh</code> tool on your host machine. Instructions here: <a href="https://cli.github.com">https://cli.github.com</a></p>
+<p>The <code>gh</code> tool allows you to interact with <a href="https://docs.github.com/en/rest?apiVersion=2022-11-28">GitHub's REST API</a> from your command line. You can do things like <a href="https://cli.github.com/manual/gh_repo_create">create new GitHub repositories</a>, <a href="https://cli.github.com/manual/gh_issue_list">list issues</a>, and nearly anything you can do from the GitHub web page.</p>
+<p>Once you have <code>gh</code>, you can achieve the clone command above with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1">gh<span class="w"> </span>repo<span class="w"> </span>clone<span class="w"> </span>comp423-26s/fastapi-tutorial<span class="w"> </span>di-tutorial
+</span></code></pre></div>
+</div>
+<p>Open the repo directory in VS Code and then open the repo in a <strong>Dev Container</strong>.</p>
+<h3 id="step-1-defining-models">Step 1: Defining Models</h3>
+<p>Let's implement a Rock, Paper, Scissors API! Create a new file in the project's root directory named <code>models.py</code>. We'll define our Pydantic data models here. Review the code below and then copy it into <code>models.py</code>:</p>
+<div class="language-python highlight"><span class="filename">models.py</span><pre><span></span><code><span id="__span-2-1"><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+</span><span id="__span-2-2"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="__span-2-3"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">TypeAlias</span>
+</span><span id="__span-2-4"><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+</span><span id="__span-2-5">
+</span><span id="__span-2-6">
+</span><span id="__span-2-7"><span class="k">class</span><span class="w"> </span><span class="nc">Choice</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+</span><span id="__span-2-8">    <span class="n">rock</span> <span class="o">=</span> <span class="s2">&quot;rock&quot;</span>
+</span><span id="__span-2-9">    <span class="n">paper</span> <span class="o">=</span> <span class="s2">&quot;paper&quot;</span>
+</span><span id="__span-2-10">    <span class="n">scissors</span> <span class="o">=</span> <span class="s2">&quot;scissors&quot;</span>
+</span><span id="__span-2-11">
+</span><span id="__span-2-12">
+</span><span id="__span-2-13"><span class="n">ChoiceField</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
+</span><span id="__span-2-14">    <span class="n">Choice</span><span class="p">,</span>
+</span><span id="__span-2-15">    <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-2-16">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Choice of rock, paper, or scissors.&quot;</span><span class="p">,</span>
+</span><span id="__span-2-17">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;rock&quot;</span><span class="p">,</span> <span class="s2">&quot;paper&quot;</span><span class="p">,</span> <span class="s2">&quot;scissors&quot;</span><span class="p">],</span>
+</span><span id="__span-2-18">    <span class="p">),</span>
+</span><span id="__span-2-19"><span class="p">]</span>
+</span><span id="__span-2-20">
+</span><span id="__span-2-21">
+</span><span id="__span-2-22"><span class="k">class</span><span class="w"> </span><span class="nc">GamePlay</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="__span-2-23">    <span class="n">user_choice</span><span class="p">:</span> <span class="n">ChoiceField</span>
+</span><span id="__span-2-24">
+</span><span id="__span-2-25">
+</span><span id="__span-2-26"><span class="k">class</span><span class="w"> </span><span class="nc">GameResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="__span-2-27">    <span class="n">timestamp</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;When the game was played.&quot;</span><span class="p">)]</span>
+</span><span id="__span-2-28">    <span class="n">user_choice</span><span class="p">:</span> <span class="n">ChoiceField</span>
+</span><span id="__span-2-29">    <span class="n">api_choice</span><span class="p">:</span> <span class="n">ChoiceField</span>
+</span><span id="__span-2-30">    <span class="n">user_wins</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Did the user win the game?&quot;</span><span class="p">)]</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Using a <code>TypeAlias</code> for repeated type annotations</p>
+<p>Notice <code>ChoiceField</code> is defined as a <code>TypeAlias</code> for the annotated type of <code>Choice</code> such that it contains the <code>Field</code> information with an API description.</p>
+<p>When you find an annotated type is repeated in multiple places in your Pydantic models or FastAPI routes, using a <code>TypeAlias</code> to cut down on the repetition and make the code more readable is a best practice.</p>
+</div>
+<p>In Python, a <strong>protocol</strong> is similar to an interface in Java. It defines a contract that a class must follow without enforcing inheritance. This allows for better flexibility and testability.</p>
+<h3 id="step-2-defining-a-game-service">Step 2: Defining a <code>Game</code> Service</h3>
+<p>Now let's define a service class that handles the serious "business logic" of rock paper scissors. Review the contents below and copy the contents to a new file named <code>services.py</code>:</p>
+<div class="language-python highlight"><span class="filename">services.py</span><pre><span></span><code><span id="__span-3-1"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="__span-3-2"><span class="kn">from</span><span class="w"> </span><span class="nn">random</span><span class="w"> </span><span class="kn">import</span> <span class="n">choice</span> <span class="k">as</span> <span class="n">random_choice</span>
+</span><span id="__span-3-3"><span class="kn">from</span><span class="w"> </span><span class="nn">models</span><span class="w"> </span><span class="kn">import</span> <span class="n">GamePlay</span><span class="p">,</span> <span class="n">GameResult</span><span class="p">,</span> <span class="n">Choice</span>
+</span><span id="__span-3-4">
+</span><span id="__span-3-5">
+</span><span id="__span-3-6"><span class="k">class</span><span class="w"> </span><span class="nc">GameService</span><span class="p">:</span>
+</span><span id="__span-3-7"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for processing game plays.</span>
+</span><span id="__span-3-8">
+</span><span id="__span-3-9"><span class="sd">    This class provides functionality to simulate a game between a user and the API.</span>
+</span><span id="__span-3-10"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-3-11">
+</span><span id="__span-3-12">    <span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gameplay</span><span class="p">:</span> <span class="n">GamePlay</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GameResult</span><span class="p">:</span>
+</span><span id="__span-3-13"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Play a game round.</span>
+</span><span id="__span-3-14">
+</span><span id="__span-3-15"><span class="sd">        Args:</span>
+</span><span id="__span-3-16"><span class="sd">            gameplay (GamePlay): An object encapsulating the user&#39;s choice.</span>
+</span><span id="__span-3-17">
+</span><span id="__span-3-18"><span class="sd">        Returns:</span>
+</span><span id="__span-3-19"><span class="sd">            GameResult: The outcome of the game including user and API choices, and win flag.</span>
+</span><span id="__span-3-20"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-3-21">        <span class="n">api_choice</span><span class="p">:</span> <span class="n">Choice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_random_choice</span><span class="p">()</span>
+</span><span id="__span-3-22">
+</span><span id="__span-3-23">        <span class="k">return</span> <span class="n">GameResult</span><span class="p">(</span>
+</span><span id="__span-3-24">            <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+</span><span id="__span-3-25">            <span class="n">user_choice</span><span class="o">=</span><span class="n">gameplay</span><span class="o">.</span><span class="n">user_choice</span><span class="p">,</span>
+</span><span id="__span-3-26">            <span class="n">api_choice</span><span class="o">=</span><span class="n">api_choice</span><span class="p">,</span>
+</span><span id="__span-3-27">            <span class="n">user_wins</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_does_user_win</span><span class="p">(</span><span class="n">gameplay</span><span class="o">.</span><span class="n">user_choice</span><span class="p">,</span> <span class="n">api_choice</span><span class="p">),</span>
+</span><span id="__span-3-28">        <span class="p">)</span>
+</span><span id="__span-3-29">
+</span><span id="__span-3-30">    <span class="k">def</span><span class="w"> </span><span class="nf">_random_choice</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Choice</span><span class="p">:</span>
+</span><span id="__span-3-31"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Select a random choice for the API.</span>
+</span><span id="__span-3-32">
+</span><span id="__span-3-33"><span class="sd">        Returns:</span>
+</span><span id="__span-3-34"><span class="sd">            Choice: A randomly chosen game option.</span>
+</span><span id="__span-3-35"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-3-36">        <span class="k">return</span> <span class="n">random_choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Choice</span><span class="p">))</span>
+</span><span id="__span-3-37">
+</span><span id="__span-3-38">    <span class="k">def</span><span class="w"> </span><span class="nf">_does_user_win</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_choice</span><span class="p">:</span> <span class="n">Choice</span><span class="p">,</span> <span class="n">api_choice</span><span class="p">:</span> <span class="n">Choice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-3-39"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if the user wins based on choices.</span>
+</span><span id="__span-3-40">
+</span><span id="__span-3-41"><span class="sd">        Args:</span>
+</span><span id="__span-3-42"><span class="sd">            user_choice (Choice): The user&#39;s chosen option.</span>
+</span><span id="__span-3-43"><span class="sd">            api_choice (Choice): The API&#39;s chosen option.</span>
+</span><span id="__span-3-44">
+</span><span id="__span-3-45"><span class="sd">        Returns:</span>
+</span><span id="__span-3-46"><span class="sd">            bool: True if the user wins, False otherwise.</span>
+</span><span id="__span-3-47"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-3-48">        <span class="n">result</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Choice</span><span class="p">,</span> <span class="n">Choice</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">user_choice</span><span class="p">,</span> <span class="n">api_choice</span><span class="p">)</span>
+</span><span id="__span-3-49">        <span class="n">winning_results</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Choice</span><span class="p">,</span> <span class="n">Choice</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-3-50">            <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">),</span>
+</span><span id="__span-3-51">            <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">),</span>
+</span><span id="__span-3-52">            <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">),</span>
+</span><span id="__span-3-53">        <span class="p">}</span>
+</span><span id="__span-3-54">        <span class="k">return</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">winning_results</span>
+</span></code></pre></div>
+<p>Notice that this <code>services.py</code> module knows <strong>nothing</strong> about HTTP or FastAPI. Its imports are data models and some library functionality for randomization. This is just plain-old Python! This is the "core" logic of our little app, though, and you can easily imagine how writing unit tests for it would be straightforward.</p>
+<h3 id="step-3-establishing-a-fastapi-route-to-play-the-game">Step 3: Establishing a FastAPI Route to Play the Game!</h3>
+<p>Now that we have a service defined, how do we add a route that uses dependency injection to utilize it? Similar to how we declare parameters of routes that are populated by dynamic <code>Path</code> parts, <code>Query</code> parameters, or <code>Body</code> payloads.</p>
+<div class="admonition question">
+<p class="admonition-title">What HTTP method would <em>you</em> choose for the game playing REST API endpoint?</p>
+<p>We will model playing a round of this game with a <code>POST</code> method. Even though we are not (yet) storing a history of games or <em>creating</em> anything, playing a game is <em>not</em> idempotent: we get back a new result each time we play. Not only do the <code>api_choice</code> and <code>user_wins</code> fields update, the <code>timestamp</code> reflects the latest game play.</p>
+</div>
+<h4 id="starting-without-dependency-injection">Starting Without Dependency Injection</h4>
+<p>Update your <code>main.py</code> file to reflect the following. <strong>Note: this example does not yet rely upon dependency injection! We will refactor this to make use of dependency injection next.</strong></p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><span class="sd">&quot;&quot;&quot;FastAPI main entrypoint file.&quot;&quot;&quot;</span>
+</span><span id="__span-4-2">
+</span><span id="__span-4-3"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">TypeAlias</span>
+</span><span id="__span-4-4"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Body</span><span class="p">,</span> <span class="n">Depends</span>
+</span><span id="__span-4-5"><span class="kn">from</span><span class="w"> </span><span class="nn">models</span><span class="w"> </span><span class="kn">import</span> <span class="n">GamePlay</span><span class="p">,</span> <span class="n">GameResult</span>
+</span><span id="__span-4-6"><span class="kn">from</span><span class="w"> </span><span class="nn">services</span><span class="w"> </span><span class="kn">import</span> <span class="n">GameService</span>
+</span><span id="__span-4-7">
+</span><span id="__span-4-8"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+</span><span id="__span-4-9">
+</span><span id="__span-4-10">
+</span><span id="__span-4-11"><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">)</span>
+</span><span id="__span-4-12"><span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">(</span>
+</span><span id="__span-4-13">    <span class="n">user_choice</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+</span><span id="__span-4-14">        <span class="n">GamePlay</span><span class="p">,</span>
+</span><span id="__span-4-15">        <span class="n">Body</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;User&#39;s choice of rock, paper, or scissors.&quot;</span><span class="p">),</span>
+</span><span id="__span-4-16">    <span class="p">],</span>
+</span><span id="__span-4-17"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GameResult</span><span class="p">:</span>
+</span><span id="__span-4-18"><span class="hll">    <span class="c1"># Here we construct a GameService *without* dependency injection...</span>
+</span></span><span id="__span-4-19"><span class="hll">    <span class="n">game_svc</span><span class="p">:</span> <span class="n">GameService</span> <span class="o">=</span> <span class="n">GameService</span><span class="p">()</span> <span class="c1"># (1)!</span>
+</span></span><span id="__span-4-20">    <span class="k">return</span> <span class="n">game_svc</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">user_choice</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>Notice that fully <em>inside the body</em> of this function is where we declare a local variable of type <code>GameService</code> and construct it. If we later wanted to use a different object, which conformed to the interface <code>GameService</code> implements, how would we do so? We couldn't without changing this source code! Being able to swap out implementations is very useful in one common software engineering practice we will soon embrace: unit testing. In unit testing, to isolate the behavior of a single function, dependency injection gives you the ability to substitute fake dependencies in such that you are <em>only</em> testing the unit(s) of code you care about.</li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Check for understanding: Why is line 19 problematic? Why do we want to use dependency injection instead?</p>
+<p>Try to answer this question for yourself before clicking the annotation symbol at the end of line 19 to reveal the answer.</p>
+</div>
+<h4 id="refactor-to-dependency-injection">Refactor to Dependency Injection</h4>
+<p>The updated definition of the <code>play</code> function provides an example with FastAPI's dependency injection utilized:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-11"><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">)</span>
+</span><span id="__span-5-12"><span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">(</span>
+</span><span id="__span-5-13">    <span class="n">user_choice</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+</span><span id="__span-5-14">        <span class="n">GamePlay</span><span class="p">,</span>
+</span><span id="__span-5-15">        <span class="n">Body</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;User&#39;s choice of rock, paper, or scissors.&quot;</span><span class="p">),</span>
+</span><span id="__span-5-16">    <span class="p">],</span>
+</span><span id="__span-5-17"><span class="hll">    <span class="n">game_svc</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">GameService</span><span class="p">,</span> <span class="n">Depends</span><span class="p">()],</span>
+</span></span><span id="__span-5-18"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GameResult</span><span class="p">:</span>
+</span><span id="__span-5-19">    <span class="k">return</span> <span class="n">game_svc</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">user_choice</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Be sure to run the FastAPI server and try out the route from the OpenAPI <code>/docs</code> user interface!</p>
+<p>Notice on line 17 we added an additional parameter to the <code>play</code> function definition. Its type is <code>Annotated[GameService, Depends()]</code>. The <code>Depends()</code> call is what declaratively signals to FastAPI this is a dependency injected parameter. How does it know to construct an instance of <code>GameService</code>? Because it's annotating the <em>type</em> <code>GameService</code>. </p>
+<p>There are other ways of using <code>Depends</code>, too, like giving it a factory function and specifying the construction elsewhere. You can also specify the annotated type to be a <code>Protocol</code> (similar to a Java interface) and giving a concrete classname as an argument to <code>Depends</code>. That's how COMP301 should have taught you to approach a similar problem. However, we will adhere to a software engineering goal: don't overengineer until you have good reason to!</p>
+<p><strong>This is dependency injection!</strong> There is a HUGE win here: your dependency is now a parameter passed in, or <em>injected</em>, from the outside. It is not hardwired in to the route body. Thus, if you wanted to <em>unit test</em> this function, you could easily supply a mock instance of a <code>GameService</code> and isolate the function's behavior. That said, this example is so trivial that the notion of isolating it for a unit test is a bit silly. </p>
+<h3 id="step-4-adding-functionality">Step 4. Adding Functionality</h3>
+<p>Let's record a history of games played since the service was last restarted. We will use global module memory for this, but realize this is only a stopgap solution until we learn more about data persistence.</p>
+<div class="language-python highlight"><span class="filename">services.py</span><pre><span></span><code><span id="__span-6-1"><span class="c1"># ... the import statements above remain the same ...</span>
+</span><span id="__span-6-2">
+</span><span id="__span-6-3"><span class="hll"><span class="c1"># This is *NOT* a database, just a hack for now...</span>
+</span></span><span id="__span-6-4"><span class="hll"><span class="n">_db</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GameResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span id="__span-6-5">
+</span><span id="__span-6-6"><span class="k">class</span><span class="w"> </span><span class="nc">GameService</span><span class="p">:</span>
+</span><span id="__span-6-7"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for processing game plays.</span>
+</span><span id="__span-6-8">
+</span><span id="__span-6-9"><span class="sd">    This class provides functionality to simulate a game between a user and the API.</span>
+</span><span id="__span-6-10"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-6-11">
+</span><span id="__span-6-12">    <span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gameplay</span><span class="p">:</span> <span class="n">GamePlay</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GameResult</span><span class="p">:</span>
+</span><span id="__span-6-13"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Play a game round.</span>
+</span><span id="__span-6-14">
+</span><span id="__span-6-15"><span class="sd">        Args:</span>
+</span><span id="__span-6-16"><span class="sd">            gameplay (GamePlay): An object encapsulating the user&#39;s choice.</span>
+</span><span id="__span-6-17">
+</span><span id="__span-6-18"><span class="sd">        Returns:</span>
+</span><span id="__span-6-19"><span class="sd">            GameResult: The outcome of the game including user and API choices, and win flag.</span>
+</span><span id="__span-6-20"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-6-21">        <span class="n">api_choice</span><span class="p">:</span> <span class="n">Choice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_random_choice</span><span class="p">()</span>
+</span><span id="__span-6-22"><span class="hll">        <span class="n">result</span> <span class="o">=</span> <span class="n">GameResult</span><span class="p">(</span>
+</span></span><span id="__span-6-23"><span class="hll">            <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+</span></span><span id="__span-6-24"><span class="hll">            <span class="n">user_choice</span><span class="o">=</span><span class="n">gameplay</span><span class="o">.</span><span class="n">user_choice</span><span class="p">,</span>
+</span></span><span id="__span-6-25"><span class="hll">            <span class="n">api_choice</span><span class="o">=</span><span class="n">api_choice</span><span class="p">,</span>
+</span></span><span id="__span-6-26"><span class="hll">            <span class="n">user_wins</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_does_user_win</span><span class="p">(</span><span class="n">gameplay</span><span class="o">.</span><span class="n">user_choice</span><span class="p">,</span> <span class="n">api_choice</span><span class="p">),</span>
+</span></span><span id="__span-6-27"><span class="hll">        <span class="p">)</span>
+</span></span><span id="__span-6-28"><span class="hll">        <span class="n">_db</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span id="__span-6-29"><span class="hll">        <span class="k">return</span> <span class="n">result</span>
+</span></span><span id="__span-6-30"><span class="hll">
+</span></span><span id="__span-6-31"><span class="hll">    <span class="k">def</span><span class="w"> </span><span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GameResult</span><span class="p">]:</span>
+</span></span><span id="__span-6-32"><span class="hll"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all game results.</span>
+</span></span><span id="__span-6-33"><span class="hll">
+</span></span><span id="__span-6-34"><span class="hll"><span class="sd">        Returns:</span>
+</span></span><span id="__span-6-35"><span class="hll"><span class="sd">            list[GameResult]: A list of all game results.</span>
+</span></span><span id="__span-6-36"><span class="hll"><span class="sd">        &quot;&quot;&quot;</span>
+</span></span><span id="__span-6-37">        <span class="k">return</span> <span class="n">_db</span>
+</span><span id="__span-6-38">
+</span><span id="__span-6-39">    <span class="c1"># ... the &quot;private&quot; helper methods remain the same ...</span>
+</span></code></pre></div>
+<p>Notice, we are using a simple global variable in the module to store results. Why not use an instance variable in the <code>GameService</code>? FastAPI's dependency injection system constructs a new instance of <code>GameService</code> on each request. With a little more effort we could get around this with something like the <em>singleton</em> design pattern, to ensure only one instance of <code>GameService</code> is shared across all requests, but that's beyond the scope of this tutorial.</p>
+<p>Let's add a route for listing the history of games played to <code>main.py</code>.</p>
+<div class="language-python highlight"><span class="filename">main.py</span><pre><span></span><code><span id="__span-7-1"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/results&quot;</span><span class="p">)</span>
+</span><span id="__span-7-2"><span class="k">def</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">game_svc</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">GameService</span><span class="p">,</span> <span class="n">Depends</span><span class="p">()])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GameResult</span><span class="p">]:</span>
+</span><span id="__span-7-3">    <span class="k">return</span> <span class="n">game_svc</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
+</span></code></pre></div>
+<p>After saving, your FastAPI server reloads so global memory is cleared. Try playing a few games and then trying out your <code>/results</code> route. You can access it both from the <code>/docs</code> UI as well as from the browser directly, since the route's method is <code>GET</code>.</p>
+<h4 id="cleaning-up-the-types">Cleaning Up the Types</h4>
+<p>There's one last minor tweak to make to help clean this up. You will find this useful as you write many routes which depend on the same service. Let's use a <code>TypeAlias</code> for our dependency injected <code>GameService</code> rather than repeat this annotated type everywhere. Try making the following changes in <code>main.py</code>:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><span class="sd">&quot;&quot;&quot;FastAPI main entrypoint file.&quot;&quot;&quot;</span>
+</span><span id="__span-8-2">
+</span><span id="__span-8-3"><span class="hll"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">TypeAlias</span>
+</span></span><span id="__span-8-4"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Body</span><span class="p">,</span> <span class="n">Depends</span>
+</span><span id="__span-8-5"><span class="kn">from</span><span class="w"> </span><span class="nn">models</span><span class="w"> </span><span class="kn">import</span> <span class="n">GamePlay</span><span class="p">,</span> <span class="n">GameResult</span>
+</span><span id="__span-8-6"><span class="kn">from</span><span class="w"> </span><span class="nn">services</span><span class="w"> </span><span class="kn">import</span> <span class="n">GameService</span>
+</span><span id="__span-8-7">
+</span><span id="__span-8-8"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+</span><span id="__span-8-9">
+</span><span id="__span-8-10"><span class="hll"><span class="n">GameServiceDI</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">GameService</span><span class="p">,</span> <span class="n">Depends</span><span class="p">()]</span>
+</span></span><span id="__span-8-11">
+</span><span id="__span-8-12">
+</span><span id="__span-8-13"><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">)</span>
+</span><span id="__span-8-14"><span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">(</span>
+</span><span id="__span-8-15">    <span class="n">user_choice</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>
+</span><span id="__span-8-16">        <span class="n">GamePlay</span><span class="p">,</span>
+</span><span id="__span-8-17">        <span class="n">Body</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;User&#39;s choice of rock, paper, or scissors.&quot;</span><span class="p">),</span>
+</span><span id="__span-8-18">    <span class="p">],</span>
+</span><span id="__span-8-19"><span class="hll">    <span class="n">game_svc</span><span class="p">:</span> <span class="n">GameServiceDI</span><span class="p">,</span>
+</span></span><span id="__span-8-20"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GameResult</span><span class="p">:</span>
+</span><span id="__span-8-21">    <span class="k">return</span> <span class="n">game_svc</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">user_choice</span><span class="p">)</span>
+</span><span id="__span-8-22">
+</span><span id="__span-8-23">
+</span><span id="__span-8-24"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/results&quot;</span><span class="p">)</span>
+</span><span id="__span-8-25"><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">game_svc</span><span class="p">:</span> <span class="n">GameServiceDI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GameResult</span><span class="p">]:</span>
+</span></span><span id="__span-8-26">    <span class="k">return</span> <span class="n">game_svc</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
+</span></code></pre></div></td></tr></table></div>
+<p>Ah, that's not only a little easier on the eyes, but since the <code>TypeAlias</code> is defined in one place we could now customize <code>Depends()</code> and have more control over how the <code>GameService</code> dependency gets injected across all of these routes. If we wanted to move toward a singleton pattern, for example, we could do so here.</p>
+<h2 id="the-power-of-dependency-injection-in-fastapi">The Power of Dependency Injection in FastAPI</h2>
+<p>Congratulations on completing a first foray into dependency injection (DI) in FastAPI—starting from its core principles and working through a hands-on example with a Rock, Paper, Scissors. You’ve now seen how DI promotes modularity, testability, and maintainability in your applications. Instead of hardwiring dependencies, we leveraged FastAPI's <code>Depends()</code> function to keep our code clean and flexible.</p>
+<p>Through this tutorial, you've learned how to:</p>
+<ul>
+<li>Define business logic services that remain independent of the HTTP framework.</li>
+<li>Use FastAPI’s DI system to inject dependencies in a structured way.</li>
+<li>Improve testability by allowing easy substitution of dependencies.</li>
+<li>Reduce code duplication and enhance maintainability.</li>
+</ul>
+<p>In time, you will learn some more advanced uses of DI in FastAPI:</p>
+<ul>
+<li>Services which inject other services into their constructors. This works just like you'd expect, but still feels magical! Since our services will ultimately depend on a database layer, we will inject the database dependencies into the service.</li>
+<li>A nicer way of declaring routes which have many query parameters using <code>Depends</code>. <a href="https://fastapi.tiangolo.com/tutorial/dependencies/#what-is-dependency-injection">Read more here</a>.</li>
+<li>Singleton dependencies which have only one instance shared across all requests.</li>
+</ul>
+<p>By adopting dependency injection, you're setting yourself up for scalable and maintainable application development. Whether you're working on a small personal project or a large-scale system, mastering DI ensures that your code remains clean and modular.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Backend Concerns">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Backend Concerns
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2-testing-apis/" class="md-footer__link md-footer__link--next" aria-label="Next: Unit, Integration, and E2E Testing API Routes">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Unit, Integration, and E2E Testing API Routes
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

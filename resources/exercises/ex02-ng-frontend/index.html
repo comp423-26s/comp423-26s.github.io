@@ -1,0 +1,1642 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/exercises/ex02-ng-frontend/">
+      
+      
+        <link rel="prev" href="../ex01-api-design/">
+      
+      
+        <link rel="next" href="../sp00-api-spec/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Angular Front-end for Link Sharing App - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#angular-front-end-for-link-sharing-app" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Angular Front-end for Link Sharing App
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-cross-origin-resource-sharing-in-ex01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling Cross-Origin Resource Sharing in EX01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enabling Cross-Origin Resource Sharing in EX01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-cors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding CORS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-middleware-in-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Middleware in FastAPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-cors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enable CORS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-ex02-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up the EX02 Dev Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting up the EX02 Dev Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starter-code-orientation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starter Code Orientation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Starter Code Orientation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-implement-sues-stories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Implement Sue's Stories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-implement-resource-list-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Implement Resource List Link
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branch-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch Expectations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-angular-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Angular Conventions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-credit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extra Credit
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="angular-front-end-for-link-sharing-app">Angular Front-end for Link Sharing App</h1>
+<p>This exercise is a SOLO exercise. Everyone will establish their own repository and work to complete a simple front-end for their own API backend.</p>
+<p>In this exercise you will build a web front-end for your Link Sharing API of EX01. In the process you will gain experience with:</p>
+<ol>
+<li>High-level CORS (Cross-Origin Resource Sharing) Concerns</li>
+<li>TypeScript:<ul>
+<li>Interfaces</li>
+</ul>
+</li>
+<li>Angular:<ul>
+<li>Components</li>
+<li>Signals</li>
+<li>Services</li>
+<li>HttpClient</li>
+<li>Dependency Injection</li>
+<li>Routing</li>
+</ul>
+</li>
+</ol>
+<h2 id="enabling-cross-origin-resource-sharing-in-ex01">Enabling Cross-Origin Resource Sharing in EX01</h2>
+<h3 id="understanding-cors">Understanding CORS</h3>
+<p>CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers that restricts web pages from making requests to a different domain than the one that served the original page. This security measure exists to prevent malicious websites from making unauthorized requests to other domains using your credentials.</p>
+<p>When you build a web application with a separate frontend and backend (like we're doing with Angular and FastAPI), they typically run on different domains or ports during development. Without proper CORS configuration, your Angular application running on one port (e.g., localhost:4200) won't be able to make API requests to your FastAPI backend running on another port (e.g., localhost:8000).</p>
+<p>Additionally, for this exercise, we will deploy your front-end as a static web page on GitHub pages to further emphasize the separation between frontend and backend separation. Your EX02 frontend will run on GitHub Pages and (origin host: comp423-26s.github.io) and backend will run on your personal OKD project hostname. This also requires CORS for requests to succeed across origins.</p>
+<h3 id="using-middleware-in-fastapi">Using Middleware in FastAPI</h3>
+<p>In web frameworks like FastAPI, middleware functions as a bridge between the server and your application code. Middleware intercepts requests and responses, allowing you to modify or process them before they reach your route handlers or before they're sent back to the client.</p>
+<p>The <code>CORSMiddleware</code> specifically manages HTTP headers related to CORS. When added to your application, it automatically handles setting the appropriate headers that tell browsers to permit cross-origin requests from your frontend application.</p>
+<p>In EX02, for simplicity's sake, we will enable <strong>very permissive</strong> CORS settings that are generally far more permissive than you would typically enable in a production application. In essence, we are disabling CORS protection of your API to make integration with our client in this application more straightforward. In true, industrial applications you will specify very specific hosts which you accept CORS API requests from.</p>
+<h3 id="enable-cors">Enable CORS</h3>
+<p>You will need to add the following code to update your EX01 production deployment to enable CORS for working on EX02. Collaborate with your partner on EX01 to decide who will make this update, push the branch, and make the PR. </p>
+<p>First, import FastAPI's CORSMiddleware module in <code>main.py</code>'s imports section:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi.middleware.cors</span><span class="w"> </span><span class="kn">import</span> <span class="n">CORSMiddleware</span>
+</span></code></pre></div>
+<p>Then, register the middleware by adding the following snippet after you define your <code>app</code> in <code>main.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><span class="c1"># Add CORS middleware to allow requests from any origin</span>
+</span><span id="__span-1-2"><span class="n">app</span><span class="o">.</span><span class="n">add_middleware</span><span class="p">(</span>
+</span><span id="__span-1-3">    <span class="n">CORSMiddleware</span><span class="p">,</span>
+</span><span id="__span-1-4">    <span class="n">allow_origins</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>  <span class="c1"># Allows all origins</span>
+</span><span id="__span-1-5">    <span class="n">allow_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+</span><span id="__span-1-6">    <span class="n">allow_methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>  <span class="c1"># Allows all methods</span>
+</span><span id="__span-1-7">    <span class="n">allow_headers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>  <span class="c1"># Allows all headers</span>
+</span><span id="__span-1-8"><span class="p">)</span>
+</span></code></pre></div>
+<p>Push this to a branch, make a PR, and ask your teammate to merge the PR so they can confirm the work you completed.</p>
+<h2 id="setting-up-the-ex02-dev-container">Setting up the EX02 Dev Container</h2>
+<p>To get started on this project, you will need to accept and clone the EX02 starter repository here: <a href="https://classroom.github.com/a/ZInataQQ">https://classroom.github.com/a/ZInataQQ</a></p>
+<p>Once cloned, open the project in a dev container and wait for the post create build steps to complete. </p>
+<p>Start the development server with the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1">ng<span class="w"> </span>serve<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span>
+</span></code></pre></div>
+<p>You may need to press enter to a prompted question about autocompletion rules. Just accept the default suggestion.</p>
+<p>The <code>host</code> flag instructs the Angular development server to listen on all IP addresses (0.0.0.0) for requests, which ensures Docker is able to route you through from your host to the dev container.</p>
+<p>Open <a href="http://localhost:4200">http://localhost:4200</a> and you should be greeted with a simple user interface with some code to help get you started with this project.</p>
+<h3 id="starter-code-orientation">Starter Code Orientation</h3>
+<h4 id="core-files">Core Files</h4>
+<ul>
+<li><code>src/main.ts</code> - Application entry point that bootstraps the Angular app</li>
+<li><code>src/app/app.component.ts</code> - Root component that serves as the application shell</li>
+<li><code>src/app/app.routes.ts</code> - Defines the application's routing configuration</li>
+</ul>
+<h4 id="components">Components</h4>
+<ul>
+<li>
+<p><strong>Share Component</strong> (<code>src/app/share/</code>):</p>
+<ul>
+<li><code>share.component.ts</code> - Form implementation using Angular Reactive Forms and Signals</li>
+<li><code>share.component.html</code> - Template with resource type selection and content input</li>
+</ul>
+</li>
+<li>
+<p><strong>Navigation Component</strong> (<code>src/app/navigation/</code>):</p>
+<ul>
+<li><code>navigation.component.ts</code> - Simple navigation logic</li>
+<li><code>navigation.component.html</code> - Navigation links using Angular's router directives</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-implement-sues-stories">1. Implement Sue's Stories</h2>
+<p>Your task is to introduce an angular Service object that integrates with your API in order to complete the implementation of the <code>ShareComponent</code>, which will make use of the Service.</p>
+<p>The general strategy for making progess here is:</p>
+<ol>
+<li>Read and understand what is going on in the Share Component's TypeScript controller and HTML view template.</li>
+<li>Generate a Service (hint: use <code>ng generate service</code> subcommand).</li>
+<li>Define a method on the service for creating a link and/or snippet. It should take the appropriate parameters (which will be provided by the component) for creating a resource for your API (e.g. the type of resource and the content of the resource).<ul>
+<li>Assuming your API end point for Sue just returns a string, this method should return an <code>Observable&lt;string&gt;</code>, which will represent a shortened URL. If your API returns an object with properties, you will need to define an <code>interface</code> that has thoes properties and give it a name. Your method would return <code>Observable&lt;YourInterfaceName&gt;</code> instead.</li>
+<li>For now, you can implement a fake skeleton of the method by having it return <code>of("https://foo.bar")</code> by importing the <code>of</code> function from <code>rxjs</code> (read more about <code>of</code> here: <a href="https://rxjs.dev/api/index/function/of">https://rxjs.dev/api/index/function/of</a>). If your API returns an object, you can return an anonymous object with the expected fields, such as <code>of({"url":"https://foo.bar"})</code>;</li>
+</ul>
+</li>
+<li>Inject your service into the <code>ShareComponent</code>'s constructor as a private variable.</li>
+<li>Update the submission logic to call out to your service object's method(s) <em>and subscribe to the result</em> as you read about in the HttpClient reading: <a href="https://angular.dev/guide/http/making-requests#fetching-json-data">https://angular.dev/guide/http/making-requests#fetching-json-data</a>. For more information on how to subscribe, see the official RxJS documentation: <a href="https://rxjs.dev/guide/observer">https://rxjs.dev/guide/observer</a>.</li>
+<li>Ultimately, you will need to update the <code>ShareComponent</code>'s controller and HTML template upon success (or failure...) of the service method such that the template displays the resulting URL generated by your API. You should be able to click the URL and be taken to a new tab (make it an <code>a</code> tag and set the <code>target</code> attribute to <code>"_blank"</code>).</li>
+<li>Now it's time to actually implement integrating with your production API! You will need to inject <code>HttpClient</code> into your service, as is discussed in the <code>HttpClient</code> setup documentation <a href="https://angular.dev/guide/http/setup">https://angular.dev/guide/http/setup</a>. Then, in your methods, replace the call to <code>of</code> with a call to your injected <code>httpClient</code>'s <code>post</code> method, like you read about in the <a href="https://angular.dev/guide/http/making-requests#mutating-server-state">"Mutating server state"</a> of the Angular HttpClient Reading. You will need to provide a request body object which contains all necessary information for your API.</li>
+<li>Try it! One of two things will happen:<ul>
+<li>Nothing or an error. Open your Chrome Developer Tools and look in the console and the network tab for more diagnostics on what is going on behind the scenes. The network tab will be your best tool here. Investigate the tab. Not seeing your request? Be sure <code>Fetc/XHR</code> is shown. Still not seeing it? Did you save everything and <code>subscribe</code> to the result of your service method call from your component? Remember, the returned value from your service method is an <code>Observable</code> not an actual result! Seeing an error? Look at the HTTP response code to diagnose. If it's a CORS issue, return back to the CORS steps above and be sure you successfully deployed. If it's a 422, it means your request body did not fulfill the expectations of your API from EX01. Be sure you are sending all the data you need!</li>
+<li>Success: Woo! Sue will be so happy to use your new UI rather than the <code>/docs</code> UI!</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-implement-resource-list-link">2. Implement Resource List Link</h2>
+<p>For the second required portion of this exercise, you will introduce a new routable component for listing resources in your backend API for Amy. No filtering user interface is required. We'll make this functionality visible to all users, though, since this is just a demo application.</p>
+<p>Your goal here is to add a new item to the navigation for a resource list, add a component that you get routed to when viewing the resource list, and add additional service functionality and control templating for displaying all resources stored in your backend API.</p>
+<p>The general strategy here is to:</p>
+<ol>
+<li>Generate a new component (<code>ng g component</code>)</li>
+<li>Make the component routable via <code>app.routes.ts</code></li>
+<li>Add a link to <code>navigation/navigation.component.html</code> so that you can navigate to the component</li>
+<li>Inject your API service into your component (like you did in <code>ShareComponent</code>)</li>
+<li>Implement a skeleton of a method in your service for listing resources from your API. Is should return type <code>Observable&lt;YourAPIResponseType&gt;</code> where <code>YourAPIResponseType</code> is an interface you define to match your API's expectations. It may also be <code>YourAPIResponseType[]</code> if your API returns a list of the response and not an object.</li>
+<li>Implement the lifecycle interface <a href="https://angular.dev/api/core/OnInit"><code>OnInit</code></a> that gets called when a component is loaded (in this case: routed to). This will subscribe to the service class' method. It should update one or more signal(s) you define in the class.</li>
+<li>The values of those signals should be read by the HTML template so that the resulting list of resources in your API are produced to the view layer of the system and you can see them in a table format.</li>
+</ol>
+<p>When deciding what and how to show the information on this screen the question you should ask yourself is, "what would I want to see if I were Amy Admin?"</p>
+<h2 id="publishing">Publishing</h2>
+<p>The project comes predefined with a GitHub Action for publishing your web site. You will need to enable GitHub Pages for your project, though. To do so, go to your project's settings, go to Pages, and turn pages on from the <code>gh-pages</code> branch. It will take a couple minutes for this to take effect. You should be able to follow with the publishing process in the Actions tab. Once publishing is fully ready, you should see a link to your website if everything built correctly.</p>
+<h2 id="branch-expectations">Branch Expectations</h2>
+<p>You are encouraged to experiment in branches while making progress on this exercise. However, your <code>git</code> workflow in this exercise is up to you. Ultimately, we expect your final product to be on <code>main</code> since that is what will be deployed live.</p>
+<h2 id="required-angular-conventions">Required Angular Conventions</h2>
+<p>No credit will be given to projects which use old Angular style <code>ngIf</code> or <code>ngFor</code> tags, you should use the <code>@if</code> and <code>@for</code> functionality we read about. Additionally, all data that is shared between a <code>Component</code> typescript file and its HTML template should be done so via modern angular <code>signal</code>s, like you read about.</p>
+<h2 id="extra-credit">Extra Credit</h2>
+<p>The following opportunities are available for extra credit, arranged by least to most challenging:</p>
+<ol>
+<li>1pt - Implement Vanity URLs in the Frontend</li>
+<li>1pt - Implement Expiration Dates when sharing a URL in the Frontend</li>
+<li>1pt - Implement Amy's Filtering Stories in the List Resources View</li>
+<li>2pt - Implement all of Amy's Stories (update, delete, view access counts)</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../ex01-api-design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: EX01. API Design and Implementation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                EX01. API Design and Implementation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../sp00-api-spec/" class="md-footer__link md-footer__link--next" aria-label="Next: Sprint 1 - Week 1 - Interactive Prototypes &amp;amp; API Scaffolding">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Sprint 1 - Week 1 - Interactive Prototypes &amp; API Scaffolding
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

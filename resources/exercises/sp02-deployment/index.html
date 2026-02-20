@@ -1,0 +1,1659 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/exercises/sp02-deployment/">
+      
+      
+        <link rel="prev" href="../sp01-one-story/">
+      
+      
+        <link rel="next" href="../sp02-second-story/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Staging Server Environment (DevOps) - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#staging-server-environment-devops" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Staging Server Environment (DevOps)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-cloud-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing Cloud Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-oc-command-line-tool-to-administer-okd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the oc Command-line Tool to Administer OKD
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-into-the-okd-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging into the OKD Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging into the OKD Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#giving-team-members-access-to-your-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giving Team Members Access to Your Project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-database-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating the Database Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-secrets-for-your-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Secrets for your Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-key-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploy Key Secrets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-openshift-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create the OpenShift Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exposing-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exposing the Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resetting-the-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resetting the Database
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-push-to-deploy-webhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up Push-to-Deploy Webhooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#youre-in-stagingproduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        You're in Staging/Production!
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="staging-server-environment-devops">Staging Server Environment (DevOps)</h1>
+<p>Your team should setup the staging environment on one team member's namespace. Choose one members' <a href="https://console.apps.unc.edu/">OKD CloudApps</a> course namespace to setup the production staging environment. The other team member(s) will be added to this namespace as collaborator(s) so everyone has access.</p>
+<p>In establishing the staging environment on our cloud infrastructure, we will work from the bottom up. We will start with the database server, then add secrets needed to build and run the application, then add the application, and finally add the route to expose the application to the internet.</p>
+<h2 id="accessing-cloud-infrastructure">Accessing Cloud Infrastructure</h2>
+<p><strong>Warning:</strong> If you are not on-campus when working with the cloud infrastructure, it will have the appearance of being "down". This is due to a firewall preventing off-campus access without a virtual private network VPN connection. If you try to load Cloud Apps at any point this semester and see a non-responsive or blank web page, it is likely because you are not connected via Eduroam nor the VPN.</p>
+<p>If you are off-campus, you will need to establish a VPN connection in to make use of Carolina CloudApps: <a href="https://ccinfo.unc.edu/start-here/secure-access-on-and-off-campus/">https://ccinfo.unc.edu/start-here/secure-access-on-and-off-campus/</a></p>
+<p>Access the OKD CloudApps console here: <a href="https://console.apps.unc.edu/">https://console.apps.unc.edu/</a></p>
+<p>Under the <strong>okd</strong> logo, you should see "Developer" in a drop down and to the right "Project: " followed by <code>comp590-140-26sp-ONYEN</code> where ONYEN is your UNC ONYEN.</p>
+<h2 id="using-the-oc-command-line-tool-to-administer-okd">Using the <code>oc</code> Command-line Tool to Administer OKD</h2>
+<p>The <code>oc</code> tool is included in the <code>csxl</code> developer container. As long as you are successfully running Docker locally and connected to a campus network or VPN, you will be able to use <code>oc</code> from your container. However, if you are making use of CodeSpaces, you will need to install <code>oc</code> onto your host machine so that you can access the OKD cluster from VPN/campus rather than the cloud container.</p>
+<h2 id="logging-into-the-okd-container">Logging into the OKD Container</h2>
+<p>Our course projects will continue to be hosted on the OKD cluster of CloudApps, found here: <a href="https://console.apps.unc.edu/">https://console.apps.unc.edu/</a></p>
+<p>Go ahead and log-in. Remember: off-campus access requires VPN as described in the above section!</p>
+<p>Next, you will need to log-in to OKD from the Command-Line Utility <strong>in your DevContainer</strong>. The login command is found in the OKD Console. Look in the top right for your name, click the drop down, and select "Copy Login Command". From here select "Display Token". Here, look for the line "Log in with this token" and copy the complete command beginning with <code>oc login</code> to your clipboard.</p>
+<p>Paste this command into a terminal in your DevContainer (or, if you are on CloudSpaces, your host machine's terminal). You should be correctly logged in and see a message of success.</p>
+<h3 id="giving-team-members-access-to-your-project">Giving Team Members Access to Your Project</h3>
+<p>One member of each team should be designated the project host. From this member's OKD CloudApps account, you will need to add other team members as follows:</p>
+<ol>
+<li>Add team members to your course workspace</li>
+<li>Navigate to the Administrator sidebar (Default is Developer)</li>
+<li>Select: User Management &gt; Role Bindings</li>
+<li>For each team member, with their <code>onyen</code>:<ol>
+<li>Create binding</li>
+<li>Name: <code>admin-ONYEN</code> (replace <code>ONYEN</code> with teammate's ONYEN)</li>
+<li>Be sure the project you are in in CloudApps is <code>comp590-140-26sp-ONYEN</code></li>
+<li><code>ONYEN</code> should be your UNC ONYEN</li>
+<li>Role name: <code>admin</code></li>
+<li>Subject:</li>
+<li>User</li>
+<li>Name: your teammate's ONYEN</li>
+</ol>
+</li>
+</ol>
+<p>Add all of your team members and have them confirm that they have access.</p>
+<h3 id="creating-the-database-server">Creating the Database Server</h3>
+<p>The first step in establishing the cloud deployment is to establish the backend database pod.</p>
+<ol>
+<li>Add a PostgreSQL database to your project:<ol>
+<li>Developer View Sidebar</li>
+<li>Add (from the Sidebar)</li>
+<li>Database</li>
+<li>PostgreSQL Provided by Red Hat</li>
+<li>Instantiate Template</li>
+<li>Change only the following settings:<ol>
+<li>Database Service Name: <code>db</code></li>
+<li>PostgreSQL Database Name: <code>csxl</code></li>
+<li>Version of PostgreSQL Image: <code>latest</code></li>
+</ol>
+</li>
+<li>Create</li>
+<li>Navigate to the secrets page as described in the next paragraph</li>
+</ol>
+</li>
+</ol>
+<p>Once the database is created, <strong>go to the Secrets page found in the left-hand sidebar and view the generated credentials for the database under <code>db</code> (this is the name we gave it above)</strong>. If you select "Reveal Values" you can see the name, username, and password for the database. These secrets will be used as environment variables in your application in the next step.</p>
+<h3 id="creating-secrets-for-your-application">Creating Secrets for your Application</h3>
+<p>Let's create a secret for your application to use. This will be used to store the database credentials, and will ultimately be mounted as environment variables in your application.</p>
+<p>Leave open the tab with these secrets, which you navigated to in Step 8 above. Additionally, you will need to generate a random string for the <code>JWT_SECRET</code> environment variable. This will be used to sign the JWT tokens that your application will use to authenticate users. You can generate a random string using the following command in your Dev Container:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1">openssl<span class="w"> </span>rand<span class="w"> </span>-hex<span class="w"> </span><span class="m">32</span>
+</span></code></pre></div>
+<p>From your DevContainer's terminal, in a shell prompt run the following command to create the secret on OpenShift <em>BE CAREFUL TO AVOID TYPOS</em>.</p>
+<p>You can copy this command and edit it, replacing the placeholders, in an empty text file before running the command in your DevContainer terminal.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1">oc<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>final-project-environment<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">POSTGRES_HOST</span><span class="o">=</span>db<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">POSTGRES_PORT</span><span class="o">=</span><span class="m">5432</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">POSTGRES_DATABASE</span><span class="o">=</span>csxl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-5"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">POSTGRES_USER</span><span class="o">=</span>&lt;from-secret-above&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>&lt;from-secret-above&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">JWT_SECRET</span><span class="o">=</span>&lt;generate-random-string&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-8"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">UNC_OPENAI_API_KEY</span><span class="o">=</span>&lt;your-teams-deployment-api-key&gt;
+</span></code></pre></div>
+<p>For the final secret, be sure to use the team's UNC OpenAI API key you were provided on the print out. It's the last key on the sheet. If this is not accessible, you can also use your own deployment key.</p>
+<div class="admonition info">
+<p class="admonition-title">Changing Secrets Later</p>
+<p>If you realize you need to change a secret, you can do so via the OKD web console by navigating to</p>
+<p><strong>Developer &gt; Secrets &gt; <code>final-project-environment</code> &gt; Actions &gt; Edit Secret</strong>.</p>
+</div>
+<p>From the OpenShift web console, you can verify that the secret was created by navigating to the Secrets page and selecting the <code>final-project-environment</code> secret.</p>
+<h3 id="deploy-key-secrets">Deploy Key Secrets</h3>
+<p>Before OpenShift's builder process is able to clone your repository from GitHub, we need to establish a means for OpenShift to <em>authenticate</em> itself to gain access to your team's private repository. This will closely resemble how <em>you</em> authenticate yourself with GitHub, but with the key difference it's the builder process running on Carolina Cloud app's machines-- not yours!-- that needs to gain access to your GitHub repository.</p>
+<p>It is worth pausing to reflect on how sensitive this step is in real world applications: you are setting up a means to directly access your code in a private repository. At organizations you may find yourself employed by, or founding, the code in your private repositories are some of it's most valuable assets and their secure handling is very important to maintaining their secrecy and protecting customers from hacks.</p>
+<p>It is for these reasons that you want to be very careful to never commit secrets to a <code>git</code> repository. The keys we are about to setup are considered secrets! (If you find yourself at an organization that breaks this rule: run.)</p>
+<p>To avoid accidentally commiting secrets to a project, one strategy is to be sure the filenames containing the secrets are added to the project's <code>.gitignore</code>. This file lists patterns that will not be included by default. Go ahead confirm the following rule is in the project's <code>.gitignore</code> file:</p>
+<p><code>deploy_key*</code></p>
+<p>Go ahead and make a commit with this change to <code>.gitignore</code> included in the commit.</p>
+<p><strong>DEVCONTAINER:</strong> In your DevContainer's terminal, not your host's, generate an SSH key:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1">ssh-keygen -t ed25519 -C &quot;GitHub Deploy Key&quot; -f ./deploy_key
+</span></code></pre></div>
+<p>Note: <strong>Do NOT set a passphrase for the ssh key, just press enter at the prompt without typing anything when asked.</strong></p>
+<p>You should now see the files <code>deploy_key</code>, which is the private/secret key, and <code>deploy_key.pub</code> which is the public key.</p>
+<p>Add the public key to your project repository's settings on GitHub:</p>
+<ol>
+<li>Navigate to your repository's settings</li>
+<li>Select Deploy Keys</li>
+<li>Add Deploy Key</li>
+<li>Title: <code>CloudApps Deploy Key</code></li>
+<li>Key: Copy the contents of <code>deploy_key.pub</code> into the key field</li>
+<li>Check the box to allow write access</li>
+<li>Click Add Key</li>
+</ol>
+<p>Now run the following command to add the private key as a secret to your Cloud Apps account:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1">$ oc create secret generic comp590-final-project-deploykey \
+</span><span id="__span-3-2">    --from-file=ssh-privatekey=./deploy_key \
+</span><span id="__span-3-3">    --type=kubernetes.io/ssh-auth
+</span></code></pre></div>
+<p>To verify the secret was correctly created, run the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1">oc<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>comp590-final-project-deploykey
+</span></code></pre></div>
+<p>Finally, you need to link the secret to the "builder" process of OpenShift. This will allow OpenShift to use the secret when it pulls your code from GitHub and builds your project.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1">oc<span class="w"> </span>secrets<span class="w"> </span>link<span class="w"> </span>builder<span class="w"> </span>comp590-final-project-deploykey
+</span></code></pre></div>
+<p>This command will succeed silently.</p>
+<h3 id="create-the-openshift-application">Create the OpenShift Application</h3>
+<p>IMPORTANT: Be sure you substitute your team's information in TWO places below! First: the repository URL, second the HOST variable should not be <code>csxl-team-XX</code>, but should instead be your team zone + number. This is your team's table. Using lowercase is encouraged.</p>
+<p>IMPORTANT: Be sure you are currently on your stage branch. If you are not, go ahead and stash and/or commit changes on your current branch, and switch to stage.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1">oc<span class="w"> </span>new-app<span class="w"> </span>python:3.11~git@github.com:comp423-26s/&lt;your-final_repo_name&gt;.git#stage<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><span class="w">  </span>--source-secret<span class="o">=</span>comp590-final-project-deploykey<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><span class="w">  </span>--name<span class="o">=</span>final-project<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-4"><span class="w">  </span>--strategy<span class="o">=</span>docker<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-5"><span class="w">  </span>--env<span class="o">=</span><span class="nv">MODE</span><span class="o">=</span>development<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-6"><span class="w">  </span>--env<span class="o">=</span><span class="nv">HOST</span><span class="o">=</span>csxl-team-&lt;TEAM<span class="w"> </span>NUMBER&gt;-comp423-26s.apps.unc.edu
+</span></code></pre></div>
+<p>Notice the <code>#stage</code> at the end of the repository URL. This is the branch name that OpenShift will pull from. When setting up the final project, you created a branch named <code>stage</code> and established it as the primary branch for your repository. This notion of a staging branch is a common practice in DevOps, and is a good way to keep your production code separate (live at csxl.unc.edu) from your development code (which you are establishing right now).</p>
+<p>While the project is building, link the secrets you created as the environment variables of the deployment and verify their existence with <code>list</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1">oc<span class="w"> </span><span class="nb">set</span><span class="w"> </span>env<span class="w"> </span>deployment/final-project<span class="w"> </span>--from<span class="o">=</span>secret/final-project-environment
+</span><span id="__span-7-2">oc<span class="w"> </span><span class="nb">set</span><span class="w"> </span>env<span class="w"> </span>deployment/final-project<span class="w"> </span>--list
+</span></code></pre></div>
+<h3 id="exposing-the-application">Exposing the Application</h3>
+<p>Once your application builds, it will be running on a pod that is not exposed to the internet. To establish a public route, first we need to expose it as a service, run the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1">oc<span class="w"> </span>expose<span class="w"> </span>deployment<span class="w"> </span>final-project<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><span class="w">  </span>--port<span class="o">=</span><span class="m">80</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><span class="w">  </span>--target-port<span class="o">=</span><span class="m">8080</span>
+</span></code></pre></div>
+<p>Next, we can create a route to the service with a specifically chosen hostname. <strong>Please replace <code>XX</code> with your team's number  and table number</strong>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1">oc<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>edge<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-2"><span class="w">  </span>--service<span class="o">=</span>final-project<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-3"><span class="w">  </span>--hostname<span class="o">=</span>csxl-team-&lt;TEAM<span class="w"> </span>NUMBER&gt;-comp423-26s.apps.unc.edu
+</span></code></pre></div>
+<p>You can now visit the hostname for your team and access it in the browser. If you see a message from OpenShift that says "Application is not available", it means that the application is still building. Once your build completes, you should see the application running, but there is still one more important step: resetting the database.</p>
+<div class="admonition info">
+<p class="admonition-title">Crash-loop Back-off and 'OOM Killed' (Out of Memory)</p>
+<p>If your pod keeps crashing, with a message like "Killed by OOM Manager", it's because the Python/FastAPI server process requires more memory than your deployment is configured to provide by default. Our deployment platform, Kubernetes/OKD, monitors resource usage so that its resources are shared fairly among us. It takes a very conservative default, which can lead to your process being crashed when it needs more memory than the default. To ask for more memory, but still a modest amount for 2025 standards, take the following steps in the <code>oc</code> tool: </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1">oc set resources deployment/final-project --requests=memory=256Mi --limits=memory=1Gi
+</span><span id="__span-10-2">oc rollout restart deployment/final-project
+</span></code></pre></div>
+<p>The first command requests a higher memory limit for the deployment and the second restarts the pod in the deployment so that it uses the new settings.</p>
+</div>
+<h3 id="resetting-the-database">Resetting the Database</h3>
+<p>The database that you created in the previous step is empty. You will need to reset the database to the state that it was in when you submitted your final project. To do this, you will need to run the <code>reset_demo.py</code> script that is included in your final project repository.</p>
+<p>This script needs to be run from within your pod, so in this section you will learn how to connect to your pod and run commands from within it.</p>
+<p>First, you will need to find the name of your pod. Run the following command to get a list of pods running in your project:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1">oc<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--selector<span class="w"> </span><span class="nv">deployment</span><span class="o">=</span>final-project
+</span></code></pre></div>
+<p>You should see a single pod with a name like <code>final-project-648fdff8d5-rr4fs</code>. The letters and numbers at the end of the name are a unique identifier for the pod. This identifier changes every time a new build of your pod is deployed, environment variables change, the pod gets restarted, and in other instances. Copy the name of your running pod and run the following command to connect to it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1">oc<span class="w"> </span>rsh<span class="w"> </span>final-project-YOUR-POD-IDENTIFIER
+</span></code></pre></div>
+<p>The <code>rsh</code> stands for "remote shell".  You are now connected to your pod running in the cloud via a secure shell (ssh)! The commands you run are not running on your host machine, but on the CloudApps infrastructure. If you <code>ls</code> you will see you are in your project's built directory. Not everything is there, importantly not the frontend because it was compiled into the <code>static</code> directory as part of the build process.</p>
+<p>To confirm you are logged into your pod, you can assure yourself with the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1">hostname
+</span></code></pre></div>
+<p>You can now run the <code>reset_demo</code> script to reset the database. Run the following command to do so:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1">python3<span class="w"> </span>-m<span class="w"> </span>backend.script.reset_demo
+</span></code></pre></div>
+<p>You should see the SQLAlchemy log messages creating tables, inserting dev data, etc. Your staging database is now reset!</p>
+<p><strong>Important</strong>: As you deploy new versions, add new entities, add new dev data, etc., this process of resetting the database in staging is one you and your team members will both need to be comfortable doing and remember to do.</p>
+<h3 id="setting-up-push-to-deploy-webhooks">Setting up Push-to-Deploy Webhooks</h3>
+<p>GitHub repositories can be configured with webhooks, which are URLs that get called when events occur in order to notify another service of the event. In our case, we want to set up a webhook so that when we merge pull requests to the <code>stage</code> branch, OpenShift's build configuration for our project will receive a webhook notification and kick off a new build and deploy pipeline.</p>
+<p>To find the URL for the web hook, open up your project in OpenShift and navigate to the Admin sidebar, followed by Builds &gt; BuildConfigs. Select <code>final-project</code> and look for the webhooks section at the bottom. Click the Copy URL with Secrets button for the GitHub webhook. This copies the URL to your clipboard.</p>
+<p>Next, open your project's settings in GitHub and navigate to Webhooks. Click Add Webhook and paste the URL into the Payload URL field. <strong>Be sure to set the content type to <code>application/json</code> and leave the secret field empty.</strong> Click Add Webhook.</p>
+<p>From the "Webhooks" page you're brought back to, click your webhook. Then go to the Recent Deliveries tab. You should see a successful delivery. Congratulations, your project is now set up to automatically build and deploy every time your team merges PRs into the <code>stage</code> branch! As a reminder, if your data entities change, you will need to reset the database in staging after the build and deploy completes.</p>
+<h3 id="youre-in-stagingproduction">You're in Staging/Production!</h3>
+<p>This setup mirrors our production setup of <code>csxl.unc.edu</code> and is running the same code base. Congratulations on setting up what is, in essence, a production cloud environment for a small, modern web application!</p>
+<p>We call this "Staging" in a nod to how many organizations think of "Staging" environments. It's an area where your team can work on a feature, see it deployed publicly on the internet, and test it without having any impact on our production deployment.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../sp01-one-story/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Sprint 1 - Week 1 - One Story End-to-End">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Sprint 1 - Week 1 - One Story End-to-End
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../sp02-second-story/" class="md-footer__link md-footer__link--next" aria-label="Next: Sprint 2">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Sprint 2
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

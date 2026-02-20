@@ -1,0 +1,1855 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/backend/2-testing-apis/">
+      
+      
+        <link rel="prev" href="../1-dependency-injection/">
+      
+      
+        <link rel="next" href="../../../teamwork/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Unit, Integration, and E2E Testing API Routes - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#unit-testing-a-route-handler" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Unit, Integration, and E2E Testing API Routes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#unit-testing-a-route-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Testing a Route Handler
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unit Testing a Route Handler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-unit-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up a Unit Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-testing-a-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration Testing a Route
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integration Testing a Route">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parametrizing-the-integration-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parametrizing the Integration Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#end-to-end-testing-a-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-End Testing a Route
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-isnt-tested-in-the-play-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What isn't tested in the /play route?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Answers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-testing-the-play-route-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Testing the play Route Handler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patching-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patching Target
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Unit, Integration, and E2E Testing API Routes</h1>
+
+<p>This tutorial follows the previous tutorial on <a href="../1-dependency-injection/">Dependency Injection</a> in FastAPI. Go ahead and reopen that tutorial to pick up from there.</p>
+<p>This tutorial assumes you are versed in mocking and patching, which covered in the last unit of the course.</p>
+<p>As a reminder, this tutorial implemented a simple RESTful game of Rock, Paper, Scissors. Our goal in this reading is to <strong>unit test</strong> the <code>/play</code> route handler in isolation <em>and</em> <strong>integration</strong> test the routing layer (route registration and route handler) and service layers. Finally, we will look at <strong>end-to-end</strong> testing the backend <em>without</em> patching over side-effects.</p>
+<p>In good practice, go ahead and add your current changes to stage and form a commit as a checkpoint before moving on in this tutorial. Commit made? Let's get started!</p>
+<h2 id="unit-testing-a-route-handler">Unit Testing a Route Handler</h2>
+<div class="admonition question">
+<p class="admonition-title">Practice Question</p>
+<p>Consider the route definition below and identify:</p>
+<ol>
+<li>What is the function name we will unit test?</li>
+<li>What arguments will our unit test provide as <em>user input</em>?</li>
+<li>What arguments are dependency injected that our unit test will need to <em>mock</em>?</li>
+<li>What will the unit test prove?</li>
+</ol>
+<p>Click on the + icons below to reveal hints </p>
+</div>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-13"><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">)</span>
+</span><span id="__span-0-14"><span class="k">def</span><span class="w"> </span><span class="nf">play</span><span class="p">(</span> <span class="c1"># (1)!</span>
+</span><span id="__span-0-15">    <span class="n">user_choice</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-0-16">        <span class="n">GamePlay</span><span class="p">,</span>
+</span><span id="__span-0-17">        <span class="n">Body</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;User&#39;s choice of rock, paper, or scissors.&quot;</span><span class="p">),</span>
+</span><span id="__span-0-18">    <span class="p">],</span>
+</span><span id="__span-0-19">    <span class="n">game_svc</span><span class="p">:</span> <span class="n">GameServiceDI</span><span class="p">,</span> <span class="c1"># (3)!</span>
+</span><span id="__span-0-20"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GameResult</span><span class="p">:</span> <span class="c1"># (4)!</span>
+</span><span id="__span-0-21">    <span class="k">return</span> <span class="n">game_svc</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">user_choice</span><span class="p">)</span> <span class="c1">#(5)!</span>
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li><code>play</code> is the function name we are testing.</li>
+<li><code>user_choice</code> is a user input parameter we will need to provide.</li>
+<li><code>game_svc</code> is a dependency injected parameter we will mock.</li>
+<li><code>GameResult</code> is the type of object we expect returned back.</li>
+<li>The logic of this route handler is intentionally simple and merely delegates to <code>game_svc</code>. Our test needs to prove that we successfully delegated to the injected <code>GameService</code> and that its result was faithfully returned.</li>
+</ol>
+<h3 id="setting-up-a-unit-test">Setting up a Unit Test</h3>
+<p>Since this tutorial is for a very simple demonstration, all of our modules are defined at the top-level. In larger, real projects you would use directory structure to organize related modules together. Go ahead and create a test module in the project's top-level directory, next to the others, named <code>test_play_unit.py</code>.</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">test_play_unit.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicMock</span>
+</span><span id="__span-1-2"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="__span-1-3">
+</span><span id="__span-1-4"><span class="kn">from</span><span class="w"> </span><span class="nn">main</span><span class="w"> </span><span class="kn">import</span> <span class="n">play</span>
+</span><span id="__span-1-5"><span class="kn">from</span><span class="w"> </span><span class="nn">models</span><span class="w"> </span><span class="kn">import</span> <span class="n">GamePlay</span><span class="p">,</span> <span class="n">GameResult</span><span class="p">,</span> <span class="n">Choice</span>
+</span><span id="__span-1-6"><span class="kn">from</span><span class="w"> </span><span class="nn">services</span><span class="w"> </span><span class="kn">import</span> <span class="n">GameService</span>
+</span><span id="__span-1-7">
+</span><span id="__span-1-8"><span class="k">def</span><span class="w"> </span><span class="nf">test_play_returns_game_result</span><span class="p">():</span>
+</span><span id="__span-1-9">    <span class="c1"># Arrange</span>
+</span><span id="__span-1-10"><span class="hll">    <span class="o">...</span>
+</span></span><span id="__span-1-11">    <span class="c1"># Act</span>
+</span><span id="__span-1-12"><span class="hll">    <span class="o">...</span>
+</span></span><span id="__span-1-13">    <span class="c1"># Assert</span>
+</span><span id="__span-1-14"><span class="hll">    <span class="o">...</span>
+</span></span></code></pre></div></td></tr></table></div>
+<p>Go ahead and try implementing this test and running it to confirm your test passes. You should be able to do so without assistance by reading and reasoning through the imports, but if you need some hints, see the box below.</p>
+<div class="admonition danger">
+<p class="admonition-title">Unit Testing Hints</p>
+<ol>
+<li>In the <em>Arrange</em> step, you'll need to setup a mock that specs <code>GameService</code> and a <code>GamePlay</code> instance. You will need to specify the <code>GameResult</code> return value of the method that you expect called on <code>GameService</code>.</li>
+<li>In the <em>Act</em> step, you'll call the <code>play</code> function and record its result.</li>
+<li>In the <em>Assert</em> step, you'll confirm the return value is equivalent to the <code>GameResult</code> instance you setup in the mock. You should also confirm that the service method was called once with the correct method(s).</li>
+</ol>
+</div>
+<h2 id="integration-testing-a-route">Integration Testing a Route</h2>
+<p>Notice in the <em>unit test</em> you implemented above there is no notion of the <code>post</code> method nor the <code>/play</code> route handling that occurs in the FastAPI layer of the backend. Additionally, by design, we mocked a <code>GameService</code> double and avoided testing the integrated behavior of both the route handler and the <code>GameService</code>.</p>
+<p>If you reread <code>GameService</code>'s implementation in <code>service.py</code>, you will remember that it uses randomization to decide the API's choice among rock, paper, and scissors using the <code>choice</code> function of Python's <code>random</code> library imported as <code>random_choice</code>. We will <em>patch</em> over this behavior to control the side-effect, but otherwise test the integration of the FastAPI route registration, route handler function, and service class. </p>
+<p>(Note for the careful reader: there is <em>one other</em> side-effect in <code>GameService</code>. Can you identify it? Since it is not integral to the business logic of the application, we will not worry about patching this side-effect in this tutorial. However, if you would like to practice patching, you can practice it here!)</p>
+<p>Let's get a new test file setup:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">test_play_integration.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span>
+</span><span id="__span-2-2">
+</span><span id="__span-2-3"><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+</span><span id="__span-2-4"><span class="hll"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">status</span>
+</span></span><span id="__span-2-5"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi.testclient</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestClient</span>  <span class="c1"># (1)!</span>
+</span><span id="__span-2-6">
+</span><span id="__span-2-7"><span class="kn">from</span><span class="w"> </span><span class="nn">main</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+</span><span id="__span-2-8"><span class="kn">from</span><span class="w"> </span><span class="nn">models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Choice</span>
+</span><span id="__span-2-9">
+</span><span id="__span-2-10">
+</span><span id="__span-2-11"><span class="k">def</span><span class="w"> </span><span class="nf">test_play_integration</span><span class="p">():</span>
+</span><span id="__span-2-12"><span class="hll">    <span class="c1"># Arrange</span>
+</span></span><span id="__span-2-13">    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>  <span class="c1"># (2)!</span>
+</span><span id="__span-2-14">
+</span><span id="__span-2-15">    <span class="n">random_choice_mock</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+</span><span id="__span-2-16">    <span class="n">random_choice_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s2">&quot;paper&quot;</span>
+</span><span id="__span-2-17">
+</span><span id="__span-2-18">    <span class="c1"># Act</span>
+</span><span id="__span-2-19"><span class="hll">    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;_____________&quot;</span><span class="p">,</span> <span class="n">random_choice_mock</span><span class="p">):</span>  <span class="c1"># (3)!</span>
+</span></span><span id="__span-2-20"><span class="hll">        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user_choice&quot;</span><span class="p">:</span> <span class="s2">&quot;rock&quot;</span><span class="p">})</span>  <span class="c1"># (4)!</span>
+</span></span><span id="__span-2-21">
+</span><span id="__span-2-22">    <span class="c1"># Assert</span>
+</span><span id="__span-2-23"><span class="hll">    <span class="n">random_choice_mock</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+</span></span><span id="__span-2-24"><span class="hll">    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span>  <span class="c1"># (5)!</span>
+</span></span><span id="__span-2-25"><span class="hll">    <span class="n">response_body</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></span><span id="__span-2-26"><span class="hll">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;user_choice&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_choice</span><span class="o">.</span><span class="n">user_choice</span>
+</span></span><span id="__span-2-27"><span class="hll">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;api_choice&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">random_choice_mock</span><span class="o">.</span><span class="n">return_value</span>
+</span></span><span id="__span-2-28"><span class="hll">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;user_wins&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span>
+</span></span></code></pre></div></td></tr></table></div>
+<ol>
+<li>We are importing the <code>TestClient</code> utility class from FastAPI's library. This will help us test the actual routing layer of our API from an HTTP client's vantage point.</li>
+<li>When we construct a <code>TestClient</code> we pass in a reference to our FastAPI app where our routes are registered.</li>
+<li>What name are we patching over to isolate the randomization side-effect? This is your challenge in this particular code listing.</li>
+<li>Notice here we are making a <code>post</code> request via the <code>client</code> to the <code>"/play"</code> route with a "JSON" dictionary object as our body.</li>
+<li>Notice in our assertions, we are working with an actual HTTP response object. </li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Your task: fill in the <code>patch</code>ed target name string</p>
+<p>Read through this integration test to understand its general flow. Click on the + icons for explanations of what is happening at new, important steps.</p>
+<p>Once you have a sense, replace the underscores in the patch string with the <em>name you are patching</em> as it is defined <em>in the module you are applying the patch</em> at.</p>
+<p>Hint: it is <em>not</em> <code>random.choice</code>. Your test will pass once you target the correct name to patch.</p>
+</div>
+<p>Notice with this integration test we are testing all the way from FastAPI's route handling, to our route handler <code>play</code> function, to our <code>GameService</code>'s play method and helpers, only patching minimally over the random choice side-effect.</p>
+<h3 id="parametrizing-the-integration-test">Parametrizing the Integration Test</h3>
+<p>Can you identify one unsatisfying quality of this test? What if you wanted to test other choices and outcomes? There would be a lot of redundancy! </p>
+<p>Let's take a look at using <code>pytest</code>'s parametrization fixture to specify different combinationd of inputs to the same test:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">test_play_integration.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-11"><span class="hll"><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
+</span></span><span id="__span-3-12"><span class="hll">    <span class="s2">&quot;user_choice_input,api_choice_input,user_wins_expected&quot;</span><span class="p">,</span>
+</span></span><span id="__span-3-13">    <span class="p">[</span>
+</span><span id="__span-3-14"><span class="hll">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>  <span class="c1"># Rock beats scissors</span>
+</span></span><span id="__span-3-15">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>  <span class="c1"># Rock loses to paper</span>
+</span><span id="__span-3-16">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>  <span class="c1"># Rock ties rock (API wins)</span>
+</span><span id="__span-3-17">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>  <span class="c1"># Paper beats rock</span>
+</span><span id="__span-3-18">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>  <span class="c1"># Paper loses to scissors</span>
+</span><span id="__span-3-19">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>  <span class="c1"># Paper ties paper (API wins)</span>
+</span><span id="__span-3-20">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>  <span class="c1"># Scissors beats paper</span>
+</span><span id="__span-3-21">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>  <span class="c1"># Scissors loses to rock</span>
+</span><span id="__span-3-22">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>  <span class="c1"># Scissors ties scissors (API wins)</span>
+</span><span id="__span-3-23">    <span class="p">],</span>
+</span><span id="__span-3-24"><span class="p">)</span>
+</span><span id="__span-3-25"><span class="hll"><span class="k">def</span><span class="w"> </span><span class="nf">test_play_integration</span><span class="p">(</span><span class="n">user_choice_input</span><span class="p">,</span> <span class="n">api_choice_input</span><span class="p">,</span> <span class="n">user_wins_expected</span><span class="p">):</span>
+</span></span><span id="__span-3-26">    <span class="c1"># Arrange</span>
+</span><span id="__span-3-27">    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</span><span id="__span-3-28">
+</span><span id="__span-3-29">    <span class="n">random_choice_mock</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+</span><span id="__span-3-30"><span class="hll">    <span class="n">random_choice_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">api_choice_input</span>
+</span></span><span id="__span-3-31">
+</span><span id="__span-3-32">    <span class="c1"># Act</span>
+</span><span id="__span-3-33">    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s2">&quot;services.random_choice&quot;</span><span class="p">,</span> <span class="n">random_choice_mock</span><span class="p">):</span>
+</span><span id="__span-3-34"><span class="hll">        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user_choice&quot;</span><span class="p">:</span> <span class="n">user_choice_input</span><span class="p">})</span>
+</span></span><span id="__span-3-35">
+</span><span id="__span-3-36">    <span class="c1"># Assert</span>
+</span><span id="__span-3-37">    <span class="n">random_choice_mock</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+</span><span id="__span-3-38">    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span>
+</span><span id="__span-3-39">    <span class="n">response_body</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span><span id="__span-3-40"><span class="hll">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;user_choice&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_choice_input</span>
+</span></span><span id="__span-3-41"><span class="hll">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;api_choice&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">api_choice_input</span>
+</span></span><span id="__span-3-42"><span class="hll">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;user_wins&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_wins_expected</span>
+</span></span></code></pre></div></td></tr></table></div>
+<p>On line 11, you are using <a href="https://docs.pytest.org/en/stable/how-to/parametrize.html"><code>@pytest.mark.parametrize</code> decorator</a> to configure the fixture parameters of the test function. On line 12, you will notice a funny string that feels a bit <em>off</em> but represents the name matching convention used in <code>parametrize</code>. Compare line 12 with line 25, where the parameters (fixtures!) of the test function are declared and notice there is a 1-to-1 correspondence. What you are doing in the string on line 12 is declaring names for each value that will pass into the test via a parameter of the same name. </p>
+<p>Then, on lines 13-23 you see a list of 9 tuples declared. Each tuple contains three values, corresponding 1-to-1 with the parameter names defined on line 12. Each of these tuples represents <em>one test case</em> worth of arguments that the test function will be called with. When you <em>run</em> this singular test, nine individual tests will be run individually, one per each of your parametrize case tuples.</p>
+<p>Inside of the test, rather than hard-coding a string value for the mocked return value of random choice, we substitute the parameter value in on line 30. The same strategy is used on lines 34 and 40-42.</p>
+<p>The <strong>big idea</strong> of this kind of integration testing is we are now proving to ourselves that our backend layers are successfully integrated with one another and are implementing the logical outcomes we expect.</p>
+<h2 id="end-to-end-testing-a-route">End-to-End Testing a Route</h2>
+<p>For a final exercise, let's write a test that proves the <em>full system</em> is working without any patching of side-effects, at all. This is an end-to-end backend test.</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">test_play_e2e.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+</span><span id="__span-4-2"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">status</span>
+</span><span id="__span-4-3"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi.testclient</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestClient</span>
+</span><span id="__span-4-4">
+</span><span id="__span-4-5"><span class="kn">from</span><span class="w"> </span><span class="nn">main</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+</span><span id="__span-4-6"><span class="kn">from</span><span class="w"> </span><span class="nn">models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Choice</span>
+</span><span id="__span-4-7">
+</span><span id="__span-4-8">
+</span><span id="__span-4-9"><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
+</span><span id="__span-4-10">    <span class="s2">&quot;user_choice_input&quot;</span><span class="p">,</span>
+</span><span id="__span-4-11"><span class="hll">    <span class="p">[(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">),</span> <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">),</span> <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>  <span class="c1"># (1)!</span>
+</span></span><span id="__span-4-12"><span class="p">)</span>
+</span><span id="__span-4-13"><span class="k">def</span><span class="w"> </span><span class="nf">test_play_e2e</span><span class="p">(</span><span class="n">user_choice_input</span><span class="p">):</span>
+</span><span id="__span-4-14">    <span class="c1"># Arrange</span>
+</span><span id="__span-4-15"><span class="hll">    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span> <span class="c1"># (2)!</span>
+</span></span><span id="__span-4-16">
+</span><span id="__span-4-17">    <span class="c1"># Act</span>
+</span><span id="__span-4-18"><span class="hll">    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user_choice&quot;</span><span class="p">:</span> <span class="n">user_choice_input</span><span class="p">})</span> <span class="c1"># (3)!</span>
+</span></span><span id="__span-4-19">
+</span><span id="__span-4-20">    <span class="c1"># Assert</span>
+</span><span id="__span-4-21">    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span>
+</span><span id="__span-4-22">    <span class="n">response_body</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span><span id="__span-4-23">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;user_choice&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_choice_input</span>
+</span><span id="__span-4-24">    <span class="k">assert</span> <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;api_choice&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">)</span>
+</span><span id="__span-4-25">
+</span><span id="__span-4-26">    <span class="n">actual_outcome</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Choice</span><span class="p">,</span> <span class="n">Choice</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-4-27">        <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;user_choice&quot;</span><span class="p">],</span>
+</span><span id="__span-4-28">        <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;api_choice&quot;</span><span class="p">],</span>
+</span><span id="__span-4-29">        <span class="n">response_body</span><span class="p">[</span><span class="s2">&quot;user_wins&quot;</span><span class="p">],</span>
+</span><span id="__span-4-30">    <span class="p">)</span>
+</span><span id="__span-4-31">    <span class="n">expected_outcomes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Choice</span><span class="p">,</span> <span class="n">Choice</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-4-32">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+</span><span id="__span-4-33">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-4-34">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-4-35">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+</span><span id="__span-4-36">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-4-37">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-4-38">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+</span><span id="__span-4-39">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-4-40">        <span class="p">(</span><span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">scissors</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-4-41">    <span class="p">]</span>
+</span><span id="__span-4-42">    <span class="k">assert</span> <span class="n">actual_outcome</span> <span class="ow">in</span> <span class="n">expected_outcomes</span>
+</span></code></pre></div></td></tr></table></div>
+<ol>
+<li>Python's <code>list</code> object has an operator overload for multiplication which produces a new list with the original list <em>repeated</em> <code>N</code> times. Therefore, this parametrization will repeat the sequence of rock, paper, scissors 100 times over for 300 tests.</li>
+<li>Notice in the arrange steps... we have no mocks or test doubles otherwise. This is a nice feature of end-to-end testing!</li>
+<li>Notice in the act step... we are not patching anything! This is <em>also</em> a nice feature of end-to-end testing. It is as real of a test of our backend system as we can write.</li>
+</ol>
+<p>Expand on the notes of the highlighted lines on lines 11, 15, and 18 for some key insights on this end-to-end test. Notice how straightforward the arrange and act steps are without any mocking or patching. This is one of the benefits of end-to-end API testing: the initial setup is as about as minimal as the API's setup. (One noteworthy caveat: If we used persistence, such as files or a database, or network dependencies, we would either need to do more setup work to be sure the starting state was predictable or relax some of our specificity in assertions.)</p>
+<p>When you run this end-to-end test you will notice that <em>300 tests</em> are run!</p>
+<div class="admonition question">
+<p class="admonition-title">Why run more than three end-to-end tests in this scenario?</p>
+<p>Why run 300? Since there is entropy in our system via the API's random <code>choice</code> of rock, paper, or scissors, there are 9 possible outcomes. This is not a resource intensive test to run. Therefore, repeating inputs over many tries gives us increasing confidence all cases are likely hit at least once. This is a common strategy and relates to the concept of a "fuzzing" test, but <em>fuzzing</em> has broader implications around <em>invalid</em> data we may explore later in the course. I chose the magic number 100 out of convenience sake.</p>
+<p>This choice is also impacted by what exactly your test is trying to prove. This end-to-end test is looking to show we are exhaustively covering the expected outcomes. That's reasonable when there are only nine outcomes. However, we <em>also</em> proved this exhaustively in the <em>integration</em> test. An engineer could argue for this end-to-end test, given the existence of other subsystem unit and integration tests, all we really need to convince ourselves of is the correct types of data and response code being returned. This is also a sound end-to-end testing strategy.</p>
+</div>
+<h2 id="what-isnt-tested-in-the-play-route">What isn't tested in the <code>/play</code> route?</h2>
+<p>One aspect of the <code>/play</code> route none of our tests have addressed are exceptional cases where clients send invalid data to the API. For example, perhaps their choice is the string "bazooka". What happens then? In the version of FastAPI the tutorial uses, the validation error causes a 422 response to be produced automatically. However, this is not code we wrote yet clients of our service may depend on predictable exception behavior. If we wanted to codify this in a test, to help us catch a regression caused by a different decision in a future versions of FastAPI, we could write a test like so:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><span class="k">def</span><span class="w"> </span><span class="nf">test_play_exception</span><span class="p">():</span>
+</span><span id="__span-5-2">    <span class="c1"># Arrange</span>
+</span><span id="__span-5-3">    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</span><span id="__span-5-4">
+</span><span id="__span-5-5">    <span class="c1"># Act</span>
+</span><span id="__span-5-6">    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/play&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user_choice&quot;</span><span class="p">:</span> <span class="s2">&quot;bazooka&quot;</span><span class="p">})</span>
+</span><span id="__span-5-7">
+</span><span id="__span-5-8">    <span class="c1"># Assert</span>
+</span><span id="__span-5-9">    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">is</span> <span class="n">status</span><span class="o">.</span><span class="n">HTTP_422_UNPROCESSABLE_ENTITY</span>
+</span></code></pre></div></td></tr></table></div>
+<p>In industrial strength software, it is generally a best practice to have regression tests for exceptional cases of all endpoints that clients of your API may depend upon. While this test adds 0 lines of new code coverage in our project code, it does add meaningful regression resilience for behaviors our clients rely upon.</p>
+<p>Now that you have completed the tutorial, please submit the responses to questions on Gradescope.</p>
+<h2 id="answers">Answers</h2>
+<p>Answers to the open-ended questions posed in sections above.</p>
+<h3 id="unit-testing-the-play-route-handler">Unit Testing the <code>play</code> Route Handler</h3>
+<p>You can find one possible correct implementation of a unit test for the <code>play</code> route handler below:</p>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">test_play_unit.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><span class="k">def</span><span class="w"> </span><span class="nf">test_play_returns_game_result</span><span class="p">():</span>
+</span><span id="__span-6-2">    <span class="c1"># Arrange</span>
+</span><span id="__span-6-3">    <span class="n">mock_svc</span><span class="p">:</span> <span class="n">GameService</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">GameService</span><span class="p">)</span>
+</span><span id="__span-6-4">    <span class="n">user_choice</span> <span class="o">=</span> <span class="n">GamePlay</span><span class="p">(</span><span class="n">user_choice</span><span class="o">=</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">)</span>
+</span><span id="__span-6-5">    <span class="n">expected</span> <span class="o">=</span> <span class="n">GameResult</span><span class="p">(</span>
+</span><span id="__span-6-6">        <span class="n">user_choice</span><span class="o">=</span><span class="n">Choice</span><span class="o">.</span><span class="n">rock</span><span class="p">,</span>
+</span><span id="__span-6-7">        <span class="n">api_choice</span><span class="o">=</span><span class="n">Choice</span><span class="o">.</span><span class="n">paper</span><span class="p">,</span>
+</span><span id="__span-6-8">        <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+</span><span id="__span-6-9">        <span class="n">user_wins</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-6-10">    <span class="p">)</span>
+</span><span id="__span-6-11">    <span class="n">mock_svc</span><span class="o">.</span><span class="n">play</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">expected</span>
+</span><span id="__span-6-12">
+</span><span id="__span-6-13">    <span class="c1"># Act</span>
+</span><span id="__span-6-14">    <span class="n">actual</span><span class="p">:</span> <span class="n">GameResult</span> <span class="o">=</span> <span class="n">play</span><span class="p">(</span><span class="n">user_choice</span><span class="p">,</span> <span class="n">mock_svc</span><span class="p">)</span>
+</span><span id="__span-6-15">
+</span><span id="__span-6-16">    <span class="c1"># Assert</span>
+</span><span id="__span-6-17">    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">expected</span>
+</span><span id="__span-6-18">    <span class="n">mock_svc</span><span class="o">.</span><span class="n">play</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">user_choice</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>If you are thinking <em>wow</em> 18 lines of code to unit test a function with one line of delegation, <em>that seems like a lot!</em> You are not wrong. However, be sure you can reason through both the value of what this is verifying in the system <em>and</em> the "contract" it is enforcing. </p>
+<p>The code could be refactored to use <em>fixtures</em> as part of the <em>arrange</em> steps to reduce some redundancy across multiple tests using the same service mock and choice, if needed. If there were other types of responses, such as <em>404 Not Found</em>, additional tests would need to be added that could reuse the fixtures and shorten the individual test implementations.</p>
+<h3 id="patching-target">Patching Target</h3>
+<p>The target you are attempting to patch is <code>services.random_choice</code>. Remember, you <em>patch the name where it is used.</em> If you look in the <code>services.py</code> imports section, you will see <code>from random import choice as random_choice</code>. Within the <code>services</code> module, this is <em>aliasing</em> the <code>choice</code> function of the <code>random</code> package with the name <code>random_choice</code>. The <code>random_choice</code> function is called to produce the API's guess of rock, paper, or scissors, so this is the fully qualified name we are patching over to control the side-effect.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../1-dependency-injection/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Dependency Injection">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Dependency Injection
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../teamwork/" class="md-footer__link md-footer__link--next" aria-label="Next: Tools and Processes for Teamwork">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Tools and Processes for Teamwork
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

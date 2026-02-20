@@ -1,0 +1,1718 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/backend-architecture/3-ci-cd/">
+      
+      
+        <link rel="prev" href="../2-testing/">
+      
+      
+        <link rel="next" href="../../database/1-sql/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>3. Introduction to CI/CD - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-introduction-to-cicd" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Introduction to CI/CD
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-cicd-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why CI/CD Matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-continuous-integration-ci-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Continuous Integration (CI) Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-continuous-deployment-cd-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Continuous Deployment (CD) Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cicd-demo-pipeline-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CI/CD Demo Pipeline Tutorial
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CI/CD Demo Pipeline Tutorial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cloning-the-starter-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloning the Starter Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-integration-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Integration Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-deployment-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Deployment Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-to-okd-using-cicd-integrated-deploymentconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploying to OKD using CI/CD (Integrated DeploymentConfig)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying to OKD using CI/CD (Integrated DeploymentConfig)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-generating-a-personal-access-token-for-your-private-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Generating a Personal Access Token for Your Private Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-register-your-github-pat-with-a-secret-stored-in-okd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Register your GitHub PAT with a Secret Stored in OKD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-create-an-integrated-deployment-with-buildconfig-imagestream-and-source-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Create an Integrated Deployment (with BuildConfig, ImageStream, and Source Secret)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-expose-the-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Expose the Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-setting-up-continuous-deployment-using-a-webhook-callback-from-github-actions-to-okd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Setting up Continuous Deployment Using a Webhook Callback from GitHub Actions to OKD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleaning-up-cicd-demo-components-on-okd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleaning Up CI/CD Demo Components on OKD
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="3-introduction-to-cicd">3. Introduction to CI/CD</h1>
+<p>Modern software development moves fast. Teams need to deliver features quickly, fix bugs rapidly, and maintain high-quality code—all while ensuring deployments are smooth and reliable. This is where <strong>CI/CD</strong> comes in.  </p>
+<ul>
+<li><strong>Continuous Integration (CI)</strong> automates the process of running tests on new code changes whenever they are pushed to a central repository. This ensures that issues are caught early and developers get fast feedback. It can also be used during a Pull Request workflow to prevent a branch from being merged into <code>main</code> until it passes all tests.</li>
+<li><strong>Continuous Deployment (CD)</strong> takes things a step further by <strong>automating the deployment of every successfully tested change directly into production</strong>—without manual intervention. This allows teams to ship updates multiple times a day with confidence.  </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Continuous Delivery vs. Continuous Deployment</p>
+<p><strong>Continuous Delivery</strong> ensures that every tested change is ready for deployment but still requires a manual approval step before going live. <strong>Continuous Deployment</strong>, on the other hand, removes this manual step and automatically pushes changes to production once they pass all verification checks.  </p>
+<p>In this tutorial, we’re focusing on <strong>Continuous Deployment</strong>, where code moves to production immediately after passing CI tests.  </p>
+</div>
+<h2 id="why-cicd-matters">Why CI/CD Matters</h2>
+<p>Manually running tests and deploying software can be slow, inconsistent, and prone to human error. CI/CD automates these critical steps, leading to:  </p>
+<ul>
+<li><strong>Faster development cycles</strong> – Developers can push changes more frequently without worrying about breaking things.  </li>
+<li><strong>Less anxiety</strong> – Automated testing and deployment remove the guesswork, making releases predictable and repeatable.  </li>
+<li><strong>Higher confidence</strong> – If every change is tested and verified before it reaches production, teams can move forward with fewer worries about stability.  </li>
+</ul>
+<p>By embracing automation, teams shift from a culture of hesitation and uncertainty to one of confidence and speed. Instead of fearing deployment days, developers can focus on building great software.  </p>
+<h2 id="how-continuous-integration-ci-works">How Continuous Integration (CI) Works</h2>
+<p>CI ensures that every code change is automatically tested before being merged or deployed. When a developer pushes code, a CI system:  </p>
+<ol>
+<li>Detects the change  </li>
+<li>Automatically runs tests  </li>
+<li>Reports results, allowing developers to catch and fix issues early  </li>
+<li>Prevents merging into the main branch (if using pull requests) or deployment if tests fail  </li>
+</ol>
+<p>A tool like <strong>GitHub Actions</strong> can be used to define workflows that trigger these tests on every push or pull request. If tests fail, CI can block the code from being merged or stop the deployment process, ensuring that only properly tested changes move forward.  </p>
+<h2 id="how-continuous-deployment-cd-works">How Continuous Deployment (CD) Works</h2>
+<p>Once CI verifies that code changes pass all tests, CD ensures those changes are <strong>automatically deployed to production</strong> without human intervention. A system like <strong>OKD (OpenShift Kubernetes Distribution)</strong> or <strong>Kubernetes</strong> can handle deployment by:  </p>
+<ol>
+<li>Being notified of <code>CI</code> successfully passing all tests on <code>main</code> and receiving a webhook callback</li>
+<li>A <code>BuildConfig</code> begins a new <code>Build</code> by pulling repository and building a Docker image</li>
+<li>The Docker image is pushed to an <code>ImageStream</code></li>
+<li>The <code>ImageStream</code> notifies a <code>Deployment</code> that a new image is available</li>
+<li>The <code>Deployment</code> spins up a new <code>Pod</code> (Container) based on the image</li>
+<li>Once the new <code>Pod</code> is available, it turns off the old <code>Pod</code> running the previous version</li>
+</ol>
+<p>With <strong>Continuous Deployment</strong>, every change that passes CI and merged to <code>main</code> is deployed to production and live, allowing teams to <strong>ship updates faster, reduce the risk of large releases, and catch issues early</strong>.  </p>
+<h2 id="cicd-demo-pipeline-tutorial">CI/CD Demo Pipeline Tutorial</h2>
+<p>In the next tutorial, you’ll configure a full <strong>CI/CD pipeline</strong> for a sample repository, using <strong>GitHub Actions for CI and Kubernetes (via OKD) for CD</strong>. Get ready to see automation in action!</p>
+<h3 id="cloning-the-starter-repository">Cloning the Starter Repository</h3>
+<p>Individually, accept the following GitHub Classroom assignment: <a href="https://classroom.github.com/a/7izSQo1P">https://classroom.github.com/a/7izSQo1P</a></p>
+<p>Then, on your host machine outside of any other project, clone your repository. Open this repository in VSCode and then open it in a VS Code Dev Container.</p>
+<p>If you are on Windows and the build fails, open <code>.devcontainer/post-create.sh</code> and check the line ending setting for this file. It needs to be <code>LF</code> not <code>CRLF</code>. If you see <code>CRLF</code> in the bottom right of the screen, click it, select <code>LF</code> and then save the file and rebuild the container.</p>
+<p>Before continuing, a few things to open and check out:</p>
+<ol>
+<li>In the <code>.devcontainer/devcontainer.json</code> the <code>postCreateCommand</code> runs the <code>bash</code> script named <code>post-create.sh</code></li>
+<li>In the <code>.devcontainer/post-create.sh</code> script, you will notice the first set of steps "Installs the <code>oc</code> CLI tool." This <code>oc</code> tool is what we will use to communicate with your production setup in the cloud. This script also installs our Python packages from <code>requirements.txt</code></li>
+<li>Open a new terminal in VSCode and run <code>pytest</code> to see that tests pass.</li>
+<li>Open up <code>main.py</code> to see that this app simply produces the current times in two timezones. You can try running the app locally with <code>fastapi dev --reload</code>. Navigate to the root URL and <code>/docs</code> to see the app in question is <em>very</em> simple.</li>
+</ol>
+<p>Now you are ready to setup continuous integration and continuous deployment!</p>
+<h3 id="continuous-integration-demo">Continuous Integration Demo</h3>
+<p>Continuous Integration is controlled by a GitHub Action. Since our project's test are written in Pytest, we want the CI system to run <code>pytest</code> as part of its workflow. We've already set you up well for this, normally you'd have to create the following directory structure and <code>yml</code> file, but for your part to get this going you need to:</p>
+<ol>
+<li>Open <code>.github/workflows/test.yml</code></li>
+<li>Read the names of each step to see how the worklflow builds up</li>
+<li>Find the commented lines:
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1">- name: Test with pytest (CI)
+</span><span id="__span-0-2">    run: pytest
+</span></code></pre></div></li>
+<li>Uncomment those lines.</li>
+</ol>
+<p>Save the file then <strong>make a git commit, on <code>main</code>, with these changes</strong>. Then, <strong>push your changes to <code>origin</code>.</strong>. For this tutorial, to keep the focus on what's important, we will make all commits and pushes to <code>main</code>. In a full industrial CI/CD pipeline, you would take this further and be sure pushes are only happening on branches and merged in to <code>main</code>, following CI success, via pull requests.</p>
+<p>Now, go open the repository you just setup and pushed to in your web browser on GitHub. Look for the Actions tab. Click it and look to see the most recent workflow run. It may still be running or have finished with a green check. Click it. Click through to <code>test</code>. Then take a look at the steps of this workflow looking specifically for <code>Test with pytest (CI)</code>. Expand that step. Here you can see the 3 tests passed! GitHub actions ran your tests on their machines as part of this CI process. Since everything passed, <code>pytest</code>'s process exited with status code 0, and GitHub Actions uses that as a signal that your CI workflow succeeded. Once it does, and any steps following succeed, you will see a green check!</p>
+<p>If you navigate back to the "Code" tab in GitHub, then you will also see a small green check just above your list of files, following your commit message. Click it and you can see this check is part of the indication that continuous integration succeeded thanks to our "Run Python Tests" workflow succeeding. (Notice: that <em>name</em> came from the name we gave the workflow at the top of the <code>test.yml</code> action specification.)</p>
+<h3 id="continuous-deployment-demo">Continuous Deployment Demo</h3>
+<p>Setting up deployment takes some more effort because we need to stand up a production cloud environment. Our production environment will be UNC Cloud Apps' "OKD" cluster, set up just for our course!</p>
+<p><strong>You need to be connected to Eduroam, or connected to <a href="https://ccinfo.unc.edu/start-here/secure-access-on-and-off-campus/">UNC VPN (instructions here)</a>, in order to successfully use OKD. If you are on a home network, UNC guest, or other network, be sure to connect via VPN.</strong></p>
+<p>Login to <code>OKD</code> by going to: <a href="https://console.apps.unc.edu">https://console.apps.unc.edu</a></p>
+<p>(If your login does not succeed, it's likely because you did not previously register for Cloud Apps. You can do so by going to https://cloudapps.unc.edu/ and following the Sign Up steps. It can take up to 15 minutes following Sign Up for the OKD link above to work correctly. In the interim, feel free to follow along with your neighbor.)</p>
+<p>Once logged in you sould see <strong>OKD</strong> in the upper-left corner. If you see "Red Hat", be sure you opened the link above.</p>
+<p>Now that you are logged in, go to the upper-right corner and click your ONYEN and go to the "Copy Login Command" link. Click Display Token. In this, copy the command in the first text box. Paste it into your dev container's terminal (which has the <code>oc</code> command-line application for interfacing with a Red Hat Open-Shift Kubernetes cluster installed).</p>
+<p>Before proceeding, switch to your personal OKD project using your ONYEN. For example, if your ONYEN is "jdoe", run:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1">oc<span class="w"> </span>project<span class="w"> </span>comp590-140-26sp-jdoe
+</span></code></pre></div></p>
+<p>If the above command fails, restart the steps above! The following will not work until you are able to access your project via <code>oc</code>.</p>
+<h2 id="deploying-to-okd-using-cicd-integrated-deploymentconfig">Deploying to OKD using CI/CD (Integrated DeploymentConfig)</h2>
+<p>This guide shows you how to deploy this FastAPI project to OKD following a successful CI/CD test run using an integrated DeploymentConfig that includes its own BuildConfig and ImageStream. In this setup, after tests pass in GitHub Actions, the build is automatically triggered on OKD. The BuildConfig uses the <code>Dockerfile</code> from the repository, and the resulting image is deployed automatically with the app name set to <code>comp423-cicd-demo</code>.</p>
+<h3 id="1-generating-a-personal-access-token-for-your-private-repository">1. Generating a Personal Access Token for Your Private Repository</h3>
+<p>OKD needs to be able to clone your private repository from GitHub. In order to do so, you will generate a Personal Access Token (legacy) and configure your OKD project to use this access token.</p>
+<p>Follow these steps to create a Personal Access Token (PAT) with read access for your repository:</p>
+<ol>
+<li>
+<p><strong>Sign in to GitHub</strong>  </p>
+<ul>
+<li>Go to <a href="https://github.com">GitHub</a> and log in with your account.</li>
+</ul>
+</li>
+<li>
+<p><strong>Navigate to Developer Settings</strong>  </p>
+<ul>
+<li>Click on your profile picture (top-right corner) and select <strong>Settings</strong>.</li>
+<li>In the left sidebar, click on <strong>Developer settings</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Access Personal Access Tokens</strong>  </p>
+<ul>
+<li>Click on <strong>Personal access tokens</strong>.</li>
+<li>Select <strong>Tokens (classic)</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Generate a New Token</strong>  </p>
+<ul>
+<li>Click the <strong>"Generate new token"</strong> button.</li>
+<li>For classic tokens, click <strong>"Generate new token (classic)"</strong>.</li>
+<li>Provide a descriptive name for the token (e.g., "OKD-Repo-ReadAccess").</li>
+</ul>
+</li>
+<li>
+<p><strong>Select the Scope</strong>  </p>
+<ul>
+<li>Under <strong>"Select scopes"</strong>, check the <strong><code>repo</code></strong> scope.</li>
+</ul>
+</li>
+<li>
+<p><strong>Generate and Copy the Token</strong>  </p>
+<ul>
+<li>Click <strong>"Generate token"</strong>.</li>
+<li><strong>Copy the generated token to your clipboard immediately.</strong> You won't be able to see it again later.</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-register-your-github-pat-with-a-secret-stored-in-okd">2. Register your GitHub PAT with a Secret Stored in OKD</h3>
+<p>From the built-in terminal in your dev container:</p>
+<ol>
+<li><strong>Create a GitHub access secret</strong><br />
+   Create a secret in OKD that contains your GitHub username and a personal access token (PAT) with appropriate repo rights. Remove the surrounding less than and greater than signs when substituting your personal GitHub username and PAT in the command below:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1">oc<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>comp423-cicd-git-credentials<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">username</span><span class="o">=</span>&lt;your-github-username&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">password</span><span class="o">=</span>&lt;your-github-pat&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><span class="w">    </span>--type<span class="o">=</span>kubernetes.io/basic-auth
+</span></code></pre></div></li>
+<li><strong>Label the Secret</strong><br />
+   Add the label "app=comp423-cicd-demo" to make it easier to delete everything related to this demo later on:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1">oc<span class="w"> </span>label<span class="w"> </span>secret<span class="w"> </span>comp423-cicd-git-credentials<span class="w"> </span><span class="nv">app</span><span class="o">=</span>comp423-cicd-demo
+</span></code></pre></div></li>
+</ol>
+<h3 id="3-create-an-integrated-deployment-with-buildconfig-imagestream-and-source-secret">3. Create an Integrated Deployment (with BuildConfig, ImageStream, and Source Secret)</h3>
+<p>OKD's <code>new-app</code> command is a handy all-in-one command to create an application from a repository that handles setting up the app's <code>BuildConfig</code>, <code>ImageStream</code>, and <code>Deployment</code> behind the scenes.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1">oc<span class="w"> </span>new-app<span class="w"> </span>.<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2">--name<span class="o">=</span>comp423-cicd-demo<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3">--source-secret<span class="o">=</span>comp423-cicd-git-credentials<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4">--strategy<span class="o">=</span>docker<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-5">--labels<span class="o">=</span><span class="nv">app</span><span class="o">=</span>comp423-cicd-demo
+</span></code></pre></div>
+<p><em>Explanation</em>:  </p>
+<ul>
+<li>The <code>--source-secret=comp423-cicd-git-credentials</code> flag directs OKD to use the secret you created to clone the private repo.</li>
+<li>The <code>--labels=app=comp423-cicd-demo</code> parameter tags the created BuildConfig, ImageStream, and DeploymentConfig with a common label, "app=comp423-cicd-demo".</li>
+</ul>
+<p>Over in OKD, in the web browser, you should look to see the application appear in your project. You should find its build status and track the build.</p>
+<h3 id="4-expose-the-service">4. Expose the Service</h3>
+<p>Your OKD pods are securely only accessible to you, or other users you give access to, and not the general public. To begin the process of exposing a pod to the public, we need to expose a route to it in OKD. The following <code>create route</code> will automatically generate a route URL securely connecting your service to the outside world:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1">oc<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span>edge<span class="w"> </span>--service<span class="o">=</span>comp423-cicd-demo
+</span></code></pre></div>
+<p>Routes can also be created with custom hostnames, but the automatic name is sufficient for this tutorial.</p>
+<p>After doing so, <strong>once your project successfully builds</strong>, you can run the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1">oc<span class="w"> </span>get<span class="w"> </span>route<span class="w"> </span>comp423-cicd-demo
+</span></code></pre></div>
+<p>What this will do is show you the public route to your app running in production. Try opening this URL in your browser or your phone. This is live on the public internet!</p>
+<h3 id="5-setting-up-continuous-deployment-using-a-webhook-callback-from-github-actions-to-okd">5. Setting up Continuous Deployment Using a Webhook Callback from GitHub Actions to OKD</h3>
+<p>A webhook callback is a mechanism by which OKD can be triggered to start a new build when it receives an HTTP POST request. In this setup, after your tests pass on GitHub Actions, a POST request is sent to the webhook URL configured in your OKD BuildConfig. This webhook URL contains a secret token that ensures only authorized calls (i.e. from your GitHub Actions) can trigger a build. </p>
+<p>To configure this:</p>
+<ol>
+<li>To get the webhook URL:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1">oc<span class="w"> </span>describe<span class="w"> </span>bc/comp423-cicd-demo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-C<span class="w"> </span><span class="m">1</span><span class="w"> </span>generic
+</span></code></pre></div></li>
+<li>To get the webhook secret token:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1">oc<span class="w"> </span>get<span class="w"> </span>bc<span class="w"> </span>comp423-cicd-demo<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-C<span class="w"> </span><span class="m">1</span><span class="w"> </span>generic
+</span></code></pre></div>
+   Look for the "generic" trigger section and note the secret token.</li>
+<li>In your GitHub repository, add this full URL as a secret named <code>WEBHOOK_URL</code>:</li>
+<li>Go to <strong>Settings &gt; Security &gt; Secrets and Variables &gt; Actions &gt; Repository Secrets &gt; New Repository Secret</strong>.</li>
+<li>Set the name to <code>WEBHOOK_URL</code> and paste in the full URL. The full URL is comprised of the URL template found in the command above and substituting the secret into the path. This secret in your repository is what will be referenced in the next GitHub Action variable. Note: <strong>you will <mark>NOT</mark> put the URL directly into the action definition!</strong></li>
+<li>In your GitHub Actions workflow, uncomment the following step to use <code>curl</code> to send a POST request to trigger a new build:</li>
+</ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trigger OKD Build via Webhook</span>
+</span><span id="__span-9-2"><span class="w">  </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">success()</span>
+</span><span id="__span-9-3"><span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-9-4"><span class="w">    </span><span class="no">curl -X POST &quot;${{ secrets.WEBHOOK_URL }}&quot;</span>
+</span></code></pre></div>
+<p>This step uses the webhook URL to trigger a build only when prior steps succeed, thanks to the <code>if</code> condition where <code>success()</code> is established by the workflow steps prior.</p>
+<p>You can try testing this by modifying something simple in your application that will not break the tests. For example, perhaps just switch the ordering in <code>main.py</code> of the two timezones in the <code>TIMEZONES</code> constant. Make a commit with the changes to your app and <code>test.yml</code>. Push the commit to <code>main</code> (we can circumvent best practices about branching for educational purposes here!) When you open your GitHub repository, you can see the action flow through the steps. In one of the final steps you will see "Deploy to production". If you then go look at OKD, you will see a new build is kicked off and working to build a new production image. Once it completes, the image is deployed to your app and it is live on the web! This is continuous integration (via testing) and continuous deployment (contingent on tests passing)! These flows are common in industrial software engineering settings.</p>
+<h2 id="summary">Summary</h2>
+<p>This setup allows a robust CI/CD pipeline where any push or PR to the main branch runs tests via GitHub Actions. After successful tests, a secure webhook callback is sent to OKD to start a build. The configuration ensures the Dockerfile (from the ".production" directory) is used and the application (tagged with "app=comp423-cicd-demo") is deployed with minimal manual intervention, while keeping sensitive tokens secure within GitHub Secrets.</p>
+<p>Happy deploying!</p>
+<hr />
+<h2 id="cleaning-up-cicd-demo-components-on-okd">Cleaning Up CI/CD Demo Components on OKD</h2>
+<p>When you're ready to clean up all the components created by this deployment, you can delete them all in one step by using the label selector:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1">oc<span class="w"> </span>delete<span class="w"> </span>all<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>comp423-cicd-demo
+</span><span id="__span-10-2">oc<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>comp423-cicd-demo
+</span></code></pre></div>
+<p>These commands will remove all resources (Deployment, BuildConfig, ImageStream, Service, Route, and secrets) tagged with "app=comp423-cicd-demo" while leaving your OKD project intact for future work.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../2-testing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. Introduction to Testing">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                2. Introduction to Testing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../database/1-sql/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. Introduction to Relational Databases &amp;amp; SQL">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                1. Introduction to Relational Databases &amp; SQL
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

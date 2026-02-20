@@ -1,0 +1,1902 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/MkDocs/tutorial/">
+      
+      
+        <link rel="prev" href="../ex00/">
+      
+      
+        <link rel="next" href="../../backend-architecture/0-layered-architecture/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Starting a Static Website Project with MkDocs - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#starting-a-static-website-project-with-mkdocs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Starting a Static Website Project with MkDocs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why This Matters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-you-will-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What You Will Learn
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-project-setup-creating-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1. Project Setup: Creating the Repository
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1. Project Setup: Creating the Repository">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-create-a-local-directory-and-initialize-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1. Create a Local Directory and Initialize Git
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-a-remote-repository-on-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. Create a Remote Repository on GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-link-your-local-repository-to-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3. Link your Local Repository to GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-setting-up-the-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2. Setting Up the Development Environment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2. Setting Up the Development Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-development-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a Development (Dev) Container?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-are-software-project-dependencies-managed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How are software project dependencies managed?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-add-development-container-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1. Add Development Container Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-add-requirementstxt-python-dependency-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. Add requirements.txt Python Dependency Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-reopen-the-project-in-a-vscode-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3. Reopen the Project in a VSCode Dev Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-creating-the-static-site-with-material-for-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3. Creating the Static Site with Material for MkDocs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3. Creating the Static Site with Material for MkDocs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-initialize-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1. Initialize MkDocs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-configure-your-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. Configure Your Site
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-preview-your-site-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3. Preview Your Site Locally
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-deploying-with-github-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4. Deploying with GitHub Pages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 4. Deploying with GitHub Pages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-github-action-for-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up a GitHub Action for CI/CD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting up a GitHub Action for CI/CD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-add-a-github-action-for-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1. Add a GitHub Action for CI/CD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-push-changes-and-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. Push Changes and Deploy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-your-cicd-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding your CI/CD Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-matters-beyond-this-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters Beyond This Tutorial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="starting-a-static-website-project-with-mkdocs">Starting a Static Website Project with MkDocs</h1>
+<p>Welcome! In this tutorial, you'll learn how to build a static website to organize your course notes using GitHub Pages and the powerful static site generator, Material for MkDocs. By the end of this guide, you'll have a fully functional website hosted online, starting from a blank repository. Along the way, you'll also set up a basic Python development container (dev container) in Visual Studio Code (VS Code) and configure GitHub Actions for continuous integration and deployment (CI/CD) and learn what all of this useful <em>jargon</em> means.</p>
+<div class="admonition info">
+<p class="admonition-title">Why Material for MkDocs?</p>
+<p>MkDocs is the de facto documentation site generator for today's most popular, modern Python projects, including a few we'll in this course: <a href="https://fastapi.tiangolo.com/">FastAPI</a> and <a href="https://docs.pydantic.dev/latest/">Pydantic</a>. Those sites are made and maintained with this documentation tool. Material for MkDocs is one of the most popular themes for MkDocs, offering a sleek design, responsive layout, and tons of features out of the box. As an added endorsement, I, Kris, claim this is the best and easiest to use, static site generator tool I've ever seen. In fact, <strong>this course site you're reading right now</strong> is <a href="https://github.com/comp423-26s/comp423-26s.github.io/">built using MkDocs</a>, too! (There's a recursion joke somewhere in here.)</p>
+</div>
+<h2 id="why-this-matters">Why This Matters</h2>
+<p>Static websites are an essential part of software engineering and open-source projects. Many teams and individuals use them to document software, share knowledge, and create personal portfolios. Learning to build and manage one not only enhances your technical skillset but also sets you up for creating your own portfolio and blogging website.</p>
+<h3 id="what-you-will-learn">What You Will Learn</h3>
+<p>By completing this tutorial, you will:</p>
+<ul>
+<li>Set up a basic Python Development Container in VS Code to streamline development.</li>
+<li>Initialize and configure a GitHub repository for a static site.</li>
+<li>Use Material for MkDocs to generate a clean, professional website.</li>
+<li>Deploy your site to GitHub Pages with GitHub Actions for CI/CD.</li>
+<li>Gain insight into the tools and practices used in open-source and professional software projects.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before we dive in, make sure you have:</p>
+<ol>
+<li><strong>A GitHub account:</strong> If you don’t have one yet, sign up at <a href="https://github.com">GitHub</a>.</li>
+<li><strong>Git installed:</strong> <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Install Git</a> if you don’t already have it.</li>
+<li><strong>Visual Studio Code (VS Code):</strong> Download and install it from <a href="https://code.visualstudio.com/">here</a>.</li>
+<li><strong>Docker installed:</strong> Required to run the dev container. <a href="https://www.docker.com/products/docker-desktop">Get Docker here</a>.</li>
+<li><strong>Command-line basics:</strong> Your COMP211 command-line knowledge will serve you well here. If in doubt, review the Learn a CLI text!</li>
+</ol>
+<h2 id="part-1-project-setup-creating-the-repository">Part 1. Project Setup: Creating the Repository</h2>
+<h3 id="step-1-create-a-local-directory-and-initialize-git">Step 1. Create a Local Directory and Initialize Git</h3>
+<p>(A) Open your terminal or command prompt.</p>
+<p>(B) Create a new directory for your project. (Note: Of course, if you'd like to organize this tutorial somewhere else on your machine, go ahead and change into that parent directory first. By default this will be in your user's home directory.):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1">mkdir<span class="w"> </span>comp423-course-notes
+</span><span id="__span-0-2"><span class="nb">cd</span><span class="w"> </span>comp423-course-notes
+</span></code></pre></div>
+<p>(C) Initialize a new Git repository:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1">git<span class="w"> </span>init
+</span></code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">What is the effect of running the <code>init</code> subcommand?</p>
+<p>You should know what happens when you run this command at this point in the course! If you do not, please refer back to the chapter on <a href="../../resources/git/ch2-git-fundamental-subcommands.md">Fundamental git Subcommands</a>.  </p>
+</div>
+<p>(D) Create a README file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;# COMP423 Course Notes&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>README.md
+</span><span id="__span-2-2">git<span class="w"> </span>add<span class="w"> </span>README.md
+</span><span id="__span-2-3">git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Initial commit with README&quot;</span>
+</span></code></pre></div>
+<h3 id="step-2-create-a-remote-repository-on-github">Step 2. Create a Remote Repository on GitHub</h3>
+<p>(1) Log in to your GitHub account and navigate to the <a href="https://github.com/new">Create a New Repository</a> page.</p>
+<p>(2) Fill in the details as follows:</p>
+<ul>
+<li><strong>Repository Name:</strong> <code>comp423-course-notes</code></li>
+<li><strong>Description:</strong> "Course notes organized as a static website using Material for MkDocs."</li>
+<li><strong>Visibility:</strong> Public</li>
+</ul>
+<p>(3) Do not initialize the repository with a README, .gitignore, or license.</p>
+<p>(4) Click <strong>Create Repository</strong>.</p>
+<h3 id="step-3-link-your-local-repository-to-github">Step 3. Link your Local Repository to GitHub</h3>
+<p>(1) Add the GitHub repository as a remote:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1">git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>https://github.com/&lt;your-username&gt;/comp423-course-notes.git
+</span></code></pre></div>
+<p>Replace <code>&lt;your-username&gt;</code> with your GitHub username.</p>
+<p>(2) Check your default branch name with the subcommand <code>git branch</code>. If it's not <code>main</code>, rename it to <code>main</code> with the following command: <code>git branch -M main</code>. Old versions of <code>git</code> choose the name <code>master</code> for the primary branch, but these days <code>main</code> is the standard primary branch name.</p>
+<p>(3) Push your local commits to the GitHub repository:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1">git<span class="w"> </span>push<span class="w"> </span>--set-upstream<span class="w"> </span>origin<span class="w"> </span>main
+</span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Understanding the --set-upstream Flag</p>
+<ul>
+<li><code>git push --set-upstream origin main</code>: This command pushes the main branch to the remote repository origin. The <code>--set-upstream</code> flag sets up the main branch to track the remote branch, meaning future pushes and pulls can be done without specifying the branch name and just writing <code>git push origin</code> when working on your local <code>main</code> branch. This long flag has a corresponding <code>-u</code> short flag.</li>
+</ul>
+</div>
+<p>(4) Back in your web browser, refresh your GitHub repository to see that the same commit you made locally has now been <em>pushed</em> to remote. You can use <code>git log</code> locally to see the commit ID and message which should match the ID of the most recent commit on GitHub. This is the result of pushing your changes to your remote repository.</p>
+<h2 id="part-2-setting-up-the-development-environment">Part 2. Setting Up the Development Environment</h2>
+<h3 id="what-is-a-development-dev-container">What is a Development (Dev) Container?</h3>
+<p>A dev container ensures that your development environment is consistent and works across different machines. At its core, a dev container is a preconfigured environment defined by a set of files, typically leveraging Docker to create isolated, consistent setups for development. Think of it as a "mini computer" inside your computer that includes everything you need to work on a specific project—like the right programming language, tools, libraries, and dependencies.</p>
+<p>Why is this valuable? In the technology industry, teams often work on complex projects that require a specific set of tools and dependencies to function correctly. Without a dev container, each developer must manually set up their environment, leading to errors, wasted time, and inconsistencies. With a dev container, everyone works in an identical environment, reducing bugs caused by "it works on my machine" issues. It also simplifies onboarding new team members since they can start coding with just a few steps.</p>
+<h3 id="how-are-software-project-dependencies-managed">How are software project dependencies managed?</h3>
+<p>To effectively manage <strong>software dependencies</strong>, it's important to understand package and dependency management. In most software projects, you rely on <em>external libraries or packages</em> to save time and leverage work that has already been done by others. Managing these dependencies ensures that your project has access to the correct versions of these libraries, avoiding compatibility issues.</p>
+<p>In this project, our primary dependency is <code>mkdocs-material</code>, which enables us to build and style our static site. This package is available on <a href="https://pypi.org/project/mkdocs-material/">PyPi</a>, the Python Package Index, which is a repository of software for the Python programming language. PyPi hosts thousands of free, open source, third-party libraries that developers can use to add functionality to their projects. These libraries are installed using <code>pip</code>, a package manager for Python. Similar tools and repositories exist for other programming languages—like <code>npm</code> for JavaScript, <code>cargo</code> for Rust, or <code>maven</code> for Java.</p>
+<p>To ensure your dependencies are always correctly installed and available, in standard Python projects relying on <code>pip</code>, requirements are traditionally listed out in a <code>requirements.txt</code> file in the project's root directory. This file is committed to your project's version control history so that as your project adds or updates dependencies, it is reflected in the project's history. This allows anyone working on the project to quickly set up their environment by installing the necessary dependencies with the <code>pip install</code> command. The dev container configuration you setup will automatically install dependencies from <code>requirements.txt</code> when the container is created. This allows anyone working on the project to have a complete environment setup in one step: starting a dev container.</p>
+<p>In summary, the the <code>devcontainer.json</code> file specifies configuration for a consistent development environment using a Docker image. The <code>requirements.txt</code> file ensures all needed Python package for our project are installed when the container is created. Together, these files automate the process of setting up a developer environment, making it easier for you and others to work on the project. </p>
+<p>Lets establish your static website development environment:</p>
+<h3 id="step-1-add-development-container-configuration">Step 1. Add Development Container Configuration</h3>
+<ol>
+<li>In VS Code, open the <code>comp423-course-notes</code> directory. You can do this via: File &gt; Open Folder.</li>
+<li>Install the <strong>Dev Containers</strong> extension for VS Code.</li>
+<li>Create a <code>.devcontainer</code> directory in the root of your project with the following file inside of this "hidden" configuration directory:</li>
+</ol>
+<p><strong><code>.devcontainer/devcontainer.json</code></strong></p>
+<p>The <code>devcontainer.json</code> file defines the configuration for your development environment. Here, we're specifying the following:</p>
+<ul>
+<li><strong><code>name</code></strong>: A descriptive name for your dev container.</li>
+<li><strong><code>image</code></strong>: The Docker image to use, in this case, the latest version of a Python environment. <a href="https://hub.docker.com/r/microsoft/vscode-devcontainers">Microsoft maintains a collection of base images for many programming language environments</a>, but you can also create your own!</li>
+<li><strong><code>customizations</code></strong>: Adds useful configurations to VS Code, like installing the Python extension. When you search for VSCode extensions on the marketplace, you will find the string identifier of each extension in its sidebar. Adding extensions here ensures other developers on your project have them installed in their dev containers automatically.</li>
+<li><strong><code>postCreateCommand</code></strong>: A command to run after the container is created. In our case, it will use <code>pip</code> to install the dependencies listed in <code>requirements.txt</code>.</li>
+</ul>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><span class="p">{</span>
+</span><span id="__span-5-2"><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;COMP423 Course Notes&quot;</span><span class="p">,</span>
+</span><span id="__span-5-3"><span class="w">  </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mcr.microsoft.com/devcontainers/python:latest&quot;</span><span class="p">,</span>
+</span><span id="__span-5-4"><span class="w">  </span><span class="nt">&quot;customizations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-5"><span class="w">    </span><span class="nt">&quot;vscode&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-6"><span class="w">      </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+</span><span id="__span-5-7"><span class="w">      </span><span class="nt">&quot;extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ms-python.python&quot;</span><span class="p">]</span>
+</span><span id="__span-5-8"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-5-9"><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-5-10"><span class="w">  </span><span class="nt">&quot;postCreateCommand&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pip install -r requirements.txt&quot;</span>
+</span><span id="__span-5-11"><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="step-2-add-requirementstxt-python-dependency-configuration">Step 2. Add <code>requirements.txt</code> Python Dependency Configuration</h3>
+<p><strong><code>requirements.txt</code></strong></p>
+<p>The <code>requirements.txt</code> file lists the Python dependencies needed for the project. It should be in your project's root directory. Here, you only need to include <code>mkdocs-material</code> pinned to a specific minor version its current release:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1">mkdocs-material~=9.5
+</span></code></pre></div>
+<p>Pinning a dependency to a minor version ensures that the project will use the latest fixes, called patch releases, within that version. For example, <code>~=9.5</code> allows automatic upgrades from <code>9.5.49</code> to <code>9.5.50</code>, but prevents upgrades to <code>9.6</code> or beyond, ensuring stability while still benefiting from bug fixes and minor improvements. In larger software projects, this practice is valuable for maintaining a stable and reproducible development environment.</p>
+<h3 id="step-3-reopen-the-project-in-a-vscode-dev-container">Step 3. Reopen the Project in a VSCode Dev Container</h3>
+<p>Reopen the project in the container by pressing <code>Ctrl+Shift+P</code> (or <code>Cmd+Shift+P</code> on Mac), typing "Dev Containers: Reopen in Container," and selecting the option. This may take a few minutes while the image is downloaded and the requirements are installed.</p>
+<p>Once your dev container setup completes, close the current terminal tab (trash can), open a new terminal pane within VSCode, and try running <code>python --version</code> to see your dev container is running a recent version of Python without much effort! (As of this writing: 3.13 released in October of 2024.)</p>
+<h2 id="part-3-creating-the-static-site-with-material-for-mkdocs">Part 3. Creating the Static Site with Material for MkDocs</h2>
+<h3 id="step-1-initialize-mkdocs">Step 1. Initialize MkDocs</h3>
+<p>Run the following commands in your terminal (inside the container):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1">mkdocs<span class="w"> </span>new<span class="w"> </span>.
+</span></code></pre></div>
+<p>This command works because <code>mkdocs</code> is installed in the container as part of the <code>requirements.txt</code> setup in the previous section. The <code>mkdocs</code> subcommand creates the basic file structure for your site, including a default <code>mkdocs.yml</code> configuration file and a <code>docs</code> folder.</p>
+<div class="admonition question">
+<p class="admonition-title">What is the <code>.</code> in that command?</p>
+<p>You should recall this from COMP211! It refers to the current working directory the terminal's shell process is in.</p>
+</div>
+<p>The official documentation for creating a new site, which goes into more depth than this tutorial, can be found in the <a href="https://squidfunk.github.io/mkdocs-material/creating-your-site/">official documenation for Material for MkDocs</a>, if you are interested in additional coverage.</p>
+<h3 id="step-2-configure-your-site">Step 2. Configure Your Site</h3>
+<p>The <code>mkdocs.yml</code> file is a YAML configuration file. YAML stands for "Yet Another Markup Language" and is commonly used in software projects for configuration due to its simplicity and human-readable format. Unlike JSON, which was used in the <code>.devcontainer.json</code> file, YAML doesn’t require brackets or quotes for every element, making it cleaner and easier to read for large configurations. While JSON is more rigid and structured, YAML's flexibility and readability make it popular for configuration files, especially in tools like MkDocs, and cloud deployment tools you will soon learn about, such as GitHub Actions and Kubernetes.</p>
+<p>Edit <code>mkdocs.yml</code> to look like this:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><span class="nt">site_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COMP423 Course Notes</span>
+</span><span id="__span-8-2"><span class="nt">theme</span><span class="p">:</span>
+</span><span id="__span-8-3"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">material</span>
+</span></code></pre></div>
+<p>Edit the <code>index.md</code> markdown file in the <code>docs</code> directory:</p>
+<p><strong><code>docs/index.md</code></strong></p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-9-1"><span class="gh"># Welcome to Your Name&#39;s Course Notes</span>
+</span><span id="__span-9-2">
+</span><span id="__span-9-3">This is my home page. I will use it to organize and share my course notes.
+</span></code></pre></div>
+<p>Of course, substitute your name in the title.</p>
+<p>Markdown is a lightweight markup language that allows you to format text using simple, readable syntax. Files written in Markdown typically use the .md extension. It’s widely used in the software industry for documentation, readme files, blogs, and more due to its simplicity and flexibility.</p>
+<p>In a MkDocs project, all your pages will be written in Markdown and then processed by MkDocs to generate HTML files for your website. This means you can write plain text and use Markdown’s syntax for headings, lists, links, and more, without dealing directly with HTML.</p>
+<p>Here are some key benefits of Markdown:</p>
+<ul>
+<li>It’s easy to read and write.</li>
+<li>It works well with version control systems like Git.</li>
+<li>It’s supported by many platforms, including GitHub, where Markdown is used for README files.</li>
+</ul>
+<p>To learn more about Markdown, check out <a href="https://www.markdownguide.org/">this comprehensive guide</a>.</p>
+<h3 id="step-3-preview-your-site-locally">Step 3. Preview Your Site Locally</h3>
+<p>Run the following command to start a local development server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1">mkdocs<span class="w"> </span>serve
+</span></code></pre></div>
+<p>The <code>serve</code> subcommand launches a local development web server that monitors your files for changes. This means if you edit any of the files, the server will automatically refresh the page in your browser to reflect those changes. </p>
+<p>Open your browser and navigate to <code>http://127.0.0.1:8000</code> to see your site. Woo! You should see the contents of your <code>docs/index.md</code> file rendered in beautiful HTML.</p>
+<div class="admonition info">
+<p class="admonition-title">What is <code>127.0.0.1</code>?</p>
+<p><code>127.0.0.1</code> is the "loopback" address, meaning it always refers to your own computer. This address is commonly used for testing web applications locally. It also means that you cannot share your local development work directly (without others without using some additional tricks beyond our concerns right now). In the next section, you will learn how to deploy a production grade version of this site live on the web.</p>
+</div>
+<p>To stop the server, return to your terminal and press <code>Ctrl+C</code>. This will terminate the <code>mkdocs serve</code> process.</p>
+<h2 id="part-4-deploying-with-github-pages">Part 4. Deploying with GitHub Pages</h2>
+<p>In this section, you will set up an automated deployment process using GitHub Actions, a tool for Continuous Integration and Continuous Deployment (CI/CD). Setting up CI/CD for your project means that every time you make changes and push them to GitHub, a series of automated steps will run to "test", build, and deploy your website. This ensures your site is always up-to-date with the latest changes you make.</p>
+<p>Here’s what you're about to do to configure this repository's CI/CD pipeline:</p>
+<ol>
+<li><strong>Add a GitHub Actions Workflow</strong>: You'll create a workflow file that defines the automated steps for building and deploying your site on GitHub.</li>
+<li><strong>Push Changes and Test the Workflow</strong>: Once everything is set up, you'll push your changes to GitHub and observe the deployment process in action.</li>
+</ol>
+<h3 id="setting-up-a-github-action-for-cicd">Setting up a GitHub Action for CI/CD</h3>
+<h4 id="step-1-add-a-github-action-for-cicd">Step 1. Add a GitHub Action for CI/CD</h4>
+<p>Create a <code>.github/workflows/ci.yml</code> file in your repository. You can do this from a Terminal in your dev container with the commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1">mkdir<span class="w"> </span>-p<span class="w"> </span>.github/workflows
+</span><span id="__span-11-2">code<span class="w"> </span>.github/workflows/ci.yml
+</span></code></pre></div>
+<p>This file defines the steps for the CI/CD workflow.</p>
+<p><strong><code>.github/workflows/ci.yml</code></strong></p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy to GitHub Pages</span>
+</span><span id="__span-12-2">
+</span><span id="__span-12-3"><span class="nt">on</span><span class="p">:</span>
+</span><span id="__span-12-4"><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+</span><span id="__span-12-5"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
+</span><span id="__span-12-6"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+</span><span id="__span-12-7">
+</span><span id="__span-12-8"><span class="nt">permissions</span><span class="p">:</span>
+</span><span id="__span-12-9"><span class="w">  </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
+</span><span id="__span-12-10">
+</span><span id="__span-12-11"><span class="nt">jobs</span><span class="p">:</span>
+</span><span id="__span-12-12"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span>
+</span><span id="__span-12-13"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+</span><span id="__span-12-14"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-12-15"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+</span><span id="__span-12-16"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+</span><span id="__span-12-17"><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-12-18"><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.x&#39;</span>
+</span><span id="__span-12-19"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
+</span><span id="__span-12-20"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r requirements.txt</span>
+</span><span id="__span-12-21"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build and Deploy</span>
+</span><span id="__span-12-22"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mkdocs gh-deploy --force</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>on.push.branches</code></strong>: Specifies that this workflow should run whenever changes are pushed to the <code>main</code> branch.</li>
+<li><strong><code>permisisons.contents</code></strong>: Specifies the GitHub Action will be able to write back to this repository, needed to update the <code>gh-pages</code> branch the static site content will generate to.</li>
+<li><strong><code>steps</code></strong>: These define the tasks to perform, such as checking out the code, setting up Python, installing dependencies, building the site, and deploying it. The details of GitHub action configuration are beyond our scope, but you can find the <a href="https://docs.github.com/en/actions/writing-workflows/quickstart">full GitHub Action documentation here</a>.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">What does the step running <code>mkdocs gh-deploy --force</code> do?</p>
+<p>The <code>mkdocs gh-deploy --force</code> command builds your site into static files and pushes them to the <code>gh-pages</code> branch of your repository. This is a subcomand built into <code>mkdocs</code>. The <code>--force</code> flag ensures that any existing content in the <code>gh-pages</code> branch is overwritten, guaranteeing that the latest version of your site is deployed.</p>
+</div>
+<h4 id="step-2-push-changes-and-deploy">Step 2. Push Changes and Deploy</h4>
+<p>Now that your configuration is ready, let’s test it out:</p>
+<p>(1) Add and commit your changes:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1">git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-13-2">git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Set up Material for MkDocs and GitHub Action&quot;</span>
+</span></code></pre></div>
+<p>(2) Push the changes to GitHub:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1">git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+</span></code></pre></div>
+<p>(3) Navigate to the <strong>Actions</strong> tab in your GitHub repository to watch the workflow run. You’ll see each step execute, and once the process completes, your site will be deployed to GitHub Pages.</p>
+<p>(4) After the GitHub Action completes, navigate to the <code>gh-pages</code> branch in your GitHub repository to view the deployed static files. These files represent your website as hosted by GitHub Pages.</p>
+<p>(5) To ensure your repository's Github Site is served from the <code>gh-pages</code> branch, go to your repository's <strong>Settings &gt; Pages</strong>, and select the <code>gh-pages</code> branch as the source for your GitHub Pages site. Once set, your site will soon be live at the URL below.</p>
+<p>(6) Visit your site at <code>https://&lt;your-username&gt;.github.io/comp423-course-notes</code> to see the changes live. Sometimes this can take a minute to update.</p>
+<p>Congratulations! You’ve automated your deployment process with CI/CD. Now, every time you push to <code>main</code>, or merge Pull Requests into <code>main</code>, these steps will automatically be carried out resulting in your static website being regenerated and deployed. This "push-to-deploy"/"merge-to-deploy" git workflow is common in many industrial settings.</p>
+<h3 id="understanding-your-cicd-workflow">Understanding your CI/CD Workflow</h3>
+<p>Now that your deployment is automated, let’s break down what happen step by step when you make changes to this project in the future:</p>
+<ol>
+<li>
+<p><strong>Commit Changes Locally:</strong> You edit your site’s files and save your changes in your local Git repository by creating a commit.</p>
+</li>
+<li>
+<p><strong>Push to GitHub:</strong> When you push your changes to the <code>main</code> branch on GitHub, the CI/CD pipeline is triggered automatically.</p>
+</li>
+<li>
+<p><strong>GitHub Action Starts:</strong> GitHub detects the new commit and starts running the workflow you defined in <code>.github/workflows/ci.yml</code>.</p>
+</li>
+<li>
+<p><strong>Workflow Steps Execute:</strong></p>
+<ul>
+<li>The repository code is checked out to the runner environment.</li>
+<li>A Python environment is set up, and the dependencies listed in <code>requirements.txt</code> are installed.</li>
+<li>MkDocs builds the static site, converting your Markdown files into an HTML website.</li>
+<li>The <code>mkdocs gh-deploy</code> command deploys the site to the <code>gh-pages</code> branch.</li>
+</ul>
+</li>
+<li>
+<p><strong>Site is Updated:</strong> Once the workflow completes, your GitHub Pages site automatically reflects the latest changes.</p>
+</li>
+</ol>
+<h3 id="why-this-matters-beyond-this-tutorial">Why This Matters Beyond This Tutorial</h3>
+<p>CI/CD is not just for static sites—it’s a critical practice in modern software development. It ensures your code is tested, built, and delivered efficiently and consistently. This approach reduces manual work, catches errors early, and speeds up development.</p>
+<p>For example:</p>
+<ul>
+<li>In large software projects, CI/CD pipelines run tests on every commit to ensure code quality.</li>
+<li>For applications, pipelines can build and deploy to staging or production environments automatically.</li>
+</ul>
+<p>By setting up this workflow, you’ve taken a first step toward understanding these industry-standard practices and how automation can enhance the reliability of your projects.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Congratulations! You’ve successfully created a static website for your course notes using Material for MkDocs, configured a development environment, and set up automated deployment. This foundational skill can be applied to many open-source and professional projects. </p>
+<p>In the first exercise, you will expand your site with more pages and customizations!</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../ex00/" class="md-footer__link md-footer__link--prev" aria-label="Previous: EX00 - Collaborating on Technical Documentation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                EX00 - Collaborating on Technical Documentation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../backend-architecture/0-layered-architecture/" class="md-footer__link md-footer__link--next" aria-label="Next: 0. Layered Architecture: Separating Concerns in Software Design">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                0. Layered Architecture: Separating Concerns in Software Design
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
