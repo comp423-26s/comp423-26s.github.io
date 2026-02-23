@@ -1,7 +1,7 @@
 ---
 code: LS14
 title: Testing with Dependency Injection
-date: 2026-02-20
+date: 2026-02-23
 type: lesson
 threads: ["System / Backend"]
 authors: [Kris Jordan]
