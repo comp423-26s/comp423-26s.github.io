@@ -1,0 +1,1835 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/apis/4-http/">
+      
+      
+        <link rel="prev" href="../3-api-design/">
+      
+      
+        <link rel="next" href="../5-api-spec/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Key Concepts in HTTP - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4-key-concepts-in-http" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Key Concepts in HTTP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#http-the-medium-of-modern-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP: The Medium of Modern APIs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HTTP: The Medium of Modern APIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resources-the-nouns-of-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resources: The Nouns of HTTP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-methods-the-verbs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Methods: The Verbs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HTTP Methods: The Verbs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PATCH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-api-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anatomy of API Communication
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anatomy of API Communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-request-client-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Request (Client → Server)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-response-server-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Response (Server → Client)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-response-sequence-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request Response Sequence Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-codes-convey-servers-handling-of-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status Codes Convey Server's Handling of Request
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="4-key-concepts-in-http">4. Key Concepts in HTTP</h1>
+<p>Have you ever wondered how your favorite apps communicate with servers behind the scenes? When you leave a comment on Instagram, how does the server know which post you’re commenting on and what you wrote? In this section, we'll explore how modern software systems communicate via HTTP (Hypertext Transfer Protocol), focusing on APIs (Application Programming Interfaces) and the structure that makes it all work.</p>
+<h2 id="key-terms">Key Terms</h2>
+<p>Understanding these concepts forms the foundation of all API interactions, whether you're building a simple weather app or a complex social media platform.</p>
+<ol>
+<li>
+<p><strong>Sender</strong> (The Client): This is who initiates the communication - like your mobile app or web browser. The client is responsible for:</p>
+<ul>
+<li>Formatting requests correctly</li>
+<li>Managing user interactions</li>
+<li>Handling responses appropriately</li>
+<li>Retrying failed requests when necessary</li>
+</ul>
+</li>
+<li>
+<p><strong>Receiver</strong> (The Server): This processes the request and sends back information. The server’s responsibilities include:</p>
+<ul>
+<li>Validating incoming requests</li>
+<li>Processing data and managing resources</li>
+<li>Ensuring security</li>
+<li>Providing appropriate responses</li>
+</ul>
+</li>
+<li>
+<p><strong>Medium</strong> (The Channel): How the message travels - in modern APIs, this is typically HTTP. The medium:</p>
+<ul>
+<li>Ensures reliable delivery of messages</li>
+<li>Handles connection management</li>
+</ul>
+</li>
+<li>
+<p><strong>Message</strong> (The Request/Response): The actual information being exchanged. Messages must be properly formatted and complete with all necessary information.</p>
+</li>
+<li>
+<p><strong>Feedback</strong> (The Server’s Response): Confirmation that the message was received and processed. Good feedback:</p>
+<ul>
+<li>Confirms success or failure</li>
+<li>Provides helpful error messages</li>
+<li>Returns requested data</li>
+<li>Includes relevant metadata</li>
+</ul>
+</li>
+</ol>
+<p>A common, helpful analogy for APIs at a conceptual level is to think of it like ordering food at a restaurant:</p>
+<ul>
+<li>You (the sender/client) place an order.</li>
+<li>The waiter (the medium) carries the message back to the kitchen.</li>
+<li>Your order (the message) contains what you want.</li>
+<li>The kitchen (the receiver/server) processes it.</li>
+<li>The waiter (the medium) carries the food from the kitchen to you.</li>
+<li>The food arriving (the feedback) confirms your order was received and accurately processed.</li>
+</ul>
+<h2 id="http-the-medium-of-modern-apis">HTTP: The Medium of Modern APIs</h2>
+<p>HTTP provides a standardized way for clients and servers to talk to each other. Understanding HTTP important for any software engineer working with web or mobile applications.</p>
+<h3 id="resources-the-nouns-of-http">Resources: The Nouns of HTTP</h3>
+<p>In HTTP, everything is a resource - think of these as the "things" your API can interact with. Resources are fundamental to REST (Representational State Transfer), the most common architectural style for modern APIs.</p>
+<p>Examples of resources:</p>
+<ul>
+<li>A user profile</li>
+<li>A social media post</li>
+<li>A collection of photos</li>
+<li>A comment thread</li>
+</ul>
+<p>Each resource has its own URL (Uniform Resource Locator). URLs are technically opaque strings, but in real-world applications tend to be structured hierarchically, inspired by directory path strings, like:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1">https://api.instagram.com/users/123/posts/456/comments
+</span></code></pre></div>
+<p>Breaking down this URL:</p>
+<ul>
+<li><code>https://</code>: This is the protocol of the connection (cryptographically secure HTTP)</li>
+<li><code>api.instagram.com</code>: This is the domain that addresses "who" the request is sent to.</li>
+<li><code>users/123</code>: Identifies a specific user.</li>
+<li><code>posts/456</code>: A specific post by that user.</li>
+<li><code>comments</code>: The collection of comments on that post.</li>
+</ul>
+<h3 id="http-methods-the-verbs">HTTP Methods: The Verbs</h3>
+<p>HTTP methods define <strong>what</strong> action you want to perform on a resource. Understanding each method’s purpose and proper use is valuable:</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Method</th>
+<th>Safety</th>
+<th>Idempotency</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>Safe</td>
+<td>Idempotent</td>
+<td>Fetches information without modifying any resources on the server</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>Not Safe</td>
+<td><strong>Not Idempotent</strong></td>
+<td>Creates new resources on the server, with each identical request potentially creating multiple resources</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>Not Safe</td>
+<td>Idempotent</td>
+<td>Completely replaces an existing resource, with repeated identical requests having the same effect</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>Not Safe</td>
+<td>Idempotent</td>
+<td>Partially modifies an existing resource, only updating specified fields</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>Not Safe</td>
+<td>Idempotent</td>
+<td>Removes a resource from the server, with repeated identical requests having the same effect</td>
+</tr>
+</tbody>
+</table>
+<p>Safety in web APIs is like reading a book versus writing in it. When a method is "safe," it means it only reads or looks at data without changing anything on the server - like how reading a book doesn't change its contents. GET is the only safe method since it just retrieves information, while methods like POST, PUT, PATCH, and DELETE are not safe because they modify data on the server, just like how writing in a book changes its contents.</p>
+<p><strong>Idempotency</strong> is about whether doing something multiple times has the same effect as doing it once. <em>It's a <strong>very important</strong> property in many system designs.</em> Think of it like pressing the button at a crosswalk: the second or third time you push it before the lights change has no additional effect (as much as we wish it sped the process up!). Similarly, saving a file many times in a row in your editor does not create multiple files. Importantly, for well implemented online checkout systems, pressing "Complete Purchase" many times does not result in duplicate orders going through. These operations are idempotent. GET, PUT, PATCH, and DELETE are idempotent because repeating the same request <em>should produce</em> you the same result. Contrast this with POST, which is not idempotent, because each request creates something new, like pressing "Download" many times on a website may download multiple copies of the same file.</p>
+<h4 id="get">GET</h4>
+<ul>
+<li>Examples:<ul>
+<li>Viewing a user's profile page</li>
+<li>Retrieving a list of blog posts</li>
+<li>Fetching search results</li>
+</ul>
+</li>
+<li>Common Use Cases:<ul>
+<li>Search operations</li>
+<li>Data retrieval</li>
+<li>Reading resources</li>
+<li>Querying system status</li>
+</ul>
+</li>
+</ul>
+<h4 id="post">POST</h4>
+<ul>
+<li>Examples:<ul>
+<li>Adding a new comment to a blog post</li>
+<li>Creating a new user account</li>
+<li>Uploading a file to a server</li>
+</ul>
+</li>
+<li>Common Use Cases:<ul>
+<li>Form submissions</li>
+<li>File uploads</li>
+<li>Resource creation</li>
+<li>Data processing</li>
+</ul>
+</li>
+</ul>
+<h4 id="put">PUT</h4>
+<ul>
+<li>Examples:<ul>
+<li>Updating an entire user profile</li>
+<li>Replacing a document with a new version</li>
+<li>Setting a complete configuration</li>
+</ul>
+</li>
+<li>Common Use Cases:<ul>
+<li>Full resource updates</li>
+<li>Complete replacements</li>
+<li>Configuration updates</li>
+<li>Version management</li>
+</ul>
+</li>
+</ul>
+<h4 id="patch">PATCH</h4>
+<ul>
+<li>Examples:<ul>
+<li>Updating just a user's email address</li>
+<li>Modifying specific fields in a document</li>
+<li>Updating part of a configuration</li>
+</ul>
+</li>
+<li>Common Use Cases:<ul>
+<li>Partial updates</li>
+<li>Field-specific modifications</li>
+<li>Resource property adjustments</li>
+<li>Incremental changes</li>
+</ul>
+</li>
+</ul>
+<h4 id="delete">DELETE</h4>
+<ul>
+<li>Examples:<ul>
+<li>Removing a comment from a post</li>
+<li>Deleting a user account</li>
+<li>Removing a file from storage</li>
+</ul>
+</li>
+<li>Common Use Cases:<ul>
+<li>Resource removal</li>
+<li>Cleanup operations</li>
+<li>Account deletion</li>
+<li>Content management</li>
+</ul>
+</li>
+</ul>
+<h2 id="anatomy-of-api-communication">Anatomy of API Communication</h2>
+<p>Let’s mock up the big ideas of what happens when you comment on a post on Instagram.</p>
+<h3 id="the-request-client-server">The Request (Client → Server)</h3>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-1-1"><span class="err">POST https://api.instagram.com/posts/12345/comments</span>
+</span><span id="__span-1-2"><span class="err">Content-Type: application/json</span>
+</span><span id="__span-1-3"><span class="err">Authorization: Bearer eyJhbGc...</span>
+</span><span id="__span-1-4">
+</span><span id="__span-1-5"><span class="err">{</span>
+</span><span id="__span-1-6"><span class="err">    &quot;comment&quot;: &quot;Great photo!&quot;,</span>
+</span><span id="__span-1-7"><span class="err">    &quot;timestamp&quot;: &quot;2024-01-26T10:30:00Z&quot;,</span>
+</span><span id="__span-1-8"><span class="err">    &quot;source&quot;: &quot;mobile_app&quot;</span>
+</span><span id="__span-1-9"><span class="err">}</span>
+</span></code></pre></div>
+<p>This is a simple example of the textual "envelope" of an HTTP request contains and what is transmitted over the network from client to server.</p>
+<ul>
+<li>
+<p><strong>Method and URL</strong>: The POST method indicates we’re creating a new comment. The URL specifies exactly which resource (the post) we’re interacting with.</p>
+</li>
+<li>
+<p><strong>Headers</strong>: Headers provide essential metadata. Examples:</p>
+<ul>
+<li><code>Content-Type</code>: Tells the server what format the data is in.</li>
+<li><code>Authorization</code>: Proves who you are (usually a token).</li>
+</ul>
+</li>
+<li>
+<p><strong>Body</strong>: Contains additional data about the request. In this case, it includes the comment text, the source of the action, and a timestamp.</p>
+</li>
+</ul>
+<h3 id="the-response-server-client">The Response (Server → Client)</h3>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-2-1"><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+</span><span id="__span-2-2"><span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</span><span id="__span-2-3"><span class="na">Cache-Control</span><span class="o">:</span> <span class="l">no-cache</span>
+</span><span id="__span-2-4">
+</span><span id="__span-2-5"><span class="p">{</span>
+</span><span id="__span-2-6"><span class="w">    </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-2-7"><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Comment added successfully&quot;</span><span class="p">,</span>
+</span><span id="__span-2-8"><span class="w">    </span><span class="nt">&quot;comment_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">789</span><span class="p">,</span>
+</span><span id="__span-2-9"><span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-26T10:30:01Z&quot;</span>
+</span><span id="__span-2-10"><span class="p">}</span>
+</span></code></pre></div>
+<p>Key components explained:</p>
+<ul>
+<li>
+<p><strong>Status Line</strong>: Indicates the HTTP version, status code (201 Created), and a brief status message. We will look at status codes in more depth shortly.</p>
+</li>
+<li>
+<p><strong>Headers</strong>: Includes metadata about the response. Examples:</p>
+<ul>
+<li><code>Content-Type</code>: Format of the response (JSON).</li>
+<li><code>Cache-Control</code>: Instructions for how clients should cache the response (or not!)</li>
+</ul>
+</li>
+<li>
+<p><strong>Body</strong>: Contains the actual response data, confirming the action was successful and providing additional context (e.g., the new comment ID).</p>
+</li>
+</ul>
+<h3 id="request-response-sequence-diagram">Request Response Sequence Diagram</h3>
+<p>The above request, response flow can be visualized as follows:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant App as Instagram App (Client)
+    participant Server as Instagram Server
+
+    Note over App: User Leaves a Comment
+    App-&gt;&gt;Server: POST /posts/12345/comments
+    Note over Server: Comment Saved Successfully
+    Server--&gt;&gt;App: 201 Created (Success!)
+    Note over App: Comment Shows as Saved </code></pre>
+<p>This diagram shows:</p>
+<ol>
+<li>The client sending the comment to the server.</li>
+<li>The server processing the comment.</li>
+<li>A success response being returned to the client.</li>
+</ol>
+<h2 id="status-codes-convey-servers-handling-of-request">Status Codes Convey Server's Handling of Request</h2>
+<p>When the server sends a response, the response starts with a status code. You've seen these in the wild: <code>404 Not Found</code> or <code>500 Internal Server Error</code>. There is an intention design to these "century" numberings. Responses within each 100-level range share something in common.</p>
+<ul>
+<li>
+<p><strong>Informational (1xx)</strong>: These are rarely used by API developers and are more for lower-level connection handling.</p>
+<ul>
+<li>101 Switching Protocols: Used when an HTTP connection is upgraded to a WebSocket connection.</li>
+</ul>
+</li>
+<li>
+<p><strong>Success (2xx)</strong>: Indicates that the request was successfully processed by the server.</p>
+<ul>
+<li>200 OK: Request succeeded.</li>
+<li>201 Created: Resource was created successfully.</li>
+</ul>
+</li>
+<li>
+<p><strong>Redirection (3xx)</strong>: Indicates the client needs to take additional action to complete their request.</p>
+<ul>
+<li>301 Moved Permanently: The resource has permanently moved to a new URL.</li>
+<li>302 Found: The resource is temporarily at a different URL.</li>
+<li>307 Temporary Redirect: Like 302, but the request method must not change.</li>
+</ul>
+</li>
+<li>
+<p><strong>Client Errors (4xx)</strong>: Indicates there is something wrong with what the client sending the request is requesting.</p>
+<ul>
+<li>400 Bad Request: Invalid syntax or parameters.</li>
+<li>401 Unauthorized: The request could not be authenticated to a user or the user no longer exists.</li>
+<li>403 Forbidden: The user making the request does not have permission to perform the requested action.</li>
+<li>404 Not Found: Resource doesn’t exist.</li>
+</ul>
+</li>
+<li>
+<p><strong>Server Errors (5xx)</strong>: Indicates an error happened on the server's end but the problem was not the client's fault.</p>
+<ul>
+<li>500 Internal Server Error: Unexpected server error.</li>
+</ul>
+</li>
+</ul>
+<p>Now that you have a handle on the fundamental concepts of what comprises an HTTP request, we'll take at modern conventions and best practices for designing APIs with these concepts and following best practices.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../3-api-design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Human Communication and API Design: A Shared Foundation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Human Communication and API Design: A Shared Foundation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../5-api-spec/" class="md-footer__link md-footer__link--next" aria-label="Next: Toward Designing and Formally Specifying APIs">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Toward Designing and Formally Specifying APIs
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

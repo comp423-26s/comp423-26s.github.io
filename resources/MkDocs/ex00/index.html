@@ -1,0 +1,1846 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/MkDocs/ex00/">
+      
+      
+        <link rel="prev" href="../../syllabus/">
+      
+      
+        <link rel="next" href="../tutorial/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>EX00 - Collaborating on Technical Documentation - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ex00-collaborating-on-technical-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              EX00 - Collaborating on Technical Documentation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Expectations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deliverable-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deliverable Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deliverable Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-anti-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tutorial Anti-patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup-partner-repository-access-and-main-ruleset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Setup: Partner Repository Access and main Ruleset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial Setup: Partner Repository Access and main Ruleset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-repository-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up Repository Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protecting-your-repository-with-rulesets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protecting Your Repository with Rulesets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloning-your-partners-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloning Your Partner's Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pay-attention-to-which-project-you-are-working-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pay Attention To Which Project You Are Working On
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#direct-git-collaboration-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Direct Git Collaboration Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Direct Git Collaboration Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#do-all-of-your-work-in-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do All of Your Work in Branches!
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#share-your-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Share Your Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reviewing-partners-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reviewing Partner's Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merging-a-partners-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merging a Partner's Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-lesson-04-practice-exchange" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Lesson 04 - Practice Exchange
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assignment Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-material-for-mkdocs-features-to-enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Material for MkDocs Features to Enable
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-content-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tutorial Content Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#need-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Need Help?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#go-tutorial-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Go Tutorial Expectations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rust-tutorial-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rust Tutorial Expectations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ex00-collaborating-on-technical-documentation">EX00 - Collaborating on Technical Documentation</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>Welcome to your first pair project! This exercise aims to build your skills in several key areas:</p>
+<ul>
+<li><strong>Starting Projects</strong>: Learn how to create a new project using today’s development tools and be empowered to start your own!</li>
+<li><strong>Using Technical Documentation</strong>: Get better at finding, reading, and using guides and manuals to achieve your goals on your own.</li>
+<li><strong>Writing Technical Documentation</strong>: Improve at writing clear instructions for others on how to do technical tasks.</li>
+<li><strong>Teamwork with Git</strong>: Develop your ability to work with others using git, focusing on how to manage changes and updates in your work effectively.</li>
+</ul>
+<h2 id="workflow-expectations">Workflow Expectations</h2>
+<p>We are prescribing, and <mark>grading on</mark>, some very specific workflow expectations in this exercise:</p>
+<ul>
+<li><mark>All merges in this exercise must produce merge commits</mark>, thus always use the <code>--no-ff</code> flag when merging in this exercise. The <code>git merge --no-ff &lt;source-branch&gt;</code> command is short for <em>no fast-forward</em> and produces a merge commit where fast-forwarding was otherwise possible. This is how we will see your history of branch use.</li>
+<li>Before merging locally, be sure you have pushed your branch to your repository.</li>
+<li>Only <em>you</em> are permitted to merge into <code>main</code> on your own repository. You can push branches to your partner's repository.</li>
+<li>We will <mark>NOT</mark> use Pull Requests yet in order to apply our understanding of <code>git</code>'s fundamental collaboration commands (<code>fetch</code>, <code>branch</code>, <code>switch</code>, <code>merge</code>, <code>pull</code>, and <code>push</code>)</li>
+</ul>
+<h2 id="deliverable-overview">Deliverable Overview</h2>
+<p>You and your partner will work together to produce:</p>
+<ol>
+<li><strong>Tutorial Guides</strong> (50 points): Each of you will write a tutorial for setting up a basic project from scratch, one of you for the Go programming language and the other for the Rust programming language. You’ll publish your guide on your personal MkDocs site. Your partner will help by reviewing and suggesting improvements to your guide.<ul>
+<li>20 points - Well fomatted markdown and use of appropriate MkDocs for Material features (e.g. text formatting, bullets/enumerations where meaningful, subheadings, code blocks, and admonitions). Hint: <a href="https://www.markdownguide.org/basic-syntax/">Markdown reference</a>.</li>
+<li>30 points - Tutorial includes required components (brief intro, git repo setup, dev container setup, initialize a project, add a hello world example, compile and run)</li>
+</ul>
+</li>
+<li><strong>Project Repositories</strong> (20 points): Host the starter projects resulting from your tutorials on GitHub and make them public. Project repositories will need a <code>README.md</code> in the root directory that link out to your tutorial on your course notes site.</li>
+<li><strong>EX00 Git Workflow Adherence</strong> (30 points): You will be asked to show how you followed the specific <code>git</code> workflow expectations we have in this exercise. This will be preserved in your <code>git</code> repository's history (e.g. via <code>log</code>) and we will show you how to share it via your GitHub repository. <mark>Read Workflow Expectations Above BEFORE Beginning!</mark></li>
+</ol>
+<h3 id="tutorial-anti-patterns">Tutorial Anti-patterns</h3>
+<ul>
+<li>Besides VSCode, Docker, and git, users should <strong>not</strong> install any software directly to their host machine. That is the role of the dev container! (Instructions which install Go or Rust to the host machine will be a -25pt penalty.)</li>
+<li>When compiling Go or Rust in the Dev Container, since it is running Linux, you do not expect to see <code>.exe</code> file extensions anywhere in this project. That is a sign you are running something on the host machine.</li>
+</ul>
+<h2 id="initial-setup-partner-repository-access-and-main-ruleset">Initial Setup: Partner Repository Access and <code>main</code> Ruleset</h2>
+<p>You need to give your partner access to your repository and get access to theirs.</p>
+<h3 id="setting-up-repository-access">Setting Up Repository Access</h3>
+<p>Navigate to <em>your</em> <code>comp423-course-notes</code> repository on GitHub (the one you created in the previous tutorial) and follow these steps:</p>
+<ol>
+<li>Go to Settings &gt; Collaborators</li>
+<li>Click "Add people"</li>
+<li>Enter your partner's GitHub username</li>
+<li>Select their account and send the invitation</li>
+</ol>
+<p>Your partner will need to accept the invitation via email or through GitHub's interface before they can contribute to your repository. Make sure you both complete this step before proceeding.</p>
+<h3 id="protecting-your-repository-with-rulesets">Protecting Your Repository with Rulesets</h3>
+<p>Even though you've added your partner as a collaborator, you'll want to protect your <code>main</code> branch through a ruleset. Rulesets are GitHub's approach to repository security, allowing you to define who can make what kinds of changes to your codebase. Let's set up a simple one and understand what each setting does.</p>
+<p>Navigate to your repository's Settings page on GitHub and follow these steps:</p>
+<ol>
+<li>Click on "Rules" &gt; "Rulesets" in the left sidebar under "Code and automation"</li>
+<li>Click "New ruleset" &gt; "New branch ruleset" to create a ruleset</li>
+<li>Configure your ruleset with these settings:</li>
+</ol>
+<p><strong>Basic Settings:</strong></p>
+<ul>
+<li>Name your ruleset <code>main</code> </li>
+<li>For "Enforcement status," select "Active"</li>
+<li>Bypass list: Add "Repository admin" (this is you, the repository owner)</li>
+<li>Under "Target branches" choose "Add target" and select "Include default branch" (this is <code>main</code>)</li>
+</ul>
+<p><strong>Rules:</strong></p>
+<ul>
+<li>Enable "Restrict creations"</li>
+<li>Enable "Restrict updates"</li>
+<li>Leave everything else as is. The following two settings should be checked by default:<ul>
+<li>Enable "Restrict deletions"</li>
+<li>Block force pushes</li>
+</ul>
+</li>
+</ul>
+<p>Let's understand what each of these settings means and why they're important:</p>
+<p><strong>Targeting the Default Branch:</strong> Your default branch (in your project, this is <code>main</code>) is the primary branch of your repository.</p>
+<p><strong>Restrict Creations, Updates, and Deletions:</strong> These three settings work together to control who can make changes to your default branch. When enabled, only people in the bypass list (in this case, just you) can create new commits on the primary branch, update existing commits, overwrite the branch (force push) or delete the branch entirely.</p>
+<p>These rules reflect a simplified real-world setup. Your partner can create branches, make changes, and push their branches to share with you - they just can't modify the protected <code>main</code> branch directly. That's your job!</p>
+<h3 id="cloning-your-partners-repository">Cloning Your Partner's Repository</h3>
+<p>Since you already have your own repository set up locally from the previous tutorial, you just need to clone your partner's repository. Because both repositories have the same name, you'll want to specify a different directory name when cloning to avoid conflicts. The target directory name is added as an extra command-line argument following the repository URL:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><span class="c1"># Clone your partner&#39;s repository with a descriptive directory name</span>
+</span><span id="__span-0-2">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;partner&gt;/comp423-course-notes.git<span class="w"> </span>partner-notes
+</span></code></pre></div>
+<p>After cloning, open your partner's notes site in the new directory in VS Code and then reopen the workspace in a dev container, just as you did with your own repository in the previous tutorial.</p>
+<h3 id="pay-attention-to-which-project-you-are-working-on">Pay Attention To <em>Which</em> Project You Are Working On</h3>
+<p>When working on this exercise, be sure you know whose project repository you are working in! In this exercise each of you owns your own repository and will be practicing contributing to your partner's repository.</p>
+<p>As a rule of thumb, when returning to work in VS Code, go to your "File" menu, "Open Recent", and select the directory with "[Dev Container]" that you intend to work on. If you're already in it, nothing happens. If you're switching between projects, your the new dev container will open.</p>
+<p>Finally, it is possible to have both dev containers running simultaneously. However, <mark>you cannot have both MkDocs dev servers available simultaneously on the same port</mark>. The most straightforward way around this is to start <code>mkdocs serve</code> with the <code>-a</code> (address) flag and provide an alternate port (e.g. <code>mkdocs serve -a localhost:4230</code>). In the event you forget to to do this, Docker will try to avoid the conflict by forwarding a different port on your host machine to your container port. To see these mappings in VS Code, go to the Ports tab (typically next to Terminal) or open up the Command Palatte and search for Focus on Ports View. Look for the forwarded address.</p>
+<h2 id="direct-git-collaboration-workflow">Direct Git Collaboration Workflow</h2>
+<p>In this exercise, you will rely on Git's fundamental commands to share and integrate changes. This approach helps you practice your understanding of Git's branching model. Here's the basic flow:</p>
+<ol>
+<li>You work on changes in your own repository</li>
+<li>Your partner clones your repository, makes suggestions in a branch, and they push their branch to your repo</li>
+<li>You fetch their suggestions locally and switch to their branch to consider the work</li>
+<li>After reviewing and testing, you merge changes into your <code>main</code> branch (with <code>--no-ff</code> to preserve the history!)</li>
+<li>You push the updated <code>main</code> branch back to GitHub to deploy your site</li>
+</ol>
+<p>This workflow requires careful coordination and communication between team members and a solid understanding of Git's core commands. Let's explore how to use these commands effectively.</p>
+<h3 id="do-all-of-your-work-in-branches">Do All of Your Work in Branches!</h3>
+<p>Always create a new branch for work you're about to embark upon:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><span class="c1"># Do you have any uncommitted work?</span>
+</span><span id="__span-1-2"><span class="c1">#     Yes? Decide what to do with it!</span>
+</span><span id="__span-1-3"><span class="c1">#     No? Great!</span>
+</span><span id="__span-1-4"><span class="c1"># Are you on the right starting branch for new work?</span>
+</span><span id="__span-1-5"><span class="c1">#     No? switch to where you want to branch from (usually main)</span>
+</span><span id="__span-1-6"><span class="c1">#     Yes? Great!</span>
+</span><span id="__span-1-7">git<span class="w"> </span>status
+</span><span id="__span-1-8">
+</span><span id="__span-1-9"><span class="c1"># Create and switch to a new branch with a meaningful name</span>
+</span><span id="__span-1-10"><span class="c1"># Of course, substitute &lt;meaningful-name&gt; with something... meaningful</span>
+</span><span id="__span-1-11">git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>&lt;meaningful-name&gt;
+</span><span id="__span-1-12">
+</span><span id="__span-1-13"><span class="c1"># As you work, commit regularly with meaningful messages</span>
+</span><span id="__span-1-14">git<span class="w"> </span>add<span class="w"> </span>&lt;directory<span class="w"> </span>or<span class="w"> </span>file<span class="o">(</span>s<span class="o">)</span>&gt;
+</span><span id="__span-1-15">git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;&lt;message&gt;&quot;</span>
+</span></code></pre></div>
+<h3 id="share-your-work">Share Your Work</h3>
+<p>When ready to share your changes for your partner to check out:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><span class="c1"># Push your meaningfully named branch to GitHub</span>
+</span><span id="__span-2-2"><span class="c1"># Note: Use the same branch name locally as remotely!</span>
+</span><span id="__span-2-3">git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>&lt;meaningful-name&gt;
+</span></code></pre></div>
+<p>Go convince yourself the branch push worked by opening GitHub, clicking the Branch Dropdown (it should show <code>main</code>) and selecting your branch. Let your partner know the branch you shared by its name and/or by sharing a link directly to the branch on Github.</p>
+<h3 id="reviewing-partners-work">Reviewing Partner's Work</h3>
+<p>When your partner has pushed changes for review, open your copy of your partner's dev container project and then:</p>
+<ol>
+<li>
+<p>Fetch the latest changes from the project's repository:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1">git<span class="w"> </span>fetch<span class="w"> </span>origin
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Switch to the branch they just pushed
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1">git<span class="w"> </span>switch<span class="w"> </span>&lt;branch-name-partner-pushed&gt;
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Review their changes locally, running their tutorial to verify it works. If you'd like to see the specific changes made relative to your <code>main</code> branch, or any other branch, you can use the <code>diff</code> subcommand of <code>git</code>:</p>
+</li>
+<li>In the terminal: <code>git diff main</code> - press <code>Space</code> to move forward page-by-page and <code>q</code> to exit. The diff shows additions (in green) and removals (in red).</li>
+<li>
+<p>On GitHub: View the branch, look for the Contribute button drop down, click it and <strong>select Compare</strong> (<em>not</em> Pull Request). You will see a <em>diff</em> of the changes.</p>
+</li>
+<li>
+<p>To make your own suggested edits to their work, go ahead and start a branch:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1">git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>edits/&lt;branch-name-partner-pushed&gt;
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Make your changes, add commit(s) with meaningful commit messages, then push your edits:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1">git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>edits/&lt;branch-name-partner-pushed&gt;
+</span></code></pre></div></p>
+</li>
+</ol>
+<p>Let your partner know the name of the branch you pushed edits to their work on.</p>
+<h3 id="merging-a-partners-changes">Merging a Partner's Changes</h3>
+<p>Ready to review the edits your partner pushed to your repo? Be sure you have your dev container open, then follow the same steps as <em>reviewing partner work</em> above, but use the branch name they pushed.</p>
+<p>Once you're ready to merge their work into your branch, or <code>main</code>, or your own work into <code>main</code>, the steps are as you already know with one minor twist: <strong>for this exercise, always use the <code>--no-ff</code> flag to preserve the merge history</strong>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><span class="c1"># First, switch to the target branch you&#39;re merging into</span>
+</span><span id="__span-7-2">git<span class="w"> </span>switch<span class="w"> </span>&lt;target<span class="w"> </span>branch&gt;
+</span><span id="__span-7-3">
+</span><span id="__span-7-4"><span class="c1"># Best practice: be sure your branch is up-to-date</span>
+</span><span id="__span-7-5">git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>&lt;target<span class="w"> </span>branch&gt;
+</span><span id="__span-7-6">
+</span><span id="__span-7-7"><span class="c1"># Merge your source branch and force a merge commit </span>
+</span><span id="__span-7-8">git<span class="w"> </span>merge<span class="w"> </span>--no-ff<span class="w"> </span>&lt;<span class="nb">source</span><span class="w"> </span>branch<span class="w"> </span>being<span class="w"> </span>merged<span class="w"> </span><span class="k">in</span>&gt;
+</span><span id="__span-7-9">
+</span><span id="__span-7-10"><span class="c1"># Push the merged changes to GitHub</span>
+</span><span id="__span-7-11">git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>&lt;target<span class="w"> </span>branch&gt;
+</span></code></pre></div>
+<h2 id="class-lesson-04-practice-exchange">Class Lesson 04 - Practice Exchange</h2>
+<p>Decide which of you will do a tutorial on Go and the other on Rust. If your partner is not in class, you get first dibs on either!</p>
+<ol>
+<li>Create and switch to a branch in your project named <code>mt04-setup</code></li>
+<li>Create a directory named <code>docs/tutorials</code></li>
+<li>Add a file named <code>docs/tutorials/rust-setup.md</code> or <code>docs/tutorials/go-setup.md</code>, whichever you are going to be working on, with the following contents:
+   <div class="language-markdown highlight"><pre><span></span><code><span id="__span-8-1"><span class="gh"># Setting up a dev container for &lt;Insert: Go or Rust depending on which you are doing&gt;</span>
+</span><span id="__span-8-2">
+</span><span id="__span-8-3"><span class="k">*</span><span class="w"> </span>Primary author: [<span class="nt">&lt;Your Name&gt;</span>](<span class="na">https://YourGitHubProfileLink</span>)
+</span></code></pre></div></li>
+<li>Verify your work in your local development server (<code>mkdocs serve</code>)</li>
+<li>Push the branch to your repo (see Share Your Work above)</li>
+<li>Let your partner know and they should follow the steps of Reviewing Partner's Work (above)</li>
+<li>Your partner should create a new branch named <code>edits/mt04-setup</code> and add the following changes to your setup markdown file below the primary author line:
+   <div class="language-markdown highlight"><pre><span></span><code><span id="__span-9-1"><span class="k">*</span><span class="w"> </span>Reviewer: [<span class="nt">&lt;Partner name&gt;</span>](<span class="na">https://PartnerGithubProfileLink</span>)
+</span></code></pre></div></li>
+<li>Your partner should commit and push <em>their</em> branch to your repo</li>
+<li>You should fetch changes, then switch to their branch and see their contribution</li>
+<li>You should switch back to your work branch (<code>mt04-setup</code>) and merge their work in with <code>--no-ff</code>. Then push to your <code>mt04-branch</code>.</li>
+<li>You should switch back to your <code>main</code> branch and merge your work in <code>mt04-setup</code> with <code>--no-ff</code>. Then push your main branch. Your site should publish successfully with these changes!</li>
+</ol>
+<p>Review the commit graph history: </p>
+<ol>
+<li>In your dev container terminal <code>git log --graph --oneline</code> and notice the merge commits and where branches are.</li>
+<li>In your GitHub repository, go to the Insights tab, select Network. You should see your commit graph with tags here.</li>
+</ol>
+<p>Ultimately, when proving that you are following the workflow expectations with your partner for this assignment, you will submit a screenshot of these graphs as a record of the branches and merges made.</p>
+<h2 id="assignment-structure">Assignment Structure</h2>
+<p>You and your partner will each create a tutorial about setting up a new DevContainer project. One of you will focus on Go, while the other will work on Rust. Here's how to organize the work:</p>
+<ol>
+<li>Update your <code>mkdocs.yml</code> to include the required markdown features. You can enable whatever other features you would like, too!</li>
+<li>Write your tutorial in either <code>docs/tutorials/go-setup.md</code> or <code>docs/tutorials/rust-setup.md</code> (one per team mate course notes site)</li>
+<li>Share your tutorial branch with your team mate, they should follow along and add helpful additions, corrections, or suggestiosn along the way. They will push their brach back to your repo.</li>
+<li>You iterate off of their pushed branch and incorporate back into your work.</li>
+<li>You finalize your tutorial and merge into <code>main</code></li>
+<li>You follow your tutorial from start to finish and publish the resulting repository in a public repo on your GitHub account. Its <code>README.md</code> should link back to your course notes site's tutorial.</li>
+</ol>
+<h2 id="required-material-for-mkdocs-features-to-enable">Required Material for MkDocs Features to Enable</h2>
+<p>Before diving head first into your tutorial, there are a few helpful markdown features to enable in Material for MkDocs with your partner. Find how to enable these on the <a href="https://squidfunk.github.io/mkdocs-material/">official website</a>. Hint: try searching! Once you find reference for a particular feature, look at the sidebar for both configuration and usage examples.</p>
+<p>Start a branch for <code>mkdocs-extensions</code> and enable the following features. After enabling each feature, try adding an example of how to use them in markdown to your tutorial draft.</p>
+<p><mark>Workflow Expectation</mark>: You setup code blocks in the branch. Your partner will check out your work and then incorporate admonitions in a branch off of your branch. You will then be responsible for merging all and pushing. If you've already individually enabled both features, let your partner find another feature to enable on your site (and do the same in exchange)!</p>
+<ol>
+<li>Code Blocks - for syntax highlighting of code</li>
+<li>Admonitions - for useful call-outs to draw attention to ideas or asides</li>
+</ol>
+<h2 id="tutorial-content-requirements">Tutorial Content Requirements</h2>
+<p>Your tutorials should include:</p>
+<ol>
+<li>Prerequisites</li>
+<li>Step-by-step instructions for creating a new Dev Container project for your language</li>
+<li>Should start from a blank directory and include git initialization</li>
+<li>Dev Container configuration file explanations</li>
+<li>Steps to create a new project, write a basic "Hello COMP423" program, compile, and run</li>
+<li>The program's requirement is that it simply prints "Hello COMP423" out to standard output</li>
+</ol>
+<p>Make use of Material for MkDocs features to enhance your documentation:</p>
+<ul>
+<li>Code blocks with syntax highlighting for configuration files and commands</li>
+<li>Admonitions for important notes and warnings</li>
+</ul>
+<p>You can cite and reuse instructions from the 423 MkDocs tutorial if useful.</p>
+<h2 id="need-help">Need Help?</h2>
+<ul>
+<li>If you encounter Git issues, try running <code>git status</code> and <code>git log</code> to understand your current state</li>
+<li>When in doubt, communicate with your partner about the current state of changes</li>
+<li>For language-specific questions, consult the official language documentation and Google</li>
+<li><a href="https://go.dev/doc/">Go</a> documentation</li>
+<li><a href="https://www.rust-lang.org/learn">Rust</a> / <a href="https://doc.rust-lang.org/cargo/guide/creating-a-new-project.html">Cargo</a> documentation</li>
+</ul>
+<p>Remember to commit early and often, and always use the <code>--no-ff</code> flag when merging to maintain a clear history of collaboration.</p>
+<h2 id="go-tutorial-expectations">Go Tutorial Expectations</h2>
+<ul>
+<li>Dev container should use a base image from Microsoft (Hint: refer back to the MkDocs tutorial)</li>
+<li>Be sure the Dev Container Installs the official Go VSCode Plugin (Made by the Go Team at Google)</li>
+<li>Show the <code>go version</code> subcommand to prove a recent version of Go</li>
+<li>Use the <code>mod</code> subcommand</li>
+<li>Use the <code>run</code> subcommand</li>
+<li>Use the <code>build</code> subcommand (discuss this in the context of COMP211's <code>gcc</code> command), run the built binary directly, and discuss the difference from <code>run</code></li>
+</ul>
+<h2 id="rust-tutorial-expectations">Rust Tutorial Expectations</h2>
+<ul>
+<li>Dev container should use a base image from Microsoft (Hint: refer back to the MkDocs tutorial)</li>
+<li>Be sure the Dev Container Installs the official <code>rust-analyzer</code> VSCode plugin by the Rust Programming Language Group</li>
+<li>Show the <code>rustc --version</code> to prove a recent version of rust</li>
+<li>Use the <code>cargo new</code> command to create a binary project (use the flag that does not create a new <code>git</code> repository automatically on your behalf: <code>--vcs none</code> (Version Control System))</li>
+<li>Use the <code>cargo build</code> command and show how to run the built file (discuss in terms of COMP211's <code>gcc</code> command)</li>
+<li>Use the <code>cargo run</code> subcommand and discuss difference with <code>build</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../syllabus/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Course Syllabus">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Course Syllabus
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: Starting a Static Website Project with MkDocs">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Starting a Static Website Project with MkDocs
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1741 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/frontend/3-event-driven/">
+      
+      
+        <link rel="prev" href="../2-typescript/">
+      
+      
+        <link rel="next" href="../../project-management/wireframes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Introduction to Event-Driven Programming in TypeScript - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-to-event-driven-programming-in-typescript" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to Event-Driven Programming in TypeScript
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#function-definitions-and-arrow-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Function Definitions and Arrow Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Function Definitions and Arrow Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#short-hand-arrow-function-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short-Hand Arrow Function Syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functional-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functional Interfaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functional Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-is-this-a-functional-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why is this a Functional Interface?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-function-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding Function Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type Inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#higher-order-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Higher-Order Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Higher-Order Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#higher-order-function-example-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Higher-order Function Example: map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-a-custom-map-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing a Custom map Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-pass-functions-around" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Pass Functions Around?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-event-driven-asynchrony" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction to Event-Driven Asynchrony
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to Event-Driven Asynchrony">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-asynchrony" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Asynchrony?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promises-and-fetch-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promises and Fetch API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Promises and Fetch API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#understanding-chained-methods-and-fluent-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding Chained Methods and Fluent APIs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow Explanation:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-promise-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding the Promise State Machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asyncawait" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async/Await
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-use-asyncawait" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Use Async/Await?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-the-connection-to-promises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding the Connection to Promises
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="introduction-to-event-driven-programming-in-typescript">Introduction to Event-Driven Programming in TypeScript</h1>
+<h2 id="function-definitions-and-arrow-functions">Function Definitions and Arrow Functions</h2>
+<p>As a refresher from the previous reading, in TypeScript, functions are first-class citizens, meaning they can be assigned to variables, passed as arguments, and returned from other functions. One of the most common ways to define functions concisely is using <strong>arrow functions</strong>.</p>
+<p>Here’s a simple example:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-0-1"><span class="kd">const</span><span class="w"> </span><span class="nx">square</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span>
+</span><span id="__span-0-3"><span class="p">};</span>
+</span></code></pre></div>
+<ul>
+<li>The function takes a parameter <code>x</code> of type <code>number</code>.</li>
+<li>It returns a <code>number</code>.</li>
+<li>The function itself is stored in a variable <code>square</code>, which holds a reference to the function definition.</li>
+</ul>
+<h3 id="short-hand-arrow-function-syntax">Short-Hand Arrow Function Syntax</h3>
+<p>For functions whose bodies consist of a single return statement, like the <code>square</code> function, JavaScript and TypeScript provide a shorthand syntax:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-1-1"><span class="kd">const</span><span class="w"> </span><span class="nx">square</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span>
+</span></code></pre></div>
+<p>This is still a <strong>full function definition</strong>! It simply omits the curly braces and <code>return</code> keyword to make the code more concise. This form is often used in functional programming and for inline callbacks.</p>
+<h2 id="functional-interfaces">Functional Interfaces</h2>
+<p>In TypeScript, we can define an interface that represents a function type. This makes our code more structured and provides strong type-checking. Unlike an object-oriented interface, a functional interface does not name the methods it supports; it simply defines a function signature that any matching function can satisfy.</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-2-1"><span class="kd">interface</span><span class="w"> </span><span class="nx">UnaryFunction</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><span class="w">    </span><span class="p">(</span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+</span><span id="__span-2-3"><span class="p">}</span>
+</span><span id="__span-2-4">
+</span><span id="__span-2-5"><span class="kd">const</span><span class="w"> </span><span class="nx">squareFunction</span><span class="o">:</span><span class="w"> </span><span class="kt">UnaryFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="why-is-this-a-functional-interface">Why is this a Functional Interface?</h3>
+<p>The key distinction between a <strong>functional interface</strong> and a traditional <strong>object-oriented interface</strong> is that a functional interface does not define named methods; instead, it only specifies a function signature. This means that any function conforming to the parameter and return types can be assigned to a variable of this type.</p>
+<h3 id="understanding-function-types">Understanding Function Types</h3>
+<p>A function’s type is determined by the combination of its <strong>parameter types</strong> and <strong>return type</strong>. This is intuitive because if two functions agree on these types, they can be used interchangeably in function call expressions without breaking type safety.</p>
+<p>For example, consider:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-3-1"><span class="kd">const</span><span class="w"> </span><span class="nx">double</span><span class="o">:</span><span class="w"> </span><span class="kt">UnaryFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
+</span><span id="__span-3-2"><span class="kd">const</span><span class="w"> </span><span class="nx">negate</span><span class="o">:</span><span class="w"> </span><span class="kt">UnaryFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">-</span><span class="nx">x</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Since <code>double</code> and <code>negate</code> both conform to the <code>UnaryFunction</code> signature, we can substitute one for the other in any context where a <code>UnaryFunction</code> is expected, and TypeScript will still type-check correctly.</p>
+<p>This principle of substitutability ensures that TypeScript maintains strong type safety while allowing flexibility in function-based programming paradigms.</p>
+<h3 id="type-inference">Type Inference</h3>
+<p>A modern feature of TypeScript is <strong>type inference</strong>, which allows the compiler to automatically determine types based on context. Since the type of function variables like <code>double</code> and <code>negate</code> is explicitly defined, TypeScript can infer and enforce the correct parameter and return types without needing additional annotations.</p>
+<p>This provides <strong>the best of both worlds</strong>: full type safety while reducing the effort required to redundantly specify types that can be inferred.</p>
+<h2 id="higher-order-functions">Higher-Order Functions</h2>
+<p>A <strong>higher-order function</strong> is a function that takes another function as an argument or returns a function. This allows us to write more flexible and reusable code by parameterizing behavior.</p>
+<h3 id="higher-order-function-example-map">Higher-order Function Example: <code>map</code></h3>
+<p>Before diving into the code, let’s break down <code>map</code> in English. Imagine you have a list of numbers, and you want to apply a specific operation—like squaring each number—to every element. One way to do this is with a loop, applying the operation to each item manually. But what if you want to apply different operations, such as doubling or taking the absolute value? Instead of writing separate loops for each case, we can use <code>map</code> to generalize the process.</p>
+<p>The <code>map</code> function takes an array and a function as arguments. It applies the function to each element of the array and returns a new array with the transformed values. This lets us reuse <code>map</code> with any function we choose, making our code more modular and expressive.</p>
+<h3 id="implementing-a-custom-map-function">Implementing a Custom <code>map</code> Function</h3>
+<p>Here's an example of how we might implement <code>map</code> from scratch in TypeScript:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-4-1"><span class="kd">const</span><span class="w"> </span><span class="nx">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">arr</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">[],</span><span class="w"> </span><span class="nx">func</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">num</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">[]</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+</span><span id="__span-4-3"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">num</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><span class="w">        </span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">func</span><span class="p">(</span><span class="nx">num</span><span class="p">));</span>
+</span><span id="__span-4-5"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-6"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span><span class="p">;</span>
+</span><span id="__span-4-7"><span class="p">};</span>
+</span><span id="__span-4-8">
+</span><span id="__span-4-9"><span class="kd">const</span><span class="w"> </span><span class="nx">square</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span>
+</span><span id="__span-4-10">
+</span><span id="__span-4-11"><span class="kd">const</span><span class="w"> </span><span class="nx">numbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="mf">4</span><span class="p">];</span>
+</span><span id="__span-4-12"><span class="kd">const</span><span class="w"> </span><span class="nx">squaredNumbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">map</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span><span class="w"> </span><span class="nx">square</span><span class="p">);</span>
+</span><span id="__span-4-13"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">squaredNumbers</span><span class="p">);</span><span class="w"> </span><span class="c1">// [1, 4, 9, 16]</span>
+</span></code></pre></div>
+<h3 id="why-pass-functions-around">Why Pass Functions Around?</h3>
+<p>The ability to pass functions as arguments gives us powerful ways to structure our code. Instead of defining heavyweight classes or duplicating logic, we can simply pass different behaviors into a function like <code>map</code> to get the desired result. This keeps our code cleaner and more flexible.</p>
+<p>For example, we can easily swap out the function to apply different transformations:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-5-1"><span class="kd">const</span><span class="w"> </span><span class="kr">double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
+</span><span id="__span-5-2"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span><span class="w"> </span><span class="kr">double</span><span class="p">));</span><span class="w"> </span><span class="c1">// [2, 4, 6, 8]</span>
+</span><span id="__span-5-3">
+</span><span id="__span-5-4"><span class="kd">const</span><span class="w"> </span><span class="nx">absolute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+</span><span id="__span-5-5"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">map</span><span class="p">([</span><span class="o">-</span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">3</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">4</span><span class="p">],</span><span class="w"> </span><span class="nx">absolute</span><span class="p">));</span><span class="w"> </span><span class="c1">// [1, 2, 3, 4]</span>
+</span></code></pre></div>
+<p>By using higher-order functions, we reduce redundancy and make our programs more expressive, letting us focus on the <em>what</em> rather than the <em>how</em>. This approach is at the core of functional programming and leads to more readable and maintainable code.</p>
+<h2 id="introduction-to-event-driven-asynchrony">Introduction to Event-Driven Asynchrony</h2>
+<p>Most modern web applications rely on event-driven programming to handle user interactions and network requests efficiently. Imagine clicking a button in a web app that triggers a network request to fetch data. If JavaScript were to process this request in a blocking manner, the entire page would become unresponsive until the request finished. This would be a terrible experience—no scrolling, no typing, no animations—just a frozen screen until the network responded. Instead, JavaScript uses an <strong>event loop</strong> and an <strong>asynchronous model</strong> to ensure that while waiting for a task to complete, the rest of the application can continue running smoothly.</p>
+<h3 id="why-asynchrony">Why Asynchrony?</h3>
+<p>Web applications frequently make requests to APIs across the internet. These requests can take time to complete due to network latency, slow servers, or large amounts of data being transferred. If the UI were to block while waiting for each request, users would experience frustrating lags. Instead, JavaScript offloads such tasks to the <strong>event loop</strong>, which allows the browser to continue processing other user interactions while waiting for the network request to finish.</p>
+<p>Here’s how the <strong>event loop</strong> works:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant User
+    participant JavaScript
+    participant WebAPI
+    participant CallbackQueue
+
+    User-&gt;&gt;JavaScript: Clicks a button
+    JavaScript-&gt;&gt;WebAPI: Sends API request (non-blocking)
+    JavaScript-&gt;&gt;User: UI remains interactive
+    WebAPI--&gt;&gt;CallbackQueue: Response arrives
+    CallbackQueue-&gt;&gt;JavaScript: Executes callback (updates UI)</code></pre>
+<p>The event loop continuously checks the <strong>callback queue</strong> for pending tasks and runs them only when the main execution stack is empty. This ensures smooth execution without blocking.</p>
+<h2 id="promises-and-fetch-api">Promises and Fetch API</h2>
+<p>A <strong>Promise</strong> represents a value that might be available now, or in the future, or never. JavaScript provides a built-in <code>Promise</code> class, which is a powerful tool for handling asynchronous operations. Instead of writing nested callbacks (which can become unreadable), Promises provide methods that allow us to register behavior for when an operation completes or fails.</p>
+<p>A <code>Promise</code> has two key methods:</p>
+<ul>
+<li><code>.then(callback)</code> – Runs the callback function when the Promise resolves successfully.</li>
+<li><code>.catch(callback)</code> – Runs the callback function when the Promise is rejected due to an error.</li>
+</ul>
+<p>The <code>fetch</code> API in JavaScript returns a Promise when making HTTP requests. Here’s an example:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-6-1"><span class="kd">const</span><span class="w"> </span><span class="nx">fetchData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;https://jsonplaceholder.typicode.com/todos/1&quot;</span><span class="p">)</span>
+</span><span id="__span-6-3"><span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span><span class="w"> </span><span class="c1">// First promise</span>
+</span><span id="__span-6-4"><span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span><span class="w">   </span><span class="c1">// Second promise</span>
+</span><span id="__span-6-5"><span class="w">        </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Error fetching data:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">));</span>
+</span><span id="__span-6-6"><span class="p">};</span>
+</span><span id="__span-6-7">
+</span><span id="__span-6-8"><span class="nx">fetchData</span><span class="p">();</span>
+</span></code></pre></div>
+<h3 id="understanding-chained-methods-and-fluent-apis">Understanding Chained Methods and Fluent APIs</h3>
+<p>At first glance, this code might feel overwhelming, especially if you haven’t encountered <strong>method chaining</strong> or fluent APIs before. Let’s break it down step by step.</p>
+<ol>
+<li><strong>Fetching Data</strong>: The <code>fetch</code> function initiates an HTTP request to retrieve data from the given URL. It immediately returns a <code>Promise</code> that will resolve when the response arrives.</li>
+<li><strong>Processing the Response</strong>: Since <code>fetch</code> doesn’t directly return the data but a <code>Response</code> object, we need to call <code>.json()</code> on it. This method also returns a Promise, which resolves when the response body has been parsed.</li>
+<li><strong>Handling the Data</strong>: The next <code>.then()</code> receives the parsed JSON and logs it to the console.</li>
+<li><strong>Error Handling</strong>: If anything goes wrong (e.g., network failure or an invalid response), the <code>.catch()</code> method ensures we handle errors gracefully.</li>
+</ol>
+<p>Each <code>.then()</code> method processes the result of the previous step, allowing us to <strong>chain operations</strong> in a clean and readable way. This avoids deeply nested callbacks (a problem known as "callback hell").</p>
+<h3 id="flow-explanation">Flow Explanation:</h3>
+<ol>
+<li><code>fetch</code> returns a <strong>Promise</strong> resolving to a <code>Response</code> object.</li>
+<li>We call <code>.json()</code> on the <code>Response</code>, which returns another <strong>Promise</strong>.</li>
+<li>The second <code>.then()</code> handles the parsed JSON data.</li>
+<li>If anything goes wrong, <code>.catch()</code> captures errors.</li>
+</ol>
+<h3 id="understanding-the-promise-state-machine">Understanding the Promise State Machine</h3>
+<p>A <strong>Promise</strong> in JavaScript follows a specific lifecycle, transitioning through different states:</p>
+<pre class="mermaid"><code>graph TD;
+    A[Pending] --&gt;|Operation succeeds| B[Fulfilled]
+    A --&gt;|Operation fails| C[Rejected]</code></pre>
+<ul>
+<li><strong>Pending</strong>: The initial state, where the Promise is waiting for the asynchronous operation to complete.</li>
+<li><strong>Fulfilled</strong>: The operation completed successfully, and the <code>then()</code> handler is called.</li>
+<li><strong>Rejected</strong>: The operation encountered an error, and the <code>catch()</code> handler is called.</li>
+</ul>
+<p>Each state transition happens exactly once. Once a Promise is either fulfilled or rejected, it cannot change state again.</p>
+<p>By understanding how Promises work and integrating them into event-driven programming, we gain fine control over asynchronous workflows. This ensures that applications remain responsive and efficient, leading to a better user experience.</p>
+<h3 id="asyncawait">Async/Await</h3>
+<p>The <code>async/await</code> syntax is a modern way to write asynchronous code in JavaScript that builds directly on top of Promises. It makes asynchronous operations easier to read and reason about by allowing developers to write code that looks synchronous while retaining all the benefits of non-blocking execution.</p>
+<p>Under the hood, an <code>async</code> function always returns a Promise. The <code>await</code> keyword pauses execution inside the function until the awaited Promise resolves. This approach avoids deeply nested <code>.then()</code> chains and allows for more natural error handling with <code>try/catch</code> blocks.</p>
+<p>Using <code>async/await</code>, we can rewrite the previous Promise-based example in a more readable way:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-7-1"><span class="kd">const</span><span class="w"> </span><span class="nx">fetchDataAsync</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-3"><span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;https://jsonplaceholder.typicode.com/todos/1&quot;</span><span class="p">);</span>
+</span><span id="__span-7-4"><span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+</span><span id="__span-7-5"><span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+</span><span id="__span-7-6"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-7"><span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;Error fetching data:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+</span><span id="__span-7-8"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-7-9"><span class="p">};</span>
+</span><span id="__span-7-10">
+</span><span id="__span-7-11"><span class="nx">fetchDataAsync</span><span class="p">();</span>
+</span></code></pre></div>
+<h3 id="why-use-asyncawait">Why Use Async/Await?</h3>
+<ul>
+<li><strong>Improves readability</strong>: Makes asynchronous code look and behave more like synchronous code, reducing cognitive load.</li>
+<li><strong>Avoids callback hell</strong>: Eliminates the need for deeply nested <code>.then()</code> chains, improving maintainability.</li>
+<li><strong>Intuitive error handling</strong>: Uses <code>try/catch</code> instead of <code>.catch()</code>, making it more consistent with synchronous code.</li>
+</ul>
+<h3 id="understanding-the-connection-to-promises">Understanding the Connection to Promises</h3>
+<p>The <code>async/await</code> syntax does not introduce a new asynchronous mechanism; rather, it is a <strong>syntactic transformation</strong> of Promise-based code. The JavaScript engine internally rewrites <code>async</code> functions into standard Promise chains.</p>
+<p>For example, the above <code>async/await</code> function is equivalent to the following Promise-based implementation written before.</p>
+<p>This transformation has been formally studied in <strong>continuation-passing style (CPS) transformation</strong> research, proving that <code>async/await</code> retains the same computational expressiveness as Promises while improving code clarity. The ability to represent asynchronous workflows more naturally makes <code>async/await</code> the preferred approach in modern JavaScript development.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../2-typescript/" class="md-footer__link md-footer__link--prev" aria-label="Previous: TypeScript For the COMP 301 Java Developer">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                TypeScript For the COMP 301 Java Developer
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../project-management/wireframes/" class="md-footer__link md-footer__link--next" aria-label="Next: Wireframing and Prototyping: Visualizing User Experiences">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Wireframing and Prototyping: Visualizing User Experiences
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

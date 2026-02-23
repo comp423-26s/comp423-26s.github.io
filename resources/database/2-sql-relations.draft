@@ -1,0 +1,123 @@
+## Foreign Keys
+
+A **foreign key** establishes a relationship between two tables by linking a column in one table to the primary key of another. This ensures that the referenced data exists before any related data can be added, keeping the relationships valid.
+
+#### Why Are Foreign Keys Useful?
+Foreign keys help keep data **accurate and meaningful** by preventing orphaned records—data that doesn’t have a valid connection to other required information. They ensure that data in one table cannot reference a non-existent row in another table.
+
+Foreign keys also make **queries more efficient**. Since they enforce relationships between tables, databases can use indexes on foreign key columns to speed up searches and joins. This means that when querying related data—such as fetching all orders associated with a user—the database can quickly locate matching records instead of scanning an entire table. 
+
+Additionally, foreign keys help **maintain consistency** by automatically enforcing rules when data changes. For example, if a user is deleted, the database can be set up to either delete related orders (cascade delete) or prevent deletion if dependent records exist.
+
+By using foreign keys, relational databases keep data organized, ensure relationships are valid, and improve query performance by leveraging indexing.
+
+
+## The Importance of ACID Properties
+
+A core principle of modern relational databases is adherence to **ACID** properties, which ensure the reliability and consistency of data **transactions**.
+
+### What is a Transaction?
+
+A **transaction** is a sequence of one or more database operations that are executed as a single logical unit. Transactions are crucial in scenarios where multiple related operations must either succeed together or fail together to maintain data integrity.
+
+To illustrate why transactions matter, consider a **banking system** where a user transfers money from their **savings account** to their **checking account**. This transaction consists of two key operations:
+
+1. **Debit** the amount from the savings account.
+2. **Credit** the same amount to the checking account.
+
+If the system executes only the first operation (debiting the savings account) but crashes before the second operation (crediting the checking account) completes, the user would lose money. This kind of data inconsistency is unacceptable in financial systems and many other applications.
+
+Transactions ensure that both operations either **fully complete** or **do not happen at all**—preserving data consistency and correctness.
+
+### ACID Properties
+
+Transactions in relational databases follow four key properties, collectively known as **ACID**:
+
+- **Atomicity:** Ensures that a transaction is treated as a single, indivisible unit, meaning either all of its operations succeed, or none of them take effect. This prevents data corruption in case of failures.
+- **Consistency:** Guarantees that a transaction brings the database from one valid state to another, maintaining integrity constraints at all times.
+- **Isolation:** Ensures that transactions do not interfere with each other, even when executed concurrently, preserving the integrity of data operations.
+- **Durability:** Ensures that once a transaction is committed, it remains permanently stored, even in the event of a system crash.
+
+These properties are essential for applications that require strict data accuracy, such as financial systems, inventory management, and multi-user applications where concurrent data modifications occur.
+
+## Creating a Table with Relationships: Bank Accounts and Transactions
+
+To better understand how relational databases manage relationships and transactions, let’s model a **bank account system**. We'll define an `accounts` table to store user balances for different account types (checking and savings). We will then demonstrate SQL transactions to ensure **atomicity**, meaning either all operations succeed or none take effect.
+
+### Defining the `accounts` Table
+
+Each user can have multiple accounts (checking and savings). We enforce data integrity with **foreign keys**, **constraints**, and **checks** to prevent invalid data.
+
+```sql
+CREATE TABLE accounts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    account_type TEXT CHECK (account_type IN ('checking', 'savings')) NOT NULL,
+    balance DECIMAL(10,2) NOT NULL CHECK (balance >= 0)
+);
+```
+
+### Adding Sample Data
+
+Let's insert some sample accounts for a user (Alice, `user_id = 1`):
+
+```sql
+INSERT INTO accounts (user_id, account_type, balance) VALUES (1, 'checking', 1000.00);
+INSERT INTO accounts (user_id, account_type, balance) VALUES (1, 'savings', 5000.00);
+```
+
+### Demonstrating a Successful Transaction
+
+Imagine Alice wants to transfer **$200** from her savings to her checking account. We use a **transaction** to ensure both the withdrawal and deposit happen together. If an error occurs, neither change is applied.
+
+```sql
+BEGIN;
+
+-- Deduct $200 from the savings account
+UPDATE accounts 
+SET balance = balance - 200.00 
+WHERE user_id = 1 AND account_type = 'savings';
+
+-- Add $200 to the checking account
+UPDATE accounts 
+SET balance = balance + 200.00 
+WHERE user_id = 1 AND account_type = 'checking';
+
+-- Commit the transaction, making changes permanent
+COMMIT;
+```
+
+#### Checking the Updated Balances
+
+```sql
+SELECT * FROM accounts WHERE user_id = 1;
+```
+
+This ensures that **both updates** succeed together, maintaining financial integrity.
+
+### Demonstrating a Failed Transaction (Rollback)
+
+Now, let’s simulate an error: Alice attempts to withdraw **$6000** from her savings account, which exceeds her balance. The transaction should be **rolled back**, leaving her balance unchanged.
+
+```sql
+BEGIN;
+
+-- Attempt to withdraw more than available in savings (invalid operation)
+UPDATE accounts 
+SET balance = balance - 6000.00 
+WHERE user_id = 1 AND account_type = 'savings';
+
+-- Oops! That’s not allowed. We rollback the entire transaction.
+ROLLBACK;
+```
+
+#### Confirming No Changes Were Made
+
+```sql
+SELECT * FROM accounts WHERE user_id = 1;
+```
+
+The rollback **ensures data integrity**, preventing the system from storing incorrect balances. This illustrates the **Atomicity** principle in ACID transactions: **either all operations succeed, or none take effect**.
+
+By using transactions, relational databases ensure **data consistency and reliability**, which is critical for financial and business applications.
+

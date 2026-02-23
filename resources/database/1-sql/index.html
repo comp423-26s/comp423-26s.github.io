@@ -1,0 +1,2033 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/database/1-sql/">
+      
+      
+        <link rel="prev" href="../../backend-architecture/3-ci-cd/">
+      
+      
+        <link rel="next" href="../../exercises/ex01-api-design/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>1. Introduction to Relational Databases & SQL - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-introduction-to-relational-databases-sql" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Introduction to Relational Databases &amp; SQL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-relational-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a Relational Database?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-brief-history-of-relational-databases-and-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Brief History of Relational Databases and SQL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A Brief History of Relational Databases and SQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modern-popular-relational-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modern, Popular Relational Databases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-abstractions-in-a-relational-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Abstractions in a Relational Database
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Abstractions in a Relational Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#columns-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Columns (Fields)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rows-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rows (Records)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primary-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-sql-a-domain-specific-language-for-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding SQL: A Domain-Specific Language for Databases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding SQL: A Domain-Specific Language for Databases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ddl-data-definition-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. DDL (Data Definition Language)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. DDL (Data Definition Language)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-ddl-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common DDL Commands:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dml-data-manipulation-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. DML (Data Manipulation Language)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. DML (Data Manipulation Language)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-dml-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common DML Commands:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimenting-with-sql-in-a-postgresql-docker-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experimenting with SQL in a PostgreSQL Docker Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experimenting with SQL in a PostgreSQL Docker Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-pull-and-run-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Pull and Run PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-is-the-data-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where is the Data Stored?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-connect-to-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Connect to PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exiting-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exiting PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stopping-restarting-and-removing-the-postgresql-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stopping, Restarting, and Removing the PostgreSQL Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basics-of-sql-creating-tables-inserting-data-and-querying-with-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basics of SQL: Creating Tables, Inserting Data, and Querying with SELECT
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basics of SQL: Creating Tables, Inserting Data, and Querying with SELECT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explanation:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inserting-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inserting Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieving-data-with-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieving Data with SELECT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-results-with-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering Results with WHERE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Filtering Results with WHERE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-a-specific-user-by-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find a specific user by email:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-all-users-whose-names-start-with-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find all users whose names start with "B":
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-users-created-after-a-specific-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find users created after a specific date:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sorting-and-limiting-query-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sorting and Limiting Query Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sorting and Limiting Query Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sort-users-by-name-ascending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sort users by name (ascending):
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-the-most-recently-created-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get the most recently created user:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="1-introduction-to-relational-databases-sql">1. Introduction to Relational Databases &amp; SQL</h1>
+<h2 id="what-is-a-relational-database">What is a Relational Database?</h2>
+<p>A <strong>relational database</strong> is a way to store and organize data in a structured format using tables. Each table consists of <strong>rows</strong> (records) and <strong>columns</strong> (fields). The power of relational databases comes from their ability to establish relationships between tables, allowing for efficient data retrieval and consistency.</p>
+<p>Unlike temporary data storage solutions, relational databases <strong>persist data to disk</strong>, meaning information is retained even after the database system shuts down. This persistence makes relational databases essential for applications that require long-term data storage, such as banking systems, e-commerce platforms, and content management systems.</p>
+<h2 id="a-brief-history-of-relational-databases-and-sql">A Brief History of Relational Databases and SQL</h2>
+<p>The concept of <strong>relational databases</strong> was introduced by <strong>Edgar F. Codd</strong> in 1970 while working at IBM. He proposed the <strong>relational model</strong>, which organizes data into structured tables and uses mathematical <strong>relational algebra</strong> for querying and manipulating data.</p>
+<p>Before relational databases, most systems used <strong>hierarchical</strong> or <strong>network databases</strong>, which were rigid and difficult to scale. Codd’s relational model revolutionized database management by making data more flexible and easier to query.</p>
+<p>The <strong>Structured Query Language (SQL)</strong> was later developed in the 1970s at IBM as a way to interact with relational databases. It became the standard language for querying and managing relational data and was eventually adopted by major database systems.</p>
+<h3 id="modern-popular-relational-databases">Modern, Popular Relational Databases</h3>
+<p>Today's most popular relational databases include:</p>
+<ul>
+<li><strong>PostgreSQL</strong> (open-source, widely used for modern applications)</li>
+<li><strong>MySQL</strong> (common in web applications)</li>
+<li><strong>SQLite</strong> (lightweight, used in mobile and embedded systems)</li>
+<li><strong>Microsoft SQL Server</strong> (enterprise-level database solution)</li>
+<li><strong>Oracle Database</strong> (widely used in large corporations)</li>
+</ul>
+<h2 id="key-abstractions-in-a-relational-database">Key Abstractions in a Relational Database</h2>
+<p>A <strong>relational database management system (RDBMS)</strong> provides a structured way to store and manipulate data. At the core of an RDBMS are the following key abstractions:</p>
+<h3 id="tables">Tables</h3>
+<p>A <strong>table</strong> is the fundamental structure in an RDBMS. It represents a collection of related data and is analogous to a spreadsheet or a well-organized list. Each table consists of <strong>columns</strong> (fields) that define the types of data stored and <strong>rows</strong> (records) that contain actual data entries.</p>
+<h3 id="columns-fields">Columns (Fields)</h3>
+<p>A <strong>column</strong> defines the type of data that a table can store for a particular attribute. Each column has a <strong>data type</strong> that constrains the values it can hold, ensuring consistency and efficiency.</p>
+<p>Columns can have constraints such as:
+- <strong>NOT NULL</strong> – Ensures the column cannot have empty values.
+- <strong>UNIQUE</strong> – Guarantees that all values in the column are distinct.
+- <strong>CHECK</strong> – Enforces a condition on the column's values.
+- <strong>DEFAULT</strong> – Assigns a default value if no explicit value is provided.</p>
+<p>Some columns also have <strong>fixed maximum widths</strong> for storage efficiency. For example, a <code>VARCHAR(255)</code> column ensures that no value stored exceeds 255 characters. Limiting column widths helps optimize performance because it enables more efficient indexing, improves retrieval speed, and reduces overall memory consumption.</p>
+<p>Here is a table of common PostgreSQL data types:</p>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INTEGER</code></td>
+<td>Whole numbers (e.g., 1, 2, 3)</td>
+</tr>
+<tr>
+<td><code>SERIAL</code></td>
+<td>Auto-incrementing integer (commonly used for primary keys)</td>
+</tr>
+<tr>
+<td><code>TEXT</code></td>
+<td>Variable-length string (unlimited size)</td>
+</tr>
+<tr>
+<td><code>VARCHAR(n)</code></td>
+<td>String with a maximum length of <code>n</code> characters</td>
+</tr>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td>True or False values</td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td>Stores dates (YYYY-MM-DD)</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP</code></td>
+<td>Stores date and time information</td>
+</tr>
+<tr>
+<td><code>DECIMAL(p, s)</code></td>
+<td>Precise fixed-point decimal numbers</td>
+</tr>
+<tr>
+<td><code>REAL</code> / <code>DOUBLE PRECISION</code></td>
+<td>Floating-point numbers</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rows-records">Rows (Records)</h3>
+<p>A <strong>row</strong> represents a single entry in a table, storing a unique combination of values across all the columns. Each row corresponds to a distinct instance of the entity the table models.</p>
+<p>An analogy to <strong>Object-Oriented Programming (OOP)</strong> can be helpful here:
+- A <strong>table</strong> is like a class definition in OOP.
+- <strong>Columns</strong> define the attributes of the class.
+- <strong>Rows</strong> are like instances (objects) created from the class.</p>
+<p>For example, consider a <code>users</code> table:
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-2"><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-0-3"><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-0-4"><span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+</span><span id="__span-0-5"><span class="p">);</span>
+</span></code></pre></div>
+This is similar to defining a <code>User</code> class in OOP:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
+</span><span id="__span-1-2">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+</span><span id="__span-1-3">        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+</span><span id="__span-1-4">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="__span-1-5">        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+</span></code></pre></div>
+Each row in the <code>users</code> table represents a different <code>User</code> object with unique values for <code>id</code>, <code>name</code>, and <code>email</code>.</p>
+<h3 id="primary-keys">Primary Keys</h3>
+<p>A <strong>primary key</strong> uniquely identifies each row in a table, ensuring that no two rows have the same identifier. The choice of primary key depends on the scale and nature of the data.</p>
+<p>For smaller datasets, using an <code>INTEGER</code> or <code>SERIAL</code> column as a unique ID is common. However, for very large-scale databases—such as those storing tweets, Instagram posts, or large-scale event logs—alternative schemes like <strong>UUIDs</strong> (Universally Unique Identifiers) or <strong>timestamp-based IDs</strong> are often used. These approaches provide a much larger range of unique identifiers and offer benefits such as distributed uniqueness and time-ordering properties.</p>
+<p>For our purposes, since we are working with small datasets, we will primarily use <strong>serial integers</strong> as primary keys.</p>
+<h2 id="understanding-sql-a-domain-specific-language-for-databases">Understanding SQL: A Domain-Specific Language for Databases</h2>
+<p>SQL (<strong>Structured Query Language</strong>) is a programming language designed specifically for interacting with relational databases. Unlike general-purpose programming languages like Python or Java, SQL is <strong>domain-specific</strong>, meaning it is specialized for tasks related to storing, retrieving, and manipulating structured data.</p>
+<p>SQL enables users to:</p>
+<ul>
+<li>Define and modify database structures.</li>
+<li>Insert, update, and delete data within those structures.</li>
+<li>Query and retrieve meaningful information efficiently.</li>
+</ul>
+<p>SQL is divided into two main categories:</p>
+<h3 id="1-ddl-data-definition-language">1. DDL (Data Definition Language)</h3>
+<p>DDL is responsible for defining and managing the structure of a database. Commands in this category affect the schema of a database, such as creating, modifying, and deleting tables.</p>
+<h4 id="common-ddl-commands">Common DDL Commands:</h4>
+<ul>
+<li><code>CREATE TABLE</code> – Defines a new table structure.</li>
+<li><code>ALTER TABLE</code> – Modifies an existing table.</li>
+<li><code>DROP TABLE</code> – Deletes a table and all its data.</li>
+</ul>
+<p>Example:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-2-2"><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-2-3"><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-2-4"><span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+</span><span id="__span-2-5"><span class="p">);</span>
+</span></code></pre></div>
+<h3 id="2-dml-data-manipulation-language">2. DML (Data Manipulation Language)</h3>
+<p>DML is used to work with the data inside database tables. These commands allow users to insert new records, update existing ones, delete data, and query stored information.</p>
+<h4 id="common-dml-commands">Common DML Commands:</h4>
+<ul>
+<li><code>INSERT INTO</code> – Adds new records to a table.</li>
+<li><code>UPDATE</code> – Modifies existing records.</li>
+<li><code>DELETE</code> – Removes records.</li>
+<li><code>SELECT</code> – Retrieves data from tables.</li>
+</ul>
+<p>Example:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;alice@email.com&#39;</span><span class="p">);</span>
+</span><span id="__span-3-2"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span></code></pre></div>
+<p>By mastering both DDL and DML, you gain the ability to design, manage, and interact with relational databases effectively. Understanding these distinctions helps clarify how SQL serves both structural and operational purposes in database management.</p>
+<h2 id="experimenting-with-sql-in-a-postgresql-docker-container">Experimenting with SQL in a PostgreSQL Docker Container</h2>
+<p>To follow along with this tutorial, you can run PostgreSQL inside a <strong>Docker container</strong>.</p>
+<h3 id="step-1-pull-and-run-postgresql">Step 1: Pull and Run PostgreSQL</h3>
+<p>From your host machine's terminal run the following command to start a PostgreSQL container:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1">docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><span class="w">  </span>--name<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><span class="w">  </span>--env<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>mysecretpassword<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4"><span class="w">  </span>--publish<span class="w"> </span><span class="m">5432</span>:5432<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-5"><span class="w">  </span>--detach<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-6"><span class="w">  </span>postgres:latest
+</span></code></pre></div>
+<p>Explanation of flags:</p>
+<ul>
+<li><code>--name postgres</code> → Names the container <strong>postgres</strong>.</li>
+<li><code>--env POSTGRES_PASSWORD=mysecretpassword</code> → Sets the default password for the PostgreSQL instance.</li>
+<li><code>--publish 5432:5432</code> → Maps port <strong>5432</strong> from the container to the host, allowing connections.</li>
+<li><code>--detach</code> → Runs the container in <strong>detached mode</strong>, meaning it runs in the background.</li>
+<li><code>postgres:latest</code> → Specifies the <strong>PostgreSQL image</strong> to use, with <code>latest</code> pulling the most recent stable version.</li>
+</ul>
+<h3 id="where-is-the-data-stored">Where is the Data Stored?</h3>
+<p>When using a Docker container without explicit volume mapping, PostgreSQL stores its data <strong>inside the container’s filesystem</strong>. This means that even if you stop and restart the container, your data will still be available. However, if the container is removed, the data will be lost.</p>
+<p>For production environments, best practice is to <strong>mount a volume</strong> to ensure that database files persist independently of the container lifecycle. However, for simplicity in this tutorial, we are relying on the container's internal storage.</p>
+<h3 id="step-2-connect-to-postgresql">Step 2: Connect to PostgreSQL</h3>
+<p>To interact with the running PostgreSQL container, use the following command which runs the CLI <code>psql</code> Postgres client:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1">docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><span class="w">  </span>--interactive<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><span class="w">  </span>--tty<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><span class="w">  </span>--user<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><span class="w">  </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-6"><span class="w">  </span>psql
+</span></code></pre></div>
+<p>This command does <strong>not</strong> start a new container; it connects to the <strong>existing detached container</strong> named <code>postgres</code> and runs the <code>psql</code> command inside it.</p>
+<h3 id="exiting-postgresql">Exiting PostgreSQL</h3>
+<p>To quit <code>psql</code>, type:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><span class="se">\q</span>
+</span></code></pre></div>
+<h3 id="stopping-restarting-and-removing-the-postgresql-container">Stopping, Restarting, and Removing the PostgreSQL Container</h3>
+<p>If you need to stop the PostgreSQL container but keep the data intact, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1">docker<span class="w"> </span>stop<span class="w"> </span>postgres
+</span></code></pre></div>
+<p>To restart the container and restore access to the database, use:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1">docker<span class="w"> </span>start<span class="w"> </span>postgres
+</span></code></pre></div>
+<p>This ensures that all changes made to the database remain intact between restarts.</p>
+<p>If you no longer need the container and want to permanently delete it, along with all stored data, run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1">docker<span class="w"> </span>rm<span class="w"> </span>postgres
+</span></code></pre></div>
+<p><strong>Important:</strong> Removing the container deletes all stored data since we are not using a volume in this tutorial. In real applications, using a Docker volume ensures data persistence beyond container removal.
+Now that you have PostgreSQL running inside Docker, you can start writing SQL commands.</p>
+<h2 id="basics-of-sql-creating-tables-inserting-data-and-querying-with-select">Basics of SQL: Creating Tables, Inserting Data, and Querying with SELECT</h2>
+<p>Now that we have PostgreSQL running inside Docker, let's explore some basic SQL commands. We'll cover:</p>
+<ul>
+<li><strong>Creating tables</strong></li>
+<li><strong>Inserting data</strong></li>
+<li><strong>Querying data with SELECT</strong></li>
+<li><strong>Filtering results with WHERE</strong></li>
+<li><strong>Sorting and limiting query results</strong></li>
+<li><strong>Joining related tables</strong></li>
+</ul>
+<h3 id="creating-a-table">Creating a Table</h3>
+<p>A table in SQL is defined using the <code>CREATE TABLE</code> statement. Each table consists of <strong>columns</strong>, where each column has a specific data type.</p>
+<p>Let's create a <code>users</code> table:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-10-2"><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-10-3"><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-10-4"><span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-10-5"><span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
+</span><span id="__span-10-6"><span class="p">);</span>
+</span></code></pre></div>
+<h4 id="explanation">Explanation:</h4>
+<ul>
+<li><code>id SERIAL PRIMARY KEY</code> → A unique, auto-incrementing identifier.</li>
+<li><code>name TEXT NOT NULL</code> → A required text field.</li>
+<li><code>email TEXT UNIQUE NOT NULL</code> → Ensures emails are unique and required.</li>
+<li><code>created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP</code> → Automatically stores the time the record was created.</li>
+</ul>
+<h3 id="inserting-data">Inserting Data</h3>
+<p>To add records to a table, use <code>INSERT INTO</code>:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;alice@email.com&#39;</span><span class="p">);</span>
+</span><span id="__span-11-2"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob@email.com&#39;</span><span class="p">);</span>
+</span><span id="__span-11-3"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Charlie&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;charlie@email.com&#39;</span><span class="p">);</span>
+</span></code></pre></div>
+<h3 id="retrieving-data-with-select">Retrieving Data with <code>SELECT</code></h3>
+<p>To retrieve all records from a table:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-12-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span></code></pre></div>
+<p>This returns:</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>email</th>
+<th>created_at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Alice</td>
+<td>alice@email.com</td>
+<td>2025-03-02 12:00:00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bob</td>
+<td>bob@email.com</td>
+<td>2025-03-02 12:01:00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Charlie</td>
+<td>charlie@email.com</td>
+<td>2025-03-02 12:02:00</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filtering-results-with-where">Filtering Results with <code>WHERE</code></h3>
+<p>Use <code>WHERE</code> to filter results based on conditions.</p>
+<h4 id="find-a-specific-user-by-email">Find a specific user by email:</h4>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-13-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;alice@email.com&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<h4 id="find-all-users-whose-names-start-with-b">Find all users whose names start with "B":</h4>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;B%&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<h4 id="find-users-created-after-a-specific-date">Find users created after a specific date:</h4>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-15-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2025-03-01&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="sorting-and-limiting-query-results">Sorting and Limiting Query Results</h3>
+<h4 id="sort-users-by-name-ascending">Sort users by name (ascending):</h4>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-16-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">ASC</span><span class="p">;</span>
+</span></code></pre></div>
+<h4 id="get-the-most-recently-created-user">Get the most recently created user:</h4>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span></code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this chapter, we explored the fundamentals of relational databases and SQL. We then covered key relational database concepts, including tables, columns, rows, and primary keys. Additionally, we demonstrated SQL queries for creating tables, inserting data, retrieving data using SELECT, filtering with WHERE, sorting, and limiting results.</p>
+<p>Understanding relational databases and SQL is useful for managing and persisting structured data efficiently. In the next reading, we will look at creating relationships between tables with foreign keys and introducing the concept of <em>transactions</em>. Each of these concepts is an important feature of a relational database system.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../backend-architecture/3-ci-cd/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Introduction to CI/CD">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Introduction to CI/CD
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../exercises/ex01-api-design/" class="md-footer__link md-footer__link--next" aria-label="Next: EX01. API Design and Implementation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                EX01. API Design and Implementation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

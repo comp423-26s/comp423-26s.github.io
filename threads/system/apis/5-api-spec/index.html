@@ -1,0 +1,1697 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/apis/5-api-spec/">
+      
+      
+        <link rel="prev" href="../4-http/">
+      
+      
+        <link rel="next" href="../6-fast-api-tutorial/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Toward Designing and Formally Specifying APIs - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-toward-designing-and-formally-specifying-apis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Toward Designing and Formally Specifying APIs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-rest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction to REST
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to REST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resources-and-their-role-in-restful-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resources and Their Role in RESTful APIs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#request-input-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request Input Specifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Request Input Specifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#methods-defining-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods: Defining Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paths-identifying-and-routing-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paths: Identifying and Routing Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters-refining-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Query Parameters: Refining Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-and-query-parameter-design-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path and Query Parameter Design Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bodies-sending-data-in-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bodies: Sending Data in Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#headers-metadata-for-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Headers: Metadata for Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#response-output-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response Output Specifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Response Output Specifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response-status-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response Status Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-body-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response Body Schemas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response Headers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kris-can-we-please-just-code-up-an-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kris, can we please just code up an API?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="5-toward-designing-and-formally-specifying-apis">5. Toward Designing and Formally Specifying APIs</h1>
+<p>Now that you have seen the key elements of HTTP at a conceptual level, across the entire request-response journey, let's focus in on how API designers generally use the inputs from a request. Additionally, let's look at how responses are designed.</p>
+<p>When working with HTTP APIs, there are multiple ways to provide input to a request, each serving a different purpose:</p>
+<ul>
+<li><strong>Methods</strong> define the type of action the API request is performing.</li>
+<li><strong>Paths</strong> define the structure of an API and uniquely identify resources.</li>
+<li><strong>Query Parameters</strong> allow clients to filter, sort, or refine results without changing the resource's identity.</li>
+<li><strong>Bodies</strong> are used to send structured data in requests, typically for creating or updating resources.</li>
+<li><strong>Headers</strong> provide metadata about the request, such as authentication details or content type preferences.</li>
+</ul>
+<p>Understanding these inputs is essential for designing HTTP APIs that are intuitive, efficient, and scalable.</p>
+<h2 id="introduction-to-rest">Introduction to REST</h2>
+<p><strong>REST (Representational State Transfer)</strong> defines a set of architectural principles for designing HTTP APIs that focus on resources and how to design interactions with them. </p>
+<p>REST emerged from Roy Fielding's 2000 PhD dissertation, where he formalized the architectural principles that had guided his work on the <a href="https://www.w3.org/Protocols/HTTP/1.0/spec.html">HTTP specifications</a>. While working on HTTP standards, he observed that many distributed systems at the time were tightly coupled, requiring detailed knowledge of each other's internal implementations. His dissertation introduced REST as an architectural style that embraced the web's fundamental design - particularly its use of <strong>hyperlinks as resource identifiers</strong>, <strong>standard methods</strong> (such as GET, POST, PUT, DELETE, and so on), and <strong>stateless communication</strong>. What made REST revolutionary was that it showed how to build distributed systems that could evolve independently by following these principles, allowing clients and servers to evolve and change without breaking each other. This was in stark contrast to earlier approaches that required lockstep changes between clients and servers.</p>
+<p>A key characteristic of REST is that it's <strong>stateless</strong>—each request from client to server must contain all the information needed to understand and process the request. The server shouldn't need to remember anything about previous requests.</p>
+<p>HTTP APIs that embrace this architectural style are often described as being <em>RESTful</em>.</p>
+<h3 id="resources-and-their-role-in-restful-apis">Resources and Their Role in RESTful APIs</h3>
+<p>In RESTful APIs, the nouns in your API are <strong>resources</strong>. Each resource is uniquely identified by a <strong>URL (Uniform Resource Locator)</strong>, meaning every resource has its own address.</p>
+<p>You may know these as web addresses, like:</p>
+<ul>
+<li><a href="https://csxl.unc.edu/api/organizations">https://csxl.unc.edu/api/organizations</a> → Returns a list of CS student organizations in JSON.</li>
+<li><a href="https://csxl.unc.edu/api/academics/section/term/26S">https://csxl.unc.edu/api/academics/section/term/26S</a> → Returns a list of CS classes offered in Spring 2026.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Could you easily see the structure of the JSON in the URLs above?</p>
+<p>Most web browsers don't have nice, automatic formatting of JSON data. If you open the links above and it's not easy to see the structure of the data, we <strong>strongly</strong> recommend installing a web browser plugin to format JSON data. They are super handy when designing and building your own APIs!</p>
+<p>In Google Chrome, for example, we recommend <a href="https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa">JSON Formatter</a>. Other browsers have similar tools—find one with good reviews and many installations.</p>
+</div>
+<h2 id="request-input-specifications">Request Input Specifications</h2>
+<h3 id="methods-defining-actions">Methods: Defining Actions</h3>
+<p>The <strong>method</strong> of an HTTP request tells the server what action is being performed on the resource. You previously read about the fundamental API methods in the last section, including <strong>GET, POST, PUT, PATCH, and DELETE</strong>. While we won't go into detail here, it's important to recognize that the method is an essential input to an HTTP request and characterizes the request's <em>intent</em> to read, write, delete, or update.</p>
+<h3 id="paths-identifying-and-routing-requests">Paths: Identifying and Routing Requests</h3>
+<p>The <strong>path</strong> of a URL is technically just an opaque string of characters. You could design APIs with any scheme you'd like, but most REST API designers today model it as a <strong>logical hierarchy</strong>, much like folders in a file system:</p>
+<ul>
+<li><code>/api/users</code> → Might represent a collection of users.</li>
+<li><code>/api/users/42</code> → Might represent a specific user with ID 42.</li>
+<li><code>/api/users/42/orders</code> → Might represent orders placed by the user with ID 42.</li>
+</ul>
+<p>A path tells you which resource you want to work with in an API. For example, <code>/api/users/42</code> points to a specific user.</p>
+<p>Paths often contain both static and dynamic parts. In the example above:</p>
+<ul>
+<li><code>/api/users/</code> is static - it's always written exactly this way</li>
+<li><code>42</code> is dynamic - it changes based on which user you want</li>
+</ul>
+<p>When you build an API, your framework (e.g. FastAPI in COMP423) handles <strong>routing</strong> - matching each incoming request to the right piece of code. The framework looks at two key inputs:</p>
+<ol>
+<li>The path (what resource you want)</li>
+<li>The HTTP method (what you want to do with it)</li>
+</ol>
+<p>For instance, sending <code>GET</code> vs <code>DELETE</code> to <code>/api/users/42</code> will trigger different actions, even though the path is the same. GET might retrieve the user's information, while <code>DELETE</code> might remove their account.</p>
+<p>Using a common delimiter character, like the <code>/</code> character in a path, communicates subparts of a path to both humans and the system. This convention allows us to visually read the parts of a path and it also allows for programs to <em>parse</em> the path in a straightforward manner by breaking the string up by its <code>/</code> characters.</p>
+<h3 id="query-parameters-refining-requests">Query Parameters: Refining Requests</h3>
+<p>HTTP API designers aim to use query parameters when you need to customize what data is returned back from an API resource. They are added to the end of a URL after the path and tell the server how to filter, sort, or modify the data before sending it back.</p>
+<p>Here's how they work in a URL:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1">www.bookstore.com/books?genre=fantasy&amp;sort=newest
+</span></code></pre></div>
+<p>The path of this request is <code>/books</code>, a resource that lists all books being sold by a hypothetical book store.</p>
+<p>The query parameter begans at the <code>?</code> following the path:</p>
+<ul>
+<li>Each parameter has a name and value joined by <code>=</code> </li>
+<li>Multiple parameters are connected with <code>&amp;</code></li>
+</ul>
+<p>Like parameter passing to a function, query parameters allow the same resource to inform its behavior and response. Common uses include:</p>
+<ul>
+<li>Filtering: <code>?genre=fantasy</code> (only return fantasy books)</li>
+<li>Sorting: <code>?sort=newest</code> (arrange by newest first) </li>
+<li>Pagination: <code>?page=2&amp;limit=10</code> (get 10 items from page 2)</li>
+<li>Searching: <code>?search=dragon</code> (find items containing "dragon")</li>
+</ul>
+<p>The server reads these parameters and adjusts what data it sends back based on them.</p>
+<p>APIs that use query parameters will often have default values for each parameter so that requests without them will still succeed. For example, when loading the first page of a product listing API, your request may not need the <code>page</code> parameter, but on pages <code>2</code> and <code>3</code> beyond, it does.</p>
+<p>Beyond APIs, query parameters are a fundamental part of the web. A common example is a Google search URL:</p>
+<ul>
+<li><code>https://www.google.com/search?q=REST%20API</code> → Searches Google for 'REST API'. Here the <code>q</code> is the name of the query parameter, Google's short-hand for <em>query</em>, and <code>REST API</code> is the value.</li>
+</ul>
+<p>You, as the designer and implementer of an API, will decide whether any of your routes utilize query parameters and be responsible for modifying responses based on their values.</p>
+<h3 id="path-and-query-parameter-design-conventions">Path and Query Parameter Design Conventions</h3>
+<p>Over the past 25 years, API designers have found many conventions in deciding how to name parts of a path, and how to use path and query parameters together.</p>
+<p>🎯 Target nouns, not verbs - resources are things, not actions:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1">✅ /articles
+</span><span id="__span-1-2">❌ /getArticles
+</span></code></pre></div></p>
+<p>🎪 Use plural nouns for collections:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1">✅ /users
+</span><span id="__span-2-2">❌ /user-list
+</span><span id="__span-2-3">✅ /users/123
+</span><span id="__span-2-4">❌ /user/123
+</span></code></pre></div></p>
+<p>🎭 Pick a form and stick to it - be consistent with plurals:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1">✅ /posts/123/comments/456
+</span><span id="__span-3-2">❌ /posts/123/comment/456
+</span></code></pre></div></p>
+<p>🌲 Don't nest too deeply:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1">✅ /articles/123/comments
+</span><span id="__span-4-2">❌ /articles/123/comments/456/replies/789/likes
+</span></code></pre></div></p>
+<p>🐪 Use kebab-case or lowercase:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1">✅ /blog-posts or /blogposts
+</span><span id="__span-5-2">❌ /blogPosts or /blog_posts
+</span></code></pre></div></p>
+<p>🔍 Filtering goes in queries - use parameters for modifiers:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1">✅ /articles?status=published&amp;sort=date
+</span><span id="__span-6-2">❌ /published-articles-sorted-by-date
+</span></code></pre></div></p>
+<p>🎯 IDs belong in paths, not query parameters - directly access resources:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1">✅ /users/123
+</span><span id="__span-7-2">❌ /users?id=123
+</span></code></pre></div></p>
+<p>👨‍👩‍👧‍👦 Family trees make sense - use nesting for real hierarchies:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1">✅ /teams/123/members
+</span><span id="__span-8-2">❌ /members?teamId=123
+</span></code></pre></div></p>
+<p>As you get deeper into API design and implementation there are a few other best practice, as well, but if you merely followed these for the purposes of this course you will be doing great.</p>
+<h3 id="bodies-sending-data-in-requests">Bodies: Sending Data in Requests</h3>
+<p>For <strong>POST</strong> (creating) and <strong>PUT</strong> (updating) method requests, we need to send more complex data to the server. This data is sent in the <strong>body</strong> of the HTTP request, often in JSON format:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><span class="p">{</span>
+</span><span id="__span-9-2"><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span>
+</span><span id="__span-9-3"><span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;alice@example.com&quot;</span>
+</span><span id="__span-9-4"><span class="p">}</span>
+</span></code></pre></div>
+<p>When designing the specification for an API, we will need to clearly define a <em>schema</em> for bodies. A schema defines exactly what "shape" of data our API expects in the request body, such as field names, data types, and structure. In the example above, the structure is a single JSON Object (denoted by the surrounding curly braces), the field names are <code>name</code> and <code>email</code>, and both fields expect <code>string</code> values assigned to them.</p>
+<p>Unlike paths or query parameters, <strong>bodies are not visible in the URL</strong> and can contain more complex structures like lists and nested objects. As such, sending <code>POST</code>/<code>PUT</code> requests to APIs is more involved than <code>GET</code> requests. Either you have to use a tool, which we'll look at an example of very soon, or you have to write some API client code.</p>
+<h3 id="headers-metadata-for-requests">Headers: Metadata for Requests</h3>
+<p>HTTP <strong>headers</strong> carry additional standard metadata about the request. The names of the example headers shown below are all defined by the HTTP standard. The API designer's use of headers is <em>primarily</em> choosing which standard headers to utilize, if any. </p>
+<ul>
+<li><strong>Authentication</strong> is used to prove the request is made by an authorized user (e.g. Bearer Tokens for security):</li>
+</ul>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-10-1"><span class="err">Authorization: Bearer abc123xyz</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Content-Type</strong> tells the server the data format in the request body (e.g., specifying JSON data format):</li>
+</ul>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-11-1"><span class="err">Content-Type: application/json</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Accept</strong> indicates the client expects a certain data type in the response body (e.g., requesting a response in a specific format):</li>
+</ul>
+<div class="language-http highlight"><pre><span></span><code><span id="__span-12-1"><span class="err">Accept: application/json</span>
+</span></code></pre></div>
+<p>In the initial APIs you design, you will not be overly concerned with headers. Why? We will start with building some public APIs that do not attempt to authenticate a user. Additionally, all of our APIs will standardize around the <code>application/json</code> request body and response format. It's become pretty standard and is nice to work with. If you spend enough time implementing APIs, you may find it interesting to learn more about <em>content negotiation</em> which allows the client to request the same resource be responded in a specific data type (such as <code>XML</code> or <code>HTML</code> rather than <code>JSON</code>).</p>
+<p>Headers are also commonly used to help out with content caching, where clients give servers a hash of their cached content and servers can response "nothing's changed, reuse your cached copy and we're not sending anything else back." Additionally, headers are used for some security features as well, like preventing an old phishing attack where an unsuspecting person would be presented with what looked like a benign form, press submit on the form, and actually have the user submitting a POST request sent to their bank's web site to transfer money from their bank account or make a purchase on an web store. That is referred to as "cross-site request forgery" or CSRF. Headers can play a role in protecting APIs against it.</p>
+<p>In some avante garde APIs, designers may introduce their own custom headers, which you can spot as different from standard headers using an <code>X-</code> prefix, such as <code>X-API-KEY</code>, but this is rare and certainly not something you should consider when designing early APIs. If you were ever to think, "hmm should I design a custom header for this?" the answer is probably no and the extra information should be bundled in a request either as a query parameter or additional field in the request body.</p>
+<h2 id="response-output-specifications">Response Output Specifications</h2>
+<p>After a client makes a request to a server, the client needs to know what kind of response(s) to expect back in order to properly handle the response. What is the happy path? What is expected when something goes wrong? Typically response specifications are pairings of <em>response code</em> and <em>response body schema</em>. For example, if a client provides a well formed request to search for a user in a directory, it can expect to receive back a <code>200 OK</code> response code and a JSON response body with a user schema. If a client fails to provide a necessary query parameter, perhaps a <code>400 Bad Request</code> response code is sent with a JSON response body that includes an <em>error schema</em> with different fields than a <em>user schema</em> indicating what went wrong.</p>
+<h3 id="response-status-code">Response Status Code</h3>
+<p>These were covered in more detail in the previos reading. Typically your job as an API designer is to specify which codes a resource routes (method + path) may respond with. </p>
+<p>Success Responses (200-299):</p>
+<ul>
+<li>You must specify what data will be returned (the response schema)</li>
+<li>Example: A 200 response returning user data needs a schema defining the user object structure</li>
+</ul>
+<p>Redirection Responses (300-399):</p>
+<ul>
+<li>No schema needed</li>
+<li>The next location is sent in the response headers instead</li>
+<li>Example: A 301 response includes a header pointing to the new URL</li>
+</ul>
+<p>Client Error Responses (400-499):</p>
+<ul>
+<li>Need a schema for error information</li>
+<li>Many API frameworks provide default error schemas</li>
+<li>Example: A 400 response needs a schema showing how error messages are formatted</li>
+</ul>
+<p>Server Error Responses (500-599):</p>
+<ul>
+<li>These represent unexpected failures</li>
+<li>Examples: Server crashes, out-of-memory errors, database connection failures</li>
+<li>Generally don't need custom schemas since these are unplanned errors</li>
+<li>Your framework typically handles how these errors are formatted</li>
+</ul>
+<p>As an API designer, you'll mainly focus on defining schemas for success responses (200s) and client errors (400s), since these are the planned, normal operations of your API.</p>
+<h3 id="response-body-schemas">Response Body Schemas</h3>
+<p>Just like with <em>request body schemas</em> discussed above, an API Designer is tasked with specifying the shape of data clients can expect in response to their request. This is <em>very analagous</em> to specifying the return type of a function or method when programming. In most modern API frameworks, including the one you will learn in this course (FastAPI) the way we specify request and response body schemas is exactly the same and will be <em>very comfortable</em> to you. Why? Because they'll just be class definitions!</p>
+<h3 id="response-headers">Response Headers</h3>
+<p>Like request headers, your initial API design work will not be overly concerned with response headers. Why? We'll always respond with a content-type of JSON. Additionally, many advanced response headers (cache control and compression) are handled by middleware and configuration, not explicitly our concern when designing the structure of an API. It's unlikely you'll need 300-level response codes in your first APIs, but these would be a reason you would care about headers: when you <em>redirect</em> a client because a resource URL has moved that information is sent back via a <code>Location</code> header. When the time comes, trust a quick documentation search or LLM prompt will fill you in.</p>
+<h2 id="kris-can-we-please-just-code-up-an-api">Kris, can we <em>please</em> just code up an API?</h2>
+<p>Yes! I promise if I believed starting with writing API code first, before these concepts were introduced and vaguely familiar, that it is easy to fail to get lost in the details. Modern API frameworks, like FastAPI, go to great lengths to make the developer experience as convenient and terse as possible. Some of these inputs (like the difference between a dynamic path part and a query parameter) can be hard to spot the differences of, or know why to use one over the other, when writing your first API implementation code. Keep these inputs and specification concerns in mind as we dive in next!</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../4-http/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Key Concepts in HTTP">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Key Concepts in HTTP
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../6-fast-api-tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: FastAPI and Pydantic Tutorial">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                FastAPI and Pydantic Tutorial
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1538 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/tasks/tk02_dev_tools/">
+      
+      
+        <link rel="prev" href="../tk01_write_adr/">
+      
+      
+        <link rel="next" href="../tk03_git_diagrams/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Implement a Dependency Manager ADR with an Agent - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#prelude" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implement a Dependency Manager ADR with an Agent
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prelude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prelude
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commit-branch-and-merge-expectations-of-this-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commit, Branch, and Merge Expectations of this Task
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#your-initial-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Your Initial Task
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Your Initial Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-it-works-with-acceptance-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify it Works with Acceptance Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions-to-be-able-to-answer-following-this-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions to be able to answer following this task:
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Implement a Dependency Manager ADR with an Agent</h1>
+
+<h2 id="prelude">Prelude</h2>
+<p>In the alternate timeline, you previously submitted ADRs to Synercast.io. Chad selected you for the job!</p>
+<blockquote>
+<p>Subject: Welcome + First Engineering Task</p>
+<p>Internal Memo: Welcome to SynerCast.ai!!!</p>
+<p>From: Chadwick P. Ledger, CEO (HBS)</p>
+<p>To: Engineering (You)</p>
+<p>Subject: Welcome + First Engineering Task</p>
+<p>Hi and welcome!!!</p>
+<p>First off, congratulations on joining SynerCast.ai, one of the most exciting and futuristic companies in the software space right now. Our leadership team is made up almost entirely of Harvard Business School graduates, which means we think very strategically and also very big picture.</p>
+<p>Earlier this year, we made the bold decision to offshore engineering to the cloud. The idea was simple: if AI can write code faster than people, why slow things down with engineers? This freed us up to focus on what really matters—vision, alignment, and pitch decks.</p>
+<p>Honestly, for a while, it was going great.</p>
+<p>Recently, though, we’ve noticed a few small things:</p>
+<ul>
+<li>The app only runs on my laptop.</li>
+<li>Sometimes it runs, but the weather is for a different state.</li>
+<li>Fixing one bug often creates a different bug, which we assume is just how software works now.</li>
+<li>Nobody is totally sure which files are "the real ones."</li>
+</ul>
+<p>So anyway, welcome! You are now the Engineering Department.</p>
+<p>To keep things simple, we are starting small. Your first task is to help us "professionalize" how we manage dependencies.</p>
+<p>Right now, installing the project is kind of vibes-based.</p>
+<p>We would like you to:</p>
+<ul>
+<li>Decide on a proper Python package manager for the project.</li>
+<li>Use the short Architecture Decision Record (ADR) you wrote in your application explaining that choice.</li>
+<li>Implement the ADR you wrote yourself, by offshoring whatever you need to the cloud.</li>
+</ul>
+<p>We’ve been told by several very confident people on the internet that all the coolest new companies in Silicon Valley are using something called <strong>"uv"</strong>, so that is probably the right answer. That said, we still need something written down that explains <em>why</em> we’re doing it this way, in case an investor asks.</p>
+<p>You do not need to add features or redesign anything. We just want something we can point to and say, "Yes, we have an engineering process now."</p>
+<p>If you could commit that ADR and make sure it says we chose <strong>uv</strong>, that would be perfect.</p>
+<p>Thanks,
+Chad
+CEO, SynerCast.ai</p>
+</blockquote>
+<h2 id="getting-started">Getting Started</h2>
+<p>Get started by accepting the following GitHub Classroom Assignment: <a href="https://classroom.github.com/a/3UMeYIjj">https://classroom.github.com/a/3UMeYIjj</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Accept Invitation to Join COMP423 Spring 2026 Organization</p>
+<p>After attempting to accept this first assignment, you may need to accept an invitation 
+to join our course organization. </p>
+<p>To do so, in a different tab, log in to Github, navigate to <a href="https://github.com/settings/organizations">https://github.com/settings/organizations</a> and look for an invitation to join the organization.</p>
+</div>
+<p>Once your GitHub repository is created, you will need to clone it to your developer machine.</p>
+<p>Open the project directory in VSCode. It should prompt you to reopen the project in a Dev Container. Accept the suggestion and wait for the dev container to download and install. Once it has, you should see "Dev Container: ..." in the bottom left corner of VSCode. All work in this course will be completed in Dev Containers.</p>
+<h2 id="commit-branch-and-merge-expectations-of-this-task">Commit, Branch, and Merge Expectations of this Task</h2>
+<p>A significant portion of this task's grade will be contingent upon following these <code>git</code> conventions.</p>
+<ol>
+<li>
+<p>You must create a branch named <code>adr001</code> and complete your work in that branch. Go ahead and do so. How can you verify you are on the correct branch?</p>
+</li>
+<li>
+<p>You must commit your ADR, following guidelines below, in a single commit on your <code>adr001</code> branch with a commit message of <code>doc: add adr001 use uv for dependency management</code>. You can see an example of this for the <a href="https://github.com/comp423-26s/tk02-starter/commit/bb2b420f6a20af610ab4102d987dfbb90e40c64b">included ADR000 here</a>.</p>
+</li>
+<li>
+<p>After reaching a point of generating configuration with an agent, reviewing it, and verifying its correctness, you will create a commit with message <code>feat: implement uv per adr001</code> with a <em>commit body</em> that contains the agentic model you used as well as the prompt. If additional prompting is needed, document your understanding of what was wrong or unsatisfactory along with the subsequent prompt. All prompts and reflections should be included in the commit message. If you find more than 5 iterations are needed, you are encouraged to give up on this attempt (reset the commit) and try to improve your original prompt or try a different underlying model. For an example of what such a commit might look like, you can see the <a href="https://github.com/comp423-26s/tk02-starter/commit/be6ea5daba2f6e2516300fd7cd99a3d4bd7625f0">commit for feature ADR000 here</a>.</p>
+</li>
+<li>
+<p>Once you are ready to merge your branch, you should force a merge commit so that the history of this branch is clearly maintained. To do so, switch to <code>main</code> branch and merge your feature branch with the <code>--no-ff</code> flag. You can use the default merge commit message. Here's an example of <a href="https://github.com/comp423-26s/tk02-starter/commits/main/">how this history looked in the started code</a>.</p>
+</li>
+</ol>
+<h2 id="your-initial-task">Your Initial Task</h2>
+<p>The project has no dependency manager in the dev container and a key dependency is missing! How can you know? Try running: <code>python3 src/main.py</code>. The library named <code>requests</code>, a popular Python library for making API calls, is not installed in Python's environment.</p>
+<p>When you begin work on a new concept: branch. Go ahead and make the new branch described in Commit Expectation #1 above to begin working on <code>adr001</code>. You will add your written ADR from TK01 (in markdown), the one where you decided on <code>uv</code>, as an appropriately named markdown file in the <code>docs/arch</code> directory. Once you have created your ADR file and saved it, go ahead and make the commit as described in Commit Expectation #2 above.</p>
+<p>After you've made that commit, your task is to setup this project with <code>uv</code> such that when a new dev container is created (or rebuilt) the <code>uv</code> package manager is installed in the dev container, configured, and dependencies are <code>sync</code>'ed ("synchronized" or <em>installed</em>). Since installing and configuring a dependency manager in a dev container contains some non-critical configuration knowledge, it is a reasonable task to work with the GitHub Copilot Agentic AI on. Based on the strategies discussed in LS02, you should open a new agent prompt for this task. </p>
+<div class="admonition info">
+<p class="admonition-title">Don't forget to claim Copilot Pro</p>
+<p>If you run into trouble prompting Copilot within VSCode, make sure you've claimed your Copilot Pro coupon! This is a separate step from accepting Github's Student Developer Pack. To claim your coupon, head to GitHub and navigate to your profile &gt; Settings &gt; Billing and Licensing &gt; Education Benefits and follow the instructions, then restart VSCode for the changes to take effect.</p>
+</div>
+<p>Try crafting an agentic prompt that includes the following context:</p>
+<ol>
+<li>Describes what you want the agent to do for you (hint: it's implementing your Architectural Design Record)</li>
+<li>Include your ADR001 file as input context explicitly, by referencing it with the <code>#</code> (hashtag) file search feature</li>
+<li>Some useful hints to consider using in your prompt:<ul>
+<li>Less is more when it comes to configuration, use adjectives to help describe "minimal", "simple", and "well documented"</li>
+<li>Keep the focus of the task small: "Do not add any <code>uv</code> dependencies yet."</li>
+<li>Indicate your level of familiarity with <code>uv</code> and ask it to walk you through its changes</li>
+<li>Use a state of the art model like Claude Sonnet 4.5 or GPT 5.2</li>
+</ul>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Do not rebuild your container until your agent task completes</p>
+<p>The agent <em>should</em> modify your project's <code>./devcontainer/devcontainer.json</code> file. As soon as it does, before the task actually completes, VS Code will surface a pop-up asking you to rebuild the container. Ignore it! You will be able to see that the agent task is still working through completing its attempt.</p>
+</div>
+<p>When the changes complete, it is your job to evaluate what was changed and understand the lines of code added to your project in the agent's first attempt.</p>
+<p>You don't need a <em>deep</em> understanding of each change, but you should have a <em>general</em> understanding of what each change does. If you do not: it's a <em>golden</em> opportunity to learn! Rather than muddying the context of your agentic chat (and spending premium model requests...), you are encouraged to explore through web searches or a separate AI chat in the web browser.</p>
+<h3 id="verify-it-works-with-acceptance-tests">Verify it Works with Acceptance Tests</h3>
+<p>Once you believe you have a general sense of the files and changes made, how will you know they actually work? By <em>verifying them</em> and proving to yourself they work.</p>
+<p>Developing a habit of asking yourself, <em>"how can I be confident my changes work,"</em> and testing your hypotheses, is fundamental to being a successful software engineer. You need to be confident your changes to a project work before submitting them for code review or to production. This was true before AI and even more true post-AI.</p>
+<p>Since you are coming up to speed on <code>uv</code>, we provide some manual acceptance tests for you to move through in your dev container should be able to complete.</p>
+<div class="admonition warning">
+<p class="admonition-title">What to do when you encounter errors</p>
+<p>Does a step in your verification process produce errors? That's a part of the process! First: deep breath.</p>
+<p>Begin by trying to make sense of the error output. This is another great place where modern AI tools can explain cryptic error messages and possible solutions. There is often something small and manually actionable once you understand the error.</p>
+<p>If you think you are in too big of a mess to fix and want to start over, perhaps with a more refined prompt or model, this is why we use git! Use <code>git status</code> to see the files changed. You can reset the changes to existing files and delete new files to try again. Start a new context for the agent (+ icon) if you start over.</p>
+</div>
+<p>First, try rebuilding your dev container via VS Code Command Palette <strong>"Dev Containers: Rebuild Container"</strong>. Does the container successfully rebuild? This is the first and most critical acceptance test.</p>
+<p>Now that your dev container successfully builds, check to see if <code>uv</code> is installed in your shell. Open a new terminal in the dev container and try both: <code>which uv</code> and <code>uv help</code> and you should see output.</p>
+<p>Now, let's test adding a dependency via <code>uv</code>. Before doing so, to understand what happens when a dependency is added, you should go ahead and open up your <code>pyproject.toml</code> file and look for its <code>dependencies</code> configuration variable. It should be empty (if it's not empty because a clever agent added <code>requests</code> for you, try <code>uv remove requests</code> first). Back in your terminal, try <code>uv add requests</code>. Notice the output in terminal and the changes in your <code>pyproject.toml</code> file. The top-level requests dependency was added to <code>pyproject.toml</code> and sub-dependencies were added to <code>uv.lock</code> (if you open it). All were installed. If you try running <code>uv sync</code> now, you will see that everything is installed.</p>
+<p>Now, let's try running the program with <code>uv</code>'s managed environment: <code>uv run python src/main.py</code>. You should see the glorious Synercast.ai weather status for Chapel Hill printed. (If you see an error message regarding a timeout, that's an error on the server-side and not your fault. Try running again.)</p>
+<p>Finally, if you look in the hidden <code>.venv</code> directory in your project, and the <code>lib64</code> directory within it, you will see the <code>requests</code> package. You can see the source code for <code>requests</code> within, starting from the <code>__init__.py</code> module. The <code>.venv</code> directory is where all of your projects dependencies are installed. When you run <code>uv run python</code> it ensures Python's "environment" includes your project's <code>.venv</code> directory with top priority so that it uses these packages before any operating system or default packages.</p>
+<div class="admonition info">
+<p class="admonition-title">How to add .venv to your path to avoid needing to use <code>uv run</code></p>
+<p>If you try running <code>python run src/main.py</code> you will see that the import error still exists. This is because your shell is not using the project's <code>.venv</code> directory in its <code>PYTHONPATH</code> so Python does not know to look in <code>.venv</code> to load dependencies first.</p>
+<p>The common way to fix this is to "activate" the virtual environment in a shell. To do so, use the <code>uv venv</code> command and accept the replacement of your <code>.venv</code>. Since it blew up your <code>.venv</code> directory, will need to resync: <code>uv sync</code>. Then, try ending this terminal session (trash can) and starting a new one. You should see a first line of <code>source ...path.../.venv/bin/activate</code> which is a script that registers your venv in your shell environment. You should also notice the project name as a prefix to the shell prompt. Now try running <code>python src/main.py</code> and you will see the script works without <code>uv run</code>.</p>
+<p>This is common to other dependency managers that make use of virtual environments, including Poetry.</p>
+</div>
+<p>Great work! Now all that is left is to make your commit per Commit Requirement #3 and merge without fast-forwarding per Commit Requirement #4. Then you'll want to push your changes to GitHub and submit your work to TK02 on GitHub.</p>
+<h2 id="questions-to-be-able-to-answer-following-this-task">Questions to be able to answer following this task:</h2>
+<ul>
+<li>Where do my dependencies live in the directory structure for a project with a Python virtual environment?</li>
+<li>What file states what my project directly depends on?</li>
+<li>What file pins the exact versions of direct and indirect dependencies in a <code>uv</code> project?</li>
+<li>What command ensures my installed dependencies exactly match the project's pinned dependencies?</li>
+<li>How do I add a new dependency to a <code>uv</code> project? How do I remove it?</li>
+<li>How do I run commands so I’m guaranteed to they use the <code>uv</code> environment?</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tk01_write_adr/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Write ADRs for Package Managers">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Write ADRs for Package Managers
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tk03_git_diagrams/" class="md-footer__link md-footer__link--next" aria-label="Next: `git` Diagram Practice">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                `git` Diagram Practice
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

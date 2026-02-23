@@ -1,0 +1,2518 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/resources/exercises/ex01-api-design/">
+      
+      
+        <link rel="prev" href="../../database/1-sql/">
+      
+      
+        <link rel="next" href="../ex02-ng-frontend/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>EX01. API Design and Implementation - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ex01-api-design-and-implementation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              EX01. API Design and Implementation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/system" class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../threads/tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/system" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../threads/tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#breakdown-of-parts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breakdown of Parts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-overview-the-pastebin-url-shortener" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        App Overview: The Pastebin + URL Shortener
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="App Overview: The Pastebin + URL Shortener">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-journey-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Journey Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sue-sharer-creates-a-text-snippet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sue Sharer Creates a Text Snippet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sue-sharer-creates-a-shortened-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sue Sharer Creates a Shortened URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-user-stories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required User Stories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-requirement-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path Requirement Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-authentication-enforced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Authentication Enforced
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: API Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: API Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-branch-for-individual-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a Branch for Individual API Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#individual-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Individual API Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openapi-specification-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAPI Specification Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenAPI Specification Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fastapi-application-level-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FastAPI Application-level Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#route-level-decorator-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route-level Decorator Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-path-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic Path Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Query Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documenting-pydantic-model-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documenting Pydantic Model Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-body-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request Body Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-note-on-model-design-and-typing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Note on Model Design and Typing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collaboration-for-phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collaboration for Phase 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sanity-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanity Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-submission-and-reflection-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 Submission and Reflection Questions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementation-extra-credit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Extra Credit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-cicd-in-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: CI/CD in Production
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: CI/CD in Production">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-continuous-integration-with-a-github-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up Continuous Integration with a Github Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-ruleset-for-continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Ruleset for Continuous Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Pull Request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-okdkubernetes-oc-tool-to-the-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding OKD/Kubernetes' oc Tool to the Dev Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-production-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a production Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merging-your-prs-and-continuing-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merging your PRs and Continuing Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manually-deploying-your-project-to-okdkubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manually Deploying your Project to OKD/Kubernetes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Manually Deploying your Project to OKD/Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-a-fine-grained-personal-access-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup a Fine-grained Personal Access Token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-up-the-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set up the App
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-continuous-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up Continuous Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting up Continuous Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-repository-secret-with-the-url-of-your-okd-build-webhook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding a Repository Secret with the URL of your OKD Build WebHook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updating-github-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating GitHub Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finishing-up-ex02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing up EX02
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequently-asked-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frequently Asked Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Frequently Asked Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#my-github-action-is-not-running-or-failing-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My Github Action is Not Running or Failing, Why?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#should-shortened-urls-redirect-to-the-url-or-just-display-the-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Should shortened URLs redirect to the URL or just display the URL?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-should-you-handle-hostname-differences-between-development-and-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How should you handle hostname differences between development and production?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ex01-api-design-and-implementation">EX01. API Design and Implementation</h1>
+<h2 id="breakdown-of-parts">Breakdown of Parts</h2>
+<p>Part 1. You only need to implement the route decorators and function signatures, <em>NOT</em> the actual implementation of the API.</p>
+<p>Part 2. You wll implement the API and deploy it to a production environment.</p>
+<h2 id="app-overview-the-pastebin-url-shortener">App Overview: The Pastebin + URL Shortener</h2>
+<p>In this lab, you and a partner will collaborate to design and implement a service that combines:</p>
+<ul>
+<li>A Pastebin-style API (store text snippets and retrieve them by a unique URL).</li>
+<li>A URL-shortening API (submit a long URL and receive a short, redirectable URL).</li>
+</ul>
+<p>These two functionalities must share a common <strong>opaque namespace</strong> for links, presenting unique design challenges regarding how to store and retrieve resources come implementation time.</p>
+<p>This application will be able to generate shortened URLs for sharing content such as:</p>
+<ol>
+<li>Pastbin Example: <a href="https://pastebin.com/uYCCWaxy">https://pastebin.com/uYCCWaxy</a></li>
+<li>URL Shortener Example: <a href="https://go.unc.edu/Xj9b6">https://go.unc.edu/Xj9b6</a></li>
+</ol>
+<p>This application design will feature three personas:</p>
+<ol>
+<li>
+<p><strong>Sue Sharer</strong> is someone who wants to distribute content easily. She might be a student sharing notes, a blogger sharing a quote, or a prankster hiding a Rickroll. Sue values convenience, control, and customization, which is why she wants options like vanity URLs and expiration times.</p>
+</li>
+<li>
+<p><strong>Cai Clicker</strong> is the person who receives and opens links. They might be a friend reading a shared snippet, a recruiter reviewing a resume, or an unsuspecting victim of a disguised meme. Cai values seamlessness and reliability—when they click a link, they expect to either see content immediately or be redirected without confusion.</p>
+</li>
+<li>
+<p><strong>Amy Admin</strong> is responsible for monitoring and managing all active resources. She is a community manager. Amy values visibility, control, and order, ensuring that shared content remains appropriate and awareness of high-traffic links.</p>
+</li>
+</ol>
+<h3 id="user-journey-examples">User Journey Examples</h3>
+<p>An journey may combine a few user stories in order to give a complete start-to-finish example of a feature's use. Since you may not be familiar with the point of a pastebin-like service, or URL shortener, consider these journeys before reading the user stories in a more standalone presentation.</p>
+<h3 id="sue-sharer-creates-a-text-snippet"><strong>Sue Sharer Creates a Text Snippet</strong></h3>
+<ol>
+<li>Sue wants to share a quote from a book with a friend.  </li>
+<li>She submits the text:<br />
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1">&quot;Not all those who wander are lost.&quot;
+</span></code></pre></div></li>
+<li>The system generates a random URL path and responds with the information Sue needs to share the URL.</li>
+<li>Sue shares this link with her friend.  </li>
+<li>Cai Clicker clicks the link, which looks something like <code>https://&lt;your-apps-hostname&gt;/xYzA12</code> and sees the text snippet:<br />
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1">&quot;Not all those who wander are lost.&quot;
+</span></code></pre></div></li>
+</ol>
+<h3 id="sue-sharer-creates-a-shortened-url"><strong>Sue Sharer Creates a Shortened URL</strong></h3>
+<ol>
+<li>Sue wants to prank a friend by disguising a Rick Astley video link.  </li>
+<li>She submits the long URL below and a vanity path of <code>exam-solutions</code>:<br />
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1">https://www.youtube.com/watch?v=dQw4w9WgXcQ
+</span></code></pre></div></li>
+<li>The system generates a link with the vanity path and responds with the information Sue needs to share the URL. </li>
+<li>Sue shares this link with her friend: <code>https://&lt;your-apps-hostname&gt;/exam-solutions</code>  </li>
+<li>Cai Clicker clicks the link and is redirected to:<br />
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1">https://www.youtube.com/watch?v=dQw4w9WgXcQ
+</span></code></pre></div></li>
+</ol>
+<h3 id="required-user-stories">Required User Stories</h3>
+<ol>
+<li>Sue Sharer<ol>
+<li>As Sue Sharer, I want to create a new text snippet with an optional expiration time and the ability to request a custom vanity URL, so that I can control how long it is available and share a more meaningful link.</li>
+<li>As Sue Sharer, I want to create a shortened URL with an optional expiration time and the ability to request a custom vanity URL, so that I can control how long it is available and share a more meaningful link.</li>
+</ol>
+</li>
+<li>Cai Clicker<ol>
+<li>As Cai Clicker, I want to open a shared text snippet by clicking its unique link, so that I can read the content that was provided to me.</li>
+<li>As Cai Clicker, I want to open a shortened URL by clicking its unique link, so that I am automatically redirected to the original long URL.</li>
+</ol>
+</li>
+<li>Amy Admin<ol>
+<li>As Amy Admin, I want to see a list of all active resources (text snippets and shortened URLs) and filter by type or view counts greater than some low threshold, so that I can oversee what content is currently being shared.  </li>
+<li>As Amy Admin, I want to see how many times each resource has been accessed, so that I can monitor usage and identify high-traffic resources.</li>
+<li>As Amy Admin, I want to update the content of an active text snippet or change the target of a shortened URL, so that I can correct or modify existing resources when necessary.  </li>
+<li>As Amy Admin, I want to delete any active resource from the system, so that I can remove content that should no longer be available.  </li>
+</ol>
+</li>
+</ol>
+<h3 id="path-requirement-specifications">Path Requirement Specifications</h3>
+<p>User stories 2.a. and 2.b. above are the only stories which we will very specificaly share an API requirement, as follows:</p>
+<p>These two stories should both share the same opaque route, including <em>method</em> and <em>path</em>. The method is <code>GET</code> and the <code>path</code> in FastAPI route path syntax is <code>/{resource_identifier}</code>. This means that there is a single shared path pattern for retrieving both types of resources.</p>
+<ul>
+<li>When a user accesses a generated or vanity URL, the system must determine whether it corresponds to a <strong>text snippet</strong> or a <strong>shortened URL</strong>.</li>
+<li>The user <strong>should not</strong> be able to infer whether a given URL points to a text snippet or a redirection just by looking at it.</li>
+</ul>
+<h3 id="no-authentication-enforced">No Authentication Enforced</h3>
+<p>The concerns of how to authenticate a user, like Amy Admin, and authorize various actions, is beyond your concern in this initial API design. You should proceed with all routes publicly available, unprotected. Later, we'll learn strategies for authenticating and authorizing various actions at the HTTP API level.</p>
+<h2 id="phase-1-api-design">Phase 1: API Design</h2>
+<h3 id="getting-started">Getting Started</h3>
+<p>To begin work on EX01, you and your partner will need to accept a GitHub classroom with your <mark>assigned Team Name (in the form of <strong><code>team_0_NN</code></strong>)</mark> found in the <a href="https://docs.google.com/spreadsheets/d/1Eu4tzOATIkRDSwg9NqxZleKChDjYhuQD8ORjOspsNMg/edit?usp=sharing">pairings sheet</a>. First look up your team name by your PID and copy it. Then go accept the <a href="https://classroom.github.com/a/FfbRXDWO">GitHub classroom assignment by following this link</a>. Search for your team name and if it already exists, join it. If you are the first of your pair to begin, create the team with the assigned team name.</p>
+<h3 id="create-a-branch-for-individual-api-design">Create a Branch for Individual API Design</h3>
+<p>Clone the project, open your project in a dev container, and create a branch for your individual API design. <strong>Name your branch something that includes your onyen or github username.</strong></p>
+<h3 id="individual-api-design">Individual API Design</h3>
+<p>In your branch created above, go ahead and stub out an HTTP API, making use of FastAPI routes and Pydantic models as necessary, that satisfy the user stories. Use the <code>/docs</code> user interface to review your routes. Your objectives are:</p>
+<ul>
+<li><strong>Define Endpoints</strong>: Specify all the HTTP routes required for the required user stories above.</li>
+<li><strong>Design Data Models</strong>: Create Pydantic models that define the structure of request bodies and responses.</li>
+<li><strong>Clear OpenAPI Documentation</strong>: Fully document important your API using the OpenAPI standards discussed below.</li>
+<li><strong>Establish Conventions</strong>: Ensure consistent naming and documentation throughout your API design.</li>
+</ul>
+<h3 id="openapi-specification-requirements">OpenAPI Specification Requirements</h3>
+<p>FastAPI and Pydantic have special constructs which allow you to more fully specify your API and its documentation to produce the standards-based <code>OpenAPI.json</code> spec powering the <code>/docs</code> user interface.</p>
+<p>You are required to add specification and documentation to your API design along each of the following dimensions. You can find examples of how each is done following this overview list:</p>
+<ul>
+<li><strong>FastAPI Application:</strong> Ensure your app is properly instantiated with required metadata.</li>
+<li><strong>Route-level:</strong> Always include a summary and description; document response bodies thoroughly.</li>
+<li><strong>Route Parameters:</strong><ul>
+<li><strong>Path parameters:</strong> Must have descriptions and optional validations.</li>
+<li><strong>Query parameters:</strong> Must have descriptions and can include validations.</li>
+<li><strong>Body parameters:</strong> Must have descriptions and <code>openapi_examples</code> for clear request body documentation.</li>
+</ul>
+</li>
+<li><strong>Pydantic Fields:</strong> Every field should include a description and an example (or examples) to aid API consumers.</li>
+</ul>
+<h4 id="fastapi-application-level-documentation">FastAPI Application-level Documentation</h4>
+<p>Instantiate your FastAPI app using the <code>FastAPI</code> constructor. You <em>must</em> provide a <code>title</code>, <code>contact</code>, <code>description</code>, and <code>openapi_tags</code> (for organizing routes), as shown below. Notice that the description is markdown and you can use a <em>docstring</em> to give your API documentation </p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">(</span>
+</span><span id="__span-4-2">    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;EX01 API Design&quot;</span><span class="p">,</span>
+</span><span id="__span-4-3">    <span class="n">contact</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-4-4">        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Parter A, Partner B&quot;</span><span class="p">,</span>
+</span><span id="__span-4-5">        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/comp423-26s/&lt;your-team-repo&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-4-6">    <span class="p">},</span>
+</span><span id="__span-4-7">    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-4-8"><span class="s2">## Introduction</span>
+</span><span id="__span-4-9">
+</span><span id="__span-4-10"><span class="s2">Your introduction text to your API goes here, in **markdown**.</span>
+</span><span id="__span-4-11"><span class="s2">Write your own brief intro to what his API is about.</span>
+</span><span id="__span-4-12"><span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+</span><span id="__span-4-13">    <span class="n">openapi_tags</span><span class="o">=</span><span class="p">[</span>
+</span><span id="__span-4-14">        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sue&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Sue Sharer&#39;s API Endpoints&quot;</span><span class="p">},</span>
+</span><span id="__span-4-15">        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Cai&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Cai Clicker&#39;s API Endpoints&quot;</span><span class="p">},</span>
+</span><span id="__span-4-16">        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Amy&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Amy Admin&#39;s API Endpoints&quot;</span><span class="p">},</span>
+</span><span id="__span-4-17">    <span class="p">],</span>
+</span><span id="__span-4-18"><span class="p">)</span>
+</span></code></pre></div>
+<p>After you've more fully configured your <code>app</code>, as shown above, try reloading your OpenAPI UI by navigating to <code>/docs</code> in your dev server. You should see the information above being used to improve the documentation generated. The <strong>tags</strong> added will allow you to organize your routes based on the intended user. In real APIs, tags are generally used to cluster endpoints for a specific feature together; here we're using them to organize by persona served.</p>
+<h4 id="route-level-decorator-specification">Route-level Decorator Specification</h4>
+<p>Define endpoints using FastAPI’s route decorators (e.g., <code>@app.get</code>, <code>@app.post</code>). Each route <em>must</em> include a <em>summary</em>, <em>description</em>, and <em>tag</em>. The <em>tag</em> corresponds to the <code>openapi_tags</code> you specified above and will be a persona name. If your route returns response codes besides <code>200</code>, such as <code>404</code>, you need to specify the <em>responses</em> field as shown below. For a given status code, the <em>description</em> is required and the <em>model</em> (Pydantic subclass) is only necessary if the response returns a body.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-5-2">
+</span><span id="__span-5-3"><span class="k">class</span><span class="w"> </span><span class="nc">MessageResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="__span-5-4">    <span class="n">message</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-5-5">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Information conveyed ot user&quot;</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Hi!&quot;</span><span class="p">]</span>
+</span><span id="__span-5-6">    <span class="p">)]</span>
+</span><span id="__span-5-7">
+</span><span id="__span-5-8"><span class="c1"># ...</span>
+</span><span id="__span-5-9">
+</span><span id="__span-5-10"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-5-11">    <span class="s2">&quot;/items/</span><span class="si">{item_id}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-5-12">    <span class="n">summary</span><span class="o">=</span><span class="s2">&quot;Retrieve an Item&quot;</span><span class="p">,</span>
+</span><span id="__span-5-13">    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Get details of an item by its ID.&quot;</span><span class="p">,</span>
+</span><span id="__span-5-14">    <span class="n">responses</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-5-15">        <span class="mi">404</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-5-16">            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Item not found&quot;</span><span class="p">,</span>
+</span><span id="__span-5-17">        <span class="p">}</span>
+</span><span id="__span-5-18">    <span class="p">},</span>
+</span><span id="__span-5-19">    <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Shopping&quot;</span><span class="p">]</span>
+</span><span id="__span-5-20"><span class="p">)</span>
+</span><span id="__span-5-21"><span class="k">def</span><span class="w"> </span><span class="nf">get_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageResponse</span><span class="p">:</span>
+</span><span id="__span-5-22">    <span class="k">if</span> <span class="n">item_id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-5-23">        <span class="k">return</span> <span class="n">MessageResponse</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Item found!&quot;</span><span class="p">)</span>
+</span><span id="__span-5-24">    <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-5-25">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Item not found!&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="dynamic-path-parameters">Dynamic <strong>Path</strong> Parameters</h4>
+<p>For dynamic segments in the URL (path parameters), use <code>Path</code>. Include a <strong>description</strong> and any additional keyword parameters found in the <a href="https://fastapi.tiangolo.com/reference/parameters/?h=path%28#fastapi.Query">official documentation</a> you believe would be helpful in specifying and documenting your path (useful ideas: 1. <code>examples</code> list of example values you might expect for the parameter, 2. validation such as <code>min_length</code> or <code>gt</code> (greater than) as shown below).</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Path</span>
+</span><span id="__span-6-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-6-3">
+</span><span id="__span-6-4"><span class="c1"># ...</span>
+</span><span id="__span-6-5">
+</span><span id="__span-6-6"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/users/</span><span class="si">{user_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-6-7"><span class="k">def</span><span class="w"> </span><span class="nf">get_user</span><span class="p">(</span>
+</span><span id="__span-6-8">    <span class="n">user_id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span>
+</span><span id="__span-6-9">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The unique ID of the user&quot;</span><span class="p">,</span>
+</span><span id="__span-6-10">        <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-6-11">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">423</span><span class="p">]</span>
+</span><span id="__span-6-12">    <span class="p">)]</span>
+</span><span id="__span-6-13"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
+</span><span id="__span-6-14">    <span class="o">...</span>
+</span></code></pre></div>
+<h4 id="query-parameters"><strong>Query</strong> Parameters</h4>
+<p>For query parameters (appended to the URL), use <code>Query</code>. Each query parameter <strong>must</strong> include a <strong>description</strong>, <strong>should</strong> probably include a default value, and can optionally include additional examples and validation rules, if needed. See the <a href="https://fastapi.tiangolo.com/reference/parameters/?h=path%28#fastapi.Query">official documentation</a> on supported keyword parameters when specifying and documenting query parameters.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Query</span>
+</span><span id="__span-7-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-7-3">
+</span><span id="__span-7-4"><span class="c1"># ...</span>
+</span><span id="__span-7-5">
+</span><span id="__span-7-6"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/search&quot;</span><span class="p">)</span>
+</span><span id="__span-7-7"><span class="k">def</span><span class="w"> </span><span class="nf">search_items</span><span class="p">(</span>
+</span><span id="__span-7-8">    <span class="n">q</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Query</span><span class="p">(</span>
+</span><span id="__span-7-9">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The product search query&quot;</span><span class="p">,</span>
+</span><span id="__span-7-10">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jordans&quot;</span><span class="p">]</span>
+</span><span id="__span-7-11">    <span class="p">)]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Default value is empty string</span>
+</span><span id="__span-7-12"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SearchResults</span><span class="p">:</span>
+</span><span id="__span-7-13">    <span class="o">...</span>
+</span></code></pre></div>
+<h4 id="documenting-pydantic-model-fields">Documenting Pydantic Model Fields</h4>
+<p>Within your Pydantic models, use the <code>Field</code> function to document each field. Every field <strong>must</strong> have a <strong>description</strong> and <strong>examples</strong> list to aid API consumers.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+</span><span id="__span-8-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-8-3">
+</span><span id="__span-8-4"><span class="k">class</span><span class="w"> </span><span class="nc">Item</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="__span-8-5">    <span class="n">name</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-8-6">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Name of Product&quot;</span><span class="p">,</span>
+</span><span id="__span-8-7">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;UNC Jersey&quot;</span><span class="p">,</span> <span class="s2">&quot;UNC Socks&quot;</span><span class="p">]</span>
+</span><span id="__span-8-8">    <span class="p">)]</span>
+</span><span id="__span-8-9">    <span class="n">price</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-8-10">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sales Price&quot;</span><span class="p">,</span>
+</span><span id="__span-8-11">        <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mf">75.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">]</span>
+</span><span id="__span-8-12">    <span class="p">)]</span>
+</span></code></pre></div>
+<h4 id="request-body-parameters">Request Body Parameters</h4>
+<p>For request body parameters (used in <code>POST</code>/<code>PUT</code>/<code>PATCH</code> requests), define a Pydantic model and use <code>Body</code> to add metadata. The body parameter <strong>must</strong> include a <strong>description</strong> and <strong>openapi_examples</strong>. These examples help make testing out the API in <code>/docs</code> easier, as you will see when you try it out. You can also add validation rules if needed.</p>
+<p><em>Example:</em></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">Body</span>
+</span><span id="__span-9-2"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+</span><span id="__span-9-3">
+</span><span id="__span-9-4"><span class="c1"># ... Same Item model as above ...</span>
+</span><span id="__span-9-5">
+</span><span id="__span-9-6"><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/items&quot;</span><span class="p">)</span>
+</span><span id="__span-9-7"><span class="k">def</span><span class="w"> </span><span class="nf">create_item</span><span class="p">(</span>
+</span><span id="__span-9-8">    <span class="n">item</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Item</span><span class="p">,</span> <span class="n">Body</span><span class="p">(</span>
+</span><span id="__span-9-9">        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The product to create&quot;</span><span class="p">,</span>
+</span><span id="__span-9-10">        <span class="n">openapi_examples</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-9-11">            <span class="s2">&quot;Air Jordans&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-9-12">                <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="s2">&quot;Air Jordan 1 Mid SE&quot;</span><span class="p">,</span>
+</span><span id="__span-9-13">                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Sample product to create&quot;</span><span class="p">,</span>
+</span><span id="__span-9-14">                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-9-15">                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Air Jordan 1 Mid SE&quot;</span><span class="p">,</span>
+</span><span id="__span-9-16">                    <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">134.99</span>
+</span><span id="__span-9-17">                <span class="p">},</span>
+</span><span id="__span-9-18">            <span class="p">}</span>
+</span><span id="__span-9-19">        <span class="p">}</span>
+</span><span id="__span-9-20">    <span class="p">)]</span>
+</span><span id="__span-9-21"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Item</span><span class="p">:</span>
+</span><span id="__span-9-22">    <span class="o">...</span>
+</span></code></pre></div>
+<h3 id="a-note-on-model-design-and-typing">A Note on Model Design and Typing</h3>
+<p>In your design space for implementing your models, there are likely a few paths worth considering. The design challenge you are confronted with is your API involves two different kinds of resources (text versus links) and they have differences in behaviors, validations, and so on. However, they also share some things in common (such as the namespace for their shortened paths once created, the expiration, and the access counter).</p>
+<ol>
+<li>(Do not do this!) Unimodel - Single model shared by both types. This solution is taking on technical debt and becomes gnarly to maintain and extend.</li>
+<li>(Discouraged) Traditional Inheritance Hierarchy - a single resource subclass of <code>BaseModel</code> which is then subclassed for your specific resources.</li>
+<li>(Recommended) <a href="https://docs.pydantic.dev/2.0/usage/types/unions/#discriminated-unions-aka-tagged-unions">Discriminated Type Unions</a> - models use a common string field to communicate their type. This is useful because once a Python or JavaScript object is <em>serialized</em> into JSON for transfer over an API, only the field names and values of an object are transferred. By encoding type into a field, it's easier to work with. This strategy has emerged in many dynamic programming languages and is recommended in Pydantic and our front-end language TypeScript.</li>
+</ol>
+<p>To learn more about discriminated type unions in Pydantic, see the [official Pydantic documentation]. Additionally, feel free to search or have an <a href="https://chatgpt.com/share/679f8a1a-22d4-8000-8ad4-2dab48c5f46f">interactive learning conversation with ChatGPT</a> to gain a better understanding. <a href="https://chatgpt.com/share/679f8a1a-22d4-8000-8ad4-2dab48c5f46f">Here's an example prompt I tried in ChatGPT that gave a solid introduction</a>. As always, with LLM generated content, read carefully and vigilantly: it doesn't always tell the complete story, the correct story, or have a complete understanding of what exactly you are doing.</p>
+<h3 id="collaboration-for-phase-1">Collaboration for Phase 1</h3>
+<p>Each of you should individually draft a design of your API in FastAPI on your own branches (branch naming specified after the Getting Started section above). You should both push your branches to GitHub.</p>
+<p>Once you are ready to merge your branches to form a unified API for your team, we do not recommend actually attempting a merge in <code>git</code>. You are welcomed to, but at your own peril. Since you both worked in <code>main.py</code>, and made design decisions independently, the merge conflict resolution will be gnarly.</p>
+<p>Instead of attempting a <code>git</code> merge, we strongly suggest <strong>pair programming</strong>, and starting over by going back to your <code>main</code> branch on one of your machines. Start a new branch based on <code>main</code> that is <code>pair-api-design</code>. On the other of your machines, have open both of your branches in GitHub to easily view how each of you approached the design and try to form a consensus on how to approach. You will be well served by each reading each other's design and then attempting to whiteboard your final approach before diving into code. Once you are complete, push your final <code>pair-api-design</code> to GitHub and submit your teams' reflection for Phase 1 on Gradescope.</p>
+<h3 id="sanity-checks">Sanity Checks</h3>
+<p>Questions to consider in the context of your API:</p>
+<ul>
+<li>Have we ensured that our design addresses every required user story for Sue, Cai, and Amy?</li>
+<li>Are our naming conventions for endpoints, models, and fields consistent and descriptive enough for all personas?</li>
+<li>How does our design distinguish between a text snippet and a URL shortener resource when using the same <code>/{resource_identifier}</code> endpoint?</li>
+<li>Are we including required metadata (e.g., summaries, descriptions, examples) for every endpoint and model field so that a developer can easily understand our API?</li>
+<li>How have we documented error responses (like 404 for missing resources) in our endpoints?</li>
+<li>Is the route design intuitive for both API users and maintainers?</li>
+<li>How easily can our design be extended in the future if new requirements are added?</li>
+</ul>
+<h3 id="phase-1-submission-and-reflection-questions">Phase 1 Submission and Reflection Questions</h3>
+<ul>
+<li>Gradescope submission will include:<ul>
+<li>Permalink to branches of both partners</li>
+<li>Permalink to the final <code>pair-api-design</code> branch</li>
+</ul>
+</li>
+<li>Brief reflection question:<ul>
+<li>What challenges did we encounter when comparing our individual designs, developing a single design, and pair programming our joint, final design?</li>
+</ul>
+</li>
+</ul>
+<h3 id="key-takeaways">Key Takeaways</h3>
+<ol>
+<li>
+<p><strong>Designing for Users and Use Cases</strong></p>
+<p>Through this assignment, you’ve gained experience designing an API that serves multiple types of users with distinct needs. You’ve seen how clear, user-focused API design is essential—not just for making the system functional but also for ensuring a smooth experience for different personas. This mirrors real-world software development, where balancing the needs of end users, system administrators, and stakeholders is key to building successful products.</p>
+</li>
+<li>
+<p><strong>Writing Clear, Professional API Documentation</strong></p>
+<p>By leveraging FastAPI’s OpenAPI documentation, you’ve practiced writing API specs that go beyond just making things work—you’ve created an API that is easy for others to understand, test, and use. In industry, well-documented APIs are what enable teams to scale, integrate with other systems, and onboard new developers quickly. This attention to detail will serve you well in any software engineering or product development role.</p>
+</li>
+<li>
+<p><strong>Navigating Design Constraints</strong></p>
+<p>You’ve tackled a unique design challenge: storing and retrieving two different resource types (text snippets and URL redirects) while keeping a shared, opaque namespace. This required careful thinking about data modeling and routing logic. Real-world software design often involves trade-offs like these, where multiple features must coexist within a unified system without exposing unnecessary complexity to users.</p>
+</li>
+<li>
+<p><strong>Collaborating on Software Design in a Team Environment</strong></p>
+<p>By independently designing an API and then merging your ideas into a unified implementation, you’ve practiced an essential part of professional software development: balancing individual contributions with collaborative decision-making. You’ve navigated trade-offs, discussed design choices, and worked toward a shared vision—skills that are essential in any software engineering role.</p>
+</li>
+<li>
+<p><strong>Designing the Interface First for Human-Centered Development</strong></p>
+<p>By focusing on the API interface before implementation, you’ve embraced a human-centered approach—prioritizing how users interact with the system rather than getting lost in internal details. This ensures the design is intuitive, valuable, and easy to integrate. A well-defined interface also enables parallel development: frontend teams can build against the spec while backend teams implement functionality, making collaboration more efficient. In real-world projects, this approach reduces wasted effort, improves usability, and accelerates development, ultimately leading to better software.</p>
+</li>
+</ol>
+<h2 id="phase-2-implementation">Phase 2: Implementation</h2>
+<p>In this phase of the exercise, you will implement a service layer in order to have a functional API. All of your Phase 2 business logic should be in the service layer. Your routes should only address HTTP concerns and otherwise delegate control to your service(s).</p>
+<p>Before beginning on Phase 2, you should complete the following readings and submit them on Gradescope:</p>
+<ul>
+<li><a href="../../backend-architecture/0-layered-architecture/">Layered Architecture</a></li>
+<li><a href="../../backend-architecture/1-dependency-injection/">Dependency Injection in FastAPI</a></li>
+</ul>
+<p>To get started on Phase 2, create a new branch named <code>phase2-services</code> and collaborate on it. If you and your partner work together with pair programming, working on this branch together is fine. If you are working async, start your own separate branches and be sure both of you attempt to complete this phase independently.</p>
+<p>By the end of Phase 2, you should be able to use the <code>/docs</code> UI to complete the stories of this exercise from each user's perspective. Of importance, you should also be able to follow Cai's stories <em>directly</em> in the web browser and be presented with plaintext or redirected to another URL by visiting the shortened URL. Finally, visit tracking and link expiration implementation is left as a challenge for extra credit.</p>
+<p>Phase 2 should have <code>pytest</code> integration tests cover Sue Sharer and Cai Clicker's stories. You should also write unit tests that cover Sue Sharer and Cai Clicker's stories. See the <a href="../../backend-architecture/2-testing/">introduction to testing</a> reading for more guidance on testing. Testing Amy's stories is left as an extra credit opportunity.</p>
+<h3 id="implementation-extra-credit">Implementation Extra Credit</h3>
+<ul>
+<li>1 point of extra credit for integration testing and unit testing Amy's stories</li>
+<li>1 point of extra credit for implementing click tracking in a way that's demonstrable and unit tested</li>
+<li>1 points of extra credit for successfully implementing resource experiation in a way that's demonstrable and unit tested (hint: you'll need to find a way to cleverly simulate the passage of time by patching or mocking...)</li>
+</ul>
+<h3 id="phase-2-cicd-in-production">Phase 2: CI/CD in Production</h3>
+<p>Let's deploy your backend API to the UNC Kubernetes/OKD cluster! Then you can share snippets and redirects with your friends.</p>
+<p>The steps we follow will be very similar to the tutorial you worked through in class on <a href="https://comp423-26s.github.io/resources/backend-architecture/3-ci-cd/">Monday, February 17th</a>. The general overview is:</p>
+<ol>
+<li>Setup Continuous Integration with a GitHub Action</li>
+<li>Setup a Cloud Deployment on OKD</li>
+<li>Setup Continuous Deployment from GitHub Action to OKD</li>
+</ol>
+<h4 id="setting-up-continuous-integration-with-a-github-action">Setting up Continuous Integration with a Github Action</h4>
+<p>You will want your GitHub Action established on your <code>main</code> branch as that is where the CI/CD pipeline will run. <strong>Only one team member should complete this sequence of steps, so coordinate as to who that will be to avoid conflicts. We recommend doing this together, if possible! This is valuable infrastructure to understand how to stand-up and what the implications are. If you do not do it together, and your team mate completes these steps, be sure to read through and check your understanding along the way.</strong> <mark>Switch to your <code>main</code> branch.</mark></p>
+<p>GitHub actions run in containers and will need to have your project's dependencies installed, including <code>pytest</code>. Those dependencies are in <code>requirements.txt</code>, but you may not have added <code>pytest</code> to it yet. <mark>Be sure <code>pytest</code> is in your <code>requirements.txt</code> pinned to the current version (as of this writing is <code>8.3.4</code>).</mark></p>
+<p>Add a file named <code>.github/workflows/cicd.yml</code> to your project with the following contents:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI/CD Pipeline</span>
+</span><span id="__span-10-2">
+</span><span id="__span-10-3"><span class="nt">on</span><span class="p">:</span>
+</span><span id="__span-10-4"><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+</span><span id="__span-10-5"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">main</span><span class="w"> </span><span class="p p-Indicator">]</span>
+</span><span id="__span-10-6"><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+</span><span id="__span-10-7"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">main</span><span class="w"> </span><span class="p p-Indicator">]</span>
+</span><span id="__span-10-8">
+</span><span id="__span-10-9"><span class="nt">jobs</span><span class="p">:</span>
+</span><span id="__span-10-10"><span class="w">  </span><span class="nt">ci</span><span class="p">:</span>
+</span><span id="__span-10-11"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Continuous</span><span class="nv"> </span><span class="s">Integration&quot;</span>
+</span><span id="__span-10-12"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+</span><span id="__span-10-13">
+</span><span id="__span-10-14"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-10-15"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+</span><span id="__span-10-16">
+</span><span id="__span-10-17"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Python 3.13</span>
+</span><span id="__span-10-18"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v3</span>
+</span><span id="__span-10-19"><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-10-20"><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.13&quot;</span>
+</span><span id="__span-10-21">
+</span><span id="__span-10-22"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install Dependencies</span>
+</span><span id="__span-10-23"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-10-24"><span class="w">          </span><span class="no">python -m pip install --upgrade pip</span>
+</span><span id="__span-10-25"><span class="w">          </span><span class="no">pip install -r requirements.txt</span>
+</span><span id="__span-10-26">
+</span><span id="__span-10-27"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Validation - pytest</span>
+</span><span id="__span-10-28"><span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+</span><span id="__span-10-29"><span class="w">          </span><span class="nt">PYTHONPATH</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+</span><span id="__span-10-30"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest</span>
+</span></code></pre></div>
+<p>At this point, you are only defining the CI job. This file will be extended to perform the CD job soon.</p>
+<p>Go ahead and create a commit on <code>main</code> and push this to your repository. Open your repository on GitHub and go to your Actions tab to see that the job runs. If you have no tests merged into your <code>main</code> branch yet then the <code>pytest</code> job will fail, which is expected. You can continue on.</p>
+<h4 id="creating-a-ruleset-for-continuous-integration">Creating a Ruleset for Continuous Integration</h4>
+<p>Go to your repository's Settings tab &gt; Rules &gt; Rulesets &gt; New ruleset. Create a Ruleset with the following settings:</p>
+<ul>
+<li>Name: <code>main</code></li>
+<li>Enforcement status: Active</li>
+<li>Targets &gt; Add Target &gt; Include the Default Branch</li>
+<li>Checked Rules:<ul>
+<li>Restrict creations</li>
+<li>Restrict deletions</li>
+<li>Require a pull request before merging<ul>
+<li>Required approvals: 0</li>
+</ul>
+</li>
+<li>Require status checks to pass <mark><strong>This is CI!</strong></mark><ul>
+<li>Require branches to be up to date before merging (check)</li>
+<li>Status checks that are required: Add checks<ul>
+<li>Search for "Continuous Integration" and check it. This is the job in the GitHub action you set up above! This is where your <code>pytest</code>s run. </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Block force pushes</li>
+</ul>
+</li>
+</ul>
+<p>Save changes. This is a slightly more sophisticated branch ruleset that you have seen prior. Namely, it will require us to use Pull Requests to merge into main. Additionally, before merging, your branches will need to successfully pass your automated tests. This is fundamentally important and characteristic of what continuous integration <em>is</em>.</p>
+<h4 id="creating-a-pull-request">Creating a Pull Request</h4>
+<p>Let's test this Ruleset by creating a Pull Request. In your GitHub Repository, navigate to the Pull Request tab and click <strong>New Pull Request</strong>. For the base, be sure your team's repository is targetted and select the <code>main</code> branch. For the compare branch, select your Phase II branch. You should see the commit history and changes between <code>main</code> and your Phase II branch here. Click <strong>Create Pull Request</strong>.</p>
+<p>For the title, add a descriptive title along the lines of "Phase II Milestone: Implementation" and a meaningful description that describes what you've done in Phase II in a few sentences. Additionally, mention the "verification steps" of additional tests added with <code>pytest</code>. Then click <strong>Create pull request.</strong> </p>
+<p>After creating the PR, you will see your history of commits and you should see a message indicating "Some checks haven't completed yet" with "Continuous Integration". Assuming your tests all pass <code>pytest</code>, you will now see a button to merge your branch into <code>main</code>. <mark>Wait to do so, for now.</mark> If you accidentally do merge, you will want to follow the steps below for what to do after successfully merging and let your team mate know they'll need to do the same.</p>
+<h4 id="adding-okdkubernetes-oc-tool-to-the-dev-container">Adding OKD/Kubernetes' <code>oc</code> Tool to the Dev Container</h4>
+<p>To setup and manage your Kubernetes/OKD cloud project from your dev container, we need to download and install the <code>oc</code> program onto your image. For the CI/CD Tutorial, this was automatically setup for you. In your project, one of you will need to add this additional configuration and push to your Phase 2 branch (or a new branch if you accidentally already merged).</p>
+<p>If only one of you completed the prior steps alone, our suggestion is to have the other complete these steps. Like before, both of you should understand what is happening in this sequence. Here we need some additional steps taken after our dev container is created. To add these steps, we'll create a bash shell script in the <code>.devcontainer</code> directory named <code>post-create.sh</code>. A shell script is just a sequence of commands like those you could type into a terminal.</p>
+<div class="language-bash highlight"><span class="filename">.devcontainer/post-create.sh</span><pre><span></span><code><span id="__span-11-1"><span class="c1"># Install `oc` CLI tool</span>
+</span><span id="__span-11-2"><span class="nv">arch</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>arch<span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-11-3"><span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$arch</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span>
+</span><span id="__span-11-4"><span class="w">    </span>x86_64<span class="o">)</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">TARGET</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="p">;;</span><span class="w"> </span>
+</span><span id="__span-11-5"><span class="w">    </span>aarch64<span class="o">)</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">TARGET</span><span class="o">=</span><span class="s1">&#39;arm64-&#39;</span><span class="w"> </span><span class="p">;;</span><span class="w"> </span>
+</span><span id="__span-11-6"><span class="k">esac</span>
+</span><span id="__span-11-7">wget<span class="w"> </span>-O<span class="w"> </span>/tmp/oc.tgz<span class="w"> </span><span class="s2">&quot;https://github.com/okd-project/okd/releases/download/4.15.0-0.okd-2024-03-10-010116/openshift-client-linux-</span><span class="si">${</span><span class="nv">TARGET</span><span class="si">}</span><span class="s2">4.15.0-0.okd-2024-03-10-010116.tar.gz&quot;</span>
+</span><span id="__span-11-8"><span class="nb">pushd</span><span class="w"> </span>/tmp
+</span><span id="__span-11-9">tar<span class="w"> </span>-xvzf<span class="w"> </span>oc.tgz
+</span><span id="__span-11-10">sudo<span class="w"> </span>mv<span class="w"> </span>oc<span class="w"> </span>/usr/bin/oc
+</span><span id="__span-11-11">rm<span class="w"> </span>kubectl<span class="w"> </span>oc.tgz<span class="w"> </span>README.md
+</span><span id="__span-11-12"><span class="nb">popd</span>
+</span><span id="__span-11-13">
+</span><span id="__span-11-14"><span class="c1"># Install Python Packages</span>
+</span><span id="__span-11-15">pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</span><span id="__span-11-16">pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span></code></pre></div>
+<p>The first set of commands downloads the correct <code>oc</code> package (<code>x86_64</code> is for Intel/AMD-based CPUs and <code>aarch64</code> is for Mac M-family chips). The second set of commands installs your <code>python</code> packages.</p>
+<p>After creating this file, we need to replace the current <code>postCreateCommand</code> in <code>devcontainer.json</code> to run this script instead. Open up <code>.devcontainer/devcontainer.json</code> and change the <code>postCreateCommand</code>'s assigned string to be <code>"bash .devcontainer/post-create.sh"</code> (instead of the <code>pip</code> command). Save this file and if you are prompted to rebuild the dev container, accept. If you are not prompted, be sure you saved and then use the Code Command Palatte to run "Rebuild Container."</p>
+<p>After rebuilding, you should be able to run <code>oc version</code> and see client version <code>4.15.0...</code>. Congrats, you have successfully added the <code>oc</code> tool to your dev container setup!</p>
+<h4 id="adding-a-production-dockerfile">Adding a production <code>Dockerfile</code></h4>
+<p>When your project builds in production on OKD it will produce a Docker image. We will control the steps to produce this image using a <code>Dockerfile</code>, as explored earlier in the course. Add a new file to the root directory of your project named <code>Dockerfile</code> with the following contents:</p>
+<div class="language-Dockerfile highlight"><span class="filename">Dockerfile</span><pre><span></span><code><span id="__span-12-1"><span class="c"># Dockerfile for Production Build</span>
+</span><span id="__span-12-2"><span class="c"># Use the official Python 3.13 image as the base image.</span>
+</span><span id="__span-12-3"><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.13</span>
+</span><span id="__span-12-4">
+</span><span id="__span-12-5"><span class="c"># Set the working directory in the container.</span>
+</span><span id="__span-12-6"><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+</span><span id="__span-12-7">
+</span><span id="__span-12-8"><span class="c"># Copy requirements file to the container.</span>
+</span><span id="__span-12-9"><span class="c"># This file should list all Python dependencies.</span>
+</span><span id="__span-12-10"><span class="k">COPY</span><span class="w"> </span>./requirements.txt<span class="w"> </span>/app/requirements.txt
+</span><span id="__span-12-11">
+</span><span id="__span-12-12"><span class="c"># Install the Python dependencies.</span>
+</span><span id="__span-12-13"><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-14"><span class="w">    </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span><span id="__span-12-15">
+</span><span id="__span-12-16"><span class="c"># Copy the rest of the application code.</span>
+</span><span id="__span-12-17"><span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>/app
+</span><span id="__span-12-18">
+</span><span id="__span-12-19"><span class="c"># Expose port 8080 which uvicorn will run on.</span>
+</span><span id="__span-12-20"><span class="k">EXPOSE</span><span class="w"> </span><span class="s">8080</span>
+</span><span id="__span-12-21">
+</span><span id="__span-12-22"><span class="c"># Command to run FastAPI in production mode.</span>
+</span><span id="__span-12-23"><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fastapi&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;run&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--host&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--port&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;8080&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p>This is a good point to add the configuration changes you just made to a new commit, push it to your Phase 2 branch, or another branch if you already merged.</p>
+<h4 id="merging-your-prs-and-continuing-work">Merging your PRs and Continuing Work</h4>
+<p>We are going to recommend using the <strong>Squash and Merge</strong> strategy of merging your PRs into <code>main</code> moving forward in this project. Pull up the PR for your Phase 2 changes and look for the green button. If it does not say "Squash and Merge", click the down triangle on the button and select <strong>Squash and merge</strong>. Go ahead and merge. Give the commit message line and extended description a meaningful message. Don't delete the branch after merging, leave it for posterity's sake in this project.</p>
+<p>Back in your dev container, and your team mates, you will want to switch to <code>main</code> and then pull the changes from your repo. If you use <code>git log -1</code> you should see the squashed and merged commit. Additionally, you should be able to run <code>pytest</code> and see your passing tests. Woo!</p>
+<p>Generally, when working with Pull Requests (PRs), this is your workflow:</p>
+<ol>
+<li>Create a branch locally, push the branch to GitHub</li>
+<li>Create a Pull Request (PR) on GitHub (select your team's repository's <code>main</code> branch as target)</li>
+<li>Once ready to merge, merge via Squash and Merge and Fill in Commit message/Message</li>
+<li>Click Confirm</li>
+<li>In you and your team mates' dev container: switch to <code>main</code> and pull.</li>
+</ol>
+<p>If you haven't followed these steps for your Phase 2 branch, now is a good time to go ahead and do so such that your tests and latest routes are on the <code>main</code> branch before we go to deploy.</p>
+<p>Additionally, if you make additional changes or fixes to your implementation following deployment, just create new branches, give them meaningful names, be sure your tests cover your changes, and continue on following this process.</p>
+<p>Soon we will see how Code Review plays into this process in engineering teams, but for now we can forego the code review process.</p>
+<h4 id="manually-deploying-your-project-to-okdkubernetes">Manually Deploying your Project to OKD/Kubernetes</h4>
+<p>Both members of the team will deploy the exercise to their respective OKD namespaces. This ensures both of you have additional experience setting up the pieces and seeing how they come together. You will want to be sure you and your partner have completed the steps above. Your local dev container should be on <code>main</code>, now with all of your Phase 2 changes merged, and your dev container rebuilt such that <code>oc version</code> succeeds.</p>
+<p>To work with UNC's OKD/Kubernetes cluster, you need to be on Eduroam or <a href="https://ccinfo.unc.edu/start-here/secure-access-on-and-off-campus/">VPN'ed in</a>.</p>
+<p>Login to OKD here: <a href="https://console.apps.unc.edu">https://console.apps.unc.edu</a></p>
+<p>Get your <code>oc</code> login command by clicking your name in the top right and navigating to copy login command. Click display token and then copy the <code>oc login --token=...</code> line and paste it into your dev container's Terminal. Try running the <code>oc project</code> command to see your OKD/Kubernetes project selected (<code>comp590-140-26sp-&lt;your-onyen&gt;</code>).</p>
+<h5 id="setup-a-fine-grained-personal-access-token">Setup a Fine-grained Personal Access Token</h5>
+<p>In the CI/CD Tutorial we used a classic personal access token with wide ranging access to read your repositories on GitHub. For this project, let's use the newer style Fine-grained token that gives the token holder permission to read only your EX01 repository. The production setup will be given this token so it can access your code to build your project. To create a new one, on GitHub click your Profile &gt; Settings &gt; Developer settings &gt; Personal access tokens &gt; Fine-grained tokens &gt; Generate new token.</p>
+<ul>
+<li>Token Name: EX01 - OKD Access - <Your Onyen></li>
+<li>Resource owner: comp423-26s</li>
+<li>Expiration: 30 Days is Fine</li>
+<li>Description: Giving access to OKD to clone/access the EX01 repo.</li>
+<li>Repository Access:<ul>
+<li>Only select repositories: Select your team's repository for ex01.</li>
+</ul>
+</li>
+<li>Permission:<ul>
+<li>Repository permissions:<ul>
+<li>Contents: Read-only</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>After clicking <strong>Generate Token</strong> you will be brought to a screen where it shows you, very lightly, the access token created. Copy this token to your clipboard (click the copy icon button), you will need it in the next step!</p>
+<p><strong>Register your EX01 GitHub Access token as an OKD secret.</strong> This secret will be used by your OKD BuildConfig to clone your repository into the build process. Run the following command and substitute your GitHub Username and the Access Token in the placeholders (replace the &lt; and &gt;'s!):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1">oc<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>ex01-pat<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-2"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">username</span><span class="o">=</span>&lt;your-github-username&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-3"><span class="w">    </span>--from-literal<span class="o">=</span><span class="nv">password</span><span class="o">=</span>&lt;your-github-pat&gt;
+</span></code></pre></div>
+<p>Let's also label this secret as belonging to <code>app</code> named <code>ex01</code> so that we can easily manage it with other <code>ex01</code> related resources in the future (such as deleting everything when we move on to another project):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1">oc<span class="w"> </span>label<span class="w"> </span>secret<span class="w"> </span>ex01-pat<span class="w"> </span><span class="nv">app</span><span class="o">=</span>ex01
+</span></code></pre></div>
+<h5 id="set-up-the-app">Set up the App</h5>
+<p>OKD's <code>oc</code>'s <code>new-app</code> subcommand is an all-in-one command to establish a <code>Deployment</code>, <code>BuildConfig</code>, <code>ImageStream</code>, and <code>Service</code> for an application based on some common conventions. The option flags we provide below tell it our app is <code>Docker</code>-based, gives it access to the personal access token secret setup above, and because we are running this command in our current working directory <code>.</code>, <code>oc</code> is clever and looks at your <code>git</code> repository's <code>remote</code> servers to know which repository it is hooked up to.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1">oc<span class="w"> </span>new-app<span class="w"> </span>.<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-2"><span class="w">    </span>--name<span class="o">=</span>ex01<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-3"><span class="w">    </span>--source-secret<span class="o">=</span>ex01-pat<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-4"><span class="w">    </span>--strategy<span class="o">=</span>docker<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-5"><span class="w">    </span>--labels<span class="o">=</span><span class="nv">app</span><span class="o">=</span>ex01
+</span></code></pre></div>
+<p>Once this command succeeds you can try the following command to follow along with the build of your app in production:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1">oc<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>buildconfig/ex01
+</span></code></pre></div>
+<p>This command will "follow" (thanks to <code>-f</code>), also commonly called <em>tail</em>, the output of your build in production on OKD/Kubernetes. Once the build completes you will be returned back to the command prompt, but you can also stop tailing the log with <code>Ctrl+C</code>. You can observe it following the steps of the <code>Dockerfile</code> when building your image.</p>
+<p>Next you'll expose a secure "edge" route to your service:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1">oc<span class="w"> </span>create<span class="w"> </span>route<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-2"><span class="w">    </span>edge<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-3"><span class="w">    </span>--service<span class="o">=</span>ex01<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-4"><span class="w">    </span>--insecure-policy<span class="o">=</span>Redirect
+</span></code></pre></div>
+<p>Finally, find your app's public URL on cloud apps with the following subcommand:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1">oc<span class="w"> </span>get<span class="w"> </span>route<span class="w"> </span>ex01
+</span></code></pre></div>
+<p>Copy the host and paste it into your browser. Try navigating to <code>/docs</code> on this host, as well. You should see your app running in production!</p>
+<p>If you wanted to manually initiate a new build for your app based on your <code>main</code> branch, you can now do so with the following command: <code>oc start-build ex01</code>. However, we'd really like to automate deployment following a successful CI verification run and merge into the <code>main</code> branch. So let's setup continuous deployment!</p>
+<h4 id="setting-up-continuous-deployment">Setting up Continuous Deployment</h4>
+<p>Now that your app is running in production, let's automate deployment on successful PR merges to <code>main</code>. You will update your GitHub Action to include a CD step.</p>
+<h5 id="adding-a-repository-secret-with-the-url-of-your-okd-build-webhook">Adding a Repository Secret with the URL of your OKD Build WebHook</h5>
+<p>What is a WebHook URL? It's just an API endpoint that one service (OKD/Kubernetes in our case) can expose to allow other services (GitHub) to notify them of something important. For us, we will find a secret URL OKD/Kubernetes exposes which, if we make an HTTP POST request to it, it will kick off a new build for our project in OKD/Kubernetes. We can try this from the terminal of your dev container:</p>
+<p>First, find the secret URL:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1">oc<span class="w"> </span>describe<span class="w"> </span>bc/ex01<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-C<span class="w"> </span><span class="m">1</span><span class="w"> </span>generic
+</span></code></pre></div>
+<p>You should see a URL that looks something like: <code>https://api.apps.unc.edu:6443/apis/build.openshift.io/v1/namespaces/comp590-140-26sp-ONYEN/buildconfigs/ex01/webhooks/&lt;secret&gt;/generic</code></p>
+<p>Next, we need to find the secret to plug into the <code>&lt;secret&gt;</code> part of the path. This is found in the YAML configuration for the BuildConfig (<code>bc</code>). We can filter down to it using <code>grep</code> to search for <code>generic</code> with one line of context around the matching line:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1">oc<span class="w"> </span>get<span class="w"> </span>bc<span class="w"> </span>ex01<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-C<span class="w"> </span><span class="m">1</span><span class="w"> </span>generic
+</span></code></pre></div>
+<p>You should copy the secret and paste it in place of the <code>&lt;secret&gt;</code> place holder in your WebHook URL. Copy this whole URL to your clipboard, we'll use it in two places.</p>
+<p>First, let's test making a POST request to the WebHook from your dev container using the <code>curl</code> command-line utility. The <code>curl</code> program allows you to make HTTP requests from the command-line and is highly configurable:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1">curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>&lt;paste<span class="w"> </span>your<span class="w"> </span>URL<span class="w"> </span>with<span class="w"> </span>secret<span class="w"> </span>here&gt;
+</span></code></pre></div>
+<p>This command will result in a message that says an invalid content-type was provided (we didn't provide any request body!) but that it is "ignoring payload and continuing with build." Woo!</p>
+<p>You can once again follow the build you just kicked off with the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1">oc<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>buildconfig/ex01
+</span></code></pre></div>
+<p>We didn't really want to start this build, we were just testing it, so you can cancel the build with the following:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1">oc<span class="w"> </span>get<span class="w"> </span>builds
+</span><span id="__span-23-2">oc<span class="w"> </span>cancel-build<span class="w"> </span>ex01-X
+</span><span id="__span-23-3">oc<span class="w"> </span>get<span class="w"> </span>builds
+</span></code></pre></div>
+<p>Replace the <code>X</code> with the number of the build you are attempting to cancel.</p>
+<p>Let's add this secret WebHook URL to your EX01 repository as a secret your GitHub Action will be able to use. Repository &gt; Settings &gt; Secrets and variables &gt; Actions &gt; New Repository Secret:</p>
+<ul>
+<li>Name: <code>CD_BUILD_WEBHOOK_&lt;ONYEN&gt;</code> (substitute your ONYEN)</li>
+<li>Secret: Paste your secret Webhook URL found above</li>
+</ul>
+<p>Save your repository secret. This will serve as a variable name in the next step.</p>
+<h5 id="updating-github-action">Updating GitHub Action</h5>
+<p>Since both you and your team mate will both kick-off the CD step from the same GitHub Action definition, you will want to coordinate who makes the initial changes and who adds to it second. This will help avoid merge conflicts.</p>
+<p><strong>If you are the first to establish continuous deployment for your production environment</strong>, add the following to the end of your YAML file. If you are the second of your pair, just read this step to understand it, pull from <code>main</code> to get this going, and then continue to your instructions following.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-24-1"><span class="w">  </span><span class="nt">cd</span><span class="p">:</span>
+</span><span id="__span-24-2"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Continuous</span><span class="nv"> </span><span class="s">Deployment&quot;</span>
+</span><span id="__span-24-3"><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ci</span>
+</span><span id="__span-24-4"><span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ github.event_name == &#39;push&#39; }}</span>
+</span><span id="__span-24-5"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+</span><span id="__span-24-6">
+</span><span id="__span-24-7"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-24-8"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Notify OKD to Build and Deploy</span>
+</span><span id="__span-24-9"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-24-10"><span class="w">          </span><span class="no">curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_&lt;ONYEN&gt; }}</span>
+</span></code></pre></div>
+<p>Be sure to substitute the <code>&lt;ONYEN&gt;</code> with yours so that it matches the name of the secret you established above.</p>
+<p>The <code>cd</code> line should be at the same level of indentation as the <code>ci</code> entry which came in the section above. Both <code>ci</code> and <code>cd</code> are direct descendents of <code>jobs</code> based on indentation. Notice a few features of this <code>cd</code> definition:</p>
+<ul>
+<li><code>needs: ci</code> Indicates that this job is taking a dependency on the <code>ci</code> job being successful above.</li>
+<li><code>if: ${{ github.event_name == 'push' }}</code> this conditional differentiates a push (which a merge is treated as) from a pull request build. Thus, continuous deployment is <em>skipped</em> on Pull Requests <em>until</em> a PR is merged to <code>main</code> (and "pushed" to <code>main</code>). This makes sense because you <strong>do not</strong> want to deploy to production until you merge to <code>main</code>!</li>
+<li>Notice in the <code>steps</code> that the command <code>run</code> is the same one you ran from the terminal with <code>curl</code>. This will trigger the WebHook.</li>
+</ul>
+<p>Switch to a new branch, perhaps <code>cd-setup</code>, add these changes, make a commit, and push. Following the push, go create a Pull Request into your repository's <code>main</code> branch from the <code>cd-setup</code> branch you just pushed.</p>
+<p>After creating the PR, you should see that your tests will run as part of the CI step and that your CD steps will be skipped, correctly, because of the <code>if</code> condition added above. Go ahead and merge this change into <code>main</code> with Squash and Merge.</p>
+<p>After merging, go checkout your Actions tab. Take a look at how you now have a pipeline that runs: Continuous Integration followed by Continuous Deployment. These names were configured by the <code>name</code> fields in your <code>cicd.yaml</code> file in your project. You can click on either to see the process each moves through. Once the Continuous Deployment step succeeds, you should be able to check your builds to see a new build was initiated:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1">oc<span class="w"> </span>get<span class="w"> </span>builds
+</span></code></pre></div>
+<p>Once that build completes, it will deploy and you have setup a complete CI/CD workflow to a kubernetes cluster! This is something to be proud of! Now, as you make changes to your project, you will need to push to a branch, create a PR, pass all your tests, and then upon merging to <code>main</code> your work will be pushed to production automagically. This is a very real industry-grade software engineering workflow and pipeline.</p>
+<p>Back in your dev container, switch back to <code>main</code> and pull to incorporate your squashed and merged commit.</p>
+<p><strong>For the second member of the team to setup continuous deployment.</strong> After adding your OKD project's webhook URL as a secret to your repository, your steps are as follows:</p>
+<p>Switch to <code>main</code> in your dev container and pull your partner's merged work. Open your <code>.github/workflows/cicd.yaml</code> file and you should see their <code>cd</code> step added above. Go ahead and create a new branch, perhaps named <code>cd-extension</code>. For your part, you're just going to add one more line to the "Notify OKD to build and deploy" step:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-26-1"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-26-2"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Notify OKD to Build and Deploy</span>
+</span><span id="__span-26-3"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-26-4"><span class="w">          </span><span class="no">curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_&lt;FIRST_ONYEN&gt; }}</span>
+</span><span id="__span-26-5"><span class="hll"><span class="w">          </span><span class="no">curl -X POST ${{ secrets.CD_BUILD_WEBHOOK_&lt;SECOND_ONYEN&gt; }}</span>
+</span></span></code></pre></div>
+<p>You will add the second <code>curl</code> command with your ONYEN replacing the <code>&lt;SECOND_ONYEN&gt;</code> placeholder. This will cause <code>curl</code> to first trigger your partner's build and then yours immediately after.</p>
+<p>Go ahead and add this to a <code>git</code> commit on your <code>cd-extension</code> branch. Push it. Make a new PR to your repository's <code>main</code> branch. Your tests should all still pass in CI and then you should be able to squash and merge.</p>
+<p>Upon merge, your GitHub Actions page should reflect that another worflow has begun and you can see the pipeline progress. After it completes the Continuous Deployment step, you can check your OKD production builds:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1">oc<span class="w"> </span>get<span class="w"> </span>builds
+</span></code></pre></div>
+<p>You can also tail your build:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1">oc<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>bc/ex01
+</span></code></pre></div>
+<p>Now your Continuous Deployment step initiates builds on <em>both</em> teammates' cloud projects! Congratulations, you have a working CI/CD pipeline.</p>
+<h4 id="finishing-up-ex02">Finishing up EX02</h4>
+<h3 id="frequently-asked-questions">Frequently Asked Questions</h3>
+<h4 id="my-github-action-is-not-running-or-failing-why">My Github Action is Not Running or Failing, Why?</h4>
+<p>If you do not see any attempts to build your Actions in the GitHub Actions tab of your repository, it is likely one of three reasons:</p>
+<ol>
+<li>You have not pushed the original action definition to <code>main</code></li>
+<li>You have not initiated a Pull Request with the action definition and targetted <code>main</code></li>
+<li>Your action file is improperly named. Be sure the file extension is <code>.yml</code></li>
+</ol>
+<p>If your build is failing, there are likely one of two reasons. Open up the Action and dig into its details to see exactly where it fails by drilling in.</p>
+<ol>
+<li>If the validation/pytest step fails because <code>pytest: command not found</code>, it is because you are missing the <code>pytest</code> dependency in <code>requirements.txt</code>. Be sure not to skip that step (search for it in the steps above!)</li>
+<li>Your tests are failing in GitHub Actions for some reason. Drill in in to investigate and keep pushing additional commits to your PR until your tests are passing.</li>
+</ol>
+<h4 id="should-shortened-urls-redirect-to-the-url-or-just-display-the-url">Should shortened URLs redirect to the URL or just display the URL?</h4>
+<p>For Cai's stories, you should be able to access the shortened URL directly in the web browser, not using <code>/docs</code> and be redirected to the URL that was shortened. You can search for FastAPI's <code>RedirectResponse</code> (and see the FAQ entry below about making sure this works in production). Note that the OpenAPI <code>/docs</code> UI will look like there is an error occuring on most redirects because it <em>follows</em> the redirect rather than shows you the redirect response. If you see a CORS error, you're probably doing it right, but to be sure you can try accessing your URL directly (e.g. <code>127.0.0.1:8000/short-url</code>) or looking in the network tab of your browser when using the <code>/docs</code> UI. Additionally, this is a place where you should have an integration test that can confirm a redirect response is correctly being returned.</p>
+<h4 id="how-should-you-handle-hostname-differences-between-development-and-production">How should you handle hostname differences between development and production?</h4>
+<p>In development your host name is likely your localhost IP address followed by a port: <code>localhost:8000</code>. In production, your hostname will be something like <code>ex01-comp590-140-26sp-ONYEN.apps.unc.edu</code>. If your Sue routes need to produce URLs for Cai to click on, you <em>should not</em> hard code <code>localhost</code>. Instead, you can use a dependency injection for FastAPI's <code>Request</code> object and inspect its host. Or, you can add the following helpful service to a new <code>url_service.py</code> file and inject it into a route instead. Here's the implementation:</p>
+<div class="language-python highlight"><span class="filename">url_service.py</span><pre><span></span><code><span id="__span-29-1"><span class="sd">&quot;&quot;&quot;Service for creating URLs based on the current request&#39;s hostname.&quot;&quot;&quot;</span>
+</span><span id="__span-29-2">
+</span><span id="__span-29-3"><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">Request</span>
+</span><span id="__span-29-4">
+</span><span id="__span-29-5"><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Kris Jordan &lt;kris@cs.unc.edu&gt;&quot;</span>
+</span><span id="__span-29-6">
+</span><span id="__span-29-7">
+</span><span id="__span-29-8"><span class="k">class</span><span class="w"> </span><span class="nc">URLService</span><span class="p">:</span>
+</span><span id="__span-29-9"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for creating URLs.&quot;&quot;&quot;</span>
+</span><span id="__span-29-10">
+</span><span id="__span-29-11">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+</span><span id="__span-29-12"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Request is dependency injected by FastAPI.&quot;&quot;&quot;</span>
+</span><span id="__span-29-13">        <span class="bp">self</span><span class="o">.</span><span class="n">_request</span> <span class="o">=</span> <span class="n">request</span>
+</span><span id="__span-29-14">
+</span><span id="__span-29-15">    <span class="k">def</span><span class="w"> </span><span class="nf">url_to_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-29-16"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a URL with the same scheme and host as the request for a given path.</span>
+</span><span id="__span-29-17"><span class="sd">        This is useful for avoiding hardcoding a host name or http/https prefix so that</span>
+</span><span id="__span-29-18"><span class="sd">        the service can be used in both production and development environments.</span>
+</span><span id="__span-29-19">
+</span><span id="__span-29-20"><span class="sd">        In OKD, `x-forwarded-port` will be &quot;443&quot; for HTTPs and &quot;80&quot; for HTTP.</span>
+</span><span id="__span-29-21">
+</span><span id="__span-29-22"><span class="sd">        Args:</span>
+</span><span id="__span-29-23"><span class="sd">            path: The path to create a URL for based on the current request.</span>
+</span><span id="__span-29-24">
+</span><span id="__span-29-25"><span class="sd">        Returns:</span>
+</span><span id="__span-29-26"><span class="sd">            The created URL.</span>
+</span><span id="__span-29-27"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-29-28">        <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x-forwarded-port&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span>
+</span><span id="__span-29-29">        <span class="n">scheme</span> <span class="o">=</span> <span class="s2">&quot;https&quot;</span> <span class="k">if</span> <span class="n">port</span> <span class="o">==</span> <span class="s2">&quot;443&quot;</span> <span class="k">else</span> <span class="s2">&quot;http&quot;</span>
+</span><span id="__span-29-30">        <span class="n">host</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-29-31">            <span class="s2">&quot;x-forwarded-host&quot;</span>
+</span><span id="__span-29-32">        <span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;host&quot;</span><span class="p">)</span>
+</span><span id="__span-29-33">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p>Then, from your <code>main.py</code>, you can import <code>URLService</code> and inject it into a route and use it as such:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/demo&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</span><span id="__span-30-2"><span class="k">def</span><span class="w"> </span><span class="nf">demo</span><span class="p">(</span><span class="n">url_svc</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">URLService</span><span class="p">,</span> <span class="n">Depends</span><span class="p">()])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-30-3">    <span class="k">return</span> <span class="n">url_svc</span><span class="o">.</span><span class="n">url_to_path</span><span class="p">(</span><span class="s2">&quot;abc123&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The result of using this service's <code>url_to_path</code> as shown above is it would return <code>"http://127.0.0.1:8000/abc123"</code> if you are running in development. In production, it will return <code>"https://ex01-comp590-140-26sp-ONYEN.apps.unc.edu/abc123"</code>, instead. If you hardcoded a hostname anywhere, you will want to either come up with your own solution or use the service above.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../database/1-sql/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. Introduction to Relational Databases &amp;amp; SQL">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1. Introduction to Relational Databases &amp; SQL
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../ex02-ng-frontend/" class="md-footer__link md-footer__link--next" aria-label="Next: Angular Front-end for Link Sharing App">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Angular Front-end for Link Sharing App
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+    Copyright &copy; 2026 Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
