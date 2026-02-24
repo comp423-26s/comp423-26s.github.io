@@ -1,6 +1,6 @@
 ---
 code: LS13
-title: Lesson 13
+title: API Implementation Lab Day
 date: 2026-02-20
 type: lesson
 threads: ["System / Backend"]

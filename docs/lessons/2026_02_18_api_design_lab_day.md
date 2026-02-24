@@ -1,6 +1,6 @@
 ---
 code: LS12
-title: API Design Working Day
+title: API Design Lab Day 
 date: 2026-02-18
 type: lesson
 threads: ["System / Backend"]
