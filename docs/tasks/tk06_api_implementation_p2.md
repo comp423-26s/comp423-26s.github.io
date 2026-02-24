@@ -66,7 +66,11 @@ class Config:
     links_path: str = "data/links.json"
 
 
-ConfigDI: TypeAlias = Annotated[Config, Depends()]
+def config_factory() -> Config:
+    return Config()
+
+
+ConfigDI: TypeAlias = Annotated[Config, Depends(config_factory)]
 """Dependency-injected Config type."""
 ~~~
 
