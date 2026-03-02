@@ -740,4 +740,4 @@ In this reading, you practiced the foundations of relational databases and SQL t
 - **DDL** (`CREATE TABLE`, `ALTER TABLE`, `DROP TABLE`) defines structure; **DML** (`INSERT`, `SELECT`, `UPDATE`, `DELETE`) manipulates data.
 - **Filtering** (`WHERE`), **sorting** (`ORDER BY`), **limiting** (`LIMIT`), and **aggregating** (`COUNT`, `SUM`, `AVG`) with `GROUP BY` are the workhorses of SQL queries.
 
-In the next reading, you will study **sessions and transactions** in SQLAlchemy and see how Python code interacts with the database safely.
+In the next reading, you will see how to express these same SQL queries in Python using **SQLModel** — the ORM library that bridges your Python application code and the database.
