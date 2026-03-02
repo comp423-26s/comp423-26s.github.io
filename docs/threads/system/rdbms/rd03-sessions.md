@@ -7,7 +7,7 @@ date: 2026-03-02
 due: 2026-03-03
 ---
 
-In the first database reading, you worked directly in `psql` with the `accounts` and `activity` tables. In the previous reading, you learned how to express those same SQL queries using SQLModel's Python API — `select()`, `.where()`, `.order_by()`, `session.get()`, and so on. In this reading, we keep the same banking domain but zoom out one level further — starting with the **Engine** that connects your Python app to PostgreSQL, then the **Session** that manages a single unit of work, and finally how all of it fits together in a web application with Docker Compose.
+In the first database reading, you worked directly in `psql` with the `accounts` and `activity` tables. In the previous reading, you learned how to express those same SQL queries using SQLModel's Python API, such as `select()`, `.where()`, `.order_by()`, `session.get()`, and so on. In this reading, we keep the same banking domain but zoom out one level further, starting with the **Engine** that connects your Python app to PostgreSQL, then the **Session** that manages a single unit of work, and finally how all of it fits together in our development environment with Docker Compose.
 
 ## Learning Objectives
 
@@ -32,8 +32,8 @@ Before a session can read or write anything, it needs a live **connection** to t
 
 An Engine is a long-lived Python object, created once per application process, that:
 
-- Holds the **database connection URL** — the address, credentials, and database name needed to reach PostgreSQL.
-- Manages a **connection pool** — a set of open TCP connections held ready for reuse across requests. Opening a brand-new TCP connection to PostgreSQL on every HTTP request would be expensive; pooling lets sessions borrow and return connections cheaply.
+- Holds the **database connection URL**: the address, credentials, and database name needed to reach PostgreSQL.
+- Manages a **connection pool**: a set of open TCP connections held ready for reuse across requests. Opening a brand-new TCP connection to PostgreSQL on every HTTP request would be expensive; pooling lets sessions borrow and return connections cheaply.
 
 In the demo project, the engine is defined in `db.py`:
 
@@ -56,7 +56,7 @@ The connection URL encodes everything SQLAlchemy needs to find and authenticate 
 | port | `5432` | PostgreSQL's default port |
 | database | `bank` | Which database to select on connect |
 
-We will cover *why* the host is named `db` — and not an IP address — when we look at Docker Compose in Section 7. The short answer: Docker Compose gives each service a hostname matching its service name, so the `db` service is reachable as `db`.
+We will cover *why* the host is named `db`, not an IP address,  when we look at Docker Compose in Section 7. The short answer: Docker Compose gives each service a hostname matching its service name, so the `db` service is reachable as `db`.
 
 `echo=True` tells SQLAlchemy to print every SQL statement it generates to stdout. While learning, this is invaluable: you can watch the exact SQL your Python code triggers for each `session.exec()`, `session.add()`, or `session.commit()`. Set `echo=False` (or omit it) in production.
 
@@ -66,10 +66,10 @@ The Engine and Session are two distinct layers with very different lifetimes:
 
 | | **Engine** | **Session** |
 |-|-----------|------------|
-| **Lifetime** | One per application process — created at startup, lives until shutdown | One per HTTP request — created when the request arrives, closed when it is handled |
+| **Lifetime** | One per application process: created at startup, lives until shutdown | One per HTTP request: created when the request arrives, closed when it is handled |
 | **Responsibility** | *How* to talk to the database: manages TCP connections, pooling, and the database driver | *What* to persist: tracks Python objects, buffers changes, and defines a transaction boundary |
 
-When you write `Session(engine)`, the Session borrows a connection from the Engine's pool for the duration of its work. When the session closes, the connection is returned to the pool — ready for the next request. This is why the Engine is created once (at import time in `db.py`) while a new Session is created for every request.
+When you write `Session(engine)`, the Session borrows a connection from the Engine's pool for the duration of its work. When the session closes, the connection is returned to the pool, ready for the next request. This is why the Engine is created once (at import time in `db.py`) while a new Session is created for every request.
 
 ---
 
@@ -128,9 +128,9 @@ with Session(engine) as session:
 
 When you call `session.commit()`, three important things happen:
 
-1. **Flush** — The session translates all pending changes (new objects, modified attributes, deletions) into SQL statements (`INSERT`, `UPDATE`, `DELETE`) and sends them to the database.
-2. **Commit the transaction** — The database finalizes the changes. After this point, the data is durably stored — it will survive a crash or power failure.
-3. **Expire objects** — The session marks all tracked objects as *expired*, meaning their in-memory attributes are considered stale until explicitly refreshed.
+1. **Flush**: The session translates all pending changes (new objects, modified attributes, deletions) into SQL statements (`INSERT`, `UPDATE`, `DELETE`) and sends them to the database.
+2. **Commit the transaction**: The database finalizes the changes. After this point, the data is durably stored and will survive a crash or power failure.
+3. **Expire objects**: The session marks all tracked objects as *expired*, meaning their in-memory attributes are considered stale until explicitly refreshed.
 
 ### What if You Forget to Commit?
 
@@ -140,7 +140,7 @@ If you add an object to the session and never call `commit()`, the changes exist
 with Session(engine) as session:
     account = Account(owner="Ghost", email="ghost@unc.edu")
     session.add(account)
-    # Oops — no commit()!
+    # Oops! No commit()!
 # Session closes. The account was never persisted.
 ```
 
@@ -174,7 +174,7 @@ print(account.id)  # Now contains the auto-generated ID, e.g. 1
 | After modifying an object but before committing | No |
 | After calling `session.get()` (data is fresh from DB) | No |
 
-A common pattern in services — for example, after creating activity records during a transfer:
+For example, a common pattern in services after creating activity records during a transfer:
 
 ```python
 self._session.add(withdrawal)
@@ -239,8 +239,8 @@ If you want a formal breakdown of why transactions are trustworthy, review the *
 
 In SQLAlchemy, a transaction begins implicitly when the session first communicates with the database (e.g., on the first `session.get()` or `session.exec()`). You can see this in the `echo`'ed output of our service. It ends when you call:
 
-- `session.commit()` — to **save** the changes, or
-- `session.rollback()` — to **discard** the changes.
+- `session.commit()`: to **save** the changes, or
+- `session.rollback()`: to **discard** the changes.
 
 If the session closes without a commit, an implicit rollback occurs.
 
@@ -336,13 +336,13 @@ HTTP Request arrives
   └────────────────────────────┘
 ```
 
-Note: `session.commit()` runs during request handling — the endpoint will not return until the commit finishes. When using a dependency that yields (our `get_session()`), the context-manager exit (the code after `yield` that closes the session) is executed by FastAPI as the dependency teardown, which normally runs after the response is sent. See the FastAPI docs on dependencies with `yield` for details: https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/.
+Note: `session.commit()` runs during request handling. The endpoint will not return until the commit finishes. When using a dependency that yields (our `get_session()`), the context-manager exit (the code after `yield` that closes the session) is executed by FastAPI as the dependency teardown, which normally runs after the response is sent. See the FastAPI docs on dependencies with `yield` for details: https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/.
 
 ---
 
 ## 7. Dev Container Setup with Docker Compose
 
-So far in this reading you have seen `POSTGRES_URL = "postgresql://postgres:mysecretpassword@db:5432/bank"` in `db.py`. We have not yet explained *where the `db` hostname comes from*, or *how PostgreSQL is running alongside your FastAPI app at all*. This section covers the setup that makes it work — the part that was not reached in lecture.
+So far in this reading you have seen `POSTGRES_URL = "postgresql://postgres:mysecretpassword@db:5432/bank"` in `db.py`. We have not yet explained *where the `db` hostname comes from*, or *how PostgreSQL is running alongside your FastAPI app at all*. Let's take a look.
 
 ### Two Processes, Two Containers
 
@@ -361,7 +361,7 @@ Your FastAPI application and PostgreSQL database run as **two separate processes
                                     └─────────────────────────────┘
 ```
 
-Your application (FastAPI) is one process. The database (PostgreSQL) is another. They communicate over a **network connection** — even though both run on the same physical machine, they talk to each other over TCP, just like they would in production.
+Your application (FastAPI) is one process. The database (PostgreSQL) is another. They communicate over a **network connection** even though both run on the same physical machine. They talk to each other over TCP, just like in a production system.
 
 ### The `docker-compose.yml`
 
@@ -465,11 +465,11 @@ When you reopen the project in a dev container, VS Code runs `docker compose up`
 | **`commit()`** | Flushes pending changes to the DB and finalizes the transaction. |
 | **Forgetting `commit()`** | Changes are discarded when the session closes. |
 | **`refresh()`** | Reloads an object's attributes from the DB (needed for auto-generated values like `id` and `created_at`). |
-| **ACID (review)** | Atomicity, Consistency, Isolation, Durability — review the formal definitions in Reading 1. |
+| **ACID (review)** | Atomicity, Consistency, Isolation, Durability |
 | **Transaction boundaries** | Begin on first DB access, end on `commit()` or `rollback()`. |
-| **Session-per-request** | Each HTTP request gets its own session — prevents cross-request data leaks. |
+| **Session-per-request** | Each HTTP request gets its own session to prevent cross-request data leaks. |
 | **`SessionDI`** | A type alias (`Annotated[Session, Depends(get_session)]`) for concise DI in services. |
 | **Docker Compose** | Defines and orchestrates multiple services (e.g., `app` + `db`) as a single unit. |
 | **Service name as hostname** | Docker Compose creates a private network; services reach each other by service name (`db:5432`). |
-| **Named volume** | A Docker-managed volume that outlives containers — persists database data across restarts. |
+| **Named volume** | A Docker-managed volume that outlives containers which persists database data across restarts. |
 | **`devcontainer.json`** | Configures VS Code to use `docker-compose.yml` and open the `app` service as the dev container. |
