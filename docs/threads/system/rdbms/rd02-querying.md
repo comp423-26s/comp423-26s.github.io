@@ -33,8 +33,7 @@ All examples in this reading use the **banking demo project** from lecture. If y
 
 The two entity classes mirror the SQL tables you created in Reading 1:
 
-```python
-# entities/account.py
+```python title="entities/account.py"
 class Account(SQLModel, table=True):
     __tablename__ = "accounts"
 
@@ -44,8 +43,7 @@ class Account(SQLModel, table=True):
     balance: int = Field(default=0)
 ```
 
-```python
-# entities/activity.py
+```python title="entities/activity.py"
 class Activity(SQLModel, table=True):
     __tablename__ = "activity"
 
