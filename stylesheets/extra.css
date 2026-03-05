@@ -1,0 +1,465 @@
+.md-typeset .grid {
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr))
+}
+
+.profile-photo {
+  object-fit: cover;
+  width: 300px;
+}
+
+.link-card {
+  width: 100px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  height: auto;
+}
+
+:root,
+[data-md-color-scheme="default"] {
+  /* Darken link color for better contrast against white background */
+  --md-typeset-a-color: #005fa0;
+  
+  /* Darken primary color (header/tabs background) for better contrast with white text */
+  --md-primary-fg-color: #004d80;
+}
+
+[data-md-color-scheme="slate"] {
+  /* Lighten link color for better contrast against dark background */
+  --md-typeset-a-color: #66b0ff;
+  
+  /* Keep primary color dark for contrast with white text in header */
+  --md-primary-fg-color: #004d80;
+}
+
+/* -------------------------------------------------------------------------
+   Thread pills (timeline "Threads" column)
+   ------------------------------------------------------------------------- */
+
+.md-typeset .thread-pill {
+  display: inline-block;
+  padding: 0.1em 0.6em;
+  margin: 0 0.25em 0 0;
+  border-radius: 999px;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.2;
+  vertical-align: middle;
+  white-space: nowrap;
+  background-color: var(
+    --thread-pill-bg,
+    color-mix(in srgb, var(--md-default-fg-color) 10%, transparent)
+  );
+  color: var(--thread-pill-fg, var(--md-default-fg-color));
+  border: 1px solid
+    color-mix(in srgb, var(--md-default-fg-color) 18%, transparent);
+}
+
+/* Per-thread background colors (derived from theme tokens; no new palette) */
+.md-typeset .thread-pill--lessons {
+  --thread-pill-bg: color-mix(in srgb, var(--md-primary-fg-color) 18%, transparent);
+}
+
+.md-typeset .thread-pill--exercise,
+.md-typeset .thread-pill--exercises {
+  --thread-pill-bg: color-mix(in srgb, var(--md-typeset-a-color) 18%, transparent);
+}
+
+.md-typeset .thread-pill--syllabus {
+  --thread-pill-bg: color-mix(in srgb, var(--md-primary-fg-color) 12%, transparent);
+}
+
+.md-typeset .thread-pill--apis,
+.md-typeset .thread-pill--api {
+  --thread-pill-bg: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
+}
+
+.md-typeset .thread-pill--frontend {
+  --thread-pill-bg: color-mix(in srgb, var(--md-typeset-a-color) 14%, transparent);
+}
+
+.md-typeset .thread-pill--backend {
+  --thread-pill-bg: color-mix(in srgb, var(--md-primary-fg-color) 14%, transparent);
+}
+
+/* -------------------------------------------------------------------------
+   Timeline table styling
+   ------------------------------------------------------------------------- */
+
+.md-typeset__table {
+  display: table;
+  width: 100% !important;
+}
+
+.md-typeset__table table[data-timeline="course"],
+.md-typeset__table table[data-timeline="thread"] {
+  display: table;
+  width: 100% !important;
+}
+
+.md-typeset table[data-timeline="course"] tr.timeline-date-row td,
+.md-typeset table[data-timeline="thread"] tr.timeline-date-row td {
+  background-color: color-mix(
+    in srgb,
+    var(--md-primary-fg-color) 14%,
+    transparent
+  );
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.6rem;
+  text-align: center;
+}
+
+.md-typeset table[data-timeline="course"] tr.timeline-item-row td,
+.md-typeset table[data-timeline="thread"] tr.timeline-item-row td {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.md-typeset table[data-timeline="course"] th:nth-child(2),
+.md-typeset table[data-timeline="course"] td:nth-child(2),
+.md-typeset table[data-timeline="course"] th:nth-child(3),
+.md-typeset table[data-timeline="course"] td:nth-child(3),
+.md-typeset table[data-timeline="thread"] th:nth-child(2),
+.md-typeset table[data-timeline="thread"] td:nth-child(2) {
+  text-align: center;
+}
+
+.md-typeset table[data-timeline="course"] tr.timeline-item-row td:first-child strong,
+.md-typeset table[data-timeline="thread"] tr.timeline-item-row td:first-child strong {
+  margin-right: 0.6rem;
+  font-family: var(--md-code-font-family, monospace);
+  display: inline-block;
+  width: 4ch;
+}
+
+.md-typeset table[data-timeline="course"] .timeline-links-container {
+  font-size: 0.8em;
+  margin-left: 0.2rem;
+}
+
+.md-typeset table[data-timeline="course"] td.timeline-due a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.md-typeset table[data-timeline="course"] td.timeline-due a:hover {
+  color: var(--md-typeset-a-color);
+  text-decoration: underline;
+}
+
+.md-typeset table[data-timeline="course"] td.timeline-item-row--due-upcoming {
+  background-color: color-mix(
+    in srgb,
+    var(--md-typeset-a-color) 10%,
+    transparent
+  );
+  font-weight: 700;
+}
+
+/* Increase logo size in header */
+.md-header__button.md-logo img, .md-header__button.md-logo svg {
+  height: 8rem;
+  width: auto;
+  position: absolute;
+  top: -0.0em;
+  left: -9rem;
+}
+
+.md-header__button.md-logo {
+  position: absolute;
+}
+
+[dir=ltr] .md-header__title {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Timeline Filters
+   ------------------------------------------------------------------------- */
+
+.timeline-filter-container {
+  display: block;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: var(--md-default-bg-color--lightest);
+  border-radius: 0.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  width: fit-content;
+}
+
+.timeline-filter-container--inline {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 1.5rem;
+  margin-bottom: 0;
+  padding: 0.4rem 0.8rem;
+  line-height: normal;
+}
+
+#agenda-title {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+
+.timeline-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.timeline-filter-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--md-default-fg-color);
+  user-select: none;
+  cursor: pointer;
+}
+
+/* Material-style Switch */
+.timeline-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.timeline-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.timeline-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--md-default-fg-color--lightest);
+  transition: .3s;
+  border-radius: 20px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.timeline-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+input:checked + .timeline-switch-slider {
+  background-color: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+}
+
+input:checked + .timeline-switch-slider:before {
+  transform: translateX(16px);
+}
+
+input:focus + .timeline-switch-slider {
+  box-shadow: 0 0 1px var(--md-primary-fg-color);
+}
+
+/* -------------------------------------------------------------------------
+   Timeline Tabs
+   ------------------------------------------------------------------------- */
+
+.timeline-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.timeline-tab {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.timeline-tab:hover {
+  color: var(--md-typeset-a-color);
+}
+
+.timeline-tab.active {
+  color: var(--md-typeset-a-color);
+}
+
+.timeline-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--md-typeset-a-color);
+}
+
+/* Hide Threads column on mobile */
+@media screen and (max-width: 76.1875em) {
+  .md-typeset table[data-timeline="course"] th:nth-child(3),
+  .md-typeset table[data-timeline="course"] td:nth-child(3) {
+    display: none;
+  }
+
+  /* Mobile sidebar logo full width */
+  .md-nav--primary .md-nav__title {
+    /* Remove sticky positioning that causes overlap */
+    position: static !important;
+    /* Keep the background color (primary color) so white logos are visible */
+    background-color: var(--md-primary-fg-color) !important;
+    color: var(--md-primary-bg-color) !important;
+    /* Allow height to grow with logo */
+    height: auto !important;
+    min-height: auto !important;
+    /* Ensure it's a block to contain the logo */
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* Allow overflow so logo is fully visible */
+    overflow: visible !important;
+    text-align: center;
+  }
+
+  /* Target the logo link/button */
+  .md-nav--primary .md-nav__title .md-nav__button.md-logo {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    overflow: visible !important;
+  }
+
+  /* Target the logo image */
+  .md-nav--primary .md-nav__title .md-nav__button.md-logo img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+  }
+
+  /* Ensure the menu list appears AFTER the logo */
+  .md-nav--primary > .md-nav__list {
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* Hide the site title text completely */
+  .md-nav--primary .md-nav__title .md-ellipsis {
+    display: none !important;
+  }
+
+  /* Hide the GitHub repository info in the sidebar */
+  .md-nav__source {
+    display: none !important;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Rainbow Thread Pills
+   ------------------------------------------------------------------------- */
+
+:root {
+  --thread-c-course:   #d81b60; /* Pink */
+  --thread-c-career:   #e65100; /* Orange */
+  --thread-c-tools:    #f9a825; /* Yellow/Amber */
+  --thread-c-teamwork:     #2e7d32; /* Green */
+  --thread-c-sde:      #00838f; /* Cyan */
+  --thread-c-design:   #1565c0; /* Blue */
+  --thread-c-system:   #6a1b9a; /* Purple */
+}
+
+.md-typeset .thread-pill--course   { --thread-base: var(--thread-c-course); }
+.md-typeset .thread-pill--career   { --thread-base: var(--thread-c-career); }
+.md-typeset .thread-pill--tools    { --thread-base: var(--thread-c-tools); }
+.md-typeset .thread-pill--teamwork     { --thread-base: var(--thread-c-teamwork); }
+.md-typeset .thread-pill--sde      { --thread-base: var(--thread-c-sde); }
+.md-typeset .thread-pill--design   { --thread-base: var(--thread-c-design); }
+.md-typeset .thread-pill--system   { --thread-base: var(--thread-c-system); }
+
+/* Shared styles for rainbow pills */
+.md-typeset .thread-pill--course,
+.md-typeset .thread-pill--career,
+.md-typeset .thread-pill--tools,
+.md-typeset .thread-pill--teamwork,
+.md-typeset .thread-pill--sde,
+.md-typeset .thread-pill--design,
+.md-typeset .thread-pill--system {
+  /* Light mode: Tinted BG, Darker Text */
+  --thread-pill-bg: color-mix(in srgb, var(--thread-base) 12%, transparent);
+  --thread-pill-fg: color-mix(in srgb, var(--thread-base), black 40%); 
+  border-color: color-mix(in srgb, var(--thread-base) 40%, transparent);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--course,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--career,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--tools,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--teamwork,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--sde,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--design,
+[data-md-color-scheme="slate"] .md-typeset .thread-pill--system {
+  /* Dark mode: Stronger Tint BG, Lighter Text */
+  --thread-pill-bg: color-mix(in srgb, var(--thread-base) 25%, transparent);
+  --thread-pill-fg: color-mix(in srgb, var(--thread-base), white 40%);
+  border-color: color-mix(in srgb, var(--thread-base) 50%, transparent);
+}
+
+/* -------------------------------------------------------------------------
+   Thread Header / Context Styling
+   ------------------------------------------------------------------------- */
+
+.thread-context {
+  margin-bottom: 1em;
+  padding: 1em;
+  border-left: 5px solid var(--md-default-fg-color);
+  background-color: var(--md-code-bg-color);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Apply rainbow colors to the border */
+.thread-border--course   { border-left-color: var(--thread-c-course); }
+.thread-border--career   { border-left-color: var(--thread-c-career); }
+.thread-border--tools    { border-left-color: var(--thread-c-tools); }
+.thread-border--teamwork     { border-left-color: var(--thread-c-teamwork); }
+.thread-border--sde      { border-left-color: var(--thread-c-sde); }
+.thread-border--design   { border-left-color: var(--thread-c-design); }
+.thread-border--system   { border-left-color: var(--thread-c-system); }
+
+/* Style the table header with the thread color */
+.thread-table--course thead th   { background-color: color-mix(in srgb, var(--thread-c-course) 20%, transparent); }
+.thread-table--career thead th   { background-color: color-mix(in srgb, var(--thread-c-career) 20%, transparent); }
+.thread-table--tools thead th    { background-color: color-mix(in srgb, var(--thread-c-tools) 20%, transparent); }
+.thread-table--teamwork thead th     { background-color: color-mix(in srgb, var(--thread-c-teamwork) 20%, transparent); }
+.thread-table--sde thead th      { background-color: color-mix(in srgb, var(--thread-c-sde) 20%, transparent); }
+.thread-table--design thead th   { background-color: color-mix(in srgb, var(--thread-c-design) 20%, transparent); }
+.thread-table--system thead th   { background-color: color-mix(in srgb, var(--thread-c-system) 20%, transparent); }
+
