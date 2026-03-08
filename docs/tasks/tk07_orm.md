@@ -1,6 +1,6 @@
 ---
 code: TK07 
-title: "Refactor Persistence Layer to an SQLModel"
+title: "Refactor Persistence Layer to an ORM"
 threads: ["System / RDBMS"]
 authors: ["Kris Jordan"]
 date: 2026-03-06
