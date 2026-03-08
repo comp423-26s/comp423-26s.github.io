@@ -73,6 +73,8 @@ This repository will initially be empty. If you have trouble accessing it, be su
 
 If you were in class on Friday, March 7th, you should have already cloned and setup the tk07 starter repository. What you need to do is replace the `origin` remote with your personal `tk07` remote. Step-by-step: _remove_ the existing `origin` remote, this was the URL you cloned in class, and add a new remote named `origin` that points to your assignment repository. Go ahead and push `main` to this new `origin` and confirm you are seeing the starting point on GitHub.
 
+If you were not in class on Friday, March 7th, [watch the streamed recording](https://www.youtube.com/live/7h_DwsWdWGc?si=fILgGMtj5q4skDcI) of lecture for instructions on how to clone the TK07 starter code.
+
 ### Extra Credit Setup
 
 If you are pursuing the extra credit option of retrofitting your TK06 project with the ORM layer, you will need to carry out a similar set of steps as the standard setup, but from your local TK06 repository instead. Remove the `origin` remote from your TK06 repository and then add a new `origin` remote pointed at your empty TK07 repository. Go ahead and push your TK06 there to test the git remote setup. 
