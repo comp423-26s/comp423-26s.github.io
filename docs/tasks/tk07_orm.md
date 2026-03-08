@@ -65,7 +65,7 @@ Finally, of course, you must be able to walk through your feature from start to 
 
 **Everyone needs to seed a new, empty repository with your TK07 starter code.**
 
-Everyone needs to accept the TK07 GitHub Classroom assignment here: <>
+Everyone needs to accept the TK07 GitHub Classroom assignment here: <https://classroom.github.com/a/FZKooMTH>
 
 This repository will initially be empty. If you have trouble accessing it, be sure you have accepted the invitation via GitHub.
 
