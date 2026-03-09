@@ -1,7 +1,7 @@
 ---
-code: LS19
-title: Lesson 19
-date: 2026-03-09
+code: LS20
+title: Entity Relationships in an ORM
+date: 2026-03-11
 type: lesson
 threads: ["Course"]
 authors: [Kris Jordan]
