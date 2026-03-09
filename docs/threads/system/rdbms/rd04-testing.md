@@ -2,7 +2,7 @@
 code: RD23
 title: "Testing with Databases"
 threads: ["System / RDBMS"]
-authors: [Kris Jordan]
+authors: ["Kris Jordan"]
 date: 2026-03-05
 due: 2026-03-06
 ---
