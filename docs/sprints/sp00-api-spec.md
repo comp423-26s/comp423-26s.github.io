@@ -2,7 +2,7 @@
 code: SP00
 title: "Technical Specificiation of Data Tables and API"
 date: 2026-04-01
-due: 2026-04-06
+due: 2026-04-05
 type:  reading
 threads: ["System / APIs"]
 authors: [Kris Jordan]
