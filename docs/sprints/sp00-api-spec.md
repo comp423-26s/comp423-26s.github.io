@@ -24,7 +24,11 @@ You will extend your design document to add a technical specification section. T
 
 ### 1. Database Modeling
 
-Your feature will need its data persisted in the PostgresQL database, with modeling in SQLModel entities. To help give an example of what simple feature tables can look like, here are some starting points. The demo Joke Generating Tool is backed by a table that looks like this:
+Your feature will need its data persisted in the PostgresQL database, with modeling in SQLModel entities. To help give an example of what simple feature tables can look like, here are some starting points. 
+
+#### Tool Example Table
+
+The very simple demo Joke Generating Tool is backed by a table that looks as follows. Of course, many tool ideas would require more than one table:
 
 **`joke_tool__joke` table** - the persisted data about joke prompts and geneted responses
 
@@ -37,6 +41,8 @@ Your feature will need its data persisted in the PostgresQL database, with model
 - `async_job` (relationship to the AsyncJob)
 - `created_at` (datetime with tz, server default now)
 - `updated_at` (datetime with tz, server default now, onupdate)
+
+#### Student Activity Structure
 
 If you are thinking about a student activity, here are the tables which will already exist in the code base. You will not modify these, but you will add one or more table(s) that relate to these:
 
