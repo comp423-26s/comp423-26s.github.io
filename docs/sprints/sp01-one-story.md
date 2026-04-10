@@ -83,7 +83,7 @@ Everyone on the team is encouraged to setup branches to avoid confusion:
 1. Remove the `origin` remote (`git remote rm origin`)
 2. Establish your team's repository as the new `origin` (`git remote add origin <your repo>`)
 3. Establish the official repository as `upstream` (`git remote add upstream https://github.com/unc-csxl/learnwithai.unc.edu.git`)
-4. Go ahead and push `main` to `upstream`
+4. Go ahead and push `main` to `origin`
 
 A member of the team should setup the branch protection rules for `main` in your team repository. In your team's final project repository, navigate to:
 
