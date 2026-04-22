@@ -2,7 +2,7 @@
 code: SP02
 title: Second Story End-to-End
 date: 2026-04-20
-due: 2026-04-29
+due: 2026-04-27
 type: sprint
 threads: ["Design"]
 authors: [Kris Jordan]
