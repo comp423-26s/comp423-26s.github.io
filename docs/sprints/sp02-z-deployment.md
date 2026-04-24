@@ -1,7 +1,7 @@
 ---
 code: SP02
 title: Deployment Instructions
-ate: 2026-04-20
+date: 2026-04-20
 due: 2026-04-27
 type: sprint
 threads: ["Design"]
