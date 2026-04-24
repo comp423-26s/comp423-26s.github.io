@@ -1,8 +1,8 @@
 ---
 code: SP02
 title: Deployment Instructions
-# date: 2026-04-20
-# due: 2026-04-27
+ate: 2026-04-20
+due: 2026-04-27
 type: sprint
 threads: ["Design"]
 authors: [Kris Jordan]
@@ -16,7 +16,7 @@ We needed to add an additional environment to the project for staging purposes. 
 
 - `git switch -c hotfix-stage`
 - `git fetch --all`
-- `git cherry-pick ecd8711f` (this should not result in conflicts, but if it does you will need to carefully resolve them) - if this fails, you will need to be sure you have `upstream` added as a remote that links to `https://github.com/unc-csxl/learnwithai.unc.edu.git` and then fetch all again
+- `git cherry-pick f7ddbaf` (this should not result in conflicts, but if it does you will need to carefully resolve them) - if this fails, you will need to be sure you have `upstream` added as a remote that links to `https://github.com/unc-csxl/learnwithai.unc.edu.git` and then fetch all again
 - `git push origin hotfix-stage`
 - A team member will need to CR and merge
 - You will need to then switch back to `main` and pull the latest and you should be all set to deploy to staging.
