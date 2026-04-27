@@ -54,4 +54,4 @@ Stories merged in to `main` should be of usable, production quality.
 
 ### Expectation 4. Running in Production on CloudApps' OKD Cluster
 
-Instructions for deployment will be distributed on Friday, April 24th.
+[Instructions for deployment can be found here](./sp02-z-deployment.md).

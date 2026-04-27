@@ -133,7 +133,3 @@ Finally, you should be able to navigate to your deployed hostname in your browse
 There are two paths toward deploying new builds in OKD. The manual path is to go to Builds, BuildConfigs, select `learnwithai-app`, and under the actionsn drop down select `Start Build`. When the build completes, you will see it roll out to your app and worker in the topology view. Note that you should not expect different results for a subsequent build unless there are new commits in your repository on GitHub.
 
 The automated "continuous deployment" path toward building when you land a PR into main is to add a webhook to your GitHub repository's settings. In OKD you can find the webhook by navigating to: Builds, BuildConfigs, `learnwithcli-app`, Scroll down to Webhooks, and (confusingly, but more predictably) copy the Generic URL with Secret button. On GitHub, navigtae to your repos settings, Webhooks, Add Webhook, paste the URL into Payload URL. Leave the other settings default and add webhook.
-
-## Development Settings and Auth-as-User
-
-We are working on a fix for deploying to CloudApps in such a way that it mirrors your development experience of being able to easily change users. We will announce the steps to deploy in development/staging mode later today, it will be a minor patch to land in your project.
