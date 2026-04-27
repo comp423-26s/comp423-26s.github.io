@@ -53,14 +53,6 @@ The placeholders you need to replace are the follow. We recommend these simple v
 `<AZURE_OPENAI_SUBSCRIPTION_KEY>`: use the key of the member who is hosting the deployment
 `<AZURE_OPENAI_DEPLOYMENT_NAME>`: set this to `gpt-5-mini` unless you have other model specific needs
 
-<!--
-### Environment `development` Override
-
-These configuration settings are established for how we would typically deploy in production. However, for our course purposes and demo purposes, the ability to authenticate as test users (like Ina and Sally) is useful. By using the development environment settings, we will get the handy "Login as" button on login and the routes for logging in as other users without security hangups are revealed.
-
-To override the environment of our app and worker pods, open their `yaml` files in the `manifests`: `app.yaml` and `worker.yaml`. Look for their `env` section where the environment variable of `ENVIRONMENT` is set to `"production"`. Change this setting to `"development"` in both files.
--->
-
 ## Logging in to OKD in your DevContainer
 
 Your devcontainer is equipped with the `oc` command-line utility that allows you to control OKD/Kubernetes clusters. You need to login with a token on your devcontainer for the commands to work, though. To get the login token:
@@ -103,6 +95,26 @@ Try your first deploy:
         6. Target port: 8000
         7. Check secure route, TLS termination **Edge**, insecure traffic **Redirect**
         8. Create
+
+## Changing the Environment to `stage`
+
+To enable the "Login as" button on the login page, and the routes for logging in as any user, you need to change two environment settings in OKD. One for the _build configuration_ and another for the FastAPI _deployment_.
+
+1. Changing the BuildConfig environment
+    1. Navigate to Builds > Build Configs
+    2. Select your BuildConfig
+    3. Switch to the YAML view
+    4. Scroll down to `strategy` > `dockerStrategy` > `buildArgs` > `name: ENVIRONMENT`
+    5. Change the value from `production` to `stage`
+    6. Save the Build Config
+    7. From the actions drop down (top right) initiate a new build
+2. Changing the Deployment environment
+    1. Navigate to Workloads > Deployments > `learnwithai-app` (This is your FastAPI server)
+    2. Switch to the Environment tab
+    3. Change `ENVIRONMENT` variable to `stage`
+    4. Save
+
+After taking these two actions, from your topology page, you should see that the build is rebuilding (the refresh icon). Once it finishes, you should see the pod redeploy. At this point you should be able to open your browser to your production URL and hard refresh your browser (Shift + Refresh). The "Login as" button should appear.
 
 ## Resetting your Database
 
