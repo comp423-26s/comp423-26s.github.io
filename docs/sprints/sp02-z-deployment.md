@@ -122,7 +122,12 @@ Now, we need to roll out your database reset script so that the postgres databas
 
 Back in your dev container's commandline, in the `infra` directory, run the script:
 
-`bash scripts/reset_db.sh comp423-001-26sp-<ONYEN>` where `<ONYEN>` is your team's dev ops' ONYEN. This script should succeed.
+`bash scripts/reset_db.sh comp423-001-26sp-<ONYEN>` where `<ONYEN>` is your team's dev ops' ONYEN. This script should succeed. If it does not, you may need to land one additional hotfix:
+
+1. `git fetch --all`
+2. `git cherry-pick 16b63c3c`
+
+This commit, [which you can review on GitHub](https://github.com/unc-csxl/learnwithai.unc.edu/commit/16b63c3c2c017ab0ebd28857ace3d09515487cb9), ensures the postgres user has permission to recreate databases. Once you add the commit locally, you'll want to get it merged in with your `main` branch for your team (and for TAs grading).
 
 ## Testing your Deployment
 
