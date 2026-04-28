@@ -1,0 +1,2809 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/rdbms/rd01-sql/">
+      
+      
+        <link rel="prev" href="../../containers/docker/">
+      
+      
+        <link rel="next" href="../rd02-querying/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>SQL Primer for COMP423 - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sql-primer-for-comp423" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SQL Primer for COMP423
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-is-a-relational-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What is a Relational Database?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. What is a Relational Database?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-brief-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Brief History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#popular-relational-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Popular Relational Databases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-setting-up-postgresql-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Setting Up PostgreSQL with Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Setting Up PostgreSQL with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pull-and-run-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull and Run PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connect to PostgreSQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-is-the-data-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where is the Data Stored?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#useful-container-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful Container Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-sql-a-domain-specific-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. SQL: A Domain-Specific Language
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. SQL: A Domain-Specific Language">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ddl-data-definition-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DDL (Data Definition Language)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dml-data-manipulation-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DML (Data Manipulation Language)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-abstractions-tables-columns-and-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key Abstractions: Tables, Columns, and Rows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Key Abstractions: Tables, Columns, and Rows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#columns-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Columns (Fields)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-your-table-with-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying Your Table with SQL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rows-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rows (Records)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-primary-keys-vs-unique-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Primary Keys vs. Unique Constraints
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Primary Keys vs. Unique Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primary-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unique Constraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-when-you-violate-a-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Happens When You Violate a Constraint?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-indexes-making-lookups-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Indexes — Making Lookups Fast
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Indexes — Making Lookups Fast">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-are-indexes-created-automatically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Are Indexes Created Automatically?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-do-you-need-to-create-an-index-manually" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Do You Need to Create an Index Manually?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Trade-off
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-next-steps-the-activity-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Next Steps: The Activity Table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Next Steps: The Activity Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insert-some-activity-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Insert Some Activity Entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-querying-select-where-order-by-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Querying: SELECT, WHERE, ORDER BY, LIMIT
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Querying: SELECT, WHERE, ORDER BY, LIMIT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-read-a-basic-select-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Read a Basic SELECT Query
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to Read a Basic SELECT Query">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pieces-syntax-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The pieces (syntax + meaning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-note-on-literals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on literals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-note-on-evaluation-order-mental-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on evaluation order (mental model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-all-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieve All Rows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-specific-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Select Specific Columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-with-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter with WHERE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sorting-with-order-by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sorting with ORDER BY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limiting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limiting Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-updating-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Updating Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Updating Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-read-an-update-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Read an UPDATE Statement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deposit-100-into-spongebobs-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deposit $100 into SpongeBob's Account
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#withdraw-50-from-squidwards-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Withdraw $50 from Squidward's Account
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recording-activity-updating-balances-as-one-atomic-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recording Activity + Updating Balances as One Atomic Transaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acid-the-four-guarantees-of-a-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACID: The Four Guarantees of a Transaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-aggregating-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Aggregating Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Aggregating Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-read-aggregate-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Read Aggregate Queries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to Read Aggregate Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aliases-with-as" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aliases with AS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-logic-with-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional logic with CASE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-many-accounts-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Many Accounts Exist?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-total-balance-across-all-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the Total Balance Across All Accounts?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-the-net-activity-for-each-account-in-the-activity-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is the Net Activity for Each Account in the Activity Table?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is the Net Activity for Each Account in the Activity Table?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-by-in-one-sentence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GROUP BY in One Sentence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering-rows-vs-filtering-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering Rows vs Filtering Groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-deleting-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Deleting Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Deleting Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-read-delete-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Read DELETE Statements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="sql-primer-for-comp423">SQL Primer for COMP423</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>After completing this reading, you will be able to:</p>
+<ol>
+<li>Explain the relational model in practical software engineering terms.</li>
+<li>Differentiate between a primary key and a unique constraint.</li>
+<li>Describe what an index does and why lookups by column are faster with one.</li>
+<li>Predict what happens when a uniqueness constraint is violated.</li>
+<li>Explain what a foreign key constraint enforces (and what happens when it's violated).</li>
+<li>Write SQL queries for filtering, sorting, updating, and aggregating (including <code>GROUP BY</code>).</li>
+<li>Write a multi-statement SQL transaction with <code>BEGIN</code> / <code>COMMIT</code> and describe ACID at a high level.</li>
+</ol>
+<hr />
+<h2 id="1-what-is-a-relational-database">1. What is a Relational Database?</h2>
+<p>A <strong>relational database</strong> stores data in <strong>tables</strong>. Each table has <strong>rows</strong> (records) and <strong>columns</strong> (fields). Relational databases are useful because they let us connect related data, enforce rules, and support many users safely at the same time.</p>
+<p>Unlike in-memory Python data structures, relational databases <strong>persist data to disk</strong>. That means data remains even after the program or server stops. This makes them essential for long-term, real-world applications like banking, e-commerce, content management systems, and the apps you build in this course.</p>
+<h3 id="a-brief-history">A Brief History</h3>
+<p>The concept of relational databases was introduced by <strong>Edgar F. Codd</strong> in 1970 while working at IBM. He proposed the <strong>relational model</strong>, which organizes data into structured tables and uses mathematical <strong>relational algebra</strong> for querying and manipulating data.</p>
+<p>Before relational databases, many systems used <strong>hierarchical</strong> or <strong>network databases</strong>, which were rigid and harder to scale. Codd's model made data easier to organize and query.</p>
+<p><strong>Structured Query Language (SQL)</strong> was developed in the 1970s at IBM as a way to interact with relational databases. It became the standard language for querying and managing relational data and is used by every major database system today.</p>
+<h3 id="popular-relational-databases">Popular Relational Databases</h3>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td>Open-source, feature-rich, widely used for modern applications</td>
+</tr>
+<tr>
+<td><strong>MySQL</strong></td>
+<td>Common in web applications, especially the LAMP stack</td>
+</tr>
+<tr>
+<td><strong>Microsoft SQL Server</strong></td>
+<td>Enterprise-level, common in .NET environments</td>
+</tr>
+<tr>
+<td><strong>Oracle Database</strong></td>
+<td>Widely used in large corporations</td>
+</tr>
+</tbody>
+</table>
+<p>In this course, we use <strong>PostgreSQL</strong> both for hands-on SQL practice and as the database for our Python web app. Running PostgreSQL as a separate process is realistic: your app is one process, the database is another, and they communicate over a network connection.</p>
+<hr />
+<h2 id="2-setting-up-postgresql-with-docker">2. Setting Up PostgreSQL with Docker</h2>
+<p>To follow along, run PostgreSQL in Docker and keep <code>psql</code> open as you read.</p>
+<h3 id="pull-and-run-postgresql">Pull and Run PostgreSQL</h3>
+<p>From your host machine's terminal:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1">docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><span class="w">  </span>--name<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><span class="w">  </span>--env<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>secret<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-4"><span class="w">  </span>--publish<span class="w"> </span><span class="m">5432</span>:5432<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-5"><span class="w">  </span>--detach<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-6"><span class="w">  </span>postgres:latest
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--name postgres</code></td>
+<td>Names the container <code>postgres</code></td>
+</tr>
+<tr>
+<td><code>--env POSTGRES_PASSWORD=...</code></td>
+<td>Sets the default password</td>
+</tr>
+<tr>
+<td><code>--publish 5432:5432</code></td>
+<td>Maps port 5432 from container to host</td>
+</tr>
+<tr>
+<td><code>--detach</code></td>
+<td>Runs in the background</td>
+</tr>
+<tr>
+<td><code>postgres:latest</code></td>
+<td>Uses the latest stable PostgreSQL image</td>
+</tr>
+</tbody>
+</table>
+<p>If <code>docker run ... --name postgres</code> fails because the container already exists, try simply running the <code>start</code> command as follows:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1">docker<span class="w"> </span>start<span class="w"> </span>postgres
+</span></code></pre></div>
+<h3 id="connect-to-postgresql">Connect to PostgreSQL</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1">docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><span class="w">  </span>--interactive<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><span class="w">  </span>--tty<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><span class="w">  </span>--user<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-5"><span class="w">  </span>postgres<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-6"><span class="w">  </span>psql
+</span></code></pre></div>
+<p>This runs the <code>psql</code> command-line client inside the existing container.</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--interactive</code>, <code>-i</code></td>
+<td>Keep STDIN open so you can interact with the process inside the container</td>
+</tr>
+<tr>
+<td><code>--tty</code>, <code>-t</code></td>
+<td>Allocate a pseudo-TTY (enables interactive terminal features)</td>
+</tr>
+<tr>
+<td><code>--user postgres</code></td>
+<td>Run the command as the specified user inside the container (<code>postgres</code>)</td>
+</tr>
+<tr>
+<td><code>&lt;container&gt;</code> (e.g., <code>postgres</code>)</td>
+<td>The name or ID of the container to execute the command in</td>
+</tr>
+<tr>
+<td><code>psql</code></td>
+<td>The command executed inside the container (PostgreSQL interactive client)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">psql prompt &amp; shell</p>
+<p>After running <code>psql</code> you will see a database prompt such as <code>postgres=#</code>. This indicates you are in the PostgreSQL interactive SQL shell (a client connected to the server) rather than the Bash shell. Commands entered here are SQL statements which are terminated with a semicolon <code>;</code>. To quit the SQL shell, type <code>\q</code> or press <code>Ctrl-D</code>.</p>
+</div>
+<h3 id="where-is-the-data-stored">Where is the Data Stored?</h3>
+<p>When running Docker without explicit volume mapping, PostgreSQL stores data <strong>inside the container's filesystem</strong>. Stopping and restarting the container preserves the data, but <em>removing</em> the container (<code>docker rm postgres</code>) deletes everything. </p>
+<p>In production you would mount a <em>volume</em>, which is persistent storage managed by Docker that lives outside a container’s writable layer (typically on the host or via a volume driver). Volumes persist across container restarts and removals, can be shared between containers, and are the standard way to store durable data.</p>
+<h3 id="useful-container-commands">Useful Container Commands</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1">docker<span class="w"> </span>stop<span class="w"> </span>postgres<span class="w">     </span><span class="c1"># Stop the container (data preserved)</span>
+</span><span id="__span-3-2">docker<span class="w"> </span>start<span class="w"> </span>postgres<span class="w">    </span><span class="c1"># Restart (data still there)</span>
+</span><span id="__span-3-3">docker<span class="w"> </span>rm<span class="w"> </span>postgres<span class="w">       </span><span class="c1"># Remove container (data lost!)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="3-sql-a-domain-specific-language">3. SQL: A Domain-Specific Language</h2>
+<p>SQL (<strong>Structured Query Language</strong>) is a language designed for relational databases. Unlike general-purpose languages like Python, SQL is <strong>domain-specific</strong>: it is focused on storing, retrieving, and changing structured data.</p>
+<p>You can think of SQL in two big categories:</p>
+<h3 id="ddl-data-definition-language">DDL (Data Definition Language)</h3>
+<p>DDL manages the <strong>structure</strong> (schema) of the database.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CREATE TABLE</code></td>
+<td>Define a new table</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE</code></td>
+<td>Modify an existing table</td>
+</tr>
+<tr>
+<td><code>DROP TABLE</code></td>
+<td>Delete a table and all its data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dml-data-manipulation-language">DML (Data Manipulation Language)</h3>
+<p>DML operates on the <strong>data</strong> stored in tables.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INSERT INTO</code></td>
+<td>Add new rows</td>
+</tr>
+<tr>
+<td><code>SELECT</code></td>
+<td>Retrieve rows</td>
+</tr>
+<tr>
+<td><code>UPDATE</code></td>
+<td>Modify existing rows</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>Remove rows</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-key-abstractions-tables-columns-and-rows">4. Key Abstractions: Tables, Columns, and Rows</h2>
+<p>Now that you have access to a database via <code>psql</code>, let's try it out!</p>
+<h3 id="tables">Tables</h3>
+<p>A <strong>table</strong> is the basic structure in an RDBMS. It represents a collection of related data, similar to a spreadsheet, but with more rigid and well defined structure.</p>
+<p>Let's create our first table using SQL's <strong>DDL</strong> (<code>CREATE TABLE</code>). In your <code>psql</code> prompt, run:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-4-2"><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-4-3"><span class="w">    </span><span class="k">owner</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-4-4"><span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-4-5"><span class="w">    </span><span class="n">balance</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="mi">0</span>
+</span><span id="__span-4-6"><span class="p">);</span>
+</span></code></pre></div>
+<p>You should see a success message like <code>CREATE TABLE</code>.</p>
+<h3 id="columns-fields">Columns (Fields)</h3>
+<p>A <strong>column</strong> defines one attribute and its allowed data type.</p>
+<p>PostgreSQL has many data types you can learn about in the <a href="https://www.postgresql.org/docs/current/datatype.html">official documentation</a>. For a quick overview, here are some of the common PostgreSQL data types:</p>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INTEGER</code></td>
+<td>Whole numbers (e.g., 1, 42, -7)</td>
+</tr>
+<tr>
+<td><code>SERIAL</code></td>
+<td>Auto-incrementing integer (commonly used for primary keys)</td>
+</tr>
+<tr>
+<td><code>TEXT</code></td>
+<td>Variable-length string (unlimited size)</td>
+</tr>
+<tr>
+<td><code>VARCHAR(n)</code></td>
+<td>String with a maximum length of <code>n</code> characters</td>
+</tr>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td>True or False values</td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td>Stores dates (YYYY-MM-DD)</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP</code></td>
+<td>Stores date and time information</td>
+</tr>
+<tr>
+<td><code>DECIMAL(p, s)</code></td>
+<td>Precise fixed-point decimal numbers</td>
+</tr>
+<tr>
+<td><code>REAL</code> / <code>DOUBLE PRECISION</code></td>
+<td>Floating-point numbers</td>
+</tr>
+</tbody>
+</table>
+<p>Columns can also carry <strong>constraints</strong> that enforce rules on the data:</p>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NOT NULL</code></td>
+<td>The column cannot be empty.</td>
+</tr>
+<tr>
+<td><code>UNIQUE</code></td>
+<td>All values in the column must be distinct.</td>
+</tr>
+<tr>
+<td><code>CHECK</code></td>
+<td>Enforces a Boolean condition (e.g., <code>CHECK (balance &gt;= 0)</code>).</td>
+</tr>
+<tr>
+<td><code>DEFAULT</code></td>
+<td>Assigns a value automatically if none is provided.</td>
+</tr>
+</tbody>
+</table>
+<p>Some columns have fixed maximum widths. For example, <code>VARCHAR(255)</code> prevents values longer than 255 characters.</p>
+<h3 id="verifying-your-table-with-sql">Verifying Your Table with SQL</h3>
+<p>After creating a table, it is good practice to <strong>verify</strong> it exists and that its columns look the way you expect. We will learn more about the structure of these SQL queries soon, for now you can scan them, copy, paste, and run in psql.</p>
+<p>In many relational databases, including PostgreSQL, you can query the database to see its tables and information about columns in a table.</p>
+<p>To list tables in the current database (restricting to the <code>public</code> schema in PostgreSQL):</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span>
+</span><span id="__span-5-2"><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span>
+</span><span id="__span-5-3"><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;public&#39;</span>
+</span><span id="__span-5-4"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">table_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;BASE TABLE&#39;</span>
+</span><span id="__span-5-5"><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span>
+</span></code></pre></div>
+<p>To list columns of the <code>accounts</code> table:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><span class="k">SELECT</span>
+</span><span id="__span-6-2"><span class="w">    </span><span class="n">ordinal_position</span><span class="p">,</span>
+</span><span id="__span-6-3"><span class="w">    </span><span class="k">column_name</span><span class="p">,</span>
+</span><span id="__span-6-4"><span class="w">    </span><span class="n">data_type</span><span class="p">,</span>
+</span><span id="__span-6-5"><span class="w">    </span><span class="n">is_nullable</span><span class="p">,</span>
+</span><span id="__span-6-6"><span class="w">    </span><span class="n">column_default</span>
+</span><span id="__span-6-7"><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span>
+</span><span id="__span-6-8"><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;public&#39;</span>
+</span><span id="__span-6-9"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;accounts&#39;</span>
+</span><span id="__span-6-10"><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ordinal_position</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Other RDBMSs organize schemas/catalogs slightly differently, but the general idea is the same: query the database's catalog tables to confirm the schema you just created.</p>
+<h3 id="rows-records">Rows (Records)</h3>
+<p>A <strong>row</strong> represents a single entry in a table — one specific combination of values across all the columns.</p>
+<p>An analogy to <strong>Object-Oriented Programming</strong> is helpful here:</p>
+<ul>
+<li>A <strong>table</strong> is like a class definition.</li>
+<li><strong>Columns</strong> define the attributes of the class.</li>
+<li><strong>Rows</strong> are like instances (objects) created from the class.</li>
+</ul>
+<p>Like all analogies, it is not a perfect one, which is why we will learn about mappings from OOP to SQL soon, but these are close conceptual relationships.</p>
+<p>Let's insert some data using SQL's <strong>DML</strong> (<code>INSERT INTO</code>). Run the following in <code>psql</code>:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="p">(</span><span class="k">owner</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="n">balance</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;SpongeBob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;spongebob@unc.edu&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">);</span>
+</span><span id="__span-7-2"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="p">(</span><span class="k">owner</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="n">balance</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Squidward&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;squidward@unc.edu&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">);</span>
+</span><span id="__span-7-3"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="p">(</span><span class="k">owner</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="n">balance</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Patrick&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;patrick@unc.edu&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
+</span></code></pre></div>
+<p>Notice we do not supply <code>id</code> — the <code>SERIAL</code> type auto-generates it for each row.</p>
+<p>The table looks like this:</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>owner</th>
+<th>email</th>
+<th>balance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SpongeBob</td>
+<td>spongebob@unc.edu</td>
+<td>500</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Squidward</td>
+<td>squidward@unc.edu</td>
+<td>250</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Patrick</td>
+<td>patrick@unc.edu</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>Each row is similar to a Python object, with some data type and constraint enforcement differences between Python and SQL:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><span class="k">class</span><span class="w"> </span><span class="nc">Account</span><span class="p">:</span>
+</span><span id="__span-8-2">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">balance</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="__span-8-3">        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+</span><span id="__span-8-4">        <span class="bp">self</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner</span>
+</span><span id="__span-8-5">        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+</span><span id="__span-8-6">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="n">balance</span>
+</span></code></pre></div>
+<hr />
+<h2 id="5-primary-keys-vs-unique-constraints">5. Primary Keys vs. Unique Constraints</h2>
+<p>These two concepts are related but serve different purposes.</p>
+<h3 id="primary-key">Primary Key</h3>
+<p>A <strong>primary key</strong> uniquely identifies each row in a table. A table should have exactly one primary key. It is:</p>
+<ul>
+<li><strong>Unique</strong> — no two rows share the same primary key value.</li>
+<li><strong>Not null</strong> — a primary key column can never be empty.</li>
+<li><strong>Immutable by convention</strong> — you generally never change a primary key after a row is created.</li>
+</ul>
+<p>In our <code>accounts</code> table, <code>id SERIAL PRIMARY KEY</code> serves this role. The <code>SERIAL</code> type auto-increments, so the database assigns <code>1</code>, <code>2</code>, <code>3</code>, ... automatically.</p>
+<p>For many applications, <code>SERIAL</code> integers are common. At very large scale, teams often use <strong>UUIDs</strong> because they can be generated across different systems without collisions.</p>
+<h3 id="unique-constraint">Unique Constraint</h3>
+<p>A <strong>unique constraint</strong> ensures that no two rows share the same value in a given column, but it is <em>not</em> the row's identity. A table can have <strong>many</strong> unique constraints but only <strong>one</strong> primary key.</p>
+<p>In our example, <code>email TEXT UNIQUE NOT NULL</code> is a unique constraint. It prevents two accounts from sharing the same email address, but the <em>identity</em> of each row is still the <code>id</code>.</p>
+<h3 id="what-happens-when-you-violate-a-constraint">What Happens When You Violate a Constraint?</h3>
+<p>Try inserting a duplicate email in your <code>psql</code> console:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="p">(</span><span class="k">owner</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="n">balance</span><span class="p">)</span>
+</span><span id="__span-9-2"><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Eve&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;spongebob@unc.edu&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</span></code></pre></div>
+<p>PostgreSQL responds with an error:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1">ERROR:  duplicate key value violates unique constraint &quot;accounts_email_key&quot;
+</span><span id="__span-10-2">DETAIL:  Key (email)=(spongebob@unc.edu) already exists.
+</span></code></pre></div>
+<p>The INSERT fails entirely — no partial row is created. This is the database <strong>enforcing data integrity</strong> for you, which is far safer than checking for duplicates in application code.</p>
+<hr />
+<h2 id="6-indexes-making-lookups-fast">6. Indexes — Making Lookups Fast</h2>
+<p>When you run a query like:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;squidward@unc.edu&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>the database needs to find the matching row. Without any special data structure, it must scan <em>every row</em> in the table — a <strong>sequential scan</strong>. For 3 rows this is trivial; for 3 million rows it is painfully slow.</p>
+<p>An <strong>index</strong> is a separate data structure (often a <strong>B-tree</strong>) that the database maintains alongside the table. It maps column values to row locations, like the index at the back of a textbook maps topics to page numbers.</p>
+<h3 id="when-are-indexes-created-automatically">When Are Indexes Created Automatically?</h3>
+<ul>
+<li>A <strong>primary key</strong> always gets an index automatically.</li>
+<li>A <strong>unique constraint</strong> always gets an index automatically (the database needs it to efficiently enforce uniqueness).</li>
+</ul>
+<p>So in our <code>accounts</code> table, both <code>id</code> and <code>email</code> are automatically indexed.</p>
+<h3 id="when-do-you-need-to-create-an-index-manually">When Do You Need to Create an Index Manually?</h3>
+<p>If you frequently filter or sort on a column that is <em>not</em> a primary key or unique, you should create an index:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-12-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_accounts_owner</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="p">(</span><span class="k">owner</span><span class="p">);</span>
+</span></code></pre></div>
+<p>Now <code>SELECT * FROM accounts WHERE owner = 'SpongeBob';</code> can use the index instead of scanning every row.</p>
+<h3 id="the-trade-off">The Trade-off</h3>
+<p>Indexes speed up reads but add some write overhead, because the index must be updated on inserts, updates, and deletes. In most applications, the read-speed gain is worth this cost.</p>
+<hr />
+<h2 id="7-next-steps-the-activity-table">7. Next Steps: The Activity Table</h2>
+<p>Before we move on to querying, let's establish another table for our banking system. The activity table records every deposit and withdrawal:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-13-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-13-2"><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-13-3"><span class="w">    </span><span class="n">account_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">accounts</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+</span><span id="__span-13-4"><span class="w">    </span><span class="n">activity_type</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">activity_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;WD&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">)),</span>
+</span><span id="__span-13-5"><span class="w">    </span><span class="n">amount</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-13-6"><span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
+</span><span id="__span-13-7"><span class="p">);</span>
+</span></code></pre></div>
+<p>This introduces a <strong>foreign key</strong> constraint: <code>activity.account_id</code> must refer to an existing row in <code>accounts(id)</code>.</p>
+<ul>
+<li>If you try to insert an activity entry for a nonexistent account, PostgreSQL will reject it.</li>
+<li>By default, PostgreSQL will also prevent you from deleting an account row if activity rows still reference it.</li>
+</ul>
+<p><code>activity_type</code> is a simple enumeration: <code>DEP</code> for deposit and <code>WD</code> for withdrawal.</p>
+<h3 id="insert-some-activity-entries">Insert Some Activity Entries</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">);</span>
+</span><span id="__span-14-2"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">);</span>
+</span><span id="__span-14-3"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
+</span><span id="__span-14-4"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;WD&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+</span><span id="__span-14-5"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span>
+</span><span id="__span-14-6"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;WD&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">);</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Convention</p>
+<p><code>amount</code> is stored as a <strong>positive</strong> integer. The <code>activity_type</code> indicates whether the activity adds to the balance (<code>DEP</code>) or subtracts from it (<code>WD</code>).</p>
+</div>
+<hr />
+<h2 id="8-querying-select-where-order-by-limit">8. Querying: SELECT, WHERE, ORDER BY, LIMIT</h2>
+<p>In this section, you will see several <code>SELECT</code> statements. A <code>SELECT</code> query asks the database to <strong>return a result table</strong> (a set of rows and columns) based on rules you specify.</p>
+<h3 id="how-to-read-a-basic-select-query">How to Read a Basic <code>SELECT</code> Query</h3>
+<p>Here is the basic shape you will see repeatedly:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-15-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">&lt;</span><span class="n">columns</span><span class="o">&gt;</span>
+</span><span id="__span-15-2"><span class="k">FROM</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span>
+</span><span id="__span-15-3"><span class="k">WHERE</span><span class="w"> </span><span class="o">&lt;</span><span class="n">row_filter</span><span class="o">&gt;</span>
+</span><span id="__span-15-4"><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="o">&lt;</span><span class="n">sort_key</span><span class="o">&gt;</span>
+</span><span id="__span-15-5"><span class="k">LIMIT</span><span class="w"> </span><span class="o">&lt;</span><span class="n">max_rows</span><span class="o">&gt;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Not every query uses every clause, but the idea stays the same.</p>
+<h4 id="the-pieces-syntax-meaning">The pieces (syntax + meaning)</h4>
+<ul>
+<li><code>SELECT</code> … chooses <strong>which columns</strong> to return.<ul>
+<li><code>*</code> is a wildcard meaning "all columns".</li>
+<li>You can list columns separated by commas, like <code>owner, balance</code>.</li>
+</ul>
+</li>
+<li><code>FROM</code> … names the <strong>table</strong> you are reading from.</li>
+<li><code>WHERE</code> … filters down to only the <strong>rows that match boolean conditions (predicates)</strong>.<ul>
+<li>Example operators you will see:<ul>
+<li><code>=</code> equality (exact match)</li>
+<li><code>&gt;</code> greater than</li>
+<li><code>LIKE</code> pattern matching (described below)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>ORDER BY</code> … sorts the returned rows.<ul>
+<li><code>ASC</code> means ascending (smallest → largest, A → Z).</li>
+<li><code>DESC</code> means descending (largest → smallest, Z → A).</li>
+<li>Without <code>ORDER BY</code>, the database is free to return rows in any order.</li>
+</ul>
+</li>
+<li><code>LIMIT</code> ... restricts how many rows are returned.</li>
+<li><code>;</code> ends the statement in <code>psql</code>, like a statement in C-family programming languages</li>
+</ul>
+<h4 id="a-note-on-literals">A note on literals</h4>
+<ul>
+<li>String values use <strong>single quotes</strong>, like <code>'spongebob@unc.edu'</code>.</li>
+<li><code>LIKE 'B%'</code> means "starts with B" because <code>%</code> is a wildcard meaning "any sequence of characters".</li>
+</ul>
+<h4 id="a-note-on-evaluation-order-mental-model">A note on evaluation order (mental model)</h4>
+<p>When reading a <code>SELECT</code> query, it often helps to think:</p>
+<ol>
+<li><code>FROM</code> (pick the table)</li>
+<li><code>WHERE</code> (filter rows)</li>
+<li><code>SELECT</code> (choose columns)</li>
+<li><code>ORDER BY</code> (sort)</li>
+<li><code>LIMIT</code> (take the first N)</li>
+</ol>
+<p>This is not a full description of how the database executes queries internally, but it is a useful way to understand what the clauses mean.</p>
+<p>Now let's interactively explore this syntax with examples that build up to more complex select statements. Follow along with each of the examples below:</p>
+<h3 id="retrieve-all-rows">Retrieve All Rows</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-16-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="p">;</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>owner</th>
+<th>email</th>
+<th>balance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SpongeBob</td>
+<td>spongebob@unc.edu</td>
+<td>500</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Squidward</td>
+<td>squidward@unc.edu</td>
+<td>250</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Patrick</td>
+<td>patrick@unc.edu</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<h3 id="select-specific-columns">Select Specific Columns</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><span class="k">SELECT</span><span class="w"> </span><span class="k">owner</span><span class="p">,</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="filter-with-where">Filter with WHERE</h3>
+<p>Find a specific account by email:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-18-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;spongebob@unc.edu&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Find accounts with a balance above 300:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-19-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">300</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Find accounts whose owner name starts with "S":</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-20-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">owner</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;S%&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="sorting-with-order-by">Sorting with ORDER BY</h3>
+<p>Sort by balance, with the highest balances first:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-21-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Sort alphabetically by owner name:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-22-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">owner</span><span class="w"> </span><span class="k">ASC</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="limiting-results">Limiting Results</h3>
+<p>Get the single largest account:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-23-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="9-updating-data">9. Updating Data</h2>
+<p>The <code>UPDATE</code> statement modifies existing rows. In a banking system, updates are the bread and butter — every deposit and withdrawal changes a balance.</p>
+<h3 id="how-to-read-an-update-statement">How to Read an <code>UPDATE</code> Statement</h3>
+<p>Here is the common shape:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-24-1"><span class="k">UPDATE</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span>
+</span><span id="__span-24-2"><span class="k">SET</span><span class="w"> </span><span class="o">&lt;</span><span class="k">column</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">expression</span><span class="o">&gt;</span>
+</span><span id="__span-24-3"><span class="k">WHERE</span><span class="w"> </span><span class="o">&lt;</span><span class="n">row_filter</span><span class="o">&gt;</span><span class="p">;</span>
+</span></code></pre></div>
+<ul>
+<li><code>UPDATE &lt;table&gt;</code> chooses which table you want to change.</li>
+<li><code>SET</code> describes <strong>what to change</strong>. The right-hand side can be an expression.<ul>
+<li><code>balance = balance + 100</code> means "take the old <code>balance</code> value and add 100".</li>
+<li>You can update multiple columns by separating assignments with commas.</li>
+</ul>
+</li>
+<li><code>WHERE</code> chooses <strong>which rows</strong> to modify.<ul>
+<li><code>WHERE id = 1</code> targets the row whose primary key is 1.</li>
+<li>If no rows match, then nothing is updated.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Always double-check <code>WHERE</code></p>
+<p>If you omit the <code>WHERE</code> clause, the update applies to <strong>every row</strong> in the table.</p>
+</div>
+<h3 id="deposit-100-into-spongebobs-account">Deposit $100 into SpongeBob's Account</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-25-1"><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span></code></pre></div>
+<p>After this, SpongeBob's balance is <code>600</code>.</p>
+<h3 id="withdraw-50-from-squidwards-account">Withdraw $50 from Squidward's Account</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-26-1"><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Squidward's balance is now <code>200</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Always Use a WHERE Clause!</p>
+<p>Running <code>UPDATE accounts SET balance = 0;</code> <em>without</em> a <code>WHERE</code> clause would set <strong>every</strong> account's balance to zero. Always double-check your <code>WHERE</code> before executing an <code>UPDATE</code>.</p>
+</div>
+<h3 id="recording-activity-updating-balances-as-one-atomic-transaction">Recording Activity + Updating Balances as One Atomic Transaction</h3>
+<p>In a real system, you rarely want to update a balance without also recording <em>why</em> it changed. We can group multiple statements into a <strong>single transaction</strong> so they succeed or fail together.</p>
+<p>Here is a simple example: transfer $200 from SpongeBob (account 1) to Squidward (account 2). This updates balances and inserts matching activity entries.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-27-1"><span class="k">BEGIN</span><span class="p">;</span>
+</span><span id="__span-27-2">
+</span><span id="__span-27-3"><span class="c1">-- Record the intent (activity log)</span>
+</span><span id="__span-27-4"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;WD&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">);</span>
+</span><span id="__span-27-5"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">);</span>
+</span><span id="__span-27-6">
+</span><span id="__span-27-7"><span class="c1">-- Apply the balance changes</span>
+</span><span id="__span-27-8"><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-27-9"><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-27-10">
+</span><span id="__span-27-11"><span class="k">COMMIT</span><span class="p">;</span>
+</span></code></pre></div>
+<p>If any statement in the transaction fails (for example, the foreign key constraint on <code>activity.account_id</code> or a check constraint), the whole transaction is rolled back and <strong>none</strong> of the changes take effect.</p>
+<h3 id="acid-the-four-guarantees-of-a-transaction">ACID: The Four Guarantees of a Transaction</h3>
+<p>The properties that make transactions trustworthy are summarized by <strong>ACID</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>One-Sentence Definition</th>
+<th>Banking Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atomicity</strong></td>
+<td>All operations in a transaction succeed together, or none of them take effect.</td>
+<td>A transfer debits SpongeBob <em>and</em> credits Squidward, or neither balance changes.</td>
+</tr>
+<tr>
+<td><strong>Consistency</strong></td>
+<td>A transaction moves the database from one valid state to another — no constraint is violated.</td>
+<td>An activity insert with a nonexistent <code>account_id</code> is rejected because of the foreign key.</td>
+</tr>
+<tr>
+<td><strong>Isolation</strong></td>
+<td>Concurrent transactions do not see each other's uncommitted work.</td>
+<td>While Request A is transferring money, Request B reading balances sees the <em>old</em> values until A commits.</td>
+</tr>
+<tr>
+<td><strong>Durability</strong></td>
+<td>Once a transaction commits, the data is permanently saved — it survives crashes, power failures, and restarts.</td>
+<td>After <code>COMMIT;</code> returns, the new balances and activity rows persist even if the server crashes one millisecond later.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Isolation levels</p>
+<p>In practice, databases offer different <strong>isolation levels</strong> (Read Committed, Repeatable Read, Serializable) that trade strictness for performance. PostgreSQL defaults to <strong>Read Committed</strong>. We won't dive into isolation levels in this course, but you should know the concept exists.</p>
+</div>
+<hr />
+<h2 id="10-aggregating-data">10. Aggregating Data</h2>
+<p>SQL provides <strong>aggregate functions</strong> that compute one result from many rows.</p>
+<h3 id="how-to-read-aggregate-queries">How to Read Aggregate Queries</h3>
+<p>Aggregates like <code>COUNT(*)</code> and <code>SUM(amount)</code> combine many rows into a single value.</p>
+<p>For example:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-28-1"><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="p">;</span>
+</span></code></pre></div>
+<p>means "count how many rows are in <code>accounts</code>".</p>
+<h4 id="aliases-with-as">Aliases with <code>AS</code></h4>
+<p>You will often see <code>AS name</code> to give a computed column a readable name:</p>
+<ul>
+<li><code>... AS net_activity</code> means "label this computed column as <code>net_activity</code>" in the results.</li>
+</ul>
+<h4 id="conditional-logic-with-case">Conditional logic with <code>CASE</code></h4>
+<p>Sometimes you need conditional logic inside an expression. SQL uses a <code>CASE</code> expression:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-29-1"><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="o">&lt;</span><span class="n">condition</span><span class="o">&gt;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="o">&lt;</span><span class="n">value_if_true</span><span class="o">&gt;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="o">&lt;</span><span class="n">value_if_false</span><span class="o">&gt;</span><span class="w"> </span><span class="k">END</span>
+</span></code></pre></div>
+<p>In our banking example, we store <code>amount</code> as a positive integer and use <code>activity_type</code> to decide whether to add or subtract it.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COUNT(*)</code></td>
+<td>Number of rows</td>
+</tr>
+<tr>
+<td><code>SUM(column)</code></td>
+<td>Total of all values in a column</td>
+</tr>
+<tr>
+<td><code>AVG(column)</code></td>
+<td>Average value</td>
+</tr>
+<tr>
+<td><code>MIN(column)</code></td>
+<td>Smallest value</td>
+</tr>
+<tr>
+<td><code>MAX(column)</code></td>
+<td>Largest value</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-many-accounts-exist">How Many Accounts Exist?</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-30-1"><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Result: <code>3</code></p>
+<h3 id="what-is-the-total-balance-across-all-accounts">What is the Total Balance Across All Accounts?</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-31-1"><span class="k">SELECT</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="what-is-the-net-activity-for-each-account-in-the-activity-table">What is the Net Activity for Each Account in the Activity Table?</h3>
+<p>If you want an aggregate <strong>per group</strong> (per account), you use <code>GROUP BY</code>.</p>
+<h4 id="group-by-in-one-sentence"><code>GROUP BY</code> in One Sentence</h4>
+<p><code>GROUP BY account_id</code> means: "Partition the rows into one bucket per <code>account_id</code>, then compute the aggregates once per bucket."</p>
+<p>Here's the pattern:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-32-1"><span class="k">SELECT</span><span class="w"> </span><span class="o">&lt;</span><span class="n">group_columns</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">aggregate_expressions</span><span class="o">&gt;</span>
+</span><span id="__span-32-2"><span class="k">FROM</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span>
+</span><span id="__span-32-3"><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="o">&lt;</span><span class="n">group_columns</span><span class="o">&gt;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Now let's compute the signed net activity and number of entries per account:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-33-1"><span class="k">SELECT</span>
+</span><span id="__span-33-2"><span class="w">    </span><span class="n">account_id</span><span class="p">,</span>
+</span><span id="__span-33-3"><span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">activity_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="o">-</span><span class="n">amount</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">net_activity</span><span class="p">,</span>
+</span><span id="__span-33-4"><span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">num_entries</span>
+</span><span id="__span-33-5"><span class="k">FROM</span><span class="w"> </span><span class="n">activity</span>
+</span><span id="__span-33-6"><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">account_id</span>
+</span><span id="__span-33-7"><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">account_id</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Read this as: "Group activity rows by <code>account_id</code>. For each account, compute the signed net total (deposits add, withdrawals subtract) and count how many activity rows exist."</p>
+<h4 id="filtering-rows-vs-filtering-groups">Filtering Rows vs Filtering Groups</h4>
+<ul>
+<li><code>WHERE ...</code> filters <strong>rows before</strong> grouping.</li>
+<li><code>GROUP BY ...</code> forms groups.</li>
+<li>Aggregate functions like <code>SUM(...)</code> and <code>COUNT(*)</code> compute results <strong>per group</strong>.</li>
+</ul>
+<p>Sometimes you want to filter based on an aggregate result (for example, "only show accounts whose net activity is positive"). That requires the <code>HAVING</code> clause, which is beyond the scope of this reading.</p>
+<ul>
+<li>PostgreSQL docs for <code>HAVING</code>: <a href="https://www.postgresql.org/docs/current/sql-select.html#SQL-HAVING">https://www.postgresql.org/docs/current/sql-select.html#SQL-HAVING</a></li>
+</ul>
+<h2 id="11-deleting-data">11. Deleting Data</h2>
+<h3 id="how-to-read-delete-statements">How to Read <code>DELETE</code> Statements</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-34-1"><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="o">&lt;</span><span class="n">row_filter</span><span class="o">&gt;</span><span class="p">;</span>
+</span></code></pre></div>
+<ul>
+<li><code>DELETE</code> removes <strong>rows</strong>.</li>
+<li>The table still exists afterward.</li>
+<li>If you omit the <code>WHERE</code> clause, it deletes <strong>all rows</strong>.</li>
+</ul>
+<p>To remove rows from a table, use <code>DELETE</code>:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-35-1"><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">A safe DELETE habit</p>
+<p>Before running a <code>DELETE ... WHERE ...</code>, run a <code>SELECT ... WHERE ...</code> first to confirm you are targeting the rows you intend.</p>
+</div>
+<p>To delete <em>all</em> rows (but keep the table structure):</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-36-1"><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">activity</span><span class="p">;</span>
+</span></code></pre></div>
+<p>To remove a table in its entirety:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-37-1"><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">&lt;</span><span class="k">table</span><span class="o">&gt;</span><span class="p">;</span>
+</span></code></pre></div>
+<ul>
+<li><code>DROP TABLE</code> deletes the <strong>table itself</strong> (its schema and all of its data).</li>
+<li>After dropping a table, you cannot query or insert into it until it is recreated.</li>
+</ul>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-38-1"><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">activity</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>DELETE</code> and <code>DROP TABLE</code> are generally irreversible. Use them carefully, especially without a <code>WHERE</code> clause.</p>
+</div>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>In this reading, you practiced the foundations of relational databases and SQL through a simple banking system:</p>
+<ul>
+<li><strong>Tables, columns, rows</strong> — the building blocks of the relational model.</li>
+<li><strong>Primary keys</strong> identify rows; <strong>unique constraints</strong> prevent duplicates on other columns.</li>
+<li><strong>Indexes</strong> make queries fast — they are created automatically for primary keys and unique constraints.</li>
+<li><strong>DDL</strong> (<code>CREATE TABLE</code>, <code>ALTER TABLE</code>, <code>DROP TABLE</code>) defines structure; <strong>DML</strong> (<code>INSERT</code>, <code>SELECT</code>, <code>UPDATE</code>, <code>DELETE</code>) manipulates data.</li>
+<li><strong>Filtering</strong> (<code>WHERE</code>), <strong>sorting</strong> (<code>ORDER BY</code>), <strong>limiting</strong> (<code>LIMIT</code>), and <strong>aggregating</strong> (<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>) with <code>GROUP BY</code> are the workhorses of SQL queries.</li>
+</ul>
+<p>In the next reading, you will see how to express these same SQL queries in Python using <strong>SQLModel</strong> — the ORM library that bridges your Python application code and the database.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../containers/docker/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Container Fundamentals">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Container Fundamentals
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../rd02-querying/" class="md-footer__link md-footer__link--next" aria-label="Next: Querying with SQLModel">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Querying with SQLModel
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2225 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/containers/docker/">
+      
+      
+        <link rel="prev" href="../../backend/2-testing-apis/">
+      
+      
+        <link rel="next" href="../../rdbms/rd01-sql/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Container Fundamentals - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#container-fundamentals-with-docker" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Container Fundamentals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-containers-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why Containers Exist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-image-vs-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Image vs Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Image vs Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-containers-are-isolated-processes-not-tiny-virtual-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Containers Are Isolated Processes, Not Tiny Virtual Machines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Containers Are Isolated Processes, Not Tiny Virtual Machines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Namespaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-groups-cgroups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Groups (cgroups)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why This Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-one-container-one-primary-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. One Container, One Primary Process
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-docker-on-linux-vs-macos-vs-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Docker on Linux vs macOS vs Windows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Docker on Linux vs macOS vs Windows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-macos-and-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On macOS and Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-docker-engine-a-client-server-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Docker Engine: A Client-Server Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-building-images-with-dockerfiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Building Images with Dockerfiles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Building Images with Dockerfiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Context
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-writable-layer-and-ephemeral-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Writable Layer and Ephemeral State
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-volumes-for-persistent-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Volumes for Persistent Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-container-networking-and-port-publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Container Networking and Port Publishing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Container Networking and Port Publishing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-to-service-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service-to-Service Networking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-environment-variables-and-runtime-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Environment Variables and Runtime Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-registries-and-image-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Registries and Image Distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-the-lifecycle-of-a-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. The Lifecycle of a Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. The Lifecycle of a Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-guided-activity-explore-a-running-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Guided Activity: Explore a Running Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Guided Activity: Explore a Running Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-do-these-flags-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What do these flags mean?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-guided-activity-run-a-background-service-in-a-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Guided Activity: Run a Background Service in a Container
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Guided Activity: Run a Background Service in a Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-happening-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is happening here?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-containers-in-real-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Containers in Real Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="container-fundamentals-with-docker">Container Fundamentals with Docker</h1>
+<p>By this point in the course, you have already been using containers in very practical ways. In this lesson, we will explore what containerization is in more detail so that you have a more complete picture of this important engineering infrastructure.</p>
+<p>You installed Docker Desktop early on, have opened projects in <strong>VS Code Dev Containers</strong>, rebuilt those containers as your project configuration changed, added tools such as <code>uv</code> into containerized development environments, and more recently we have moved toward <strong>Docker Compose</strong> as projects gain more than one moving part with a relational database.</p>
+<p>This lesson aims to answer the deeper question:</p>
+<blockquote>
+<p>Why are we, and so many software teams, making such significant use of containers in the first place?</p>
+</blockquote>
+<p>Your laptop, your teammate's computer, the CI server, and a production cloud environment may all differ in operating system, installed tools, library versions, filesystem layout, and environment variables. Even small differences can lead to the classic problem of: <em>"it works on my machine."</em></p>
+<p><em>How do we make sure software runs the same way on every machine?</em> <strong>Containers</strong> are one of the industry's main answers to this problem. A container packages an application together with the runtime environment it expects, while still relying on the host operating system's kernel. In this course, <strong>Docker</strong> is the platform we use to build, run, inspect, and reason about containers.</p>
+<p>This reading is meant to connect the hands-on container work you have already done to the systems ideas underneath it. It also foreshadows where the course is heading next: container images are not just useful for local development, they are a major building block of cloud deployment platforms such as <strong>OKD/Kubernetes</strong>.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>After completing this reading, you will be able to:</p>
+<ol>
+<li>Explain the difference between a <strong>Docker image</strong> and a <strong>Docker container</strong>.</li>
+<li>Describe why containers are useful for reproducible software environments.</li>
+<li>Explain the <strong>one container = one primary process</strong> design model.</li>
+<li>Describe how containers use operating system isolation features rather than a full guest OS.</li>
+<li>Explain how Docker runs differently on Linux versus macOS and Windows.</li>
+<li>Describe how images are built from <strong>Dockerfiles</strong> using <strong>layers</strong>.</li>
+<li>Explain the difference between a container's writable layer and a <strong>volume</strong>.</li>
+<li>Describe basic container networking, including <strong>port publishing</strong>.</li>
+<li>Explain how images are shared through <strong>registries</strong>.</li>
+<li>Walk through the basic <strong>lifecycle</strong> of a container from creation to removal.</li>
+</ol>
+<hr />
+<h2 id="1-why-containers-exist">1. Why Containers Exist</h2>
+<p>Imagine a small Python API project. To run it successfully, you may need:</p>
+<ul>
+<li>Python 3.14</li>
+<li>specific Python packages</li>
+<li>OS-level libraries</li>
+<li>environment variables</li>
+<li>a predictable working directory</li>
+</ul>
+<p>Without containers, every developer and every deployment environment must recreate those assumptions manually. That is error-prone and time-consuming.</p>
+<p>You have already seen a course-scale version of this problem. Rather than asking every student to install exactly the right Python version, tools, extensions, and CLI dependencies directly onto their host machine, the course has repeatedly leaned on Dev Containers to provide a reproducible development setup. When you rebuilt a Dev Container after changing <code>devcontainer.json</code> or a post-create script, you were already benefiting from containerization as an environment management tool.</p>
+<p>Containers help by packaging together:</p>
+<ul>
+<li>application code</li>
+<li>runtime environment</li>
+<li>installed dependencies</li>
+<li>filesystem layout</li>
+<li>startup command</li>
+</ul>
+<p>This does <strong>not</strong> mean a container is an entire computer or <em>virtual machine</em>. It means the container gives a process a well-defined <strong>execution environment</strong> so that software behaves consistently across machines.</p>
+<p>In practice, this lets us replace a long setup checklist with a command such as:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1">docker<span class="w"> </span>run<span class="w"> </span>my-service
+</span></code></pre></div>
+<p>That command only works if an image named <code>my-service</code> already exists locally or can be pulled from a registry, but it captures the goal: a container should be easy to start and predictable to run.</p>
+<p>In this course, the motivation for containers goes beyond local development. We also want a path from a reproducible development environment to a reproducible deployment artifact.</p>
+<p>That progression is a big part of modern software engineering practice.</p>
+<hr />
+<h2 id="2-image-vs-container">2. Image vs Container</h2>
+<p>The most important distinction in Docker is between an <strong>image</strong> and a <strong>container</strong>.</p>
+<h3 id="image">Image</h3>
+<p>A <strong>Docker image</strong> is an immutable template for a runtime environment.</p>
+<p>An image commonly includes:</p>
+<ul>
+<li>a base Linux filesystem</li>
+<li>installed language runtimes</li>
+<li>libraries and dependencies</li>
+<li>application source code or built artifacts</li>
+<li>metadata such as a default startup command</li>
+</ul>
+<p>For example, <code>python:3.14</code> is the name of an image which is hosted on <a href="https://hub.docker.com/layers/library/python/3.14/images/sha256-c32bcecb0032e1ce31f9e137579cc11e4886d490eb313f847cd00b750d2283d0">Docker Hub</a> that contains all of the above with a modern Python runtime version installed. This is an image. It is not yet a running process. It is a stored data file, also called an artifact, that contains the runtime environment.</p>
+<h3 id="container">Container</h3>
+<p>A <strong>container</strong> is a running or stopped instance of an image.</p>
+<p>When you run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1">docker<span class="w"> </span>run<span class="w"> </span>python:3.14
+</span></code></pre></div>
+<p>Docker does two important things:</p>
+<ol>
+<li>It creates a new container from the image.</li>
+<li>It starts that container's configured <strong>primary process</strong>. Here we use the term *<em>process</em> very precisely to refer to a process in the systems sense: an active, executing instance of a computer program managed by an operating system.</li>
+</ol>
+<p>You can create many containers from the same image. Each container has its own process state, network identity, and writable filesystem layer. There is an analogy between a programming language's <em>classes</em> and <em>instances</em> and Docker <em>images</em> and <em>containers</em>, but recognize their concerns are <strong>very different</strong>.</p>
+<p>Ultimately, you will want to commit these definitions to memory:</p>
+<ul>
+<li><strong>Image</strong> - immutable filesystem template + metadata</li>
+<li><strong>Container</strong> - one instance of an image with running process state + writable storage layer</li>
+</ul>
+<hr />
+<h2 id="3-containers-are-isolated-processes-not-tiny-virtual-machines">3. Containers Are Isolated Processes, Not Tiny Virtual Machines</h2>
+<p>At the operating system level, a container is still a <strong>process</strong> on some machine.</p>
+<p>Docker is not primarily giving you a whole second operating system. Instead, it is giving a process an isolated environment using features of the Linux kernel. The two  important kernel mechanisms that make this possible are:</p>
+<h3 id="namespaces">Namespaces</h3>
+<p>Namespaces isolate what a process can see. They can provide separate views of:</p>
+<ul>
+<li>process IDs</li>
+<li>network interfaces</li>
+<li>mount points / filesystems</li>
+<li>hostnames</li>
+<li>users and groups</li>
+</ul>
+<p>Inside a container, a process may believe it is running as process <code>1</code>, with its own network stack and filesystem view, even though from the host's perspective it is just one process among many.</p>
+<h3 id="control-groups-cgroups">Control Groups (cgroups)</h3>
+<p>Control groups help limit and account for resource usage such as:</p>
+<ul>
+<li>CPU</li>
+<li>memory</li>
+<li>disk IO</li>
+</ul>
+<p>This matters because containers are often used in multi-service systems where resource isolation is important.</p>
+<h3 id="why-this-matters">Why This Matters</h3>
+<p>Because containers share the host kernel, they are usually much lighter weight than full virtual machines.</p>
+<p>Compare:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1">Virtual Machine
+</span><span id="__span-2-2">  guest OS kernel
+</span><span id="__span-2-3">  system services
+</span><span id="__span-2-4">  runtime
+</span><span id="__span-2-5">  application
+</span><span id="__span-2-6">
+</span><span id="__span-2-7">Container
+</span><span id="__span-2-8">  shares host kernel
+</span><span id="__span-2-9">  runtime
+</span><span id="__span-2-10">  application
+</span></code></pre></div>
+<p>Containers often start in seconds or less because they are starting processes, not booting an entire guest operating system.</p>
+<div class="admonition note">
+<p class="admonition-title">Containers are not magic security boundaries</p>
+<p>Containers provide useful isolation, but they are not the same thing as a full hardware-virtualized machine. In industry, security depends on configuration, host hardening, least privilege, and workload design. For this course, the important takeaway is that containers isolate processes using OS features rather than a separate guest kernel.</p>
+</div>
+<hr />
+<h2 id="4-one-container-one-primary-process">4. One Container, One Primary Process</h2>
+<p>A very useful design rule in containerized systems is:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1">one container = one primary process
+</span></code></pre></div>
+<p>In production, for example, we might run one container for the FastAPI application and another for PostgreSQL. A container’s lifecycle is tied to its main process (PID 1), so when that process exits, the container stops.</p>
+<p>That does not mean a container is limited to a single process. The main process can spawn child processes, which is how Dev Containers support editor services, language servers, interactive shells, and application processes inside the same running container.</p>
+<p>Following a primary process model is valuable because it keeps containers predictable, composable, easy to observe, and easy to restart.</p>
+<p>In modern systems, instead of making one huge machine image that runs everything, we usually run multiple focused containers and let them communicate with one another.</p>
+<hr />
+<h2 id="5-docker-on-linux-vs-macos-vs-windows">5. Docker on Linux vs macOS vs Windows</h2>
+<p>Containers rely on Linux kernel features. That creates an interesting platform problem when your host machine runs macOS or Windows.</p>
+<h3 id="on-linux">On Linux</h3>
+<p>Docker can run containers directly on the host because the host is already using the Linux kernel.</p>
+<h3 id="on-macos-and-windows">On macOS and Windows</h3>
+<p>Docker Desktop runs a lightweight <strong>Linux virtual machine</strong> behind the scenes. The containers run inside that Linux VM, not directly on the macOS or Windows kernel.</p>
+<p>This means that when you type <code>docker ...</code> on macOS or Windows, the Docker CLI program is talking to a Docker engine running inside a Linux environment.</p>
+<p><strong>Containers are fundamentally Linux-based</strong>, even if your laptop is not.</p>
+<hr />
+<h2 id="6-docker-engine-a-client-server-model">6. Docker Engine: A Client-Server Model</h2>
+<p>Docker uses a tiered, client-server architecture.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1">Docker CLI
+</span><span id="__span-4-2">   |
+</span><span id="__span-4-3">Docker daemon (dockerd)
+</span><span id="__span-4-4">   |
+</span><span id="__span-4-5">images, networks, volumes, containers
+</span></code></pre></div>
+<p>When you run a Docker command such as <code>docker ps</code> or <code>docker run</code>, the CLI program sends a request to the Docker daemon, and the daemon manages the actual container resources.</p>
+<p>This architecture helps explain why the Docker CLI feels like a management tool: it is asking the Docker engine to create, start, stop, inspect, and remove container resources.</p>
+<hr />
+<h2 id="7-building-images-with-dockerfiles">7. Building Images with Dockerfiles</h2>
+<p>Images are often built from a file named <code>Dockerfile</code>.</p>
+<p>Here is a small example for a Python API:</p>
+<div class="language-Dockerfile highlight"><pre><span></span><code><span id="__span-5-1"><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.14</span>
+</span><span id="__span-5-2">
+</span><span id="__span-5-3"><span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>ghcr.io/astral-sh/uv:latest<span class="w"> </span>/uv<span class="w"> </span>/uvx<span class="w"> </span>/bin/
+</span><span id="__span-5-4">
+</span><span id="__span-5-5"><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+</span><span id="__span-5-6">
+</span><span id="__span-5-7"><span class="k">COPY</span><span class="w"> </span>pyproject.toml<span class="w"> </span>uv.lock<span class="w"> </span>./
+</span><span id="__span-5-8"><span class="k">RUN</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span>--frozen<span class="w"> </span>--no-dev
+</span><span id="__span-5-9">
+</span><span id="__span-5-10"><span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+</span><span id="__span-5-11">
+</span><span id="__span-5-12"><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;uv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;run&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uvicorn&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;main:app&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--host&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--port&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;8000&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p>This example says:</p>
+<ol>
+<li>Start from the <code>python:3.14</code> base image.</li>
+<li>Copy the <code>uv</code> binaries into the image.</li>
+<li>Set <code>/app</code> as the working directory.</li>
+<li>Copy dependency metadata in first.</li>
+<li>Install the locked project dependencies with <code>uv</code>.</li>
+<li>Copy the rest of the application code. (COMP211 reminder: <code>.</code> is the current directory. The first <code>.</code> is the local working directory on host, the second <code>.</code> is win the working directory <code>/app</code> following step 3.)</li>
+<li>Define the default startup command.</li>
+</ol>
+<h3 id="layers">Layers</h3>
+<p>Each Dockerfile instruction above contributes to the image as a <strong>layer</strong>. Docker can reuse previously built layers when their inputs have not changed. This is why Dockerfile ordering matters.</p>
+<p>For example, copying <code>pyproject.toml</code> and <code>uv.lock</code> and installing dependencies <strong>before</strong> copying the full app source can improve rebuild speed. If only your application code changes, Docker may reuse the dependency layer from cache.</p>
+<h3 id="build-context">Build Context</h3>
+<p>When you run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1">docker<span class="w"> </span>build<span class="w"> </span>.
+</span></code></pre></div>
+<p>the <code>.</code> means: "use the current directory as the build context." Docker sends that directory's contents to the daemon so instructions like <code>COPY . .</code> can work.</p>
+<p>Projects commonly use a <code>.dockerignore</code> file to exclude:</p>
+<ul>
+<li>Git history</li>
+<li>virtual environments</li>
+<li>test artifacts</li>
+<li>secrets</li>
+<li>large local datasets</li>
+</ul>
+<p>Keeping the build context small improves speed and reduces accidental leakage of files into images.</p>
+<hr />
+<h2 id="8-writable-layer-and-ephemeral-state">8. Writable Layer and Ephemeral State</h2>
+<p>Images are immutable, but containers can still write files while they run.</p>
+<p>Docker makes this possible by adding a <strong>writable container layer</strong> on top of the image's read-only layers. This explains a subtle but important point:</p>
+<ul>
+<li>the data of an <strong>image</strong> is read-only to its containers</li>
+<li>each <strong>container instance</strong> can save data changes to its <strong>writable layer</strong> while it is running</li>
+</ul>
+<p>If you remove the container, that writable layer disappears with it.</p>
+<p>This is why we say container state is often <strong>ephemeral</strong>.</p>
+<p>For stateless services, this is fine and even desirable. For stateful services such as databases, we usually need a more durable storage mechanism.</p>
+<hr />
+<h2 id="9-volumes-for-persistent-data">9. Volumes for Persistent Data</h2>
+<p>To persist data independently from a container's writable layer, Docker provides <strong>volumes</strong>.</p>
+<p>For example:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1">docker<span class="w"> </span>run<span class="w"> </span>--volume<span class="w"> </span>postgres-data:/var/lib/postgresql/data<span class="w"> </span>postgres
+</span></code></pre></div>
+<p>In this case, PostgreSQL stores its database files in a Docker-managed volume rather than only inside the container layer.</p>
+<p>Volumes are valuable because:</p>
+<ul>
+<li>stopping the container does not delete the volume's data</li>
+<li>removing the container does not delete the volume by default</li>
+<li>a replacement container can mount the same volume</li>
+</ul>
+<p>This separation between <strong>compute</strong> and <strong>durable state</strong> is a major systems concept.</p>
+<div class="admonition question">
+<p class="admonition-title">Check for understanding</p>
+<p>If you remove a PostgreSQL container without using a volume, what happens to the database files stored only in that container's writable layer?</p>
+</div>
+<hr />
+<h2 id="10-container-networking-and-port-publishing">10. Container Networking and Port Publishing</h2>
+<p>Containers run in isolated network environments. A container can listen on a port <strong>inside</strong> its own network namespace without automatically exposing that port to your host machine.</p>
+<p>To make a service reachable from your laptop, you publish a port:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1">docker<span class="w"> </span>run<span class="w"> </span>--publish<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span>my-api
+</span></code></pre></div>
+<p>This maps:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1">host port 8000 -&gt; container port 8000
+</span></code></pre></div>
+<p>The left side is the host port. The right side is the container port.</p>
+<p>This matters whenever you run a web server, database, or any other networked service in Docker. In DevContainers, you can open the Ports tab to see these mappings from container to host. This functionality is how you are able to access your FastAPI applications and <code>/docs</code> via a port from your host machine's network address (<code>localhost</code>).</p>
+<h3 id="service-to-service-networking">Service-to-Service Networking</h3>
+<p>Containers on the same Docker network can communicate with one another without publishing every port to the host. In multi-container applications, Docker networking lets one service talk to another using network names rather than hard-coded IP addresses. Doing this manually requires some substantial configuration. When working with multi-container projects, <strong>Docker Compose</strong> simplifies and handles much of this configuration for you by mapping service names to network names. We are making use of this facility in projects where we are utilizing PostgresQL containers, such as Task 07.</p>
+<hr />
+<h2 id="11-environment-variables-and-runtime-configuration">11. Environment Variables and Runtime Configuration</h2>
+<p>Images are designed to be reusable across environments. We often keep environment-specific configuration outside the image itself and pass it in at runtime.</p>
+<p>For example:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-10-1">docker<span class="w"> </span>run<span class="w"> </span>--env<span class="w"> </span><span class="nv">DATABASE_URL</span><span class="o">=</span>postgresql://...<span class="w"> </span>my-api
+</span></code></pre></div>
+<p>This lets the same image run on a developer laptop, in CI, in staging, in production without rebuilding the image for every environment-specific setting. We will explore environment variables in more detail as we prepare our applications for deployment in production.</p>
+<hr />
+<h2 id="12-registries-and-image-distribution">12. Registries and Image Distribution</h2>
+<p>Images are meant to be shareable artifacts.</p>
+<p>A <strong>registry</strong> is a server that stores Docker images so they can be pulled onto other machines. The canonical registry is <code>hub.docker.com</code>.</p>
+<p>Example image reference:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1">docker.io/library/python:3.14
+</span></code></pre></div>
+<p>Breaking this apart:</p>
+<ul>
+<li><code>docker.io</code> is the registry</li>
+<li><code>library/python</code> is the repository</li>
+<li><code>3.14</code> is the tag</li>
+</ul>
+<p>Typical workflow:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-12-1">docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>my-org/my-api:1.0<span class="w"> </span>.
+</span><span id="__span-12-2">docker<span class="w"> </span>push<span class="w"> </span>my-org/my-api:1.0
+</span><span id="__span-12-3">docker<span class="w"> </span>pull<span class="w"> </span>my-org/my-api:1.0
+</span></code></pre></div>
+<p>This is a key reason containers are so valuable in deployment pipelines: an image can be built once, tested, published, and then run consistently in other environments.</p>
+<p>Since images are <em>immutable</em> and shared between containers that utilize them, Docker caches images locally so that starting new containers with the same image is very fast and does not require a large download.</p>
+<hr />
+<h2 id="13-the-lifecycle-of-a-container">13. The Lifecycle of a Container</h2>
+<p>A container typically moves through a simple lifecycle.</p>
+<h3 id="create">Create</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-13-1">docker<span class="w"> </span>create<span class="w"> </span>my-api
+</span></code></pre></div>
+<p>Creates a container object from an image without starting it.</p>
+<h3 id="start">Start</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-14-1">docker<span class="w"> </span>start<span class="w"> </span>&lt;container&gt;
+</span></code></pre></div>
+<p>Starts a previously created container.</p>
+<h3 id="run">Run</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-15-1">docker<span class="w"> </span>run<span class="w"> </span>my-api
+</span></code></pre></div>
+<p>This is really shorthand for: create a new container and then start it.</p>
+<h3 id="stop">Stop</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-16-1">docker<span class="w"> </span>stop<span class="w"> </span>&lt;container&gt;
+</span></code></pre></div>
+<p>Stops the primary process and therefore stops the container.</p>
+<h3 id="remove">Remove</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-17-1">docker<span class="w"> </span>rm<span class="w"> </span>&lt;container&gt;
+</span></code></pre></div>
+<p>Removes the container object and its writable layer.</p>
+<p>The image remains available unless you remove it separately.</p>
+<p>This is another place where folks often get tripped up:</p>
+<ul>
+<li>removing a <strong>container</strong> is not the same as removing an <strong>image</strong></li>
+<li>removing a container does not automatically remove a <strong>volume</strong></li>
+</ul>
+<p>Those are distinct Docker-managed resources.</p>
+<hr />
+<h2 id="14-guided-activity-explore-a-running-container">14. Guided Activity: Explore a Running Container</h2>
+<p>This activity is worth doing. It turns the abstractions above into something concrete.</p>
+<p>From your <strong>host machine's terminal</strong> run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-18-1">docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--interactive<span class="w"> </span>--tty<span class="w"> </span>python:3.14<span class="w"> </span>bash
+</span></code></pre></div>
+<h3 id="what-do-these-flags-mean">What do these flags mean?</h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--rm</code></td>
+<td>Remove the container automatically when it exits</td>
+</tr>
+<tr>
+<td><code>--interactive</code> / <code>-i</code></td>
+<td>Keep standard input open</td>
+</tr>
+<tr>
+<td><code>--tty</code> / <code>-t</code></td>
+<td>Allocate a terminal</td>
+</tr>
+<tr>
+<td><code>python:3.14</code></td>
+<td>Image to run</td>
+</tr>
+<tr>
+<td><code>bash</code></td>
+<td>Command to run as the container's primary process</td>
+</tr>
+</tbody>
+</table>
+<p>Once you are inside the container, try:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-19-1"><span class="nb">pwd</span>
+</span><span id="__span-19-2">ls<span class="w"> </span>/
+</span><span id="__span-19-3">cat<span class="w"> </span>/etc/os-release
+</span><span id="__span-19-4">ps<span class="w"> </span>-ef
+</span><span id="__span-19-5">python<span class="w"> </span>--version
+</span></code></pre></div>
+<p>Questions to think through:</p>
+<ol>
+<li>What operating system distribution does the container appear to be using?</li>
+<li>What process is running as PID <code>1</code> inside the container?</li>
+<li>Does the filesystem look identical to your host machine?</li>
+<li>Why does <code>python --version</code> work even if your host machine might not have that exact Python version installed?</li>
+</ol>
+<p>Exit the shell with:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-20-1"><span class="nb">exit</span>
+</span></code></pre></div>
+<p>Because you used <code>--rm</code>, Docker cleans up the container automatically after exit.</p>
+<hr />
+<h2 id="15-guided-activity-run-a-background-service-in-a-container">15. Guided Activity: Run a Background Service in a Container</h2>
+<p>Now let's run a container in the background and inspect it from the outside.</p>
+<p>From your <strong>host machine's terminal</strong> run:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-21-1">docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-2"><span class="w">  </span>--detach<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-3"><span class="w">  </span>--name<span class="w"> </span>simple-http<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-4"><span class="w">  </span>--publish<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-5"><span class="w">  </span>python:3.14<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-6"><span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">8000</span>
+</span></code></pre></div>
+<p>After doing so, try opening up <code>localhost:8000</code> in your web browser. If you receive a port conflict error, check docker and be sure you do not have other containers running concurrently.</p>
+<h3 id="what-is-happening-here">What is happening here?</h3>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--detach</code></td>
+<td>Run in the background</td>
+</tr>
+<tr>
+<td><code>--name simple-http</code></td>
+<td>Give the container an easy name</td>
+</tr>
+<tr>
+<td><code>--publish 8000:8000</code></td>
+<td>Expose the service to your host on port 8000</td>
+</tr>
+<tr>
+<td><code>python:3.14</code></td>
+<td>Use the Python image</td>
+</tr>
+<tr>
+<td><code>python -m http.server 8000</code></td>
+<td>Run a simple web server as the primary process</td>
+</tr>
+</tbody>
+</table>
+<p>Now inspect it:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-22-1">docker<span class="w"> </span>ps
+</span><span id="__span-22-2">docker<span class="w"> </span>logs<span class="w"> </span>simple-http
+</span><span id="__span-22-3">docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--interactive<span class="w"> </span>--tty<span class="w"> </span>simple-http<span class="w"> </span>bash
+</span></code></pre></div>
+<p>Inside the running container, try:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-23-1">ps<span class="w"> </span>-ef
+</span><span id="__span-23-2">ss<span class="w"> </span>-lnt
+</span></code></pre></div>
+<p>Then exit the shell and clean up:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-24-1">docker<span class="w"> </span>stop<span class="w"> </span>simple-http
+</span><span id="__span-24-2">docker<span class="w"> </span>rm<span class="w"> </span>simple-http
+</span></code></pre></div>
+<p>Questions:</p>
+<ol>
+<li>Why does the container stop when the <code>python -m http.server</code> process stops?</li>
+<li>What would happen if you omitted <code>--publish 8000:8000</code>?</li>
+<li>Why is <code>docker exec ... bash</code> different from <code>docker run ... bash</code>?</li>
+</ol>
+<hr />
+<h2 id="16-containers-in-real-systems">16. Containers in Real Systems</h2>
+<p>In modern software systems, it is common to split responsibilities across multiple containers.</p>
+<p>For example:</p>
+<ul>
+<li>API container</li>
+<li>PostgreSQL container</li>
+<li>background worker container</li>
+</ul>
+<p>Each container has a focused role. They communicate over a network. This makes systems easier to scale, update, replace, and reason about.</p>
+<p>As systems grow, tools such as Docker Compose and Kubernetes help define, run, and orchestrate multiple containers together.</p>
+<p>You are already seeing the beginning of this progression in the course:</p>
+<ul>
+<li><strong>Dev Containers</strong> package development environments.</li>
+<li><strong>Dockerfiles</strong> package applications as deployable images.</li>
+<li><strong>Docker Compose</strong> helps manage local multi-container systems such as an API plus a database.</li>
+<li><strong>OKD/Kubernetes</strong> runs and orchestrates containers in a cloud environment.</li>
+</ul>
+<p>When you deploy to OKD/Kubernetes soon, you will not be shipping your laptop or your VS Code setup to the cloud. You will be shipping a container image and asking the platform to run it for you, connect it to networking, restart it when needed, and manage it as part of a larger system.</p>
+<p>You do not need to master orchestration yet. The key first step is understanding what a single container is and what problem it solves.</p>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>An <strong>image</strong> is an immutable template; a <strong>container</strong> is an instance of that template.</li>
+<li>Containers are isolated <strong>process environments</strong>, not full guest operating systems.</li>
+<li>Containers usually follow a <strong>one primary process</strong> model.</li>
+<li>Images are built from <strong>Dockerfiles</strong> and optimized through <strong>layers</strong>.</li>
+<li>A container's writable layer is usually <strong>ephemeral</strong>.</li>
+<li><strong>Volumes</strong> store data that must outlive a container.</li>
+<li><strong>Port publishing</strong> connects container services to the host.</li>
+<li><strong>Registries</strong> let teams distribute images as reusable deployment artifacts.</li>
+</ul>
+<p>If you leave this reading with one strong mental model, let it be this: <strong>Docker is a tool for packaging and running processes inside predictable, isolated Linux-based environments.</strong></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../backend/2-testing-apis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Unit, Integration, and E2E Testing API Routes">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Unit, Integration, and E2E Testing API Routes
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../rdbms/rd01-sql/" class="md-footer__link md-footer__link--next" aria-label="Next: SQL Primer for COMP423">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                SQL Primer for COMP423
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

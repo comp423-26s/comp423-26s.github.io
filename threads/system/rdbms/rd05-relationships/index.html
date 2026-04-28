@@ -1,0 +1,2241 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://comp423-26s.github.io/threads/system/rdbms/rd05-relationships/">
+      
+      
+        <link rel="prev" href="../rd04-testing/">
+      
+      
+        <link rel="next" href="../../../teamwork/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Introduction to Entity Relationships in an ORM - COMP423 - Spring 2026</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#relationships-defining-querying-and-mutating" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-header__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            COMP423 - Spring 2026
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to Entity Relationships in an ORM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../course" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Course
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../career" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Career
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teamwork" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Collaboration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Process
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  System Design
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../sde" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Software Engineering
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tools" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tool Bench
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../people/team/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Teaching Team
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="COMP423 - Spring 2026" class="md-nav__button md-logo" aria-label="COMP423 - Spring 2026" data-md-component="logo">
+      
+  <img src="../../../../assets/images/logo.png" alt="logo">
+
+    </a>
+    COMP423 - Spring 2026
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/comp423-26s/comp423-26s.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    comp423-26s/comp423-26s.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../career" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Career
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teamwork" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collaboration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sde" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tools" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tool Bench
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Teaching Team
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/alext_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alex Tang
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/brakower_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benny Rakower
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/chtsui_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charlotte Tsui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/escoats_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lizzie Coats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/hamzahyous_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hamzah Yousuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/jadek_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jade Keegan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/juliag_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Julia Guzzo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kamalv_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamal Vasireddy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/kgbro_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Katie Brown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/krisj_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kris Jordan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/lucykgood_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lucy Good
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/mfouly_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Muhammad Fouly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../people/bios/natamm_about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natalie Ammerman
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-beyond-a-single-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Beyond a Single Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-foreign-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Foreign Keys
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Foreign Keys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-on-violation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Happens on Violation?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-one-to-many-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. One-to-Many Relationships
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-how-orms-represent-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. How ORMs Represent Relationships
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. How ORMs Represent Relationships">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#working-with-related-objects-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working With Related Objects in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-back_populates-actually-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What back_populates Actually Does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lazy-vs-eager-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lazy vs. Eager Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-n1-queries-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The N+1 Queries Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-think-about-the-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Think About the Cost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules-of-thumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules of Thumb
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writing-custom-queries-across-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Custom Queries Across Relationships
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-important-caution-about-joins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One Important Caution About Joins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-to-read-next-on-eager-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where To Read Next on Eager Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inserting-new-related-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inserting New Related Records
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-you-need-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do You Need refresh()?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-if-one-side-already-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What If One Side Already Exists?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#many-to-many-relationships-and-join-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Many-to-Many Relationships and Join Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-join-tables-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Join Tables Matter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-deleting-and-cascading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Deleting and Cascading
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Deleting and Cascading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-behavior-vs-cascade-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default Behavior vs. Cascade Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-and-delete-orphan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete and delete-orphan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subtleties-of-in-memory-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subtleties of In-Memory State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-rule-of-thumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General Rule of Thumb
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-normalization-when-and-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Normalization: When and Why
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Normalization: When and Why">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#an-example-of-denormalized-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An Example of Denormalized Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-normalized-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Normalized Version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-is-denormalization-acceptable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Is Denormalization Acceptable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-concepts-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Concepts Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="relationships-defining-querying-and-mutating">Relationships: Defining, Querying and Mutating</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>After completing this reading, you will be able to:</p>
+<ol>
+<li>Explain what a <strong>foreign key</strong> is and why it matters.</li>
+<li>Describe <strong>one-to-many</strong> relationships conceptually and in SQLModel.</li>
+<li>Explain how ORMs represent relationships with <code>Relationship()</code>.</li>
+<li>Work with related entities from either side of a relationship in Python.</li>
+<li>Recognize how relationship traversal can trigger the <strong>N+1 queries</strong> problem.</li>
+<li>Write basic <strong>relationship queries</strong> using joins and filters.</li>
+<li>Explain how SQLModel / SQLAlchemy handle inserts across related entities.</li>
+<li>Describe how <strong>many-to-many</strong> relationships use join tables.</li>
+<li>Explain the basics of <strong>delete</strong> and <strong>delete-orphan</strong> cascade behavior.</li>
+<li>Identify when <strong>normalization</strong> is necessary.</li>
+</ol>
+<hr />
+<h2 id="1-beyond-a-single-table">1. Beyond a Single Table</h2>
+<p>Throughout this unit, we have worked with two tables: <code>accounts</code> and <code>activity</code>. In the demo project, the <code>activity</code> table records every deposit and withdrawal. Each activity entry references an account via <code>account_id</code> which is a column whose value must correspond to an existing account's <code>id</code>. The database enforces this relationship through a <strong>foreign key</strong>.</p>
+<h2 id="2-foreign-keys">2. Foreign Keys</h2>
+<p>A <strong>foreign key</strong> is a column (or set of columns) in one table that references the <strong>primary key</strong> of another table. It creates a formal link between the two tables and enables the database to enforce <strong>referential integrity</strong>, which is the rule that you cannot reference a row that does not exist.</p>
+<h3 id="syntax">Syntax</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-2"><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-0-3"><span class="w">    </span><span class="n">account_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">accounts</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+</span><span id="__span-0-4"><span class="w">    </span><span class="n">activity_type</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">activity_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;WD&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">)),</span>
+</span><span id="__span-0-5"><span class="w">    </span><span class="n">amount</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-0-6"><span class="w">    </span><span class="n">created_at</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span>
+</span><span id="__span-0-7"><span class="p">);</span>
+</span></code></pre></div>
+<p>The <code>REFERENCES accounts(id)</code> clause tells the database:</p>
+<ul>
+<li>Every value in <code>activity.account_id</code> <strong>must</strong> correspond to an existing <code>id</code> in the <code>accounts</code> table.</li>
+<li>Attempting to insert an activity entry for a nonexistent account will fail with an error.</li>
+<li>Attempting to delete an account that still has activity entries will also fail (by default).</li>
+</ul>
+<h3 id="what-happens-on-violation">What Happens on Violation?</h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">activity</span><span class="w"> </span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span><span class="w"> </span><span class="n">activity_type</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span>
+</span><span id="__span-1-2"><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">999</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DEP&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+</span><span id="__span-1-3"><span class="c1">-- ERROR: insert or update on table &quot;activity&quot; violates</span>
+</span><span id="__span-1-4"><span class="c1">--        foreign key constraint &quot;activity_account_id_fkey&quot;</span>
+</span><span id="__span-1-5"><span class="c1">-- DETAIL: Key (account_id)=(999) is not present in table &quot;accounts&quot;.</span>
+</span></code></pre></div>
+<p>The database stops you from creating orphaned records. This is referential integrity in action.</p>
+<h2 id="3-one-to-many-relationships">3. One-to-Many Relationships</h2>
+<p>The relationship between <code>accounts</code> and <code>activity</code> is <strong>one-to-many</strong>: one account can have many activity entries, but each activity entry belongs to exactly one account.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1">accounts                         activity
+</span><span id="__span-2-2">┌────┬───────────┐              ┌────┬────────────┬──────┬────────┐
+</span><span id="__span-2-3">│ id │ owner     │              │ id │ account_id │ type │ amount │
+</span><span id="__span-2-4">├────┼───────────┤        ┌────►├────┼────────────┼──────┼────────┤
+</span><span id="__span-2-5">│  1 │ SpongeBob │◄───────┤     │  1 │     1      │ DEP  │  500   │
+</span><span id="__span-2-6">│  2 │ Squidward │◄──┐    │     │  2 │     1      │ WD   │  100   │
+</span><span id="__span-2-7">│  3 │ Patrick   │   │    └────►│  3 │     1      │ DEP  │   50   │
+</span><span id="__span-2-8">└────┴───────────┘   │          │  4 │     2      │ DEP  │  250   │
+</span><span id="__span-2-9">                     └─────────►│  5 │     2      │ WD   │   30   │
+</span><span id="__span-2-10">                                └────┴────────────┴──────┴────────┘
+</span></code></pre></div>
+<p>One-to-many is the most common relationship type in application databases. Other types include:</p>
+<table>
+<thead>
+<tr>
+<th>Relationship</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>One-to-many</strong></td>
+<td>An account has many activity entries.</td>
+</tr>
+<tr>
+<td><strong>One-to-one</strong></td>
+<td>A user's settings in an app.</td>
+</tr>
+<tr>
+<td><strong>Many-to-many</strong></td>
+<td>Students enroll in multiple courses; courses have multiple students. (Implemented with a <em>join table</em>.)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-how-orms-represent-relationships">4. How ORMs Represent Relationships</h2>
+<p>In our demo project, the <code>Account</code> and <code>Activity</code> entities declare their relationship using SQLModel's <code>Relationship()</code>:</p>
+<div class="language-python highlight"><span class="filename">entities/account.py</span><pre><span></span><code><span id="__span-3-1"><span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Relationship</span><span class="p">,</span> <span class="n">SQLModel</span><span class="p">,</span> <span class="n">String</span>
+</span><span id="__span-3-2">
+</span><span id="__span-3-3"><span class="k">class</span><span class="w"> </span><span class="nc">Account</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span><span id="__span-3-4">    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;accounts&quot;</span>
+</span><span id="__span-3-5">
+</span><span id="__span-3-6">    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-3-7">    <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="__span-3-8">    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">sa_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</span><span id="__span-3-9">    <span class="n">balance</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-3-10">    <span class="n">activities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Activity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;account&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="language-python highlight"><span class="filename">entities/activity.py</span><pre><span></span><code><span id="__span-4-1"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="__span-4-2"><span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Relationship</span><span class="p">,</span> <span class="n">SQLModel</span><span class="p">,</span> <span class="n">func</span>
+</span><span id="__span-4-3"><span class="kn">from</span><span class="w"> </span><span class="nn">.activity_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActivityType</span>
+</span><span id="__span-4-4">
+</span><span id="__span-4-5"><span class="k">class</span><span class="w"> </span><span class="nc">Activity</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span><span id="__span-4-6">    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;activity&quot;</span>
+</span><span id="__span-4-7">
+</span><span id="__span-4-8">    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-9">    <span class="n">account_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">foreign_key</span><span class="o">=</span><span class="s2">&quot;accounts.id&quot;</span><span class="p">)</span>
+</span><span id="__span-4-10">    <span class="n">activity_type</span><span class="p">:</span> <span class="n">ActivityType</span>
+</span><span id="__span-4-11">    <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="__span-4-12">    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-4-13">        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-4-14">        <span class="n">sa_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">,</span> <span class="n">server_default</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
+</span><span id="__span-4-15">    <span class="p">)</span>
+</span><span id="__span-4-16">    <span class="n">account</span><span class="p">:</span> <span class="s2">&quot;Account&quot;</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;activities&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>With this setup:</p>
+<ul>
+<li><code>account.activities</code> evaluates to the activity entries for an account — no manual SQL join needed.</li>
+<li><code>activity.account</code> evaluates to the account an activity entry belongs to.</li>
+</ul>
+<p>The ORM handles the joins behind the scenes.</p>
+<h3 id="key-details">Key Details</h3>
+<ul>
+<li><strong><code>foreign_key="accounts.id"</code></strong> on <code>Activity.account_id</code> tells SQLModel to generate the <code>REFERENCES accounts(id)</code> constraint.</li>
+<li><strong><code>Relationship(back_populates="account")</code></strong> on <code>Account.activities</code> links the two sides of the relationship so changes on one side are reflected on the other.</li>
+<li><strong><code>ActivityType</code></strong> is a Python <code>enum</code>. SQLModel stores it as a string in the database and converts it automatically.</li>
+<li><strong><code>server_default=func.now()</code></strong> translates to a SQL function in the database that sets the <code>created_at</code> timestamp automatically upon row insertion, which is why we need <code>refresh()</code> after a commit to see the value.</li>
+</ul>
+<h3 id="working-with-related-objects-in-python">Working With Related Objects in Python</h3>
+<p>Before worrying about loading strategies, it helps to see what these relationships feel like when you already have ORM objects in memory.</p>
+<p>Suppose you load an account by primary key:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><span class="n">account</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-5-2">
+</span><span id="__span-5-3"><span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">owner</span><span class="p">)</span>
+</span><span id="__span-5-4"><span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">account</span><span class="o">.</span><span class="n">activities</span><span class="p">:</span>
+</span><span id="__span-5-5">    <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="o">.</span><span class="n">activity_type</span><span class="p">,</span> <span class="n">activity</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+</span></code></pre></div>
+<p>This reads naturally in Python: start from the <code>Account</code>, then traverse to its <code>activities</code>.</p>
+<p>You can also go the other direction:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><span class="n">activity</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Activity</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-6-2">
+</span><span id="__span-6-3"><span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+</span><span id="__span-6-4"><span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">owner</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Here you start from one <code>Activity</code>, then traverse back to the <code>Account</code> it belongs to.</p>
+<p>This is the main developer experience (DX) benefit of ORM relationships: once objects are loaded, your code can follow connections through object attributes instead of manually reconstructing every relationship with SQL.</p>
+<h3 id="what-back_populates-actually-does">What <code>back_populates</code> Actually Does</h3>
+<p>The <code>back_populates</code> setting connects the two relationship attributes so they stay synchronized in Python object state.</p>
+<p>If you append a new activity to an account's collection:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><span class="n">account</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-7-2"><span class="n">deposit</span> <span class="o">=</span> <span class="n">Activity</span><span class="p">(</span><span class="n">activity_type</span><span class="o">=</span><span class="n">ActivityType</span><span class="o">.</span><span class="n">DEP</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</span><span id="__span-7-3">
+</span><span id="__span-7-4"><span class="n">account</span><span class="o">.</span><span class="n">activities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deposit</span><span class="p">)</span>
+</span><span id="__span-7-5">
+</span><span id="__span-7-6"><span class="k">assert</span> <span class="n">deposit</span><span class="o">.</span><span class="n">account</span> <span class="ow">is</span> <span class="n">account</span>
+</span></code></pre></div>
+<p>And if you assign from the child side:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><span class="n">deposit</span> <span class="o">=</span> <span class="n">Activity</span><span class="p">(</span><span class="n">activity_type</span><span class="o">=</span><span class="n">ActivityType</span><span class="o">.</span><span class="n">DEP</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</span><span id="__span-8-2"><span class="n">deposit</span><span class="o">.</span><span class="n">account</span> <span class="o">=</span> <span class="n">account</span>
+</span><span id="__span-8-3">
+</span><span id="__span-8-4"><span class="k">assert</span> <span class="n">deposit</span> <span class="ow">in</span> <span class="n">account</span><span class="o">.</span><span class="n">activities</span>
+</span></code></pre></div>
+<p>That synchronization is happening in Python memory because the two attributes are paired with <code>back_populates</code>.</p>
+<p>Two important boundaries to keep in mind:</p>
+<ul>
+<li><code>back_populates</code> keeps the object graph consistent in Python.</li>
+<li>It does <strong>not</strong> persist anything to the database until the session flushes or commits.</li>
+</ul>
+<p>If you want more detail beyond this course's level, the official SQLAlchemy relationship basics are here:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html">Basic Relationship Patterns</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html#one-to-many">One To Many</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html#many-to-one">Many To One</a></li>
+</ul>
+<h3 id="lazy-vs-eager-loading">Lazy vs. Eager Loading</h3>
+<p>The convenient Python navigation above is exactly why loading behavior matters: relationship access looks simple, but it may trigger more database work than you expect.</p>
+<p>By default, SQLAlchemy uses <strong>lazy loading</strong>: it does not fetch related objects until you access the attribute. This means <code>account.activities</code> triggers a separate SQL query the first time you access it. For small applications this is fine. For high-performance applications, you can use <strong>eager loading</strong> to fetch related data in a single query, but this is beyond our scope in COMP423.</p>
+<h3 id="the-n1-queries-problem">The N+1 Queries Problem</h3>
+<p>This lazy-loading behavior leads to one of the most important ORM performance problems: the <strong>N+1 queries problem</strong>.</p>
+<p>Suppose you first query for a list of accounts:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><span class="n">accounts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Account</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</span></code></pre></div>
+<p>That is <strong>1 query</strong>.</p>
+<p>Then suppose you loop over those accounts and access each account's related activities:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><span class="k">for</span> <span class="n">account</span> <span class="ow">in</span> <span class="n">accounts</span><span class="p">:</span>
+</span><span id="__span-10-2">    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">activities</span><span class="p">))</span>
+</span></code></pre></div>
+<p>That <code>account.activities</code> access may look like ordinary Python attribute access, but with lazy loading it can trigger <strong>another SQL query per account</strong>. If there are <code>N</code> accounts, the total becomes:</p>
+<ul>
+<li><code>1</code> query to load the accounts</li>
+<li><code>N</code> more queries to load each account's activities</li>
+</ul>
+<p>So if <code>N = 500</code>, you may accidentally execute <strong>501 queries</strong>.</p>
+<p>This is what makes ORM relationship traversal tricky: it <em>looks</em> like ordinary object graph traversal in memory, but it may actually be network round-trips to the database over and over again.</p>
+<h3 id="how-to-think-about-the-cost">How to Think About the Cost</h3>
+<p>At the Python level, <code>account.activities</code> looks cheap.</p>
+<p>At the ORM level, SQLAlchemy checks whether that relationship has already been loaded into the session cache.</p>
+<p>At the session cache level, if it has not been loaded, SQLAlchemy generates a new SQL query, sends it to PostgreSQL, waits for the result, constructs Python objects, and then returns the list.</p>
+<p>That hidden jump across abstraction levels is the core danger. In normal in-memory OOP, traversing <code>obj.children</code> is usually just pointer dereferencing. In an ORM, the same-looking code may cross process boundaries and hit the database repeatedly.</p>
+<p>You do not need to become a performance expert yet, but you should develop a <strong>healthy suspicion whenever you traverse relationships of entities of an ORM</strong>.</p>
+<h3 id="rules-of-thumb">Rules of Thumb</h3>
+<ul>
+<li>Be suspicious of relationship access inside loops.</li>
+<li>If you load many parent objects, then touch a related field on each one, ask yourself: "Am I doing one query per row?"</li>
+<li>Remember that serialization, templates, debug printing, and response-model construction can also trigger relationship access.</li>
+<li>When you know you will need related data for many rows, that is a sign to consider eager loading strategies such as <code>selectinload()</code> or <code>joinedload()</code> later on.</li>
+<li>If performance seems surprisingly bad, turn on SQL logging and count the actual queries.</li>
+</ul>
+<p>For this course, the key lesson is not to master every loading strategy. It is to avoid the dangerous assumption that relationship traversal is free.</p>
+<p>If you want the full SQLAlchemy treatment, the official loading guide is here:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html">Relationship Loading Techniques</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html#lazy-loading">Lazy Loading</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html#preventing-unwanted-lazy-loads-using-raiseload">Preventing unwanted lazy loads using <code>raiseload</code></a></li>
+</ul>
+<h3 id="writing-custom-queries-across-relationships">Writing Custom Queries Across Relationships</h3>
+<p>Relationship fields are convenient for navigation, but they are not a replacement for writing explicit queries.</p>
+<p>Suppose you want all accounts that have at least one deposit activity of at least $750. This is a query concern, so you should express it as a query:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">select</span>
+</span><span id="__span-11-2">
+</span><span id="__span-11-3"><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-11-4">    <span class="n">select</span><span class="p">(</span><span class="n">Account</span><span class="p">)</span>
+</span><span id="__span-11-5">    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Account</span><span class="o">.</span><span class="n">activities</span><span class="p">)</span>
+</span><span id="__span-11-6">    <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+</span><span id="__span-11-7">        <span class="p">(</span><span class="n">Activity</span><span class="o">.</span><span class="n">activity_type</span> <span class="o">==</span> <span class="n">ActivityType</span><span class="o">.</span><span class="n">DEP</span><span class="p">)</span> <span class="o">&amp;</span>
+</span><span id="__span-11-8">        <span class="p">(</span><span class="n">Activity</span><span class="o">.</span><span class="n">amount</span> <span class="o">&gt;=</span> <span class="mi">750</span><span class="p">)</span>
+</span><span id="__span-11-9">    <span class="p">)</span>
+</span><span id="__span-11-10"><span class="p">)</span>
+</span><span id="__span-11-11">
+</span><span id="__span-11-12"><span class="n">accounts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</span></code></pre></div>
+<p>That <code>join(Account.activities)</code> call tells SQLAlchemy to join <code>accounts</code> to <code>activity</code> using the relationship definition you already declared above.</p>
+<p>This is useful because the relationship metadata helps SQLAlchemy infer the join condition for you. You do not have to manually restate <code>activity.account_id = accounts.id</code> every time.</p>
+<p>Another example: suppose you want all activity entries for accounts owned by accounts with the <code>owner</code> name <code>"SpongeBob"</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-12-2">    <span class="n">select</span><span class="p">(</span><span class="n">Activity</span><span class="p">)</span>
+</span><span id="__span-12-3">    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Activity</span><span class="o">.</span><span class="n">account</span><span class="p">)</span>
+</span><span id="__span-12-4">    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Account</span><span class="o">.</span><span class="n">owner</span> <span class="o">==</span> <span class="s2">&quot;SpongeBob&quot;</span><span class="p">)</span>
+</span><span id="__span-12-5"><span class="p">)</span>
+</span><span id="__span-12-6">
+</span><span id="__span-12-7"><span class="n">activities</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</span></code></pre></div>
+<p>This is an important distinction:</p>
+<ul>
+<li><code>account.activities</code> is object navigation on an already-loaded object.</li>
+<li><code>select(...).join(...)</code> is how you shape a database query.</li>
+</ul>
+<p>Those are related ideas, but they are not the same operation.</p>
+<h3 id="one-important-caution-about-joins">One Important Caution About Joins</h3>
+<p>When you join from a parent table to a one-to-many child table, the parent row can appear multiple times in the SQL result set, once for each matching child row.</p>
+<p>So if an account has three activity entries, a join-based query may produce three rows involving that same account. That means join queries are powerful, but you should think carefully about whether you want:</p>
+<ul>
+<li>parent objects,</li>
+<li>child objects, or</li>
+<li>a deduplicated parent result.</li>
+</ul>
+<p>In other words: explicit joins are often the right way to <strong>filter</strong> or <strong>order</strong> by related data, but they change the query you are asking the database to run.</p>
+<p>If you wanted each matching account only once, a common pattern is:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-13-2">    <span class="n">select</span><span class="p">(</span><span class="n">Account</span><span class="p">)</span>
+</span><span id="__span-13-3">    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Account</span><span class="o">.</span><span class="n">activities</span><span class="p">)</span>
+</span><span id="__span-13-4">    <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+</span><span id="__span-13-5">        <span class="p">(</span><span class="n">Activity</span><span class="o">.</span><span class="n">activity_type</span> <span class="o">==</span> <span class="n">ActivityType</span><span class="o">.</span><span class="n">DEP</span><span class="p">)</span> <span class="o">&amp;</span>
+</span><span id="__span-13-6">        <span class="p">(</span><span class="n">Activity</span><span class="o">.</span><span class="n">amount</span> <span class="o">&gt;=</span> <span class="mi">750</span><span class="p">)</span>
+</span><span id="__span-13-7">    <span class="p">)</span>
+</span><span id="__span-13-8">    <span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+</span><span id="__span-13-9"><span class="p">)</span>
+</span></code></pre></div>
+<p>If you want more detail on query construction beyond the introductory level here, the official references are:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/index.html">ORM Querying Guide</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html">Relationship Loading Techniques</a></li>
+</ul>
+<h3 id="where-to-read-next-on-eager-loading">Where To Read Next on Eager Loading</h3>
+<p>If you want the next step after this reading, the SQLAlchemy documentation section to bookmark is:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html">Relationship Loading Techniques</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html#select-in-loading">Select IN loading</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html#joined-eager-loading">Joined Eager Loading</a></li>
+</ul>
+<p>For collection relationships like <code>Account.activities</code>, <code>selectinload()</code> is usually the best first eager-loading strategy to learn.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">selectinload</span>
+</span><span id="__span-14-2"><span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">select</span>
+</span><span id="__span-14-3">
+</span><span id="__span-14-4"><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Account</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">selectinload</span><span class="p">(</span><span class="n">Account</span><span class="o">.</span><span class="n">activities</span><span class="p">))</span>
+</span><span id="__span-14-5"><span class="n">accounts</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</span></code></pre></div>
+<p>That still performs multiple SQL statements, but importantly it does <strong>not</strong> perform one query per account. Instead, SQLAlchemy loads the accounts first, then loads the related activities for all of those accounts in a batched follow-up query.</p>
+<p>Notice here we have an example of what is called a <em>leaky abstraction</em>. As much as an ORM tries to abstract away database concerns, since there are some fundamental mismatches in semantic models between these two systems sometimes it is unavoidable that we need to contort high-level code to address lower-level concerns.</p>
+<p>Again, this kind of optimization is a little beyond our scope in COMP423, but you should be aware there are techniques for addressing it and look toward official documentation when you work with larger databases and ORMs in future opportunities:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/relationships.html#what-kind-of-loading-to-use">What Kind of Loading to Use?</a></li>
+</ul>
+<h3 id="inserting-new-related-records">Inserting New Related Records</h3>
+<p>Relationships are not only for reading. ORMs also help when you create related objects.</p>
+<p>Suppose you want to create a new account and its first activity entry in the same unit of work:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><span class="n">new_account</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="s2">&quot;Sandy&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;sandy@example.org&quot;</span><span class="p">,</span> <span class="n">balance</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-15-2"><span class="n">first_deposit</span> <span class="o">=</span> <span class="n">Activity</span><span class="p">(</span><span class="n">activity_type</span><span class="o">=</span><span class="n">ActivityType</span><span class="o">.</span><span class="n">DEP</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span><span id="__span-15-3">
+</span><span id="__span-15-4"><span class="n">new_account</span><span class="o">.</span><span class="n">activities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first_deposit</span><span class="p">)</span>
+</span><span id="__span-15-5">
+</span><span id="__span-15-6"><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_account</span><span class="p">)</span>
+</span><span id="__span-15-7"><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="__span-15-8"><span class="n">session</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">new_account</span><span class="p">)</span>
+</span><span id="__span-15-9"><span class="n">session</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">first_deposit</span><span class="p">)</span>
+</span></code></pre></div>
+<p>In SQLModel / SQLAlchemy, you generally <strong>do not manually assign the IDs yourself</strong>. Instead:</p>
+<ul>
+<li>You connect the objects in Python using the relationship.</li>
+<li>The ORM's <strong>unit of work</strong> tracks those objects.</li>
+<li>On flush / commit, it inserts rows in an order that satisfies foreign key constraints.</li>
+<li>It fills in the foreign key values, such as <code>first_deposit.account_id</code>, for you.</li>
+</ul>
+<p>You could also set the relationship from the other side:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><span class="n">first_deposit</span><span class="o">.</span><span class="n">account</span> <span class="o">=</span> <span class="n">new_account</span>
+</span></code></pre></div>
+<p>That is conceptually equivalent because the two relationship fields are linked by <code>back_populates</code>.</p>
+<h3 id="do-you-need-refresh">Do You Need <code>refresh()</code>?</h3>
+<p>Usually, you do <strong>not</strong> manually manage the parent's new primary key value and then copy it into the child. SQLAlchemy generally populates database-generated primary keys after a flush / commit.</p>
+<p>However, <code>refresh()</code> is still important when you want to guarantee that your Python object reflects the database's final stored values, especially for columns populated by the database itself. In our example, <code>created_at</code> uses <code>server_default=func.now()</code>, so <code>refresh()</code> is how we pull that generated timestamp back into the Python object.</p>
+<p>So the practical rules of thumb are:</p>
+<ul>
+<li>Let the ORM handle foreign key assignment through the relationship.</li>
+<li>Use <code>commit()</code> to persist the work.</li>
+<li>Use <code>refresh()</code> when you need database-generated values back on your Python objects.</li>
+</ul>
+<h3 id="what-if-one-side-already-exists">What If One Side Already Exists?</h3>
+<p>This is also common. Suppose the account already exists and you want to add a new activity entry:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><span class="n">account</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-17-2"><span class="n">deposit</span> <span class="o">=</span> <span class="n">Activity</span><span class="p">(</span><span class="n">activity_type</span><span class="o">=</span><span class="n">ActivityType</span><span class="o">.</span><span class="n">DEP</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-17-3">
+</span><span id="__span-17-4"><span class="n">account</span><span class="o">.</span><span class="n">activities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deposit</span><span class="p">)</span>
+</span><span id="__span-17-5"><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="__span-17-6"><span class="n">session</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">deposit</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Again, you usually do not need to manually assign <code>deposit.account_id = account.id</code>. Appending to the relationship collection gives the ORM enough information to connect the rows correctly.</p>
+<p>More broadly, this is a general ORM idea, not just a SQLModel idea: many ORMs try to let you work in terms of object references while the framework handles foreign keys and insert ordering underneath. That convenience is powerful, but it is also why you must remember there is still real SQL and real database work happening underneath the abstraction.</p>
+<h3 id="many-to-many-relationships-and-join-tables">Many-to-Many Relationships and Join Tables</h3>
+<p>Some relationships are not one-to-many. A student can enroll in many courses, and each course can have many students. That is a <strong>many-to-many</strong> relationship.</p>
+<p>In relational databases, many-to-many relationships are typically implemented with a <strong>join table</strong> that stores one row per pairing:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-18-1"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">enrollment</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-18-2"><span class="w">    </span><span class="n">student_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">student</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+</span><span id="__span-18-3"><span class="w">    </span><span class="n">course_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">course</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+</span><span id="__span-18-4"><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">student_id</span><span class="p">,</span><span class="w"> </span><span class="n">course_id</span><span class="p">)</span>
+</span><span id="__span-18-5"><span class="p">);</span>
+</span></code></pre></div>
+<p>In SQLModel, a common pattern is to define that join table as a link model:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><span class="k">class</span><span class="w"> </span><span class="nc">EnrollmentLink</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span><span id="__span-19-2">    <span class="n">student_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-19-3">        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s2">&quot;student.id&quot;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-19-4">    <span class="p">)</span>
+</span><span id="__span-19-5">    <span class="n">course_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-19-6">        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">foreign_key</span><span class="o">=</span><span class="s2">&quot;course.id&quot;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-19-7">    <span class="p">)</span>
+</span><span id="__span-19-8">
+</span><span id="__span-19-9">
+</span><span id="__span-19-10"><span class="k">class</span><span class="w"> </span><span class="nc">Student</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span><span id="__span-19-11">    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-19-12">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="__span-19-13">
+</span><span id="__span-19-14">    <span class="n">courses</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Course&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+</span><span id="__span-19-15">        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;students&quot;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">EnrollmentLink</span>
+</span><span id="__span-19-16">    <span class="p">)</span>
+</span><span id="__span-19-17">
+</span><span id="__span-19-18">
+</span><span id="__span-19-19"><span class="k">class</span><span class="w"> </span><span class="nc">Course</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span><span id="__span-19-20">    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-19-21">    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="__span-19-22">
+</span><span id="__span-19-23">    <span class="n">students</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Student&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+</span><span id="__span-19-24">        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;courses&quot;</span><span class="p">,</span> <span class="n">link_model</span><span class="o">=</span><span class="n">EnrollmentLink</span>
+</span><span id="__span-19-25">    <span class="p">)</span>
+</span></code></pre></div>
+<p>With that setup, the ORM knows how to connect <code>Student</code> rows to <code>Course</code> rows through the join table.</p>
+<p>In the simple case, you can often work with the relationship directly:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><span class="n">student</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+</span><span id="__span-20-2"><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span></code></pre></div>
+<p>The ORM will insert the row in the join table for you.</p>
+<h3 id="why-join-tables-matter">Why Join Tables Matter</h3>
+<p>At first, a join table may look like pure plumbing. But often the relationship itself has data worth storing.</p>
+<p>For example, an enrollment is not just "student X is in course Y." You may also care about:</p>
+<ul>
+<li>when the student enrolled,</li>
+<li>what role they have,</li>
+<li>what grade they earned, or</li>
+<li>whether they are on a waitlist.</li>
+</ul>
+<p>Once that happens, the join table becomes more than a hidden connector. It becomes a first-class concept in your domain.</p>
+<p>In that case, it is often better to model the join table as its own entity, such as <code>Enrollment</code>, and give it its own fields and relationships to <code>Student</code> and <code>Course</code>.</p>
+<p>That is one of the deep reasons relational modeling matters: sometimes the most important thing to model is not just the entities, but the relationship between them.</p>
+<p>If you want the full SQLAlchemy background, the official references are:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html#many-to-many">Many To Many</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html#deleting-rows-from-the-many-to-many-table">Deleting Rows from the Many to Many Table</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/basic_relationships.html#association-object">Association Object</a></li>
+</ul>
+<hr />
+<h2 id="5-deleting-and-cascading">5. Deleting and Cascading</h2>
+<p>Reading and inserting related data are only part of the story. Deletion is where ORMs often surprise people.</p>
+<p>Suppose you delete a parent object:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><span class="n">account</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-21-2"><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+</span><span id="__span-21-3"><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span></code></pre></div>
+<p>What happens to the related <code>Activity</code> rows depends on how the relationship and database constraints are configured.</p>
+<h3 id="default-behavior-vs-cascade-behavior">Default Behavior vs. Cascade Behavior</h3>
+<p>Without delete cascade configured, SQLAlchemy will often try to <strong>de-associate</strong> child rows rather than delete them. In a one-to-many relationship, that usually means trying to set the child's foreign key to <code>NULL</code>.</p>
+<p>But in our banking example, <code>activity.account_id</code> is not nullable. That means a parent delete will usually fail unless you explicitly configure a delete strategy that makes sense.</p>
+<p>This is a good thing. It forces you to decide what deletion should mean in your domain.</p>
+<h3 id="delete-and-delete-orphan"><code>delete</code> and <code>delete-orphan</code></h3>
+<p>Two important cascade settings to know about are:</p>
+<ul>
+<li><strong><code>delete</code></strong>: when the parent is deleted, the related child rows should also be deleted.</li>
+<li><strong><code>delete-orphan</code></strong>: if a child is removed from the parent's collection and no longer belongs to that parent, it should be deleted.</li>
+</ul>
+<p>For example, a relationship might be configured like this in SQLAlchemy terms:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><span class="n">activities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;Activity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Relationship</span><span class="p">(</span>
+</span><span id="__span-22-2">    <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;account&quot;</span><span class="p">,</span>
+</span><span id="__span-22-3">    <span class="n">sa_relationship_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cascade&quot;</span><span class="p">:</span> <span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">},</span>
+</span><span id="__span-22-4"><span class="p">)</span>
+</span></code></pre></div>
+<p>With that kind of configuration, removing an activity from <code>account.activities</code> means more than "stop pointing to it." It can mean "delete this row entirely when the session flushes."</p>
+<p>That is powerful, but it should match the domain. If <code>Activity</code> rows are part of a permanent transaction ledger, automatic orphan deletion may be the wrong behavior.</p>
+<h3 id="subtleties-of-in-memory-state">Subtleties of In-Memory State</h3>
+<p>One common surprise: after you delete an object and flush, Python collections are not necessarily rewritten immediately in memory.</p>
+<p>So an object you just deleted may still appear in a relationship collection until the session is committed or expired and the collection is reloaded.</p>
+<p>That is one reason delete behavior can feel confusing at first. There is both:</p>
+<ul>
+<li>the database row state, and</li>
+<li>the current in-memory object graph state.</li>
+</ul>
+<p>They eventually line up again, but not always at the exact moment a flush occurs.</p>
+<h3 id="general-rule-of-thumb">General Rule of Thumb</h3>
+<ul>
+<li>Be explicit about what deleting a parent should mean for its children.</li>
+<li>Use <code>delete-orphan</code> when the child should not exist without that parent.</li>
+<li>Be cautious with delete cascade on many-to-many relationships because it can delete more than you intended.</li>
+<li>Use database constraints and domain rules, not assumptions about "what the ORM probably does."</li>
+</ul>
+<p>If you want the authoritative SQLAlchemy references, these are the right places to read:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/cascades.html">Cascades</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/cascades.html#delete">delete</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/cascades.html#delete-orphan">delete-orphan</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/cascades.html#passive-deletes">Using foreign key ON DELETE cascade with ORM relationships</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/cascades.html#notes-on-delete-deleting-objects-referenced-from-collections-and-scalar-relationships">Notes on Delete</a></li>
+</ul>
+<hr />
+<h2 id="6-normalization-when-and-why">6. Normalization: When and Why</h2>
+<p><strong>Normalization</strong> is the process of organizing database tables to reduce redundancy and improve data integrity. The key idea: <em>store each piece of information in exactly one place.</em></p>
+<h3 id="an-example-of-denormalized-data">An Example of Denormalized Data</h3>
+<p>Imagine storing the account owner's name directly in each activity entry:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1">activity
+</span><span id="__span-23-2">┌────┬──────────┬──────┬────────┐
+</span><span id="__span-23-3">│ id │ owner    │ type │ amount │
+</span><span id="__span-23-4">├────┼──────────┼──────┼────────┤
+</span><span id="__span-23-5">│  1 │ SpongeBob│ DEP  │  500   │
+</span><span id="__span-23-6">│  2 │ SpongeBob│ WD   │  100   │
+</span><span id="__span-23-7">│  3 │ SpongeBob│ DEP  │   50   │
+</span><span id="__span-23-8">│  4 │ Squidward│ DEP  │  250   │
+</span><span id="__span-23-9">└────┴──────────┴──────┴────────┘
+</span></code></pre></div>
+<p>What happens if SpongeBob changes his name? You would need to update <strong>every row</strong> in the activity table that mentions "SpongeBob." If you miss one, your data is inconsistent.</p>
+<h3 id="the-normalized-version">The Normalized Version</h3>
+<p>With normalization, as the database is designed in our demo repository, SpongeBob's name is stored <strong>once</strong> in the <code>accounts</code> table. Activity entries reference him by <code>account_id</code>. Changing his name requires updating a single row:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-24-1"><span class="k">UPDATE</span><span class="w"> </span><span class="n">accounts</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="k">owner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SpongeBob SquarePants&#39;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span></code></pre></div>
+<p>All activity queries that join on <code>account_id</code> will automatically reflect the new name. This is cleaner, safer, and more efficient.</p>
+<h3 id="when-is-denormalization-acceptable">When Is Denormalization Acceptable?</h3>
+<p>Sometimes you intentionally denormalize for performance (e.g., caching a frequently-accessed computed value). The rule of thumb: <strong>start normalized</strong> and denormalize only when profiling shows a measurable performance need.</p>
+<h2 id="important-concepts-summary">Important Concepts Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Key Takeaway</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Foreign key</strong></td>
+<td>A column that references another table's primary key, enforcing referential integrity.</td>
+</tr>
+<tr>
+<td><strong>One-to-many</strong></td>
+<td>One row in table A relates to many rows in table B (most common relationship).</td>
+</tr>
+<tr>
+<td><strong>ORM relationships</strong></td>
+<td><code>Relationship()</code> fields let you navigate between related objects in Python.</td>
+</tr>
+<tr>
+<td><strong><code>back_populates</code></strong></td>
+<td>Keeps both sides of a relationship synchronized in Python object state.</td>
+</tr>
+<tr>
+<td><strong>N+1 queries</strong></td>
+<td>Relationship traversal can silently turn one query into many and seriously hurt performance.</td>
+</tr>
+<tr>
+<td><strong>Relationship queries</strong></td>
+<td>Use explicit <code>join()</code> queries when filtering or ordering by related table data.</td>
+</tr>
+<tr>
+<td><strong>Related inserts</strong></td>
+<td>SQLModel / SQLAlchemy usually handle foreign key assignment and insert ordering for related objects.</td>
+</tr>
+<tr>
+<td><strong>Many-to-many</strong></td>
+<td>Join tables connect rows on both sides and can also store extra data about the relationship.</td>
+</tr>
+<tr>
+<td><strong>Delete and cascade</strong></td>
+<td>Parent deletion and child removal depend on cascade rules, nullability, and domain intent.</td>
+</tr>
+<tr>
+<td><strong>Normalization</strong></td>
+<td>Store each fact once; use foreign keys to connect tables.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../rd04-testing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Testing with Databases">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Testing with Databases
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../teamwork/" class="md-footer__link md-footer__link--next" aria-label="Next: Tools and Processes for Teamwork">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Tools and Processes for Teamwork
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+  Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+  
+      Copyright &copy; 2026 
+      Kris Jordan
+  
+  </div>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["search.suggest", "search.highlight", "navigation.sections", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.indexes", "navigation.footer", "content.code.select", "content.code.annotate", "content.code.copy", "navigation.top", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../javascripts/mathjax.js"></script>
+      
+        <script src="../../../../javascripts/accessibility-fixes.js"></script>
+      
+        <script src="../../../../javascripts/timeline-due-highlights.js"></script>
+      
+        <script src="../../../../javascripts/timeline-filters.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
