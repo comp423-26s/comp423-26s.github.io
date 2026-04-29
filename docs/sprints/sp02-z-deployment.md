@@ -2,7 +2,7 @@
 code: SP02
 title: Deployment Instructions
 date: 2026-04-20
-due: 2026-04-27
+due: 2026-05-01
 type: sprint
 threads: ["Design"]
 authors: [Kris Jordan]
