@@ -1,0 +1,44 @@
+{% set all_items = get_pages_for_thread(thread_name) %}
+{% set categories = [
+    ("reading", "Readings"),
+    ("lesson", "Lessons"),
+    ("task", "Tasks")
+] %}
+
+{% for type_key, type_label in categories %}
+{% set category_items = [] %}
+{% for item in all_items %}
+{% if item.type|lower == type_key %}
+    {% set _ = category_items.append(item) %}
+{% endif %}
+{% endfor %}
+
+{% if category_items %}
+<h2>{{ type_label }}</h2>
+
+<div class="thread-context thread-border--{{ css_class }}">
+<table data-timeline="thread" class="thread-table--{{ css_class }}">
+    <thead>
+    <tr>
+        <th scope="col">Topic</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in category_items %}
+    <tr class="timeline-item-row" data-date="{{ item.date }}">
+        <td>
+        <strong>{{ item.code }}</strong>
+        {% if item.url == "tbd" %}
+            {{ item.title }}
+        {% else %}
+            <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endif %}
+{% endfor %}
+
